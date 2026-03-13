@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* Color */
   --primary: #00C8FF;
@@ -263,6 +267,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes pulse-dash { to { stroke-dashoffset: -208; } }
+.service-card-pulse { animation: pulse-dash 1.2s linear infinite; }
 
 /* ========================
    TRUST BAR (?�자/?�스???�터?�션)
@@ -365,7 +371,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
    SERVICES
 ======================== */
 #services { padding: 120px 0; background: var(--dark2); }
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 78px; }
 .service-card {
   position: relative; padding: 40px 32px; border-radius: var(--radius);
   background: var(--card-bg); border: 1px solid var(--card-border);

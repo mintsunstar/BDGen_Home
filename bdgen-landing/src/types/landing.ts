@@ -12,8 +12,10 @@ export interface Service {
   index: string;
   icon: string;
   title: string;
+  subtitle?: string;
   desc: string;
   tags: string[];
+  image?: string;
 }
 
 export interface Partner {

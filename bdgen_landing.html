@@ -35,7 +35,8 @@
   --space-2xl: 3rem;
   --space-3xl: 4rem;
   --section-padding-y: clamp(4rem, 10vw, 7.5rem);
-  --container-padding-x: clamp(1rem, 4vw, 1.5rem);
+  --container-padding-x: clamp(1rem, 3vw, 2rem);
+  --container-max: 90rem;
   /* Radius */
   --radius: 1rem;
   --radius-sm: 0.5rem;
@@ -141,7 +142,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .btn-outline:hover { background: rgba(0,200,255,0.12); border-color: var(--primary); transform: translateY(-2px); }
 
 /* ===== LAYOUT ===== */
-.container { max-width: 75rem; margin: 0 auto; padding: 0 var(--container-padding-x); }
+.container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding-x); }
 .section { padding: var(--section-padding-y) 0; }
 .section-alt { background: var(--dark2); }
 
@@ -203,7 +204,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .gnb.gnb-light .lang-option[aria-selected="true"] { color: var(--primary); }
 .gnb-inner {
   display: flex; align-items: center; justify-content: space-between;
-  max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 24px;
+  max-width: var(--container-max); width: 100%; margin: 0 auto; padding: 0 var(--container-padding-x);
 }
 .gnb-nav {
   flex: 1; display: flex; align-items: center; justify-content: center; gap: 46px;
@@ -244,7 +245,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   background: #fff; border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 .gnb-submenu-inner {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding-x);
   display: flex; justify-content: center; align-items: center; gap: 0; flex-wrap: wrap;
 }
 .gnb-submenu a {
@@ -339,7 +340,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   overflow-y: auto;
 }
 .gnb-fullmenu[aria-hidden="false"] { visibility: visible; opacity: 1; }
-.gnb-fullmenu-inner { position: relative; min-height: 100%; padding: 32px 24px 80px; max-width: 1200px; margin: 0 auto; }
+.gnb-fullmenu-inner { position: relative; min-height: 100%; padding: 32px 24px 80px; max-width: var(--container-max); margin: 0 auto; }
 .gnb-fullmenu-header {
   display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px;
 }
@@ -402,8 +403,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 }
 .hero-content {
   position: relative; z-index: 2; text-align: center;
-  max-width: 1200px; width: 100%; margin: 0 auto;
-  padding: 0 clamp(48px, 10vw, 120px);
+  max-width: var(--container-max); width: 100%; margin: 0 auto;
+  padding: 0 var(--container-padding-x);
   box-sizing: border-box;
 }
 .hero-badge {
@@ -488,7 +489,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   position: relative; z-index: 2;
   padding-left: clamp(40px, 5vw, 80px);
   padding-right: clamp(40px, 5vw, 80px);
-  max-width: 1200px; margin: 0 auto;
+  max-width: var(--container-max); margin: 0 auto;
   box-sizing: border-box;
 }
 .partner-title {
@@ -602,15 +603,21 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
    SERVICES (핵심 기술 및 제공 서비스)
 ======================== */
 #services {
-  padding: 120px 0; background: #ffffff;
+  padding: 170px 0 120px; background: #ffffff;
 }
 .section-services .section-label { color: var(--primary); }
-.section-services .section-title { font-size: 74px; color: #111; }
-.section-services .section-sub { color: #444; }
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.section-services .section-title { font-size: 74px; color: #000; }
+.section-services .section-title span { color: #000; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #000; background-clip: unset; }
+.section-services .section-sub { color: #000; }
+.section-services .section-sub span { color: #000; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #000; background-clip: unset; }
+#services .section-header { margin-bottom: 114px; }
+.services-typing { border-right: 2px solid var(--primary); animation: blink 0.7s step-end infinite; }
+#services .section-title .services-typing { min-height: 1.1em; display: inline-block; }
+#services .section-sub .services-typing { min-height: 1.4em; display: inline-block; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 78px; }
 .service-card {
   position: relative; border-radius: var(--radius);
-  height: 510px; overflow: hidden;
+  height: 560px; overflow: hidden;
   cursor: default; transition: transform 0.4s ease, box-shadow 0.4s ease;
   box-shadow: 0 8px 32px rgba(0,0,0,0.1);
 }
@@ -621,7 +628,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; pointer-events: none;
   transition: opacity 0.4s ease;
 }
-.service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+.service-card:hover { transform: translateY(-12px); box-shadow: 0 0 50px rgba(0,200,255,0.35), 0 0 100px rgba(0,200,255,0.12), 0 20px 50px rgba(0,0,0,0.2); }
 .service-card:hover::before {
   opacity: 1; animation: borderFlow 4s linear infinite;
 }
@@ -632,11 +639,14 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .service-card-image {
   position: absolute; inset: 0; z-index: 0;
 }
+.service-card-inner { position: relative; width: 100%; height: 100%; border-radius: inherit; transition: transform 0.12s ease-out; will-change: transform; }
 .service-card-image img {
   position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s ease, filter 0.5s ease;
 }
 .service-card:hover .service-card-image img { transform: scale(1.08); }
+.service-card[data-content-index="2"]:hover .service-card-image img { filter: blur(3px); }
 .service-card-image::after {
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(to top, rgba(5,11,32,0.9) 0%, rgba(5,11,32,0.3) 50%, transparent 100%);
@@ -655,23 +665,26 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .service-card:hover .service-title { color: var(--primary); }
 .service-title-icon {
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  width: 32px; height: 32px; margin-left: auto; margin-right: 20px; color: #ffffff;
+  width: 37px; height: 37px; margin-left: auto; margin-right: 20px; color: #ffffff;
   transition: color 0.4s ease;
 }
 .service-card:hover .service-title-icon { color: var(--primary); }
 .service-title-icon svg {
   width: 100%; height: 100%; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round;
 }
-.service-title-icon svg path {
+.service-title-icon svg path,
+.service-title-icon svg rect {
   stroke-dasharray: 1; stroke-dashoffset: 1;
-  animation: svgDraw 2.5s ease-out forwards;
+  animation: svgDraw 5s ease-in-out infinite;
 }
 .service-card:nth-child(1) .service-title-icon svg path { animation-delay: 0.2s; }
 .service-card:nth-child(2) .service-title-icon svg path,
 .service-card:nth-child(2) .service-title-icon svg rect { animation-delay: 0.2s; }
 .service-card:nth-child(3) .service-title-icon svg rect { animation-delay: 0.2s; }
 @keyframes svgDraw {
-  to { stroke-dashoffset: 0; }
+  0% { stroke-dashoffset: 1; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 1; }
 }
 .service-title-block { flex-wrap: wrap; }
 .service-subtitle { font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.95); letter-spacing: -0.02em; transition: color 0.4s ease; }
@@ -689,30 +702,110 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   color: var(--primary); border-color: rgba(0,200,255,0.5); background: rgba(0,200,255,0.15);
 }
 
+/* 서비스 카드: 틸트용 perspective */
+.service-card { perspective: 800px; }
+.service-card-inner { transform-style: preserve-3d; }
+
+/* 카드1: 회로선 + 라이트 펄스 */
+.service-card-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.service-card-circuit { opacity: 0.35; }
+.service-card:hover .service-card-circuit { opacity: 0.6; }
+.service-circuit-svg { width: 100%; height: 100%; }
+.service-circuit-line { stroke: rgba(0,200,255,0.4); stroke-width: 1; fill: none; }
+.service-card:hover .service-circuit-line { stroke: rgba(0,200,255,0.7); }
+.service-circuit-pulse { opacity: 0; transition: opacity 0.3s; }
+.service-card[data-content-index="1"]:hover .service-circuit-pulse { opacity: 1; animation: servicePulseDash 1.2s linear infinite; }
+@keyframes servicePulseDash { to { stroke-dashoffset: -208; } }
+.service-tags-card1 { position: relative; }
+.service-tags-card1 .service-tag { transition: transform 0.3s, color 0.4s, border-color 0.4s, background 0.4s; }
+.service-card[data-content-index="1"]:hover .service-tags-card1 .service-tag:nth-child(1) { transform: translateY(-3px); }
+.service-card[data-content-index="1"]:hover .service-tags-card1 .service-tag:nth-child(2) { transform: translateY(-5px); }
+.service-card[data-content-index="1"]:hover .service-tags-card1 .service-tag:nth-child(3) { transform: translateY(-2px); }
+.service-card[data-content-index="1"]:hover .service-tags-card1 .service-tag:nth-child(4) { transform: translateY(-4px); }
+.service-card[data-content-index="1"]:hover .service-tags-card1 .service-tag:nth-child(5) { transform: translateY(-3px); }
+.service-tags-card1::before, .service-tags-card1::after { content: ''; position: absolute; width: 8px; height: 8px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300C8FF' opacity='0.8'%3E%3Cpath d='M12 2L22 8.5v7L12 22L2 15.5v-7L12 2z'/%3E%3C/svg%3E") no-repeat; background-size: contain; opacity: 0; transition: opacity 0.3s; }
+.service-card[data-content-index="1"]:hover .service-tags-card1::before { opacity: 1; top: -4px; left: 10%; animation: hexFloat 2s ease-in-out infinite; }
+.service-card[data-content-index="1"]:hover .service-tags-card1::after { opacity: 1; top: -6px; right: 15%; animation: hexFloat 2s ease-in-out infinite 0.5s; }
+@keyframes hexFloat { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-4px) } }
+
+/* 카드2: 떠다니는 UI 블록 */
+.service-card-floatui { display: flex; align-items: center; justify-content: center; }
+.float-ui { position: absolute; border-radius: 8px; background: rgba(0,200,255,0.12); border: 1px solid rgba(0,200,255,0.35); box-shadow: 0 8px 24px rgba(0,0,0,0.3); transition: transform 0.35s ease, opacity 0.3s; opacity: 0; }
+.float-ui-1 { width: 55%; height: 22%; left: 22%; top: 35%; transform: translate(0,0); }
+.float-ui-2 { width: 45%; height: 18%; left: 28%; top: 42%; transform: translate(0,0); }
+.float-ui-3 { width: 42%; height: 16%; left: 25%; top: 52%; transform: translate(0,0); }
+.service-card[data-content-index="2"]:hover .float-ui-1 { opacity: 1; transform: translate(8px, -24px); transition-delay: 0s; }
+.service-card[data-content-index="2"]:hover .float-ui-2 { opacity: 1; transform: translate(-6px, -16px); transition-delay: 0.06s; }
+.service-card[data-content-index="2"]:hover .float-ui-3 { opacity: 1; transform: translate(4px, -20px); transition-delay: 0.12s; }
+
+/* 카드3: 데이터 스트림 + glitch */
+.service-card-stream { overflow: hidden; }
+.stream-line { position: absolute; bottom: 0; height: 2px; background: linear-gradient(to right, transparent, var(--primary), transparent); border-radius: 2px; opacity: 0; width: 20%; }
+.stream-line-1 { left: 10%; }
+.stream-line-2 { left: 28%; }
+.stream-line-3 { left: 46%; }
+.stream-line-4 { left: 64%; }
+.service-card[data-content-index="3"]:hover .stream-line { opacity: 0.7; animation: streamUp 2s linear infinite; }
+.service-card[data-content-index="3"]:hover .stream-line-2 { animation-delay: 0.3s; }
+.service-card[data-content-index="3"]:hover .stream-line-3 { animation-delay: 0.6s; }
+.service-card[data-content-index="3"]:hover .stream-line-4 { animation-delay: 0.9s; }
+@keyframes streamUp { 0%{ transform: translateY(0); opacity: 0.7 } 100%{ transform: translateY(-620px); opacity: 0 } }
+.service-card-glitch { position: absolute; left: 15%; right: 15%; top: 28%; bottom: 38%; border: 1px solid rgba(0,200,255,0.3); border-radius: 10px; background: rgba(10,30,60,0.5); opacity: 0; display: flex; align-items: center; justify-content: center; }
+.service-card[data-content-index="3"]:hover .service-card-glitch { opacity: 1; animation: glitchPulse 2s ease-in-out infinite; }
+.service-card-glitch::after { content: ''; width: 24px; height: 24px; border: 2px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes glitchPulse { 0%,100%{ box-shadow: 0 0 0 rgba(0,200,255,0) } 50%{ box-shadow: 0 0 20px 2px rgba(0,200,255,0.25) } }
+@keyframes spin { to { transform: rotate(360deg) } }
+.service-tag-icon { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: middle; }
+.service-tag-loading { border: 2px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 0.9s linear infinite; }
+.service-card[data-content-index="3"]:hover .service-tag-loading { display: none; }
+.service-card[data-content-index="3"]:hover .service-tags-card3 .service-tag::before { content: ''; display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: middle; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300C8FF' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
+
 /* ========================
    ABOUT BDGEN (Web3 비주얼 섹션)
 ======================== */
-#about-bdgen { min-height: 950px; padding: 170px 0; background: #ffffff; display: flex; align-items: center; color: #000000; }
+#about-bdgen {
+  min-height: 950px; padding: 170px 0;
+  background: #050B18;
+  display: flex; align-items: center;
+  color: #fff; position: relative; overflow: hidden;
+}
+#about-bdgen .about-bdgen-bg-canvas {
+  position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(10,20,48,0.5) 0%, #050B18 70%);
+}
+#about-bdgen .about-bdgen-content { position: relative; z-index: 1; width: 100%; }
 #about-bdgen .section-label { color: var(--primary); }
-#about-bdgen .section-title { font-size: 74px; color: #000000; }
+#about-bdgen .section-title { font-size: 74px; color: #ffffff; }
 #about-bdgen .section-title .about-title-line {
   display: block; white-space: nowrap;
-  color: #000000; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #000000; background-clip: unset;
+  color: #ffffff; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #ffffff; background-clip: unset;
 }
 #about-bdgen .section-title .about-title-line:first-child {
   color: var(--primary); background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-#about-bdgen .section-title .about-title-line span { color: #000000; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #000000; }
-#about-bdgen .section-sub { color: #000000; max-width: 100%; }
+#about-bdgen .section-title .about-title-line span { color: #ffffff; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #ffffff; }
+#about-bdgen .section-sub { color: #8FA3C0; max-width: 100%; }
 .about-bdgen-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
 }
 .about-bdgen-visual {
   position: relative; display: flex; align-items: center; justify-content: center;
+  perspective: 800px;
+}
+.about-bdgen-tilt {
+  width: 374px; max-width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  transition: transform 0.1s ease-out;
+  will-change: transform;
 }
 .about-bdgen-visual img {
   width: 374px; height: 452px; object-fit: cover;
   border-radius: var(--radius);
+  display: block; max-width: 100%;
 }
 @media (max-width: 1023px) {
   .about-bdgen-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -1050,6 +1143,19 @@ footer {
 .back-top.visible { opacity: 1; pointer-events: all; }
 .back-top:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,200,255,0.5); }
 
+/* Floating: 회사소개서 다운받기 */
+.floating-brochure {
+  position: fixed; bottom: 88px; right: 32px; z-index: var(--z-back-top);
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #fff; color: #111;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  transition: var(--transition);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.floating-brochure:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); color: var(--primary); }
+.floating-brochure svg { width: 24px; height: 24px; }
+
 /* ========================
    RESPONSIVE - Desktop 1280+ | Laptop 1024~1279 | Tablet 768~1023 | Mobile ~767 | Small ~480
 ======================== */
@@ -1067,7 +1173,7 @@ footer {
   .section { padding: clamp(3.5rem, 8vw, 5rem) 0; }
   .section-header { margin-bottom: clamp(2rem, 5vw, 3rem); }
   .about-grid { gap: 48px; }
-  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 70px; }
   .why-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .genid-usecases { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .ref-projects { grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -1151,8 +1257,8 @@ footer {
   .about-orb-inner { width: min(150px, 42vw); height: min(150px, 42vw); }
   .about-orb-center-text { font-size: 0.9rem; }
   .about-orb-center-text span { font-size: 0.7rem; }
-  .services-grid { grid-template-columns: 1fr; gap: 16px; }
-  .service-card { height: 260px; }
+  .services-grid { grid-template-columns: 1fr; gap: 66px; }
+  .service-card { height: 310px; }
   .service-card-body { padding: 24px 20px 28px; }
   .service-num { font-size: 3rem; margin-bottom: 16px; }
   .service-title { font-size: 1.1rem; margin-bottom: 10px; }
@@ -1204,6 +1310,8 @@ footer {
   .footer-bottom { flex-direction: column; align-items: center; text-align: center; padding-top: 24px; gap: 12px; }
   .footer-bottom-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
   .back-top { bottom: 20px; right: 20px; width: 48px; height: 48px; }
+  .floating-brochure { bottom: 76px; right: 20px; width: 44px; height: 44px; }
+  .floating-brochure svg { width: 22px; height: 22px; }
 }
 
 /* Small mobile (~480) */
@@ -1393,66 +1501,87 @@ footer {
   <div class="container">
     <div class="section-header">
       <div class="section-label reveal">SERVICES</div>
-      <h2 id="services-title" class="section-title reveal reveal-delay-1" data-i18n="servicesTitle">핵심 기술 및 제공 서비스</h2>
-      <p class="section-sub reveal reveal-delay-2" data-i18n="servicesSub">블록체인 기반 디지털 서비스 구축을 위한 핵심 기술을 제공합니다</p>
+      <h2 id="services-title" class="section-title reveal reveal-delay-1" data-i18n="servicesTitle"><span id="services-typing-title" class="services-typing" data-text="핵심 기술 및 제공 서비스" aria-hidden="false"></span></h2>
+      <p class="section-sub reveal reveal-delay-2" data-i18n="servicesSub"><span id="services-typing-sub" class="services-typing" data-text="블록체인 기반 디지털 서비스 구축을 위한 핵심 기술을 제공합니다" aria-hidden="false"></span></p>
     </div>
     <div class="services-grid">
       <div class="service-card reveal" data-content-index="1">
-        <div class="service-card-image">
-          <img src="assets/services_01.png" alt="블록체인 DID" loading="lazy">
-        </div>
-        <div class="service-card-body">
-          <h3 class="service-title">
-            <span data-i18n="svc1Title">블록체인 DID</span>
-            <span class="service-title-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path pathLength="1" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </span>
-          </h3>
-          <p class="service-subtitle" data-i18n="svc1Sub">Web3 인프라 기술</p>
-          <div class="service-tags">
-            <span class="service-tag">DID</span>
-            <span class="service-tag">NFT</span>
-            <span class="service-tag">Blockchain</span>
-            <span class="service-tag">AI</span>
-            <span class="service-tag">IoT</span>
+        <div class="service-card-inner">
+          <div class="service-card-image">
+            <img src="assets/services_01.png" alt="블록체인 DID" loading="lazy">
+          </div>
+          <div class="service-card-overlay service-card-circuit" aria-hidden="true">
+            <svg class="service-circuit-svg" viewBox="0 0 400 300"><defs><linearGradient id="svc1-pulse" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(0,200,255,0)"/><stop offset="50%" stop-color="rgba(0,200,255,0.9)"/><stop offset="100%" stop-color="rgba(0,200,255,0)"/></linearGradient></defs><path class="service-circuit-line" d="M0 80 Q80 60 160 80 T320 80 T480 80"/><path class="service-circuit-line" d="M40 140 L160 140 L220 200 L320 140 L440 140"/><path class="service-circuit-pulse" d="M0 80 Q80 60 160 80 T320 80 T480 80" stroke="url(#svc1-pulse)" stroke-width="2" fill="none" stroke-dasharray="8 200"/></svg>
+          </div>
+          <div class="service-card-body">
+            <h3 class="service-title">
+              <span data-i18n="svc1Title">블록체인 DID</span>
+              <span class="service-title-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path pathLength="1" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              </span>
+            </h3>
+            <p class="service-subtitle" data-i18n="svc1Sub">Web3 인프라 기술</p>
+            <div class="service-tags service-tags-card1">
+              <span class="service-tag">DID</span>
+              <span class="service-tag">NFT</span>
+              <span class="service-tag">Blockchain</span>
+              <span class="service-tag">AI</span>
+              <span class="service-tag">IoT</span>
+            </div>
           </div>
         </div>
       </div>
       <div class="service-card reveal reveal-delay-2" data-content-index="2">
-        <div class="service-card-image">
-          <img src="assets/services_02.png" alt="모바일·서비스 개발" loading="lazy">
-        </div>
-        <div class="service-card-body">
-          <h3 class="service-title">
-            <span data-i18n="svc2Title">모바일·서비스 개발</span>
-            <span class="service-title-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path pathLength="1" d="M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"/><path pathLength="1" d="M12 18h.01"/></svg>
-            </span>
-          </h3>
-          <p class="service-subtitle" data-i18n="svc2Sub">UX 중심 플랫폼 구축</p>
-          <div class="service-tags">
-            <span class="service-tag">Android</span>
-            <span class="service-tag">iOS</span>
-            <span class="service-tag">Native App</span>
-            <span class="service-tag">Web App</span>
+        <div class="service-card-inner">
+          <div class="service-card-image">
+            <img src="assets/services_02.png" alt="모바일·서비스 개발" loading="lazy">
+          </div>
+          <div class="service-card-overlay service-card-floatui" aria-hidden="true">
+            <div class="float-ui float-ui-1"></div>
+            <div class="float-ui float-ui-2"></div>
+            <div class="float-ui float-ui-3"></div>
+          </div>
+          <div class="service-card-body">
+            <h3 class="service-title">
+              <span data-i18n="svc2Title">모바일·서비스 개발</span>
+              <span class="service-title-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path pathLength="1" d="M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"/><path pathLength="1" d="M12 18h.01"/></svg>
+              </span>
+            </h3>
+            <p class="service-subtitle" data-i18n="svc2Sub">UX 중심 플랫폼 구축</p>
+            <div class="service-tags">
+              <span class="service-tag">Android</span>
+              <span class="service-tag">iOS</span>
+              <span class="service-tag">Native App</span>
+              <span class="service-tag">Web App</span>
+            </div>
           </div>
         </div>
       </div>
       <div class="service-card reveal reveal-delay-4" data-content-index="3">
-        <div class="service-card-image">
-          <img src="assets/services_03.png" alt="플랫폼 구축 및 운영 솔루션" loading="lazy">
-        </div>
-        <div class="service-card-body">
-          <h3 class="service-title service-title-block">
-            <span><span data-i18n="svc3Title">플랫폼 구축 및</span><br><span data-i18n="svc3Sub">운영 솔루션</span></span>
-            <span class="service-title-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path pathLength="1" d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
-            </span>
-          </h3>
-          <div class="service-tags">
-            <span class="service-tag">플랫폼 구축</span>
-            <span class="service-tag">백오피스</span>
-            <span class="service-tag">운영 고도화</span>
+        <div class="service-card-inner">
+          <div class="service-card-image">
+            <img src="assets/services_03.png" alt="플랫폼 구축 및 운영 솔루션" loading="lazy">
+          </div>
+          <div class="service-card-overlay service-card-stream" aria-hidden="true">
+            <div class="stream-line stream-line-1"></div>
+            <div class="stream-line stream-line-2"></div>
+            <div class="stream-line stream-line-3"></div>
+            <div class="stream-line stream-line-4"></div>
+            <div class="service-card-glitch"></div>
+          </div>
+          <div class="service-card-body">
+            <h3 class="service-title service-title-block">
+              <span><span data-i18n="svc3Title">플랫폼 구축 및</span><br><span data-i18n="svc3Sub">운영 솔루션</span></span>
+              <span class="service-title-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path pathLength="1" d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
+              </span>
+            </h3>
+            <div class="service-tags service-tags-card3">
+              <span class="service-tag"><span class="service-tag-icon service-tag-loading"></span>플랫폼 구축</span>
+              <span class="service-tag"><span class="service-tag-icon service-tag-loading"></span>백오피스</span>
+              <span class="service-tag"><span class="service-tag-icon service-tag-loading"></span>운영 고도화</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1460,9 +1589,10 @@ footer {
   </div>
 </section>
 
-<!-- ===== ABOUT BDGEN (Web3 기술 비주얼 - 제공서비스 아래) ===== -->
+<!-- ===== ABOUT BDGEN (Web3 기술 비주얼 - 노드 연결·패럴랙스·틸트) ===== -->
 <section id="about-bdgen" class="section" aria-labelledby="about-bdgen-title">
-  <div class="container">
+  <canvas id="about-bdgen-canvas" class="about-bdgen-bg-canvas" aria-hidden="true"></canvas>
+  <div class="container about-bdgen-content">
     <div class="about-bdgen-grid">
       <div class="about-bdgen-text">
         <div class="section-label reveal">ABOUT BDGEN</div>
@@ -1474,7 +1604,9 @@ footer {
         <p class="section-sub reveal reveal-delay-2" data-i18n="aboutSub">(주)비디젠(BDGen)은 2019년 설립 이후 블록체인 응용 서비스 상용화에 집중해온 전문 기업입니다. DID·NFT·Passkey 등 Web3 핵심 기술을 실제 산업에 구현하며 신뢰할 수 있는 디지털 환경을 만들어 나가고 있습니다.</p>
       </div>
       <div class="about-bdgen-visual reveal-right">
-        <img src="assets/web3-visual.png" alt="블록체인·Web3 기술" width="374" height="452">
+        <div id="about-bdgen-tilt" class="about-bdgen-tilt">
+          <img src="assets/web3-visual.png" alt="블록체인·Web3 기술" width="374" height="452">
+        </div>
       </div>
     </div>
   </div>
@@ -1792,6 +1924,11 @@ footer {
   </div>
 </footer>
 
+<!-- 회사소개서 다운받기 (플로팅) -->
+<a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" id="floatingBrochure" class="floating-brochure" target="_blank" rel="noopener" aria-label="회사소개서 다운받기" title="회사소개서 다운받기" data-i18n-title="brochureDownload">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15l3 3 3-3"/></svg>
+</a>
+
 <!-- Back to Top -->
 <button type="button" class="back-top" id="backTop" aria-label="맨 위로 이동">↑</button>
 
@@ -1907,6 +2044,120 @@ footer {
   loop();
 })();
 
+/* ---------- About BDGen: 노드 배경 (커서 150px 반경에서만 선 연결) + 틸트 ---------- */
+(function(){
+  var canvas = document.getElementById('about-bdgen-canvas');
+  var tiltEl = document.getElementById('about-bdgen-tilt');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, nodes = [], animId;
+  var NODE_COUNT = 80;
+  var CURSOR_RADIUS = 150;
+  var MOUSE = { x: -1e4, y: -1e4 };
+  var section = document.getElementById('about-bdgen');
+
+  function resize(){
+    if(!section) return;
+    var rect = section.getBoundingClientRect();
+    W = canvas.width = rect.width;
+    H = canvas.height = rect.height;
+  }
+  function createNode(){
+    return {
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3
+    };
+  }
+  function init(){
+    resize();
+    nodes = [];
+    for(var i=0;i<NODE_COUNT;i++) nodes.push(createNode());
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var mx = MOUSE.x, my = MOUSE.y;
+    var inRadius = [];
+    for(var i=0;i<nodes.length;i++){
+      var n = nodes[i];
+      var dx = n.x - mx, dy = n.y - my;
+      if(dx*dx + dy*dy <= CURSOR_RADIUS*CURSOR_RADIUS) inRadius.push(n);
+    }
+    ctx.strokeStyle = 'rgba(0,200,255,0.35)';
+    ctx.lineWidth = 0.8;
+    for(var i=0;i<inRadius.length;i++)
+      for(var j=i+1;j<inRadius.length;j++){
+        ctx.beginPath();
+        ctx.moveTo(inRadius[i].x, inRadius[i].y);
+        ctx.lineTo(inRadius[j].x, inRadius[j].y);
+        ctx.stroke();
+      }
+    ctx.fillStyle = 'rgba(0,200,255,0.6)';
+    nodes.forEach(function(n){
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 1.5, 0, Math.PI*2);
+      ctx.fill();
+    });
+  }
+  function update(){
+    nodes.forEach(function(n){
+      n.x += n.vx; n.y += n.vy;
+      if(n.x<0||n.x>W) n.vx *= -1;
+      if(n.y<0||n.y>H) n.vy *= -1;
+      n.x = Math.max(0, Math.min(W, n.x));
+      n.y = Math.max(0, Math.min(H, n.y));
+    });
+  }
+  function loop(){
+    update();
+    draw();
+    animId = requestAnimationFrame(loop);
+  }
+  section.addEventListener('mousemove', function(e){
+    var rect = section.getBoundingClientRect();
+    MOUSE.x = e.clientX - rect.left;
+    MOUSE.y = e.clientY - rect.top;
+  });
+  section.addEventListener('mouseleave', function(){ MOUSE.x = -1e4; MOUSE.y = -1e4; });
+  window.addEventListener('resize', resize);
+  window.addEventListener('scroll', resize, { passive: true });
+  init();
+  loop();
+
+  if(tiltEl){
+    tiltEl.addEventListener('mousemove', function(e){
+      var rect = tiltEl.getBoundingClientRect();
+      var cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+      var dx = (e.clientX - cx) / rect.width, dy = (e.clientY - cy) / rect.height;
+      var rx = Math.max(-8, Math.min(8, -dy * 12));
+      var ry = Math.max(-8, Math.min(8, dx * 12));
+      tiltEl.style.transform = 'perspective(800px) rotateX('+rx+'deg) rotateY('+ry+'deg)';
+    });
+    tiltEl.addEventListener('mouseleave', function(){
+      tiltEl.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
+    });
+  }
+})();
+
+/* ---------- 서비스 카드 3D 틸트 ---------- */
+(function(){
+  var cards = document.querySelectorAll('.service-card');
+  cards.forEach(function(card){
+    var inner = card.querySelector('.service-card-inner');
+    if(!inner) return;
+    card.addEventListener('mousemove', function(e){
+      var rect = card.getBoundingClientRect();
+      var cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+      var dx = (e.clientX - cx) / rect.width, dy = (e.clientY - cy) / rect.height;
+      var rx = Math.max(-6, Math.min(6, -dy * 10));
+      var ry = Math.max(-6, Math.min(6, dx * 10));
+      inner.style.transform = 'perspective(800px) rotateX('+rx+'deg) rotateY('+ry+'deg)';
+    });
+    card.addEventListener('mouseleave', function(){
+      inner.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
+    });
+  });
+})();
+
 /* ---------- GNB 스크롤 & Back to Top ---------- */
 (function(){
   var gnb = document.getElementById('gnb');
@@ -1995,7 +2246,7 @@ var I18N = {
     ctaPlaceholder:'선택해 주세요', ctaMsgPlaceholder:'프로젝트 개요, 도입 목적, 일정 등 자유롭게 작성해 주세요.',
     footerDesc:'블록체인·DID 전문기업. 통신·금융·공공·의료 등 산업의 인증·증명 솔루션을 제공합니다.',
     footerSvc:'서비스', footerComp:'회사', footerContact:'문의', footerSvc1:'블록체인 서비스 개발', footerSvc2:'모바일 앱 개발', footerSvc3:'플랫폼 운영 솔루션', footerSvc4:'GenID 솔루션',
-    footerAbout:'회사소개', footerWhy:'핵심역량', footerRef:'레퍼런스', footerNews:'소식', footerInquiry:'프로젝트 문의', footerIntro:'회사소개서',
+    footerAbout:'회사소개', footerWhy:'핵심역량', footerRef:'레퍼런스', footerNews:'소식', footerInquiry:'프로젝트 문의', footerIntro:'회사소개서', brochureDownload:'회사소개서 다운받기',
     footerPolicy:'개인정보처리방침', footerTerms:'이용약관',
     ref1Tag:'DID · 모바일지갑', ref1Proj:'PASS 모바일지갑 DID 서비스 운영·고도화. 수백만 사용자 규모의 국내 대표 모바일 신원인증 서비스 장기 운영.',
     ref2Tag:'블록체인 · 디지털배지', ref2Proj:'디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정. 블록체인 기반 디지털 자격증명 시스템 구현.',
@@ -2035,7 +2286,7 @@ var I18N = {
     ctaPlaceholder:'Please select', ctaMsgPlaceholder:'Project overview, goals, timeline—feel free to share.',
     footerDesc:'Blockchain·DID specialist. Authentication and verification solutions for telecom, finance, public, healthcare, and more.',
     footerSvc:'Services', footerComp:'Company', footerContact:'Contact', footerSvc1:'Blockchain services', footerSvc2:'Mobile app development', footerSvc3:'Platform operations', footerSvc4:'GenID solution',
-    footerAbout:'About', footerWhy:'Capability', footerRef:'Reference', footerNews:'News', footerInquiry:'Project inquiry', footerIntro:'Company intro',
+    footerAbout:'About', footerWhy:'Capability', footerRef:'Reference', footerNews:'News', footerInquiry:'Project inquiry', footerIntro:'Company intro', brochureDownload:'Download company brochure',
     footerPolicy:'Privacy policy', footerTerms:'Terms of use',
     ref1Tag:'DID · Mobile wallet', ref1Proj:'PASS mobile wallet DID service operations and enhancement. Long-term operation of a leading domestic mobile identity service serving millions.',
     ref2Tag:'Blockchain · Digital badge', ref2Proj:'Selected for digital badge-based integrated employment support project. Blockchain-based digital credential system implementation.',
@@ -2056,10 +2307,18 @@ function applyLang(lang, skipHero){
     var val = T[key]; if(val == null) return;
     if(val.indexOf && val.indexOf('<') >= 0) el.innerHTML = val; else el.textContent = val;
   });
+  document.querySelectorAll('[data-i18n-title]').forEach(function(el){
+    var key = el.getAttribute('data-i18n-title'); if(!key) return;
+    var val = T[key]; if(val == null) return;
+    el.title = val; el.setAttribute('aria-label', val);
+  });
   document.querySelectorAll('.lang-option').forEach(function(btn){
     btn.setAttribute('aria-selected', btn.getAttribute('data-lang') === lang);
   });
   var pt = document.getElementById('partner-typing'); if(pt) { pt.setAttribute('data-text', T.partnerTitle); pt.textContent = T.partnerTitle; pt.classList.remove('partner-typing'); pt.style.borderRight = 'none'; }
+  var st = document.getElementById('services-typing-title'); var ss = document.getElementById('services-typing-sub');
+  if(st) { st.setAttribute('data-text', T.servicesTitle); if(st.textContent) { st.textContent = T.servicesTitle; st.classList.remove('services-typing'); st.style.borderRight = 'none'; } }
+  if(ss) { ss.setAttribute('data-text', T.servicesSub); if(ss.textContent) { ss.textContent = T.servicesSub; ss.classList.remove('services-typing'); ss.style.borderRight = 'none'; } }
   var suffixEl = document.querySelector('.partner-metric-value[data-suffix="개"]'); if(suffixEl) suffixEl.setAttribute('data-suffix', lang==='ko'?'개':'');
   if(skipHero){ var ab=document.querySelector('#about-bdgen-title'); if(ab&&T.aboutLine1) ab.innerHTML='<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>'; var ph=document.getElementById('cta-message'); if(ph&&T.ctaMsgPlaceholder) ph.placeholder=T.ctaMsgPlaceholder; var sel=document.getElementById('cta-type'); if(sel&&sel.options[0]&&T.ctaPlaceholder) sel.options[0].textContent=T.ctaPlaceholder; return; }
   var heroSub = document.querySelector('.hero-sub'); if(heroSub) heroSub.innerHTML = T.heroSub;
@@ -2259,6 +2518,60 @@ function applyLang(lang, skipHero){
       });
     }, { threshold: 0.2 });
     typingObserver.observe(partnerSection);
+  }
+
+  /* 핵심 기술 및 제공 서비스 타이핑 (뷰포트 진입 시) */
+  var servicesSection = document.getElementById('services');
+  var servicesTitleEl = document.getElementById('services-typing-title');
+  var servicesSubEl = document.getElementById('services-typing-sub');
+  if(servicesSection && servicesTitleEl && servicesSubEl){
+    var servicesTypingDone = false;
+    var servicesTypingObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting){
+          servicesTitleEl.textContent = '';
+          servicesSubEl.textContent = '';
+          servicesTitleEl.classList.add('services-typing');
+          servicesSubEl.classList.add('services-typing');
+          servicesTitleEl.style.borderRight = '';
+          servicesSubEl.style.borderRight = '';
+          servicesTypingDone = false;
+          return;
+        }
+        if(servicesTypingDone) return;
+        servicesTypingDone = true;
+        var titleText = servicesTitleEl.getAttribute('data-text') || '';
+        var subText = servicesSubEl.getAttribute('data-text') || '';
+        servicesTitleEl.textContent = '';
+        servicesSubEl.textContent = '';
+        servicesTitleEl.classList.add('services-typing');
+        servicesSubEl.classList.add('services-typing');
+        var ti = 0, si = 0;
+        function typeTitle(){
+          if(ti < titleText.length){
+            servicesTitleEl.textContent += titleText.charAt(ti);
+            ti++;
+            setTimeout(typeTitle, 70);
+          } else {
+            servicesTitleEl.classList.remove('services-typing');
+            servicesTitleEl.style.borderRight = 'none';
+            setTimeout(typeSub, 300);
+          }
+        }
+        function typeSub(){
+          if(si < subText.length){
+            servicesSubEl.textContent += subText.charAt(si);
+            si++;
+            setTimeout(typeSub, 50);
+          } else {
+            servicesSubEl.classList.remove('services-typing');
+            servicesSubEl.style.borderRight = 'none';
+          }
+        }
+        typeTitle();
+      });
+    }, { threshold: 0.2 });
+    servicesTypingObserver.observe(servicesSection);
   }
 })();
 

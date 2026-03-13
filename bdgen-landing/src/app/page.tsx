@@ -6,7 +6,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { TrustSection } from '@/components/sections/TrustSection';
-import { HighlightSection } from '@/components/sections/HighlightSection';
+import { AboutBdgenSection } from '@/components/sections/AboutBdgenSection';
 import { ServicesSection } from '@/components/sections/ServicesSection';
 import { SolutionsSection } from '@/components/sections/SolutionsSection';
 import { WhySection } from '@/components/sections/WhySection';
@@ -34,7 +34,7 @@ export default function LandingPage() {
       <main id="main-content">
         <HeroSection />
         <TrustSection items={trustItems} />
-        <HighlightSection />
+        <AboutBdgenSection />
         <ServicesSection services={services} />
         <SolutionsSection />
         <WhySection reasons={reasons} />

@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BDGen — Web 3.0 블록체인 DID 전문기업</title>
+<meta name="description" content="블록체인·DID·Passkey 기술로 산업의 디지털 전환을 완성하는 BDGen"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<style>
+/* ===== DESIGN TOKENS (실무용 토큰화) ===== */
+:root {
+  /* Color */
+  --primary: #00C8FF;
+  --primary-dark: #0090CC;
+  --accent: #6C3FFF;
+  --accent2: #00FFB2;
+  --dark: #050B18;
+  --dark2: #0A1428;
+  --dark3: #0F1E3A;
+  --card-bg: rgba(255,255,255,0.04);
+  --card-border: rgba(0,200,255,0.15);
+  --text: #FFFFFF;
+  --text-secondary: #8FA3C0;
+  --text-muted: #5A7090;
+  /* Gradient */
+  --gradient-primary: linear-gradient(135deg, #00C8FF 0%, #6C3FFF 100%);
+  --gradient-dark: linear-gradient(180deg, #050B18 0%, #0A1428 100%);
+  /* Spacing (rem 기반) */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --section-padding-y: clamp(4rem, 10vw, 7.5rem);
+  --container-padding-x: clamp(1rem, 4vw, 1.5rem);
+  /* Radius */
+  --radius: 1rem;
+  --radius-sm: 0.5rem;
+  --radius-pill: 50px;
+  /* Shadow & Effect */
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-glow: 0 0 30px rgba(0,200,255,0.15);
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.2s ease;
+  /* Z-index 계층 */
+  --z-gnb: 1000;
+  --z-mobile-nav: 999;
+  --z-back-top: 900;
+  --z-hero-content: 2;
+  --z-hero-bg: 0;
+  /* Typography (반응형 확장용) */
+  --font-family: 'Pretendard', -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --font-size-xs: 0.72rem;
+  --font-size-sm: 0.85rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.1rem;
+  --font-size-xl: 1.25rem;
+  --line-height-base: 1.7;
+  --line-height-tight: 1.25;
+  /* Breakpoints (미디어쿼리 참고용) */
+  /* Desktop: 1280+ | Laptop: 1024~1279 | Tablet: 768~1023 | Mobile: ~767 | Small: ~480 */
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  font-size: clamp(14px, 2.5vw, 16px);
+  overflow-x: hidden;
+  min-width: 320px;
+}
+body {
+  font-family: var(--font-family);
+  background: var(--dark);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+  min-width: 320px;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; height: auto; display: block; }
+ul { list-style: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+  .partner-metric { opacity: 1; transform: none; }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--primary-dark); border-radius: 3px; }
+
+/* ===== TYPOGRAPHY ===== */
+.section-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--primary);
+  margin-bottom: 16px;
+}
+.section-label::before {
+  content: ''; width: 24px; height: 2px;
+  background: var(--gradient-primary); border-radius: 2px;
+}
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800; line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.section-title span { background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.section-sub {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: var(--text-secondary); margin-top: 16px; max-width: 600px;
+}
+.section-header { text-align: center; margin-bottom: 64px; }
+.section-header .section-label { justify-content: center; }
+.section-header .section-sub { margin-left: auto; margin-right: auto; }
+
+/* ===== BUTTONS (터치 영역 44px 이상 확보) ===== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; min-height: 44px; min-width: 44px;
+  padding: 14px 28px; border-radius: var(--radius-pill);
+  font-size: 0.95rem; font-weight: 700;
+  transition: var(--transition); white-space: nowrap;
+}
+.btn-primary {
+  background: var(--gradient-primary);
+  color: #fff; box-shadow: 0 4px 20px rgba(0,200,255,0.35);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,200,255,0.5); }
+.btn-outline {
+  border: 1.5px solid rgba(0,200,255,0.5); color: var(--primary);
+  background: rgba(0,200,255,0.05);
+}
+.btn-outline:hover { background: rgba(0,200,255,0.12); border-color: var(--primary); transform: translateY(-2px); }
+
+/* ===== LAYOUT ===== */
+.container { max-width: 75rem; margin: 0 auto; padding: 0 var(--container-padding-x); }
+.section { padding: var(--section-padding-y) 0; }
+.section-alt { background: var(--dark2); }
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
+
+/* ========================
+   GNB
+======================== */
+.gnb {
+  position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-gnb);
+  transition: var(--transition);
+  min-height: 100px; display: flex; align-items: center;
+}
+.gnb.scrolled {
+  background: rgba(5,11,24,0.95);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,200,255,0.1);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+.gnb:hover {
+  background: #ffffff !important;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.gnb:hover .gnb-nav a { color: #333; }
+.gnb:hover .gnb-logo-default { opacity: 0; }
+.gnb:hover .gnb-logo-hover { opacity: 1; }
+.gnb:hover .gnb-hamburger span { background: #333; }
+.gnb-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 24px;
+}
+.gnb-nav {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 46px;
+}
+.gnb-cta { margin-left: auto; padding: 10px 22px; font-size: 0.85rem; }
+.gnb-logo {
+  display: flex; align-items: center; margin-right: 48px; flex-shrink: 0;
+  position: relative;
+}
+.gnb-logo-img {
+  height: 32px; width: auto; display: block; transition: opacity 0.3s;
+}
+.gnb-logo-hover {
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%); opacity: 0;
+}
+.gnb-nav a {
+  font-size: 18px; font-weight: 500; color: #ffffff;
+  transition: color 0.3s; position: relative;
+}
+.gnb-nav a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+  background: var(--gradient-primary); border-radius: 2px; transition: width 0.3s;
+}
+.gnb-nav a:hover { color: var(--text); }
+.gnb-nav a:hover::after { width: 100%; }
+/* 언어 선택기 */
+.lang-switcher { position: relative; margin-left: 8px; }
+.lang-switcher-trigger {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; padding: 0;
+  background: none; border: none; cursor: pointer;
+  color: inherit; border-radius: 8px;
+  transition: color 0.3s, background 0.3s;
+}
+.lang-switcher-trigger:hover { background: rgba(255,255,255,0.1); }
+.gnb:hover .lang-switcher-trigger { color: #333; }
+.gnb:hover .lang-switcher-trigger:hover { background: rgba(0,0,0,0.06); }
+.lang-globe { width: 20px; height: 20px; color: inherit; }
+.lang-dropdown {
+  position: absolute; top: 100%; right: 0; margin-top: 8px;
+  min-width: 100px; background: rgba(10,20,40,0.98);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  padding: 6px 0; z-index: 100;
+}
+.gnb:hover .lang-dropdown { background: #fff; border-color: rgba(0,0,0,0.1); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+.lang-dropdown[hidden] { display: none !important; }
+.lang-option {
+  display: block; width: 100%; padding: 10px 16px;
+  background: none; border: none; cursor: pointer;
+  font-size: 0.95rem; font-weight: 500; text-align: left; color: #fff;
+  transition: background 0.2s;
+}
+.gnb:hover .lang-option { color: #333; }
+.lang-option:hover { background: rgba(255,255,255,0.1); }
+.gnb:hover .lang-option:hover { background: rgba(0,0,0,0.06); }
+.lang-option[aria-selected="true"] { color: var(--primary); font-weight: 700; }
+.gnb:hover .lang-option[aria-selected="true"] { color: var(--primary); }
+.gnb-hamburger {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  cursor: pointer; padding: 10px; min-width: 44px; min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+}
+.gnb-hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: var(--transition); }
+.gnb-mobile { display: none; }
+
+/* ========================
+   HERO
+======================== */
+#hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; padding: 160px 0 120px;
+}
+.hero-bg-video {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover;
+}
+#hero-canvas {
+  position: absolute; inset: 0; z-index: 0;
+}
+.hero-bg-gradient {
+  position: absolute; inset: 0; z-index: 1;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(108,63,255,0.15) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 50% at 80% 20%, rgba(0,200,255,0.1) 0%, transparent 60%),
+              linear-gradient(180deg, rgba(5,11,24,0.3) 0%, rgba(5,11,24,0.8) 100%);
+}
+.hero-content {
+  position: relative; z-index: 2; text-align: center;
+  max-width: 1200px; width: 100%; margin: 0 auto;
+  padding: 0 clamp(48px, 10vw, 120px);
+  box-sizing: border-box;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,200,255,0.08); border: 1px solid rgba(0,200,255,0.25);
+  border-radius: 50px; padding: 8px 18px; font-size: 0.8rem;
+  color: var(--primary); font-weight: 600; letter-spacing: 0.05em;
+  margin-bottom: 28px;
+  animation: fadeInDown 0.8s ease forwards;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+.hero-title {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 92px; font-weight: 800; line-height: 0.88;
+  letter-spacing: -0.03em; margin: 0 auto 24px;
+  text-align: center; width: 100%; max-width: 100%;
+  animation: fadeInUp 0.9s 0.2s ease both;
+}
+.hero-title .line2 { display: block; }
+.hero-line1, .hero-line2 {
+  display: block; text-align: center;
+  margin-left: auto; margin-right: auto; width: fit-content; max-width: 100%;
+}
+.hero-line2 { white-space: nowrap; }
+@media (max-width: 1023px) { .hero-line2 { white-space: normal; } }
+.hero-title .gradient-text { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+.hero-typing-cursor { border-right: 2px solid var(--primary); animation: blink 0.7s step-end infinite; padding-right: 2px; }
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem); color: #ffffff;
+  max-width: 600px; margin: 60px auto 40px;
+  animation: fadeInUp 0.9s 0.4s ease both;
+}
+.hero-cta {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  animation: fadeInUp 0.9s 0.6s ease both;
+}
+.hero-cta .btn { padding: 14px 56px; min-width: 280px; }
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: #ffffff; font-size: 0.75rem; letter-spacing: 0.1em;
+  animation: fadeIn 1.5s 1.2s ease both;
+}
+.hero-scroll-line {
+  width: 1px; height: 40px; background: linear-gradient(to bottom, var(--primary), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+@keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* ========================
+   PARTNER (검증된 기술력 - 배경이미지 + 숫자지표 인터랙션)
+======================== */
+#partner {
+  position: relative; padding: calc(clamp(80px, 15vw, 140px) + 75px) 0;
+  color: #ffffff;
+  background: url('assets/partner-section-bg.png') center/cover no-repeat;
+  overflow: hidden;
+}
+#partner .container {
+  position: relative; z-index: 2;
+  padding-left: clamp(40px, 5vw, 80px);
+  padding-right: clamp(40px, 5vw, 80px);
+  max-width: 1200px; margin: 0 auto;
+  box-sizing: border-box;
+}
+.partner-title {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 74px; font-weight: 900; text-align: center;
+  margin-bottom: clamp(48px, 8vw, 72px); color: #ffffff;
+  min-height: 1.2em;
+  white-space: nowrap;
+}
+.partner-typing { border-right: 2px solid var(--primary); animation: blink 0.7s step-end infinite; }
+@keyframes blink { 50% { border-color: transparent; } }
+.partner-metrics {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 0; list-style: none;
+}
+.partner-metric {
+  flex: 1; min-width: 180px; max-width: 260px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 28px 32px; position: relative; text-align: center;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.partner-metric.metric-visible {
+  opacity: 1; transform: translateY(0);
+}
+.partner-metric:hover { transform: translateY(-4px); }
+.partner-metric + .partner-metric::before {
+  content: ''; position: absolute; left: 0; top: 15%; bottom: 15%;
+  width: 1px; background: rgba(255,255,255,0.25);
+}
+.partner-metric-value {
+  font-size: 60px; font-weight: 900;
+  color: #ffffff; line-height: 1;
+  font-variant-numeric: tabular-nums; min-width: 4ch;
+  white-space: nowrap;
+  transition: transform 0.3s ease;
+}
+.partner-metric:hover .partner-metric-value {
+  background: var(--gradient-primary); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+  transform: scale(1.05);
+}
+.partner-metric-label {
+  font-size: 0.9rem; color: #ffffff; font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ========================
+   ABOUT
+======================== */
+#about { padding: 120px 0; }
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.about-text .section-sub { max-width: 100%; }
+.about-features { margin-top: 40px; display: flex; flex-direction: column; gap: 16px; }
+.about-feature {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 18px 22px; border-radius: var(--radius-sm);
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  transition: var(--transition);
+}
+.about-feature:hover { background: rgba(0,200,255,0.07); border-color: rgba(0,200,255,0.3); transform: translateX(6px); }
+.about-feature-icon {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+  background: var(--gradient-primary); display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.about-feature-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+.about-feature-desc { font-size: 0.85rem; color: var(--text-secondary); }
+.about-visual {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.about-orb {
+  width: 380px; height: 380px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(108,63,255,0.25), rgba(0,200,255,0.1) 50%, transparent 70%);
+  border: 1px solid rgba(0,200,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; animation: orbFloat 6s ease-in-out infinite;
+}
+@keyframes orbFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+.about-orb-inner {
+  width: 260px; height: 260px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, rgba(108,63,255,0.4), rgba(0,200,255,0.2));
+  border: 1px solid rgba(0,200,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 8px; text-align: center;
+}
+.about-orb-center-text { font-size: 1rem; font-weight: 800; line-height: 1.4; }
+.about-orb-center-text span { display: block; font-size: 0.75rem; color: var(--text-secondary); font-weight: 400; margin-top: 4px; }
+.about-ring {
+  position: absolute; border-radius: 50%; border: 1px dashed rgba(0,200,255,0.15);
+  animation: ringRotate 20s linear infinite;
+}
+.about-ring-1 { width: 440px; height: 440px; animation-duration: 25s; }
+.about-ring-2 { width: 500px; height: 500px; animation-direction: reverse; animation-duration: 35s; }
+@keyframes ringRotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.about-dot {
+  position: absolute; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--primary); box-shadow: 0 0 10px var(--primary);
+}
+.cert-badges { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+.cert-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,255,178,0.06); border: 1px solid rgba(0,255,178,0.2);
+  border-radius: 50px; padding: 8px 16px; font-size: 0.8rem;
+  color: var(--accent2); font-weight: 600;
+}
+
+/* ========================
+   SERVICES (두 번째 이미지 스타일)
+======================== */
+#services { padding: 220px 0; background: var(--dark2); }
+#services .section-title { font-size: 74px; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.service-card {
+  position: relative; padding: 40px 32px; border-radius: var(--radius);
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden; transition: var(--transition);
+  cursor: default; display: flex; flex-direction: column;
+}
+.service-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--gradient-primary); transform: scaleX(0); transition: transform 0.4s;
+  transform-origin: left;
+}
+.service-card:hover {
+  transform: translateY(-6px); border-color: rgba(0,200,255,0.3);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+}
+.service-card:hover::after { transform: scaleX(1); }
+.service-num {
+  font-size: 4rem; font-weight: 900; line-height: 1;
+  color: rgba(255,255,255,0.15); margin-bottom: 20px;
+  font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+}
+.service-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 14px; line-height: 1.4; }
+.service-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; flex: 1; }
+.service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.service-tag {
+  font-size: 0.72rem; padding: 6px 12px; border-radius: 6px;
+  background: rgba(255,255,255,0.06); color: var(--text-secondary);
+  border: 1px solid rgba(255,255,255,0.08); font-weight: 500;
+}
+.service-card:hover .service-tag {
+  background: rgba(0,200,255,0.08); color: var(--primary);
+  border-color: rgba(0,200,255,0.2);
+}
+
+/* ========================
+   ABOUT BDGEN (Web3 비주얼 섹션)
+======================== */
+#about-bdgen { min-height: 950px; padding: 170px 0; background: #ffffff; display: flex; align-items: center; color: #000000; }
+#about-bdgen .section-label { color: var(--primary); }
+#about-bdgen .section-title { font-size: 74px; color: #000000; }
+#about-bdgen .section-title .about-title-line { display: block; white-space: nowrap; color: #000000; }
+#about-bdgen .section-title .about-title-line span { color: #000000; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #000000; }
+#about-bdgen .section-sub { color: #000000; max-width: 100%; }
+.about-bdgen-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.about-bdgen-visual {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.about-bdgen-visual img {
+  width: 374px; height: 452px; object-fit: cover;
+  border-radius: var(--radius);
+}
+@media (max-width: 1023px) {
+  .about-bdgen-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-bdgen-visual { order: -1; }
+}
+@media (max-width: 600px) {
+  .about-title-line { white-space: normal !important; }
+}
+
+/* ========================
+   GENID (FLAGSHIP)
+======================== */
+#genid { padding: 120px 0; }
+.genid-header { text-align: center; margin-bottom: 60px; }
+.genid-product-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg,rgba(108,63,255,0.15),rgba(0,200,255,0.1));
+  border: 1px solid rgba(108,63,255,0.3); border-radius: 50px;
+  padding: 8px 20px; font-size: 0.8rem; font-weight: 700;
+  color: #A78BFF; letter-spacing: 0.05em; margin-bottom: 20px;
+}
+.genid-tabs {
+  display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 48px;
+}
+.genid-tab {
+  padding: 10px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 600;
+  border: 1.5px solid rgba(0,200,255,0.2); color: var(--text-secondary);
+  transition: var(--transition); cursor: pointer;
+}
+.genid-tab.active {
+  background: var(--gradient-primary); color: #fff; border-color: transparent;
+  box-shadow: 0 4px 20px rgba(0,200,255,0.35);
+}
+.genid-tab:hover:not(.active) { border-color: var(--primary); color: var(--text); }
+.genid-panel { display: none; animation: tabFade 0.4s ease; }
+.genid-panel.active { display: block; }
+@keyframes tabFade { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* Tab 1: Features */
+.genid-features-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+.genid-feature {
+  display: flex; align-items: flex-start; gap: 18px;
+  padding: 28px; border-radius: var(--radius);
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  transition: var(--transition);
+}
+.genid-feature:hover { border-color: rgba(108,63,255,0.4); background: rgba(108,63,255,0.06); transform: translateY(-4px); }
+.genid-feature-icon {
+  width: 50px; height: 50px; border-radius: 12px; flex-shrink: 0;
+  background: linear-gradient(135deg, #6C3FFF, #00C8FF);
+  display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+}
+.genid-feature-title { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.genid-feature-desc { font-size: 0.85rem; color: var(--text-secondary); }
+
+/* Tab 2: Use Cases */
+.genid-usecases { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.genid-usecase {
+  padding: 28px; border-radius: var(--radius);
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  transition: var(--transition); text-align: center;
+}
+.genid-usecase:hover { border-color: rgba(0,200,255,0.3); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+.genid-usecase-emoji { font-size: 2.5rem; margin-bottom: 14px; }
+.genid-usecase-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; }
+.genid-usecase-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* Tab 3: Flow */
+.genid-flow { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; }
+.genid-flow-step {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 28px 20px; border-radius: var(--radius);
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  min-width: 160px; text-align: center; transition: var(--transition);
+}
+.genid-flow-step:hover { border-color: var(--primary); transform: translateY(-4px); }
+.genid-flow-num {
+  width: 40px; height: 40px; border-radius: 50%; margin-bottom: 16px;
+  background: var(--gradient-primary); display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 800;
+}
+.genid-flow-icon { font-size: 1.8rem; margin-bottom: 12px; }
+.genid-flow-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; }
+.genid-flow-desc { font-size: 0.75rem; color: var(--text-secondary); }
+.genid-flow-arrow {
+  font-size: 1.5rem; color: var(--primary); padding: 0 8px;
+  flex-shrink: 0;
+}
+.genid-cta-wrap { text-align: center; margin-top: 48px; }
+
+/* ========================
+   WHY BDGEN
+======================== */
+#why { padding: 120px 0; background: var(--dark2); }
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.why-card {
+  padding: 36px 28px; border-radius: var(--radius);
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  transition: var(--transition); position: relative; overflow: hidden;
+}
+.why-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--gradient-primary); transform: scaleX(0); transition: transform 0.4s;
+  transform-origin: left;
+}
+.why-card:hover { transform: translateY(-6px); border-color: rgba(0,200,255,0.3); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+.why-card:hover::after { transform: scaleX(1); }
+.why-num {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+  color: var(--primary); margin-bottom: 16px;
+}
+.why-icon { font-size: 2rem; margin-bottom: 16px; }
+.why-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 12px; line-height: 1.4; }
+.why-desc { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.7; }
+
+/* ========================
+   REFERENCE
+======================== */
+#reference { padding: 120px 0; }
+.ref-sub-text { text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 48px; }
+
+/* Logo slider */
+.logo-track-wrap { overflow: hidden; margin-bottom: 64px; position: relative; }
+.logo-track-wrap::before,
+.logo-track-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2;
+}
+.logo-track-wrap::before { left: 0; background: linear-gradient(to right, var(--dark), transparent); }
+.logo-track-wrap::after { right: 0; background: linear-gradient(to left, var(--dark), transparent); }
+.logo-track {
+  display: flex; align-items: center; gap: 48px;
+  animation: logoScroll 20s linear infinite; width: max-content;
+}
+.logo-track:hover { animation-play-state: paused; }
+.logo-item {
+  display: flex; align-items: center; justify-content: center;
+  width: 140px; height: 60px; border-radius: 12px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  padding: 12px 20px; transition: var(--transition); flex-shrink: 0;
+  font-size: 0.9rem; font-weight: 700; color: var(--text-secondary);
+}
+.logo-item:hover { background: rgba(0,200,255,0.06); border-color: rgba(0,200,255,0.2); color: var(--text); }
+@keyframes logoScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* Project cards */
+.ref-projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.ref-card {
+  padding: 32px; border-radius: var(--radius);
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  transition: var(--transition); position: relative;
+}
+.ref-card:hover { transform: translateY(-6px); border-color: rgba(0,200,255,0.3); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+.ref-card-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+  padding: 4px 12px; border-radius: 50px; margin-bottom: 16px;
+  background: rgba(0,200,255,0.08); color: var(--primary); border: 1px solid rgba(0,200,255,0.2);
+}
+.ref-card-client {
+  font-size: 1.1rem; font-weight: 800; margin-bottom: 10px;
+}
+.ref-card-project { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; }
+.ref-card-period { font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+.ref-card-period::before { content: ''; width: 16px; height: 1px; background: var(--text-muted); }
+.ref-more-wrap { text-align: center; margin-top: 40px; }
+
+/* ========================
+   NEWS
+======================== */
+#news { padding: 120px 0; background: var(--dark2); }
+.news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.news-card {
+  border-radius: var(--radius); overflow: hidden;
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  transition: var(--transition); display: flex; flex-direction: column;
+}
+.news-card:hover { transform: translateY(-8px); border-color: rgba(0,200,255,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
+.news-thumb {
+  aspect-ratio: 16/9; background: var(--dark3); overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; position: relative;
+}
+.news-thumb-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--dark3), var(--dark2));
+}
+.news-thumb-emoji { position: relative; z-index: 1; }
+.news-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.news-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.news-category {
+  font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 50px;
+  background: rgba(0,200,255,0.08); color: var(--primary); border: 1px solid rgba(0,200,255,0.2);
+}
+.news-date { font-size: 0.78rem; color: var(--text-muted); }
+.news-title { font-size: 0.97rem; font-weight: 700; line-height: 1.5; margin-bottom: 12px; flex: 1; }
+.news-excerpt { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
+.news-link {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.82rem; font-weight: 700; color: var(--primary);
+  transition: gap 0.3s;
+}
+.news-card:hover .news-link { gap: 10px; }
+
+/* ========================
+   CTA (프로젝트 기술협업 문의하기)
+======================== */
+#cta {
+  padding: 100px 0;
+  background: var(--dark);
+  border-top: 1px solid rgba(0,200,255,0.1);
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-bg-orb {
+  position: absolute; width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(108,63,255,0.08), transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;
+}
+.cta-content {
+  position: relative; z-index: 1;
+  max-width: 720px; width: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 80px);
+  box-sizing: border-box;
+  text-align: left;
+}
+.cta-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 16px; line-height: 1.2; white-space: nowrap; }
+.cta-sub { font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 48px; }
+/* 문의 폼 */
+.cta-form { display: flex; flex-direction: column; gap: 20px; }
+.cta-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 600px) { .cta-form-row { grid-template-columns: 1fr; } }
+.cta-form-field { display: flex; flex-direction: column; gap: 8px; }
+.cta-form-field.full { grid-column: 1 / -1; }
+.cta-form-label {
+  font-size: 0.9rem; font-weight: 600; color: var(--text);
+}
+.cta-form-input,
+.cta-form-select,
+.cta-form-textarea {
+  width: 100%; min-height: 48px; padding: 14px 18px;
+  font-family: var(--font-family); font-size: 0.95rem; color: var(--text);
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-sm); transition: var(--transition-fast);
+}
+.cta-form-input::placeholder,
+.cta-form-textarea::placeholder { color: var(--text-muted); }
+.cta-form-input:focus,
+.cta-form-select:focus,
+.cta-form-textarea:focus {
+  outline: none; border-color: var(--primary); background: rgba(0,200,255,0.05);
+}
+.cta-form-select {
+  cursor: pointer; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238FA3C0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 18px center; padding-right: 40px;
+}
+.cta-form-textarea { min-height: 140px; resize: vertical; }
+.cta-form-submit {
+  margin-top: 8px; width: 100%; min-height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--gradient-primary); color: #fff;
+  font-size: 1rem; font-weight: 700; border-radius: var(--radius-pill);
+  transition: var(--transition); border: none; cursor: pointer;
+  font-family: var(--font-family); box-shadow: 0 4px 20px rgba(0,200,255,0.35);
+}
+.cta-form-submit:hover {
+  transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,200,255,0.5);
+}
+
+/* ========================
+   FOOTER
+======================== */
+footer {
+  background: #030812;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 48px 0 32px;
+}
+.footer-inner {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+  margin-bottom: 40px;
+}
+.footer-brand { }
+.footer-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 1.3rem; font-weight: 900; margin-bottom: 16px;
+}
+.footer-logo-icon {
+  width: 32px; height: 32px; border-radius: 7px;
+  background: var(--gradient-primary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem; font-weight: 900; color: #fff;
+}
+.footer-logo span { background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.footer-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; max-width: 280px; }
+.footer-info { font-size: 0.8rem; color: var(--text-muted); line-height: 1.9; }
+.footer-info a { color: inherit; transition: color 0.3s; }
+.footer-info a:hover { color: var(--primary); }
+.footer-col-title { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 16px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-col a { font-size: 0.85rem; color: var(--text-muted); transition: color 0.3s; }
+.footer-col a:hover { color: var(--primary); }
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.8rem; color: var(--text-muted);
+}
+.footer-bottom-links { display: flex; gap: 20px; }
+.footer-bottom-links a { color: var(--text-muted); transition: color 0.3s; }
+.footer-bottom-links a:hover { color: var(--text-secondary); }
+
+/* Back to top */
+.back-top {
+  position: fixed; bottom: 32px; right: 32px; z-index: var(--z-back-top);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,200,255,0.4);
+  opacity: 0; pointer-events: none; transition: var(--transition);
+  font-size: 1.1rem; color: #fff;
+}
+.back-top.visible { opacity: 1; pointer-events: all; }
+.back-top:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,200,255,0.5); }
+
+/* ========================
+   RESPONSIVE - Desktop 1280+ | Laptop 1024~1279 | Tablet 768~1023 | Mobile ~767 | Small ~480
+======================== */
+
+/* Tablet (1023px 이하): 햄버거 메뉴 전환 */
+@media (max-width: 1023px) {
+  .gnb-nav { display: none; }
+  .gnb-hamburger { display: flex; }
+  .gnb-inner { padding: 0 var(--container-padding-x); }
+  .gnb { padding: 12px 0; }
+  .gnb.scrolled { padding: 10px 0; }
+  .gnb-mobile {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(5,11,24,0.98);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    z-index: var(--z-mobile-nav); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 24px;
+    transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .gnb-mobile.open { transform: translateX(0); display: flex; }
+  .gnb-mobile[hidden] { display: none !important; }
+  .gnb-mobile a {
+    font-size: 1.25rem; font-weight: 700; color: var(--text);
+    padding: 12px 20px; min-height: 44px; display: flex; align-items: center; justify-content: center;
+  }
+  .gnb-mobile-close {
+    position: absolute; top: 20px; right: 20px;
+    font-size: 1.5rem; color: var(--text-secondary);
+    cursor: pointer; padding: 10px; min-width: 44px; min-height: 44px;
+    display: flex; align-items: center; justify-content: center;
+  }
+}
+
+/* Laptop / Tablet landscape (1024~1279) */
+@media (max-width: 1279px) {
+  .section { padding: clamp(3.5rem, 8vw, 5rem) 0; }
+  .section-header { margin-bottom: clamp(2rem, 5vw, 3rem); }
+  .about-grid { gap: 48px; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .why-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .genid-usecases { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .ref-projects { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .news-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .about-orb { width: min(300px, 45vw); height: min(300px, 45vw); }
+  .about-ring-1 { width: min(340px, 52vw); height: min(340px, 52vw); }
+  .about-ring-2 { width: min(390px, 58vw); height: min(390px, 58vw); }
+  .about-orb-inner { width: min(200px, 30vw); height: min(200px, 30vw); }
+  .partner-metric { min-width: 140px; padding: 20px 24px; }
+}
+
+/* Tablet (768~1023) */
+@media (max-width: 1023px) {
+  #hero {
+    padding: clamp(100px, 20vh, 140px) 0 clamp(80px, 15vh, 120px);
+    min-height: min(100vh, 700px);
+  }
+  .hero-content { padding: 0 clamp(32px, 6vw, 80px); }
+  .hero-title { font-size: clamp(1.75rem, 5vw, 2.8rem); line-height: 1.15; margin-bottom: 20px; }
+  .hero-sub { font-size: clamp(0.95rem, 1.8vw, 1.1rem); margin-bottom: 32px; }
+  .hero-cta { gap: 12px; }
+  .hero-scroll { bottom: 24px; }
+  .section { padding: clamp(3rem, 7vw, 4.5rem) 0; }
+  .section-header { margin-bottom: 2.5rem; }
+  .section-title { font-size: clamp(1.5rem, 3.5vw, 2.25rem); }
+  #services .section-title, #about-bdgen .section-title { font-size: clamp(2rem, 6vw, 74px); }
+  .section-sub { font-size: clamp(0.9rem, 1.4vw, 1rem); }
+  .genid-tabs { gap: 6px; margin-bottom: 32px; }
+  .genid-tab { padding: 8px 18px; font-size: 0.85rem; }
+  .logo-track-wrap::before, .logo-track-wrap::after { width: 60px; }
+  .cta-bg-orb { width: 400px; height: 400px; }
+}
+
+/* Mobile (~767) */
+@media (max-width: 767px) {
+  .gnb { padding: 10px 0; }
+  .gnb.scrolled { padding: 8px 0; }
+  .gnb-logo-img { height: 28px; }
+  #hero {
+    padding: 90px 0 70px;
+    min-height: min(100vh, 600px);
+  }
+  .hero-content { max-width: 100%; }
+  .hero-badge { font-size: 0.75rem; padding: 6px 14px; margin-bottom: 20px; }
+  .hero-title { font-size: clamp(1.5rem, 7vw, 2.2rem); line-height: 1.2; margin-bottom: 16px; }
+  .hero-sub { font-size: 0.95rem; margin-bottom: 28px; max-width: 100%; }
+  .hero-cta { flex-direction: column; align-items: stretch; gap: 12px; }
+  .hero-cta .btn { justify-content: center; width: 100%; }
+  .hero-scroll { bottom: 20px; font-size: 0.7rem; }
+  .hero-scroll-line { height: 28px; }
+  #partner { padding: calc(clamp(60px, 12vw, 100px) + 75px) 0; }
+  #partner .container { padding-left: clamp(24px, 5vw, 60px); padding-right: clamp(24px, 5vw, 60px); }
+  .partner-title { white-space: normal; }
+  .partner-title { font-size: clamp(2rem, 8vw, 74px); }
+  .partner-metrics {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 0; row-gap: 20px;
+  }
+  .partner-metric {
+    min-width: 0; padding: 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .partner-metric:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.06); }
+  .partner-metric + .partner-metric::before { display: none; }
+  .partner-metric-value { font-size: clamp(2rem, 6vw, 60px); }
+  .partner-metric-label { font-size: 0.8rem; }
+  .section { padding: clamp(2.5rem, 6vw, 3.5rem) 0; }
+  .section-header { margin-bottom: 2rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  .about-visual { order: -1; }
+  .about-features { margin-top: 24px; gap: 12px; }
+  .about-feature { padding: 14px 18px; gap: 12px; }
+  .about-feature-icon { width: 36px; height: 36px; font-size: 1rem; }
+  .about-feature-title { font-size: 0.9rem; }
+  .about-feature-desc { font-size: 0.8rem; }
+  .about-orb { width: min(220px, 60vw); height: min(220px, 60vw); }
+  .about-ring-1 { width: min(260px, 72vw); height: min(260px, 72vw); }
+  .about-ring-2 { width: min(300px, 85vw); height: min(300px, 85vw); }
+  .about-orb-inner { width: min(150px, 42vw); height: min(150px, 42vw); }
+  .about-orb-center-text { font-size: 0.9rem; }
+  .about-orb-center-text span { font-size: 0.7rem; }
+  .services-grid { grid-template-columns: 1fr; gap: 16px; }
+  .service-card { padding: 28px 24px; }
+  .service-num { font-size: 3rem; margin-bottom: 16px; }
+  .service-title { font-size: 1.1rem; margin-bottom: 10px; }
+  .service-desc { font-size: 0.85rem; margin-bottom: 20px; }
+  .service-tags { gap: 6px; }
+  .service-tag { font-size: 0.7rem; padding: 4px 10px; }
+  .genid-header { margin-bottom: 36px; }
+  .genid-tabs { margin-bottom: 24px; flex-direction: column; }
+  .genid-tab { width: 100%; justify-content: center; padding: 12px 20px; }
+  .genid-features-grid { grid-template-columns: 1fr; gap: 14px; }
+  .genid-feature { padding: 20px; gap: 14px; }
+  .genid-feature-icon { width: 44px; height: 44px; font-size: 1.1rem; }
+  .genid-usecases { grid-template-columns: 1fr; gap: 14px; }
+  .genid-usecase { padding: 20px; }
+  .genid-usecase-emoji { font-size: 2rem; margin-bottom: 12px; }
+  .genid-usecase-title { font-size: 0.9rem; }
+  .genid-flow { flex-direction: column; gap: 12px; }
+  .genid-flow-step { min-width: 0; padding: 20px 16px; }
+  .genid-flow-arrow { transform: rotate(90deg); padding: 8px 0; }
+  .genid-cta-wrap { margin-top: 32px; }
+  .why-grid { grid-template-columns: 1fr; gap: 16px; }
+  .why-card { padding: 24px 20px; }
+  .why-icon { font-size: 1.75rem; margin-bottom: 12px; }
+  .why-title { font-size: 0.95rem; }
+  .why-desc { font-size: 0.85rem; }
+  .logo-track-wrap { margin-bottom: 40px; }
+  .logo-track-wrap::before, .logo-track-wrap::after { width: 40px; }
+  .logo-item { width: 120px; height: 52px; font-size: 0.85rem; padding: 10px 16px; }
+  .ref-projects { grid-template-columns: 1fr; gap: 16px; }
+  .ref-card { padding: 24px 20px; }
+  .ref-card-tag { font-size: 0.7rem; margin-bottom: 12px; }
+  .ref-card-client { font-size: 1rem; }
+  .ref-card-project { font-size: 0.85rem; margin-bottom: 12px; }
+  .news-grid { grid-template-columns: 1fr; gap: 20px; }
+  .news-card .news-body { padding: 20px; }
+  .news-title { font-size: 0.95rem; }
+  .news-excerpt { font-size: 0.8rem; margin-bottom: 16px; }
+  .ref-more-wrap { margin-top: 32px; }
+  #cta { padding: 60px 0; }
+  .cta-title { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom: 12px; white-space: normal; }
+  .cta-sub { font-size: 0.9rem; margin-bottom: 28px; }
+  .cta-buttons { flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 32px; }
+  .cta-buttons .btn { width: 100%; justify-content: center; }
+  .cta-contact-row { flex-direction: column; gap: 16px; align-items: center; }
+  .cta-contact-item { font-size: 0.85rem; }
+  footer { padding: 36px 0 24px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; margin-bottom: 32px; }
+  .footer-desc { max-width: 100%; }
+  .footer-bottom { flex-direction: column; align-items: center; text-align: center; padding-top: 24px; gap: 12px; }
+  .footer-bottom-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+  .back-top { bottom: 20px; right: 20px; width: 48px; height: 48px; }
+}
+
+/* Small mobile (~480) */
+@media (max-width: 480px) {
+  html { font-size: 14px; }
+  .gnb-logo-img { height: 26px; }
+  #hero { padding: 80px 0 60px; min-height: min(100vh, 550px); }
+  .hero-title { font-size: clamp(1.35rem, 8vw, 1.9rem); line-height: 1.2; }
+  .hero-badge { font-size: 0.7rem; padding: 6px 12px; }
+  .partner-metrics { grid-template-columns: 1fr; }
+  .partner-metric:nth-child(odd) { border-right: none; }
+  .partner-metric { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .about-visual { display: none; }
+  .about-orb, .about-ring-1, .about-ring-2 { display: none; }
+  .section-title { font-size: clamp(1.35rem, 6vw, 1.75rem); }
+  #services .section-title, #about-bdgen .section-title { font-size: clamp(1.75rem, 8vw, 74px); }
+  .genid-product-badge { font-size: 0.72rem; padding: 6px 14px; }
+  .service-card { padding: 22px 20px; }
+  .why-card { padding: 20px 18px; }
+  .ref-card { padding: 20px 18px; }
+  .news-body { padding: 18px; }
+  .cta-bg-orb { width: 280px; height: 280px; }
+}
+
+/* 터치 디바이스: blur/effect 완화, hover 덜 의존 */
+@media (hover: none) and (pointer: coarse) {
+  .gnb.scrolled { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .gnb-mobile { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+}
+
+/* 320px 최소 폭 대응 */
+@media (max-width: 360px) {
+  .container { padding: 0 1rem; }
+  .hero-cta .btn, .cta-buttons .btn { padding: 12px 20px; font-size: 0.9rem; }
+  .genid-tab { padding: 10px 16px; font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== GNB (Semantic Header + Nav) ===== -->
+<header class="gnb" id="gnb" role="banner">
+  <div class="gnb-inner container">
+    <a href="#hero" class="gnb-logo" aria-label="BDGen 홈">
+      <img src="assets/logo_w.svg" alt="BDGen" class="gnb-logo-img gnb-logo-default">
+      <img src="assets/logo_b.svg" alt="" class="gnb-logo-img gnb-logo-hover" aria-hidden="true">
+    </a>
+    <nav class="gnb-nav" aria-label="주요 메뉴">
+      <a href="#services" data-i18n="nav.services">서비스</a>
+      <a href="#why" data-i18n="nav.solutions">솔루션</a>
+      <a href="#why" data-i18n="nav.capability">역량</a>
+      <a href="#reference" data-i18n="nav.reference">레퍼런스</a>
+      <a href="#news" data-i18n="nav.news">소식</a>
+      <div class="lang-switcher" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-label="언어 선택">
+        <button type="button" class="lang-switcher-trigger" aria-label="언어 선택" title="언어 선택">
+          <svg class="lang-globe" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </button>
+        <div class="lang-dropdown" role="listbox" hidden>
+          <button type="button" role="option" data-lang="ko" class="lang-option" aria-selected="true">한글</button>
+          <button type="button" role="option" data-lang="en" class="lang-option" aria-selected="false">EN</button>
+        </div>
+      </div>
+    </nav>
+    <button type="button" class="gnb-hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Nav (TODO: SPA 라우트 또는 실제 페이지 URL로 교체) -->
+<div class="gnb-mobile" id="mobileMenu" role="dialog" aria-label="모바일 메뉴" aria-modal="true" hidden>
+  <button type="button" class="gnb-mobile-close" aria-label="메뉴 닫기">✕</button>
+  <a href="#services" data-i18n="nav.services">서비스</a>
+  <a href="#why" data-i18n="nav.solutions">솔루션</a>
+  <a href="#why" data-i18n="nav.capability">역량</a>
+  <a href="#reference" data-i18n="nav.reference">레퍼런스</a>
+  <a href="#news" data-i18n="nav.news">소식</a>
+  <a href="#cta" class="btn btn-primary">문의하기</a>
+</div>
+
+<main id="main-content">
+<!-- ===== HERO ===== -->
+<section id="hero" class="landing-hero" aria-labelledby="hero-title">
+  <video class="hero-bg-video" autoplay muted loop playsinline aria-hidden="true">
+    <source src="assets/hero_main_01.mp4" type="video/mp4">
+  </video>
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-content">
+    <h1 id="hero-title" class="hero-title">
+      <span class="hero-line1"><span class="gradient-text"><span id="hero-typing-1"></span></span><span id="hero-typing-2"></span></span><br>
+      <span class="hero-line2"><span id="hero-typing-3" class="hero-typing-cursor"></span></span>
+    </h1>
+    <p class="hero-sub">
+      ㈜비디젠은 DID·Passkey·블록체인 기술을 보유하고,<br>
+      통신·금융·공공·의료·교육 산업의 인증·증명 솔루션을 제공합니다.
+    </p>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
+</section>
+
+<!-- ===== PARTNER (검증된 기술력 - 배경이미지 + 숫자지표 인터랙션) ===== -->
+<section id="partner" class="landing-partner" aria-label="검증된 기술력, 신뢰할 수 있는 파트너">
+  <div class="container">
+    <h2 class="partner-title"><span id="partner-typing" class="partner-typing" data-text="검증된 기술력, 신뢰할 수 있는 파트너" aria-hidden="false"></span></h2>
+    <ul class="partner-metrics" role="list">
+      <li class="partner-metric">
+        <span class="partner-metric-value" data-metric-type="number" data-count="30" data-suffix="+" data-duration="1600">0+</span>
+        <span class="partner-metric-label" data-i18n="partnerM1">성공화 프로젝트</span>
+      </li>
+      <li class="partner-metric">
+        <span class="partner-metric-value" data-metric-type="number" data-count="6" data-suffix="개" data-duration="1600">0개</span>
+        <span class="partner-metric-label" data-i18n="partnerM2">핵심 산업 분야</span>
+      </li>
+      <li class="partner-metric">
+        <span class="partner-metric-value" data-metric-type="text">이노비즈</span>
+        <span class="partner-metric-label" data-i18n="partnerM3">중소벤처기업부 인증</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== SERVICES (제공 서비스 - 두 번째 이미지 스타일) ===== -->
+<section id="services" class="section section-alt" aria-labelledby="services-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label reveal">SERVICES</div>
+      <h2 id="services-title" class="section-title reveal reveal-delay-1" data-i18n="servicesTitle">제공 서비스</h2>
+      <p class="section-sub reveal reveal-delay-2" data-i18n="servicesSub">블록체인 DID 기반 개발·구축·운영을 단일 딜에서 담당합니다</p>
+    </div>
+    <div class="services-grid" data-content-source="services">
+      <div class="service-card reveal" data-content-index="1">
+        <div class="service-num">01</div>
+        <h3 class="service-title" data-i18n="svc1Title">블록체인 응용 서비스 개발</h3>
+        <p class="service-desc" data-i18n="svc1Desc">DID·NFT·스마트컨트랙트 등 Web3 핵심 기술 기반 서비스를 설계하고 개발합니다. Hyperledger Fabric과 Ethereum 등 주요 블록체인 플랫폼 기술을 직접 보유합니다.</p>
+        <div class="service-tags">
+          <span class="service-tag">DID</span>
+          <span class="service-tag">NFT</span>
+          <span class="service-tag">Blockchain</span>
+          <span class="service-tag">AI</span>
+          <span class="service-tag">IoT</span>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-2" data-content-index="2">
+        <div class="service-num">02</div>
+        <h3 class="service-title" data-i18n="svc2Title">모바일 앱 개발</h3>
+        <p class="service-desc" data-i18n="svc2Desc">사용자 경험(UX)을 최우선으로 설계하는 Android·iOS Native App과 Web App을 개발합니다. DID 기반 인증 모듈을 포함한 보안 특화 모바일 서비스를 구현합니다.</p>
+        <div class="service-tags">
+          <span class="service-tag">Android</span>
+          <span class="service-tag">iOS</span>
+          <span class="service-tag">Native App</span>
+          <span class="service-tag">Web App</span>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-4" data-content-index="3">
+        <div class="service-num">03</div>
+        <h3 class="service-title" data-i18n="svc3Title">플랫폼 구축 및 운영 솔루션</h3>
+        <p class="service-desc" data-i18n="svc3Desc">서비스 기획 단계부터 런칭, 운영, 고도화까지 원스톱으로 지원합니다. 맞춤형 VNC 기반 솔루션 및 파트너 연계 통합까지 담당합니다.</p>
+        <div class="service-tags">
+          <span class="service-tag">구축 솔루션</span>
+          <span class="service-tag">운영 프로세스</span>
+          <span class="service-tag">모니터링</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT BDGEN (Web3 기술 비주얼 - 제공서비스 아래) ===== -->
+<section id="about-bdgen" class="section" aria-labelledby="about-bdgen-title">
+  <div class="container">
+    <div class="about-bdgen-grid">
+      <div class="about-bdgen-text">
+        <div class="section-label reveal">ABOUT BDGEN</div>
+        <h2 id="about-bdgen-title" class="section-title reveal reveal-delay-1">
+          <span class="about-title-line">Web3 기술로</span>
+          <span class="about-title-line"><span>산업의 신뢰 인프라</span>를</span>
+          <span class="about-title-line">설계합니다</span>
+        </h2>
+        <p class="section-sub reveal reveal-delay-2" data-i18n="aboutSub">(주)비디젠(BDGen)은 2019년 설립 이후 블록체인 응용 서비스 상용화에 집중해온 전문 기업입니다. DID·NFT·Passkey 등 Web3 핵심 기술을 실제 산업에 구현하며 신뢰할 수 있는 디지털 환경을 만들어 나가고 있습니다.</p>
+      </div>
+      <div class="about-bdgen-visual reveal-right">
+        <img src="assets/web3-visual.png" alt="블록체인·Web3 기술" width="374" height="452">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY BDGEN (역량) ===== -->
+<section id="why" class="section section-alt" aria-labelledby="why-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label reveal">WHY BDGEN</div>
+      <h2 id="why-title" class="section-title reveal reveal-delay-1" data-i18n="whyTitle">비디젠이 <span>강한 이유</span> 6가지</h2>
+      <p class="section-sub reveal reveal-delay-2" data-i18n="whySub">수년간 축적된 기술 역량과 상용화 경험이 만드는 경쟁력</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-num">01</div>
+        <div class="why-icon">🏆</div>
+        <h3 class="why-title" data-i18n="why1Title">상용화로 증명된<br>블록체인 역량</h3>
+        <p class="why-desc" data-i18n="why1Desc">SKT PASS 모바일지갑, 디지털 혁신대학 출입 서비스 등 수백만 사용자 규모의 서비스를 실제로 상용화한 검증된 실전 경험을 보유합니다.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-num">02</div>
+        <div class="why-icon">🔩</div>
+        <h3 class="why-title" data-i18n="why2Title">다층적<br>블록체인 기술 스택</h3>
+        <p class="why-desc" data-i18n="why2Desc">DID·NFT·출입인증 등 응용 솔루션부터 Hyperledger Fabric·Ethereum 인프라까지, 전 계층을 자체 개발·운영하는 기술 보유 기업입니다.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-num">03</div>
+        <div class="why-icon">🏗️</div>
+        <h3 class="why-title" data-i18n="why3Title">완전한<br>플랫폼 구축 역량</h3>
+        <p class="why-desc" data-i18n="why3Desc">모바일 앱·웹·IF 서버·백오피스를 포함한 풀스택 플랫폼을 처음부터 끝까지 직접 설계하고 납품합니다.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-num">04</div>
+        <div class="why-icon">✨</div>
+        <h3 class="why-title" data-i18n="why4Title">기획부터 런칭까지<br>단일 팀 완결</h3>
+        <p class="why-desc" data-i18n="why4Desc">서비스 기획 → UX 디자인 → 개발 → QA → 런칭의 전 과정을 하나의 팀에서 일관되게 처리하여 품질과 일정을 모두 보장합니다.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-4">
+        <div class="why-num">05</div>
+        <div class="why-icon">📈</div>
+        <h3 class="why-title" data-i18n="why5Title">대규모 플랫폼<br>장기 운영 경험</h3>
+        <p class="why-desc" data-i18n="why5Desc">체계적인 프로세스 기반의 효율적 운영과 UX 개선, VoC 피드백 루프로 대형 통신사 플랫폼을 장기간 안정적으로 운영한 노하우를 보유합니다.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-5">
+        <div class="why-num">06</div>
+        <div class="why-icon">🔑</div>
+        <h3 class="why-title" data-i18n="why6Title">차세대<br>Passkey 인증 기술</h3>
+        <p class="why-desc" data-i18n="why6Desc">피싱 불가·생체인식 기반의 FIDO 표준 Passkey 인증으로 비밀번호 없는 안전하고 편리한 인증 환경을 구현합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REFERENCE (고객사/프로젝트) ===== -->
+<section id="reference" class="section" aria-labelledby="reference-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label reveal">REFERENCE</div>
+      <h2 id="reference-title" class="section-title reveal reveal-delay-1" data-i18n="refTitle">국내 주요 기관이<br><span>비디젠을 선택</span>했습니다</h2>
+      <p class="section-sub reveal reveal-delay-2" data-i18n="refSub">통신 대기업부터 정부 기관까지 — 실제 운영 중인 서비스로 신뢰를 증명합니다</p>
+    </div>
+    <!-- data-api: partners[] → { name, logo?, url? } / 운영확정: 로고는 사용 승인 후 img 교체 -->
+    <div class="logo-track-wrap reveal" aria-label="파트너·고객사" data-content-source="partners">
+      <div class="logo-track">
+        <div class="logo-item" title="로고 사용 승인 확인 후 이미지 교체">SK텔레콤</div>
+        <div class="logo-item" title="로고 사용 승인 확인 후 이미지 교체">NIPA</div>
+        <div class="logo-item" title="로고 사용 승인 확인 후 이미지 교체">서울특별시</div>
+        <div class="logo-item" data-placeholder="true" title="TODO: 실제 고객사명 확정 또는 제거">고객사명</div>
+        <div class="logo-item" title="로고 사용 승인 확인 후 이미지 교체">금융위원회</div>
+        <div class="logo-item" title="로고 사용 승인 확인 후 이미지 교체">보건의료기관</div>
+        <div class="logo-item" title="로고 사용 승인 확인 후 이미지 교체">SK텔레콤</div>
+        <div class="logo-item" title="로고 사용 승인 확인 후 이미지 교체">NIPA</div>
+        <div class="logo-item" title="로고 사용 승인 확인 후 이미지 교체">서울특별시</div>
+        <div class="logo-item" data-placeholder="true" title="TODO: 실제 고객사명 확정 또는 제거">고객사명</div>
+        <div class="logo-item" title="로고 사용 승인 확인 후 이미지 교체">금융위원회</div>
+        <div class="logo-item" title="로고 사용 승인 확인 후 이미지 교체">보건의료기관</div>
+      </div>
+    </div>
+    <!-- data-api: references[] → { tag, client, project, period, url? } 동일 .ref-card 마크업으로 렌더 -->
+    <div class="ref-projects" data-content-source="references">
+      <div class="ref-card reveal">
+        <div class="ref-card-tag" data-i18n="ref1Tag">📱 DID · 모바일지갑</div>
+        <div class="ref-card-client">SK텔레콤</div>
+        <div class="ref-card-project" data-i18n="ref1Proj">PASS 모바일지갑 DID 서비스 운영·고도화. 수백만 사용자 규모의 국내 대표 모바일 신원인증 서비스 장기 운영.</div>
+        <div class="ref-card-period">2022.01 ~ 현재 진행 중</div>
+      </div>
+      <div class="ref-card reveal reveal-delay-1">
+        <div class="ref-card-tag" data-i18n="ref2Tag">🎓 블록체인 · 디지털배지</div>
+        <div class="ref-card-client">NIPA (정보통신산업진흥원)</div>
+        <div class="ref-card-project" data-i18n="ref2Proj">디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정. 블록체인 기반 디지털 자격증명 시스템 구현.</div>
+        <div class="ref-card-period">2024.06 ~ 2024.12</div>
+      </div>
+      <div class="ref-card reveal reveal-delay-2">
+        <div class="ref-card-tag" data-i18n="ref3Tag">🏛️ 블록체인 · 전자계약</div>
+        <div class="ref-card-client">서울특별시</div>
+        <div class="ref-card-project" data-i18n="ref3Proj">블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축. 공공 행정 디지털 전환 선도.</div>
+        <div class="ref-card-period">2022.07 ~ 2022.12</div>
+      </div>
+      <div class="ref-card reveal reveal-delay-3">
+        <div class="ref-card-tag" data-i18n="ref4Tag">💰 블록체인 · STO</div>
+        <div class="ref-card-client">조각투자사업자</div>
+        <div class="ref-card-project" data-i18n="ref4Proj">공익적 토큰증권 플랫폼(STO) 구축 사업 참여기관 선정. 블록체인 기반 증권형 토큰 발행·거래 시스템.</div>
+        <div class="ref-card-period">2024.06 ~ 2024.12</div>
+      </div>
+      <div class="ref-card reveal reveal-delay-4">
+        <div class="ref-card-tag" data-i18n="ref5Tag">🏥 블록체인 · 의약품관리</div>
+        <div class="ref-card-client">보건의료기관</div>
+        <div class="ref-card-project" data-i18n="ref5Proj">블록체인 기반 마약류 의약품 관리 플랫폼 개발. 유통 이력의 완전한 추적과 위변조 방지 실현.</div>
+        <div class="ref-card-period">2021.05 ~ 2021.12</div>
+      </div>
+      <div class="ref-card reveal reveal-delay-5" data-placeholder="client-anonymized" title="TODO: 고객사명 공개 시 수정">
+        <div class="ref-card-tag" data-i18n="ref6Tag">💉 DID · 의료인증</div>
+        <div class="ref-card-client">S 통신사</div>
+        <div class="ref-card-project" data-i18n="ref6Proj">DID 기반 백신접종증명 서비스 개발. 개인 의료 정보를 안전하게 보관하고 선택적으로 제출.</div>
+        <div class="ref-card-period">2021.09 ~ 2021.11</div>
+      </div>
+    </div>
+    <div class="ref-more-wrap reveal">
+      <a href="#reference" class="btn btn-outline" data-i18n="refMore">전체 레퍼런스 보기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEWS - data-api: news[] { category, date, title, excerpt, url, thumb? } / 운영: 상세 페이지 없으면 #news 앵커 유지 ===== -->
+<section id="news" class="section section-alt" aria-labelledby="news-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label reveal">NEWS & INSIGHTS</div>
+      <h2 id="news-title" class="section-title reveal reveal-delay-1" data-i18n="newsTitle">비디젠 <span>소식</span></h2>
+      <p class="section-sub reveal reveal-delay-2" data-i18n="newsSub">수주·파트너십·사업 확장 등 비디젠의 주요 소식을 전합니다</p>
+    </div>
+    <div class="news-grid" data-content-source="news">
+      <div class="news-card reveal">
+        <div class="news-thumb" data-placeholder="thumb">
+          <div class="news-thumb-bg"></div>
+          <div class="news-thumb-emoji" aria-hidden="true">🤝</div>
+        </div>
+        <div class="news-body">
+          <div class="news-meta">
+            <span class="news-category" data-i18n="news1Cat">파트너십</span>
+            <span class="news-date">2024.06.15</span>
+          </div>
+          <h3 class="news-title" data-i18n="news1Title">비디젠–소금광산, 블록체인 기술 R&D 및 서비스 개발 업무 협약 체결</h3>
+          <p class="news-excerpt" data-i18n="news1Excerpt">DID 기술 및 블록체인 인프라 기술 R&D 등 기술 고도화를 통해 급변하는 Web3 환경 전환 시장에 공동 대응한다는 전략으로 MOU를 체결하였습니다.</p>
+          <a href="#news" class="news-link" data-placeholder="href" data-i18n="newsLink" title="TODO: 뉴스 상세 페이지 URL 연결">자세히 보기</a>
+        </div>
+      </div>
+      <div class="news-card reveal reveal-delay-2">
+        <div class="news-thumb">
+          <div class="news-thumb-bg" style="background:linear-gradient(135deg,#0A1428,#0F1E3A)"></div>
+          <div class="news-thumb-emoji">🏆</div>
+        </div>
+        <div class="news-body">
+          <div class="news-meta">
+            <span class="news-category" data-i18n="news2Cat">수주</span>
+            <span class="news-date">2024.06.01</span>
+          </div>
+          <h3 class="news-title" data-i18n="news2Title">디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관으로 선정</h3>
+          <p class="news-excerpt" data-i18n="news2Excerpt">NIPA(정보통신산업진흥원)가 추진하는 디지털배지 기반 통합 취업지원서비스 구축 사업의 참여기관으로 최종 선정되었습니다.</p>
+          <a href="#news" class="news-link" data-placeholder="href" data-i18n="newsLink" title="TODO: 뉴스 상세 페이지 URL 연결">자세히 보기</a>
+        </div>
+      </div>
+      <div class="news-card reveal reveal-delay-4">
+        <div class="news-thumb">
+          <div class="news-thumb-bg" style="background:linear-gradient(135deg,#100A28,#1A0F3A)"></div>
+          <div class="news-thumb-emoji">💰</div>
+        </div>
+        <div class="news-body">
+          <div class="news-meta">
+            <span class="news-category" data-i18n="news3Cat">사업확장</span>
+            <span class="news-date">2024.05.20</span>
+          </div>
+          <h3 class="news-title" data-i18n="news3Title">공익적 토큰증권 플랫폼(STO) 구축 사업 참여기관으로 선정</h3>
+          <p class="news-excerpt" data-i18n="news3Excerpt">조각투자사업자를 위한 공익적 토큰증권(STO) 플랫폼 구축 사업에 참여기관으로 선정, 블록체인 금융 시장으로의 사업 영역을 확대합니다.</p>
+          <a href="#news" class="news-link" data-placeholder="href" data-i18n="newsLink" title="TODO: 뉴스 상세 페이지 URL 연결">자세히 보기</a>
+        </div>
+      </div>
+    </div>
+    <div class="ref-more-wrap reveal">
+      <a href="#news" class="btn btn-outline" data-i18n="newsMore" title="TODO: 뉴스 목록 페이지 있으면 URL 연결">모든 소식 보기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA: 프로젝트 기술협업 문의하기 ===== -->
+<section id="cta" class="landing-cta" aria-labelledby="cta-title">
+  <div class="cta-bg-orb"></div>
+  <div class="cta-content">
+    <div class="section-label reveal" style="justify-content:center">CONTACT</div>
+    <h2 id="cta-title" class="cta-title reveal reveal-delay-1" data-i18n="ctaTitle">프로젝트를 시작할 준비가 되셨나요?</h2>
+    <p class="cta-sub reveal reveal-delay-2" data-i18n="ctaSub">도입 검토부터 기술 상담까지, 비디젠 전문가가 함께합니다.</p>
+    <form class="cta-form reveal reveal-delay-3" action="#" method="post" aria-label="프로젝트 기술협업 문의 양식">
+      <div class="cta-form-row">
+        <div class="cta-form-field">
+          <label for="cta-name" class="cta-form-label" data-i18n="ctaName">성함</label>
+          <input type="text" id="cta-name" name="name" class="cta-form-input" placeholder="홍길동" required autocomplete="name">
+        </div>
+        <div class="cta-form-field">
+          <label for="cta-company" class="cta-form-label" data-i18n="ctaCompany">회사명</label>
+          <input type="text" id="cta-company" name="company" class="cta-form-input" placeholder="(주)회사명" autocomplete="organization">
+        </div>
+      </div>
+      <div class="cta-form-row">
+        <div class="cta-form-field">
+          <label for="cta-email" class="cta-form-label" data-i18n="ctaEmail">이메일</label>
+          <input type="email" id="cta-email" name="email" class="cta-form-input" placeholder="example@company.com" required autocomplete="email">
+        </div>
+        <div class="cta-form-field">
+          <label for="cta-phone" class="cta-form-label" data-i18n="ctaPhone">연락처</label>
+          <input type="tel" id="cta-phone" name="phone" class="cta-form-input" placeholder="010-0000-0000" autocomplete="tel">
+        </div>
+      </div>
+      <div class="cta-form-field">
+        <label for="cta-type" class="cta-form-label" data-i18n="ctaType">문의 유형</label>
+        <select id="cta-type" name="inquiry_type" class="cta-form-select">
+          <option value="" data-i18n="ctaPlaceholder">선택해 주세요</option>
+          <option value="consulting">도입 상담</option>
+          <option value="poc">PoC(실증)</option>
+          <option value="development">개발 협업</option>
+          <option value="etc">기타</option>
+        </select>
+      </div>
+      <div class="cta-form-field">
+        <label for="cta-message" class="cta-form-label" data-i18n="ctaMsg">문의 내용</label>
+        <textarea id="cta-message" name="message" class="cta-form-textarea" placeholder="프로젝트 개요, 도입 목적, 일정 등 자유롭게 작성해 주세요." required></textarea>
+      </div>
+      <button type="submit" class="cta-form-submit" data-i18n="ctaSubmit">문의 보내기</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== FOOTER (운영필수: 회사정보·정책 URL) ===== -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-icon">B</div>
+          <span>BDGen</span>
+        </div>
+        <p class="footer-desc" data-i18n="footerDesc">블록체인·DID 전문기업. 통신·금융·공공·의료 등 산업의 인증·증명 솔루션을 제공합니다.</p>
+        <div class="footer-info">
+          <span>㈜비디젠</span><br>
+          대표이사 : 유성종<br>
+          사업자등록번호 : 113-86-78453<br>
+          주소 : 서울 구로구 디지털로26길 43, R동 304호<br>
+          전화 : <a href="tel:02-6091-1533">02-6091-1533</a><br>
+          이메일 : <a href="mailto:[email protected]">[email protected]</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footerSvc">서비스</div>
+        <ul>
+          <li><a href="#services" data-i18n="footerSvc1">블록체인 서비스 개발</a></li>
+          <li><a href="#services" data-i18n="footerSvc2">모바일 앱 개발</a></li>
+          <li><a href="#services" data-i18n="footerSvc3">플랫폼 운영 솔루션</a></li>
+          <li><a href="#services" data-i18n="footerSvc4">GenID 솔루션</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footerComp">회사</div>
+        <ul>
+          <li><a href="#about-bdgen" data-i18n="footerAbout">회사소개</a></li>
+          <li><a href="#why" data-i18n="footerWhy">핵심역량</a></li>
+          <li><a href="#reference" data-i18n="footerRef">레퍼런스</a></li>
+          <li><a href="#news" data-i18n="footerNews">소식</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footerContact">문의</div>
+        <ul>
+          <li><a href="tel:02-6091-1533">02-6091-1533</a></li>
+          <li><a href="mailto:[email protected]">[email protected]</a></li>
+          <li><a href="#cta" data-i18n="footerInquiry">프로젝트 문의</a></li>
+          <li><a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" data-i18n="footerIntro">회사소개서</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 ㈜비디젠. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#" data-placeholder="href" data-i18n="footerPolicy" title="TODO: 개인정보처리방침 페이지 URL 확정 후 연결">개인정보처리방침</a>
+        <a href="#" data-placeholder="href" data-i18n="footerTerms" title="TODO: 이용약관 페이지 URL 확정 후 연결">이용약관</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button type="button" class="back-top" id="backTop" aria-label="맨 위로 이동">↑</button>
+
+<!--
+  ========== 운영 전 반드시 확정 필요 ==========
+  [필수]
+  1. Hero 최종 카피 확정 (대표/기획 검토)
+  2. Trust 숫자(30+, 6개, 5년+) — 실제 실적으로 교체
+  3. 이노비즈·벤처기업 인증 — 인증서/근거자료 확보 후 노출
+  4. 개인정보처리방침·이용약관 URL 연결
+  5. 고객사 로고 — 사용 승인 후 이미지 교체 (현재 텍스트)
+  6. "S 통신사" — 고객사명 공개 여부 확정 후 수정
+  7. "고객사명" placeholder — 실제 파트너명 또는 제거
+
+  [권장]
+  8. 뉴스 상세 페이지 있으면 "자세히 보기" href 연결
+  9. 뉴스 목록 페이지 있으면 "모든 소식 보기" href 연결
+  10. 문의 폼 페이지 있으면 CTA를 폼 링크로 교체
+  11. © 2024 연도 — 매년 갱신
+  12. 회사소개서 PDF 경로 유효성 확인
+-->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ===== 랜딩페이지 스크립트 (실무용 · 이벤트 바인딩 중심) ===== */
+(function(){
+'use strict';
+
+/* ---------- Hero Particle Canvas (탭 비가시 시 일시정지로 성능 절약) ---------- */
+(function initHeroCanvas(){
+  var canvas = document.getElementById('hero-canvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, nodes = [], animId, visible = true;
+  var NODE_COUNT = 70;
+  var CONNECTION_DIST = 130;
+  var MOUSE = { x: -999, y: -999 };
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  function createNode(){
+    return {
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5,
+      r: Math.random()*2+1, opacity: Math.random()*0.6+0.2
+    };
+  }
+  function init(){
+    resize();
+    nodes = [];
+    for(var i=0;i<NODE_COUNT;i++) nodes.push(createNode());
+  }
+  function draw(){
+    if(!visible) return;
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<nodes.length;i++){
+      for(var j=i+1;j<nodes.length;j++){
+        var dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        var dist = Math.sqrt(dx*dx+dy*dy);
+        if(dist<CONNECTION_DIST){
+          var alpha = (1-dist/CONNECTION_DIST)*0.25;
+          ctx.strokeStyle = 'rgba(0,200,255,'+alpha+')';
+          ctx.lineWidth = 0.7;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(function(n){
+      var dx = n.x - MOUSE.x, dy = n.y - MOUSE.y;
+      var dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist<180){
+        var alpha = (1-dist/180)*0.4;
+        ctx.strokeStyle = 'rgba(108,63,255,'+alpha+')';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(n.x, n.y);
+        ctx.lineTo(MOUSE.x, MOUSE.y);
+        ctx.stroke();
+      }
+    });
+    nodes.forEach(function(n){
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(0,200,255,'+n.opacity+')';
+      ctx.fill();
+    });
+  }
+  function update(){
+    nodes.forEach(function(n){
+      n.x += n.vx; n.y += n.vy;
+      if(n.x<0||n.x>W) n.vx *= -1;
+      if(n.y<0||n.y>H) n.vy *= -1;
+    });
+  }
+  function loop(){
+    update();
+    draw();
+    animId = requestAnimationFrame(loop);
+  }
+  function onVisibilityChange(){
+    visible = document.visibilityState === 'visible';
+    if(visible) loop();
+    else if(animId) cancelAnimationFrame(animId);
+  }
+  window.addEventListener('resize', init);
+  window.addEventListener('mousemove', function(e){ MOUSE.x=e.clientX; MOUSE.y=e.clientY; });
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  init();
+  loop();
+})();
+
+/* ---------- GNB 스크롤 & Back to Top ---------- */
+(function(){
+  var gnb = document.getElementById('gnb');
+  var backTop = document.getElementById('backTop');
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    if(gnb) gnb.classList.toggle('scrolled', y>50);
+    if(backTop) backTop.classList.toggle('visible', y>400);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  if(backTop){
+    backTop.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+})();
+
+/* ---------- 모바일 메뉴 (접근성: aria-expanded, 포커스 트랩 고려) ---------- */
+(function(){
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var closeBtn = mobileMenu && mobileMenu.querySelector('.gnb-mobile-close');
+  function openMobile(){
+    if(!mobileMenu) return;
+    mobileMenu.classList.add('open');
+    mobileMenu.removeAttribute('hidden');
+    if(hamburger) hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobile(){
+    if(!mobileMenu) return;
+    mobileMenu.classList.remove('open');
+    mobileMenu.setAttribute('hidden', '');
+    if(hamburger) hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  if(hamburger) hamburger.addEventListener('click', openMobile);
+  if(closeBtn) closeBtn.addEventListener('click', closeMobile);
+  if(mobileMenu){
+    mobileMenu.addEventListener('click', function(e){
+      if(e.target.tagName === 'A') closeMobile();
+    });
+  }
+})();
+
+/* ---------- 언어 선택 (EN/한글) ---------- */
+var LANG = localStorage.getItem('bdgen-lang') || 'ko';
+var I18N = {
+  ko: {
+    'nav.services':'서비스','nav.solutions':'솔루션','nav.capability':'역량','nav.reference':'레퍼런스','nav.news':'소식',
+    hero1:'디지털 신원', hero2:' 기술로', hero3:'산업의 신뢰를 설계합니다.',
+    heroSub:'㈜비디젠은 DID·Passkey·블록체인 기술을 보유하고,<br>통신·금융·공공·의료·교육 산업의 인증·증명 솔루션을 제공합니다.',
+    partnerTitle:'검증된 기술력, 신뢰할 수 있는 파트너', partnerM1:'성공화 프로젝트', partnerM2:'핵심 산업 분야', partnerM3:'중소벤처기업부 인증',
+    servicesTitle:'제공 서비스', servicesSub:'블록체인 DID 기반 개발·구축·운영을 단일 딜에서 담당합니다',
+    svc1Title:'블록체인 응용 서비스 개발', svc1Desc:'DID·NFT·스마트컨트랙트 등 Web3 핵심 기술 기반 서비스를 설계하고 개발합니다. Hyperledger Fabric과 Ethereum 등 주요 블록체인 플랫폼 기술을 직접 보유합니다.',
+    svc2Title:'모바일 앱 개발', svc2Desc:'사용자 경험(UX)을 최우선으로 설계하는 Android·iOS Native App과 Web App을 개발합니다. DID 기반 인증 모듈을 포함한 보안 특화 모바일 서비스를 구현합니다.',
+    svc3Title:'플랫폼 구축 및 운영 솔루션', svc3Desc:'서비스 기획 단계부터 런칭, 운영, 고도화까지 원스톱으로 지원합니다. 맞춤형 VNC 기반 솔루션 및 파트너 연계 통합까지 담당합니다.',
+    aboutLine1:'Web3 기술로', aboutLine2:'<span>산업의 신뢰 인프라</span>를', aboutLine3:'설계합니다',
+    aboutSub:'(주)비디젠(BDGen)은 2019년 설립 이후 블록체인 응용 서비스 상용화에 집중해온 전문 기업입니다. DID·NFT·Passkey 등 Web3 핵심 기술을 실제 산업에 구현하며 신뢰할 수 있는 디지털 환경을 만들어 나가고 있습니다.',
+    whyTitle:'비디젠이 <span>강한 이유</span> 6가지', whySub:'수년간 축적된 기술 역량과 상용화 경험이 만드는 경쟁력',
+    why1Title:'상용화로 증명된<br>블록체인 역량', why1Desc:'SKT PASS 모바일지갑, 디지털 혁신대학 출입 서비스 등 수백만 사용자 규모의 서비스를 실제로 상용화한 검증된 실전 경험을 보유합니다.',
+    why2Title:'다층적<br>블록체인 기술 스택', why2Desc:'DID·NFT·출입인증 등 응용 솔루션부터 Hyperledger Fabric·Ethereum 인프라까지, 전 계층을 자체 개발·운영하는 기술 보유 기업입니다.',
+    why3Title:'완전한<br>플랫폼 구축 역량', why3Desc:'모바일 앱·웹·IF 서버·백오피스를 포함한 풀스택 플랫폼을 처음부터 끝까지 직접 설계하고 납품합니다.',
+    why4Title:'기획부터 런칭까지<br>단일 팀 완결', why4Desc:'서비스 기획 → UX 디자인 → 개발 → QA → 런칭의 전 과정을 하나의 팀에서 일관되게 처리하여 품질과 일정을 모두 보장합니다.',
+    why5Title:'대규모 플랫폼<br>장기 운영 경험', why5Desc:'체계적인 프로세스 기반의 효율적 운영과 UX 개선, VoC 피드백 루프로 대형 통신사 플랫폼을 장기간 안정적으로 운영한 노하우를 보유합니다.',
+    why6Title:'차세대<br>Passkey 인증 기술', why6Desc:'피싱 불가·생체인식 기반의 FIDO 표준 Passkey 인증으로 비밀번호 없는 안전하고 편리한 인증 환경을 구현합니다.',
+    refTitle:'국내 주요 기관이<br><span>비디젠을 선택</span>했습니다', refSub:'통신 대기업부터 정부 기관까지 — 실제 운영 중인 서비스로 신뢰를 증명합니다',
+    refMore:'전체 레퍼런스 보기', newsTitle:'비디젠 <span>소식</span>', newsSub:'수주·파트너십·사업 확장 등 비디젠의 주요 소식을 전합니다',
+    news1Cat:'파트너십', news1Title:'비디젠–소금광산, 블록체인 기술 R&D 및 서비스 개발 업무 협약 체결', news1Excerpt:'DID 기술 및 블록체인 인프라 기술 R&D 등 기술 고도화를 통해 급변하는 Web3 환경 전환 시장에 공동 대응한다는 전략으로 MOU를 체결하였습니다.',
+    news2Cat:'수주', news2Title:'디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관으로 선정', news2Excerpt:'NIPA(정보통신산업진흥원)가 추진하는 디지털배지 기반 통합 취업지원서비스 구축 사업의 참여기관으로 최종 선정되었습니다.',
+    news3Cat:'사업확장', news3Title:'공익적 토큰증권 플랫폼(STO) 구축 사업 참여기관으로 선정', news3Excerpt:'조각투자사업자를 위한 공익적 토큰증권(STO) 플랫폼 구축 사업에 참여기관으로 선정, 블록체인 금융 시장으로의 사업 영역을 확대합니다.',
+    newsMore:'모든 소식 보기', newsLink:'자세히 보기',
+    ctaTitle:'프로젝트를 시작할 준비가 되셨나요?', ctaSub:'도입 검토부터 기술 상담까지, 비디젠 전문가가 함께합니다.',
+    ctaName:'성함', ctaCompany:'회사명', ctaEmail:'이메일', ctaPhone:'연락처', ctaType:'문의 유형', ctaMsg:'문의 내용', ctaSubmit:'문의 보내기',
+    ctaPlaceholder:'선택해 주세요', ctaMsgPlaceholder:'프로젝트 개요, 도입 목적, 일정 등 자유롭게 작성해 주세요.',
+    footerDesc:'블록체인·DID 전문기업. 통신·금융·공공·의료 등 산업의 인증·증명 솔루션을 제공합니다.',
+    footerSvc:'서비스', footerComp:'회사', footerContact:'문의', footerSvc1:'블록체인 서비스 개발', footerSvc2:'모바일 앱 개발', footerSvc3:'플랫폼 운영 솔루션', footerSvc4:'GenID 솔루션',
+    footerAbout:'회사소개', footerWhy:'핵심역량', footerRef:'레퍼런스', footerNews:'소식', footerInquiry:'프로젝트 문의', footerIntro:'회사소개서',
+    footerPolicy:'개인정보처리방침', footerTerms:'이용약관',
+    ref1Tag:'DID · 모바일지갑', ref1Proj:'PASS 모바일지갑 DID 서비스 운영·고도화. 수백만 사용자 규모의 국내 대표 모바일 신원인증 서비스 장기 운영.',
+    ref2Tag:'블록체인 · 디지털배지', ref2Proj:'디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정. 블록체인 기반 디지털 자격증명 시스템 구현.',
+    ref3Tag:'블록체인 · 전자계약', ref3Proj:'블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축. 공공 행정 디지털 전환 선도.',
+    ref4Tag:'블록체인 · STO', ref4Proj:'공익적 토큰증권 플랫폼(STO) 구축 사업 참여기관 선정. 블록체인 기반 증권형 토큰 발행·거래 시스템.',
+    ref5Tag:'블록체인 · 의약품관리', ref5Proj:'블록체인 기반 마약류 의약품 관리 플랫폼 개발. 유통 이력의 완전한 추적과 위변조 방지 실현.',
+    ref6Tag:'DID · 의료인증', ref6Proj:'DID 기반 백신접종증명 서비스 개발. 개인 의료 정보를 안전하게 보관하고 선택적으로 제출.'
+  },
+  en: {
+    'nav.services':'Services','nav.solutions':'Solutions','nav.capability':'Capability','nav.reference':'Reference','nav.news':'News',
+    hero1:'Digital Identity', hero2:' technology', hero3:'Designing trust for industry.',
+    heroSub:'BDGen holds DID·Passkey·blockchain technologies and provides authentication and verification solutions for telecom, finance, public, healthcare, and education industries.',
+    partnerTitle:'Proven technology, a partner you can trust', partnerM1:'Successful projects', partnerM2:'Core industries', partnerM3:'INNOBIZ certified',
+    servicesTitle:'Services', servicesSub:'We deliver blockchain DID development, deployment, and operations in a single engagement.',
+    svc1Title:'Blockchain application development', svc1Desc:'We design and develop services based on Web3 technologies including DID, NFT, and smart contracts. We possess direct expertise in major blockchain platforms including Hyperledger Fabric and Ethereum.',
+    svc2Title:'Mobile app development', svc2Desc:'We develop Android·iOS Native Apps and Web Apps with UX as top priority. We implement security-focused mobile services including DID-based authentication modules.',
+    svc3Title:'Platform deployment and operations', svc3Desc:'We provide end-to-end support from service planning through launch, operations, and enhancement. Custom VNC-based solutions and partner integration.',
+    aboutLine1:'Web3 technology', aboutLine2:'Trust infrastructure for industry', aboutLine3:'We design it.',
+    aboutSub:'BDGen, founded in 2019, is a specialized company focused on commercializing blockchain applications. We implement core Web3 technologies—DID, NFT, Passkey—into real-world industries to build trusted digital environments.',
+    whyTitle:'Why BDGen <span>stands out</span>', whySub:'Competitive edge from years of accumulated technical capability and commercialization experience',
+    why1Title:'Proven<br>blockchain capability', why1Desc:'We have verified real-world experience with services at scale—including SKT PASS mobile wallet and Digital Innovation University access services—serving millions of users.',
+    why2Title:'Multi-layer<br>blockchain tech stack', why2Desc:'From DID, NFT, and access solutions to Hyperledger Fabric and Ethereum infrastructure, we develop and operate across the full stack.',
+    why3Title:'Complete<br>platform capability', why3Desc:'We design and deliver full-stack platforms—mobile apps, web, IF servers, back-office—from start to finish.',
+    why4Title:'Single team from<br>planning to launch', why4Desc:'One team handles the full cycle—planning, UX design, development, QA, launch—ensuring both quality and timeline.',
+    why5Title:'Large-scale platform<br>operations experience', why5Desc:'Efficient process-based operations, UX improvements, and VoC feedback loops—operating major telecom platforms stably over the long term.',
+    why6Title:'Next-generation<br>Passkey authentication', why6Desc:'FIDO-standard Passkey authentication: phishing-resistant, biometric-based, passwordless, and user-friendly.',
+    refTitle:'Leading institutions<br><span>choose BDGen</span>', refSub:'From telecom giants to government—we prove trust through live services',
+    refMore:'View all references', newsTitle:'BDGen <span>News</span>', newsSub:'BDGen updates on contracts, partnerships, and business expansion',
+    news1Cat:'Partnership', news1Title:'BDGen–SogeumGwang San MOU for blockchain R&D and service development', news1Excerpt:'Strategic MOU to jointly address the evolving Web3 market through R&D in DID and blockchain infrastructure.',
+    news2Cat:'Contract', news2Title:'Selected as participant for digital badge-based integrated employment support service', news2Excerpt:'Final selection as a participant in NIPA\'s digital badge-based integrated employment support service project.',
+    news3Cat:'Expansion', news3Title:'Selected as participant for public-interest token securities (STO) platform', news3Excerpt:'Selected as participant for STO platform project, expanding into the blockchain financial market.',
+    newsMore:'View all news', newsLink:'Learn more',
+    ctaTitle:'Ready to start your project?', ctaSub:'From evaluation to technical consultation, BDGen experts are with you.',
+    ctaName:'Name', ctaCompany:'Company', ctaEmail:'Email', ctaPhone:'Phone', ctaType:'Inquiry type', ctaMsg:'Message', ctaSubmit:'Send inquiry',
+    ctaPlaceholder:'Please select', ctaMsgPlaceholder:'Project overview, goals, timeline—feel free to share.',
+    footerDesc:'Blockchain·DID specialist. Authentication and verification solutions for telecom, finance, public, healthcare, and more.',
+    footerSvc:'Services', footerComp:'Company', footerContact:'Contact', footerSvc1:'Blockchain services', footerSvc2:'Mobile app development', footerSvc3:'Platform operations', footerSvc4:'GenID solution',
+    footerAbout:'About', footerWhy:'Capability', footerRef:'Reference', footerNews:'News', footerInquiry:'Project inquiry', footerIntro:'Company intro',
+    footerPolicy:'Privacy policy', footerTerms:'Terms of use',
+    ref1Tag:'DID · Mobile wallet', ref1Proj:'PASS mobile wallet DID service operations and enhancement. Long-term operation of a leading domestic mobile identity service serving millions.',
+    ref2Tag:'Blockchain · Digital badge', ref2Proj:'Selected for digital badge-based integrated employment support project. Blockchain-based digital credential system implementation.',
+    ref3Tag:'Blockchain · E-contract', ref3Proj:'Blockchain-based public job electronic labor contract and history platform. Leading public sector digital transformation.',
+    ref4Tag:'Blockchain · STO', ref4Proj:'Selected for public-interest token securities (STO) platform. Blockchain-based security token issuance and trading system.',
+    ref5Tag:'Blockchain · Drug management', ref5Proj:'Blockchain-based controlled substance management platform. Complete traceability and counterfeit prevention.',
+    ref6Tag:'DID · Medical verification', ref6Proj:'DID-based vaccination certificate service. Secure storage and selective disclosure of personal medical information.'
+  }
+};
+function applyLang(lang, skipHero){
+  LANG = lang;
+  localStorage.setItem('bdgen-lang', lang);
+  document.documentElement.lang = lang === 'ko' ? 'ko' : 'en';
+  var T = I18N[lang] || I18N.ko;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key = el.getAttribute('data-i18n'); if(!key) return;
+    var val = T[key]; if(val == null) return;
+    if(val.indexOf && val.indexOf('<') >= 0) el.innerHTML = val; else el.textContent = val;
+  });
+  document.querySelectorAll('.lang-option').forEach(function(btn){
+    btn.setAttribute('aria-selected', btn.getAttribute('data-lang') === lang);
+  });
+  var pt = document.getElementById('partner-typing'); if(pt) { pt.setAttribute('data-text', T.partnerTitle); pt.textContent = T.partnerTitle; pt.classList.remove('partner-typing'); pt.style.borderRight = 'none'; }
+  var suffixEl = document.querySelector('.partner-metric-value[data-suffix="개"]'); if(suffixEl) suffixEl.setAttribute('data-suffix', lang==='ko'?'개':'');
+  if(skipHero){ var ab=document.querySelector('#about-bdgen-title'); if(ab&&T.aboutLine1) ab.innerHTML='<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>'; var ph=document.getElementById('cta-message'); if(ph&&T.ctaMsgPlaceholder) ph.placeholder=T.ctaMsgPlaceholder; var sel=document.getElementById('cta-type'); if(sel&&sel.options[0]&&T.ctaPlaceholder) sel.options[0].textContent=T.ctaPlaceholder; return; }
+  var heroSub = document.querySelector('.hero-sub'); if(heroSub) heroSub.innerHTML = T.heroSub;
+  var el1=document.getElementById('hero-typing-1'),el2=document.getElementById('hero-typing-2'),el3=document.getElementById('hero-typing-3');
+  if(el1&&el2&&el3){ el1.textContent=T.hero1; el2.textContent=T.hero2; el3.textContent=T.hero3; el3.classList.remove('hero-typing-cursor'); el3.style.borderRight='none'; }
+  var ab = document.querySelector('#about-bdgen-title'); if(ab && T.aboutLine1){
+    ab.innerHTML = '<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>';
+  }
+  var ph = document.getElementById('cta-message'); if(ph && T.ctaMsgPlaceholder) ph.placeholder = T.ctaMsgPlaceholder;
+  var sel = document.getElementById('cta-type'); if(sel){ var opt0 = sel.options[0]; if(opt0 && T.ctaPlaceholder) opt0.textContent = T.ctaPlaceholder; }
+}
+(function(){
+  var sw = document.querySelector('.lang-switcher');
+  var trigger = document.querySelector('.lang-switcher-trigger');
+  var dropdown = document.querySelector('.lang-dropdown');
+  if(!sw || !trigger || !dropdown) return;
+  trigger.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = !dropdown.hidden;
+    dropdown.hidden = open;
+    sw.setAttribute('aria-expanded', !open);
+  });
+  document.addEventListener('click', function(){ dropdown.hidden = true; sw.setAttribute('aria-expanded', 'false'); });
+  dropdown.addEventListener('click', function(e){
+    var opt = e.target.closest('.lang-option');
+    if(!opt) return;
+    var lang = opt.getAttribute('data-lang');
+    applyLang(lang);
+    dropdown.hidden = true;
+    sw.setAttribute('aria-expanded', 'false');
+  });
+  if(LANG !== 'ko') applyLang(LANG, true);
+})();
+
+/* ---------- Hero 타이틀 타이핑 인터랙션 ---------- */
+(function(){
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var el1 = document.getElementById('hero-typing-1');
+  var el2 = document.getElementById('hero-typing-2');
+  var el3 = document.getElementById('hero-typing-3');
+  if(!el1 || !el2 || !el3) return;
+  var texts = I18N && I18N[LANG] ? [I18N[LANG].hero1, I18N[LANG].hero2, I18N[LANG].hero3] : ['디지털 신원',' 기술로','산업의 신뢰를 설계합니다'];
+  var text1 = texts[0], text2 = texts[1], text3 = texts[2];
+  var speed = reducedMotion ? 0 : 70;
+  function typeWriter(el, text, callback){
+    var i = 0;
+    function type(){
+      if(i < text.length){
+        el.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      } else if(callback) callback();
+    }
+    type();
+  }
+  function run(){
+    typeWriter(el1, text1, function(){
+      setTimeout(function(){
+        typeWriter(el2, text2, function(){
+          setTimeout(function(){
+            typeWriter(el3, text3, function(){
+              el3.classList.remove('hero-typing-cursor');
+              el3.style.borderRight = 'none';
+            });
+          }, 80);
+        });
+      }, 80);
+    });
+  }
+  if(reducedMotion){
+    el1.textContent = text1;
+    el2.textContent = text2;
+    el3.textContent = text3;
+    el3.classList.remove('hero-typing-cursor');
+    el3.style.borderRight = 'none';
+  } else {
+    setTimeout(run, 600);
+  }
+})();
+
+/* ---------- Scroll Reveal (1회만 표시 후 unobserve) ---------- */
+(function(){
+  var revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el){ observer.observe(el); });
+  window._revealObserver = observer; /* GenID 탭 전환 시 재사용 */
+})();
+
+/* ---------- Partner 숫자지표 인터랙션 (스크롤 진입 시 카운트업 + 호버) ---------- */
+(function(){
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function animateNumber(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    if(isNaN(target)) return;
+    var duration = parseInt(el.getAttribute('data-duration'), 10) || 1600;
+    var scramblePhase = 200;
+
+    if(reducedMotion){
+      el.textContent = target + suffix;
+      return;
+    }
+
+    var start = null;
+    function tick(now){
+      if(!start) start = now;
+      var elapsed = now - start;
+
+      if(elapsed < scramblePhase){
+        var r = Math.floor(Math.random() * (target + 1));
+        el.textContent = r + suffix;
+        requestAnimationFrame(tick);
+        return;
+      }
+
+      var countElapsed = elapsed - scramblePhase;
+      var countDuration = duration - scramblePhase;
+      var progress = Math.min(countElapsed / countDuration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.round(eased * target);
+      el.textContent = (progress >= 1 ? target : current) + suffix;
+
+      if(progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  var partnerSection = document.getElementById('partner');
+  if(!partnerSection) return;
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+
+      var items = entry.target.querySelectorAll('.partner-metric');
+      var staggerMs = 120;
+
+      items.forEach(function(item, i){
+        var numEl = item.querySelector('.partner-metric-value[data-metric-type="number"]');
+        var textEl = item.querySelector('.partner-metric-value[data-metric-type="text"]');
+        var delay = i * staggerMs;
+
+        if(numEl){
+          setTimeout(function(){
+            item.classList.add('metric-visible');
+            animateNumber(numEl);
+          }, delay);
+        } else if(textEl){
+          setTimeout(function(){ item.classList.add('metric-visible'); }, delay);
+        }
+      });
+    });
+  }, { threshold: 0.2 });
+
+  observer.observe(partnerSection);
+
+  /* 파트너 타이틀 타이핑 인터랙션 */
+  var typingEl = document.getElementById('partner-typing');
+  if(typingEl){
+    var fullText = typingEl.getAttribute('data-text') || '';
+    var typingObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        typingObserver.unobserve(entry.target);
+        var i = 0;
+        function type(){
+          if(i < fullText.length){
+            typingEl.textContent += fullText.charAt(i);
+            i++;
+            setTimeout(type, 80);
+          } else {
+            typingEl.classList.remove('partner-typing');
+            typingEl.style.borderRight = 'none';
+          }
+        }
+        type();
+      });
+    }, { threshold: 0.3 });
+    typingObserver.observe(partnerSection);
+  }
+})();
+
+/* ---------- 앵커 스무스 스크롤 (href="#id" 형태만, # 단독 제외) ---------- */
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  var href = a.getAttribute('href');
+  if(href === '#') return;
+  a.addEventListener('click', function(e){
+    var target = document.querySelector(href);
+    if(target){
+      e.preventDefault();
+      var offset = 80;
+      var top = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - offset;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  });
+});
+
+})();
+</script>
+</body>
+</html>

@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>BDGen — Web 3.0 블록체인 DID 전문기업</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg"/>
 <meta name="description" content="블록체인·DID·Passkey 기술로 산업의 디지털 전환을 완성하는 BDGen"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
 <style>
@@ -173,7 +174,6 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   background: rgba(5,11,24,0.95);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(0,200,255,0.1);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
 }
 .gnb:hover {
   background: #ffffff !important;
@@ -182,7 +182,25 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .gnb:hover .gnb-nav a { color: #333; }
 .gnb:hover .gnb-logo-default { opacity: 0; }
 .gnb:hover .gnb-logo-hover { opacity: 1; }
-.gnb:hover .gnb-hamburger span { background: #333; }
+.gnb:hover .gnb-menu-btn span { background: #333; }
+/* 제공서비스 섹션 진입 시 헤더 흰색 테마 */
+.gnb.gnb-light {
+  background: #ffffff !important;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.gnb.gnb-light .gnb-nav a { color: #333; }
+.gnb.gnb-light .gnb-logo-default { opacity: 0; }
+.gnb.gnb-light .gnb-logo-hover { opacity: 1; }
+.gnb.gnb-light .gnb-menu-btn span { background: #333; }
+.gnb.gnb-light .lang-switcher-trigger { color: #333; }
+.gnb.gnb-light .lang-switcher-trigger:hover { background: rgba(0,0,0,0.06); }
+.gnb.gnb-light .gnb-submenu { background: #fff; border-bottom: 1px solid rgba(0,0,0,0.08); }
+.gnb.gnb-light .gnb-submenu a { color: #333; }
+.gnb.gnb-light .gnb-submenu a:hover { background: rgba(0,0,0,0.04); }
+.gnb.gnb-light .lang-dropdown { background: #fff; border-color: rgba(0,0,0,0.1); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+.gnb.gnb-light .lang-option { color: #333; }
+.gnb.gnb-light .lang-option:hover { background: rgba(0,0,0,0.06); }
+.gnb.gnb-light .lang-option[aria-selected="true"] { color: var(--primary); }
 .gnb-inner {
   display: flex; align-items: center; justify-content: space-between;
   max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 24px;
@@ -211,6 +229,34 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 }
 .gnb-nav a:hover { color: var(--text); }
 .gnb-nav a:hover::after { width: 100%; }
+.gnb-trigger:hover::after { width: 100%; }
+.gnb-dropdown { position: relative; }
+.gnb-dropdown:hover .gnb-submenu { opacity: 1; visibility: visible; }
+.gnb-submenu {
+  position: fixed; left: 0; right: 0; top: 100px; /* .gnb min-height 100px */
+  margin: 0; padding: 0; min-height: 152px;
+  background: rgba(10,20,40,0.98);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s;
+  z-index: 99;
+}
+.gnb:hover .gnb-submenu {
+  background: #fff; border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.gnb-submenu-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: center; align-items: center; gap: 0; flex-wrap: wrap;
+}
+.gnb-submenu a {
+  display: block; padding: 16px 28px; font-size: 1rem; font-weight: 500; white-space: nowrap;
+  color: #fff; transition: background 0.2s, color 0.2s; position: relative;
+}
+.gnb:hover .gnb-submenu a { color: #333; }
+.gnb-submenu a:hover { background: rgba(255,255,255,0.08); color: var(--primary); }
+.gnb:hover .gnb-submenu a:hover { background: rgba(0,0,0,0.04); color: var(--primary); }
+.gnb-submenu a::after { display: none !important; }
+.gnb-submenu a:hover::after { display: none !important; }
+.mobile-sub { padding-left: 24px !important; font-size: 0.95rem !important; }
 /* 언어 선택기 */
 .lang-switcher { position: relative; margin-left: 8px; }
 .lang-switcher-trigger {
@@ -244,13 +290,94 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .gnb:hover .lang-option:hover { background: rgba(0,0,0,0.06); }
 .lang-option[aria-selected="true"] { color: var(--primary); font-weight: 700; }
 .gnb:hover .lang-option[aria-selected="true"] { color: var(--primary); }
-.gnb-hamburger {
-  display: none; flex-direction: column; justify-content: center; gap: 5px;
-  cursor: pointer; padding: 10px; min-width: 44px; min-height: 44px;
-  -webkit-tap-highlight-color: transparent;
+.gnb-right {
+  display: flex; align-items: center; gap: 12px; flex-shrink: 0;
 }
-.gnb-hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: var(--transition); }
-.gnb-mobile { display: none; }
+.gnb-menu-btn {
+  display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+  cursor: pointer; padding: 10px; min-width: 44px; min-height: 44px;
+  background: none; border: none; -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+.gnb-menu-btn span {
+  display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.25s ease;
+  transform-origin: center;
+}
+/* 호버 시 선이 물결치듯 순차 애니메이션 */
+.gnb-menu-btn:hover span {
+  animation: menuLineWave 0.6s ease-in-out both;
+}
+.gnb-menu-btn:hover span:nth-child(1) { animation-delay: 0s; }
+.gnb-menu-btn:hover span:nth-child(2) { animation-delay: 0.08s; }
+.gnb-menu-btn:hover span:nth-child(3) { animation-delay: 0.16s; }
+@keyframes menuLineWave {
+  0% { transform: scaleX(1) translateY(0); opacity: 1; }
+  25% { transform: scaleX(1.2) translateY(-1.5px); opacity: 1; }
+  50% { transform: scaleX(0.95) translateY(0); opacity: 1; }
+  75% { transform: scaleX(1.1) translateY(1.5px); opacity: 1; }
+  100% { transform: scaleX(1) translateY(0); opacity: 1; }
+}
+/* 메뉴 열림 시 햄버거 → X 변형 (호버 애니 해제) */
+.gnb-menu-btn.is-open span {
+  animation: none;
+}
+.gnb-menu-btn.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.gnb-menu-btn.is-open span:nth-child(2) {
+  opacity: 0; transform: scaleX(0);
+}
+.gnb-menu-btn.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+/* 풀스크린 전체 메뉴 오버레이 */
+.gnb-fullmenu {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #ffffff; visibility: hidden; opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s;
+  overflow-y: auto;
+}
+.gnb-fullmenu[aria-hidden="false"] { visibility: visible; opacity: 1; }
+.gnb-fullmenu-inner { position: relative; min-height: 100%; padding: 32px 24px 80px; max-width: 1200px; margin: 0 auto; }
+.gnb-fullmenu-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px;
+}
+.gnb-fullmenu-logo { display: block; }
+.gnb-fullmenu-logo img { height: 32px; width: auto; display: block; }
+.gnb-fullmenu-close {
+  font-size: 1.75rem; color: #111; background: none; border: none;
+  cursor: pointer; padding: 10px; min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center; line-height: 1;
+  transition: color 0.2s;
+}
+.gnb-fullmenu-close:hover { color: var(--primary); }
+.gnb-fullmenu-watermark {
+  position: absolute; left: 50%; bottom: 15%; transform: translateX(-50%);
+  font-size: clamp(6rem, 20vw, 14rem); font-weight: 900; color: rgba(0,0,0,0.04);
+  white-space: nowrap; pointer-events: none; user-select: none;
+}
+.gnb-fullmenu-nav {
+  display: grid; grid-template-columns: auto repeat(5, 1fr); gap: 0 48px; align-items: start;
+}
+.gnb-fullmenu-col {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.gnb-fullmenu-col-title {
+  font-size: 1rem; font-weight: 800; color: #111; margin-bottom: 8px; letter-spacing: 0.02em;
+}
+.gnb-fullmenu-col a {
+  font-size: 0.95rem; color: #333; text-decoration: none;
+  padding: 4px 0; transition: color 0.2s;
+}
+.gnb-fullmenu-col a:hover { color: var(--primary); }
+.gnb-fullmenu-col:first-child .gnb-fullmenu-col-title { font-size: 1.1rem; }
+@media (max-width: 1023px) {
+  .gnb-fullmenu-nav { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
+}
+@media (max-width: 600px) {
+  .gnb-fullmenu-nav { grid-template-columns: 1fr; }
+}
 
 /* ========================
    HERO
@@ -317,15 +444,32 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .hero-cta .btn { padding: 14px 56px; min-width: 280px; }
 .hero-scroll {
   position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-  z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 12px;
   color: #ffffff; font-size: 0.75rem; letter-spacing: 0.1em;
   animation: fadeIn 1.5s 1.2s ease both;
 }
-.hero-scroll-line {
-  width: 1px; height: 40px; background: linear-gradient(to bottom, var(--primary), transparent);
-  animation: scrollLine 2s ease-in-out infinite;
+.hero-scroll-mouse {
+  width: 26px; height: 40px; color: rgba(255,255,255,0.9);
+  animation: heroMouseFloat 2.2s ease-in-out infinite;
 }
-@keyframes scrollLine { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+.hero-mouse-icon {
+  width: 100%; height: 100%; display: block;
+}
+.hero-mouse-wheel { opacity: 0.9; }
+.hero-mouse-dot {
+  animation: heroMouseScroll 2s ease-in-out infinite;
+}
+.hero-scroll-label {
+  font-size: 0.7rem; letter-spacing: 0.15em; opacity: 0.9;
+}
+@keyframes heroMouseFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+@keyframes heroMouseScroll {
+  0%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+  50% { opacity: 0.6; transform: translateY(4px) scale(0.9); }
+}
 @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -333,6 +477,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 /* ========================
    PARTNER (검증된 기술력 - 배경이미지 + 숫자지표 인터랙션)
 ======================== */
+/* 권장 배경 이미지: 1920×800 ~ 1920×1080 (16:9), 최소 1440×600, 포맷 PNG/JPG */
 #partner {
   position: relative; padding: calc(clamp(80px, 15vw, 140px) + 75px) 0;
   color: #ffffff;
@@ -454,43 +599,94 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 }
 
 /* ========================
-   SERVICES (두 번째 이미지 스타일)
+   SERVICES (핵심 기술 및 제공 서비스)
 ======================== */
-#services { padding: 220px 0; background: var(--dark2); }
-#services .section-title { font-size: 74px; }
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+#services {
+  padding: 120px 0; background: #ffffff;
+}
+.section-services .section-label { color: var(--primary); }
+.section-services .section-title { font-size: 74px; color: #111; }
+.section-services .section-sub { color: #444; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .service-card {
-  position: relative; padding: 40px 32px; border-radius: var(--radius);
-  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-  overflow: hidden; transition: var(--transition);
-  cursor: default; display: flex; flex-direction: column;
+  position: relative; border-radius: var(--radius);
+  height: 510px; overflow: hidden;
+  cursor: default; transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
 }
-.service-card::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-  background: var(--gradient-primary); transform: scaleX(0); transition: transform 0.4s;
-  transform-origin: left;
+.service-card::before {
+  content: ''; position: absolute; inset: -2px; z-index: 3; border-radius: inherit;
+  padding: 2px; background: linear-gradient(90deg, var(--primary) 0%, transparent 30%, transparent 70%, var(--primary) 100%); background-size: 200% 100%; background-position: 100% 0;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; pointer-events: none;
+  transition: opacity 0.4s ease;
 }
-.service-card:hover {
-  transform: translateY(-6px); border-color: rgba(0,200,255,0.3);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+.service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+.service-card:hover::before {
+  opacity: 1; animation: borderFlow 4s linear infinite;
 }
-.service-card:hover::after { transform: scaleX(1); }
-.service-num {
-  font-size: 4rem; font-weight: 900; line-height: 1;
-  color: rgba(255,255,255,0.15); margin-bottom: 20px;
-  font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+@keyframes borderFlow {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
 }
-.service-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 14px; line-height: 1.4; }
-.service-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; flex: 1; }
-.service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.service-card-image {
+  position: absolute; inset: 0; z-index: 0;
+}
+.service-card-image img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+}
+.service-card:hover .service-card-image img { transform: scale(1.08); }
+.service-card-image::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(5,11,32,0.9) 0%, rgba(5,11,32,0.3) 50%, transparent 100%);
+  z-index: 1;
+}
+.service-card-body {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 28px 24px 24px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.service-title {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  font-size: 32px; font-weight: 800; line-height: 1.4; color: #ffffff;
+  transition: color 0.4s ease;
+}
+.service-card:hover .service-title { color: var(--primary); }
+.service-title-icon {
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 32px; height: 32px; margin-left: auto; margin-right: 20px; color: #ffffff;
+  transition: color 0.4s ease;
+}
+.service-card:hover .service-title-icon { color: var(--primary); }
+.service-title-icon svg {
+  width: 100%; height: 100%; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round;
+}
+.service-title-icon svg path {
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  animation: svgDraw 2.5s ease-out forwards;
+}
+.service-card:nth-child(1) .service-title-icon svg path { animation-delay: 0.2s; }
+.service-card:nth-child(2) .service-title-icon svg path,
+.service-card:nth-child(2) .service-title-icon svg rect { animation-delay: 0.2s; }
+.service-card:nth-child(3) .service-title-icon svg rect { animation-delay: 0.2s; }
+@keyframes svgDraw {
+  to { stroke-dashoffset: 0; }
+}
+.service-title-block { flex-wrap: wrap; }
+.service-subtitle { font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.95); letter-spacing: -0.02em; transition: color 0.4s ease; }
+.service-card:hover .service-subtitle { color: var(--primary); }
+.service-tags {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 52px;
+}
 .service-tag {
   font-size: 0.72rem; padding: 6px 12px; border-radius: 6px;
-  background: rgba(255,255,255,0.06); color: var(--text-secondary);
-  border: 1px solid rgba(255,255,255,0.08); font-weight: 500;
+  background: rgba(10,30,60,0.75); color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.2); font-weight: 500;
+  transition: color 0.4s ease, border-color 0.4s ease, background 0.4s ease;
 }
 .service-card:hover .service-tag {
-  background: rgba(0,200,255,0.08); color: var(--primary);
-  border-color: rgba(0,200,255,0.2);
+  color: var(--primary); border-color: rgba(0,200,255,0.5); background: rgba(0,200,255,0.15);
 }
 
 /* ========================
@@ -499,7 +695,13 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 #about-bdgen { min-height: 950px; padding: 170px 0; background: #ffffff; display: flex; align-items: center; color: #000000; }
 #about-bdgen .section-label { color: var(--primary); }
 #about-bdgen .section-title { font-size: 74px; color: #000000; }
-#about-bdgen .section-title .about-title-line { display: block; white-space: nowrap; color: #000000; }
+#about-bdgen .section-title .about-title-line {
+  display: block; white-space: nowrap;
+  color: #000000; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #000000; background-clip: unset;
+}
+#about-bdgen .section-title .about-title-line:first-child {
+  color: var(--primary); background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
 #about-bdgen .section-title .about-title-line span { color: #000000; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #000000; }
 #about-bdgen .section-sub { color: #000000; max-width: 100%; }
 .about-bdgen-grid {
@@ -609,15 +811,29 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .why-card {
   padding: 36px 28px; border-radius: var(--radius);
   background: var(--card-bg); border: 1px solid var(--card-border);
-  transition: var(--transition); position: relative; overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease; position: relative;
+  overflow: hidden;
 }
-.why-card::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-  background: var(--gradient-primary); transform: scaleX(0); transition: transform 0.4s;
-  transform-origin: left;
+.why-card-inner { position: relative; z-index: 2; }
+.why-card-line {
+  display: block; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; z-index: 3;
+  background: var(--gradient-primary);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.why-card-border-flow {
+  display: block; position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none;
+  padding: 2px; opacity: 0;
+  background: linear-gradient(90deg, var(--primary) 0%, transparent 30%, transparent 70%, var(--primary) 100%);
+  background-size: 200% 100%; background-position: 100% 0;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  transition: opacity 0.4s ease;
 }
 .why-card:hover { transform: translateY(-6px); border-color: rgba(0,200,255,0.3); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
-.why-card:hover::after { transform: scaleX(1); }
+.why-card:hover .why-card-line { transform: scaleX(1); }
+.why-card:hover .why-card-border-flow { opacity: 1; animation: borderFlow 4s linear infinite; }
 .why-num {
   font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
   color: var(--primary); margin-bottom: 16px;
@@ -838,33 +1054,12 @@ footer {
    RESPONSIVE - Desktop 1280+ | Laptop 1024~1279 | Tablet 768~1023 | Mobile ~767 | Small ~480
 ======================== */
 
-/* Tablet (1023px 이하): 햄버거 메뉴 전환 */
+/* Tablet (1023px 이하): 중앙 네비 숨김, 우측 지구본+메뉴 아이콘 유지 */
 @media (max-width: 1023px) {
   .gnb-nav { display: none; }
-  .gnb-hamburger { display: flex; }
   .gnb-inner { padding: 0 var(--container-padding-x); }
   .gnb { padding: 12px 0; }
   .gnb.scrolled { padding: 10px 0; }
-  .gnb-mobile {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(5,11,24,0.98);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    z-index: var(--z-mobile-nav); display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 24px;
-    transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-  }
-  .gnb-mobile.open { transform: translateX(0); display: flex; }
-  .gnb-mobile[hidden] { display: none !important; }
-  .gnb-mobile a {
-    font-size: 1.25rem; font-weight: 700; color: var(--text);
-    padding: 12px 20px; min-height: 44px; display: flex; align-items: center; justify-content: center;
-  }
-  .gnb-mobile-close {
-    position: absolute; top: 20px; right: 20px;
-    font-size: 1.5rem; color: var(--text-secondary);
-    cursor: pointer; padding: 10px; min-width: 44px; min-height: 44px;
-    display: flex; align-items: center; justify-content: center;
-  }
 }
 
 /* Laptop / Tablet landscape (1024~1279) */
@@ -896,6 +1091,7 @@ footer {
   .hero-sub { font-size: clamp(0.95rem, 1.8vw, 1.1rem); margin-bottom: 32px; }
   .hero-cta { gap: 12px; }
   .hero-scroll { bottom: 24px; }
+  .hero-scroll-mouse { width: 22px; height: 34px; }
   .section { padding: clamp(3rem, 7vw, 4.5rem) 0; }
   .section-header { margin-bottom: 2.5rem; }
   .section-title { font-size: clamp(1.5rem, 3.5vw, 2.25rem); }
@@ -923,7 +1119,7 @@ footer {
   .hero-cta { flex-direction: column; align-items: stretch; gap: 12px; }
   .hero-cta .btn { justify-content: center; width: 100%; }
   .hero-scroll { bottom: 20px; font-size: 0.7rem; }
-  .hero-scroll-line { height: 28px; }
+  .hero-scroll-mouse { width: 20px; height: 32px; }
   #partner { padding: calc(clamp(60px, 12vw, 100px) + 75px) 0; }
   #partner .container { padding-left: clamp(24px, 5vw, 60px); padding-right: clamp(24px, 5vw, 60px); }
   .partner-title { white-space: normal; }
@@ -956,7 +1152,8 @@ footer {
   .about-orb-center-text { font-size: 0.9rem; }
   .about-orb-center-text span { font-size: 0.7rem; }
   .services-grid { grid-template-columns: 1fr; gap: 16px; }
-  .service-card { padding: 28px 24px; }
+  .service-card { height: 260px; }
+  .service-card-body { padding: 24px 20px 28px; }
   .service-num { font-size: 3rem; margin-bottom: 16px; }
   .service-title { font-size: 1.1rem; margin-bottom: 10px; }
   .service-desc { font-size: 0.85rem; margin-bottom: 20px; }
@@ -1024,7 +1221,7 @@ footer {
   .section-title { font-size: clamp(1.35rem, 6vw, 1.75rem); }
   #services .section-title, #about-bdgen .section-title { font-size: clamp(1.75rem, 8vw, 74px); }
   .genid-product-badge { font-size: 0.72rem; padding: 6px 14px; }
-  .service-card { padding: 22px 20px; }
+  .service-card-body { padding: 20px 18px 24px; }
   .why-card { padding: 20px 18px; }
   .ref-card { padding: 20px 18px; }
   .news-body { padding: 18px; }
@@ -1034,7 +1231,6 @@ footer {
 /* 터치 디바이스: blur/effect 완화, hover 덜 의존 */
 @media (hover: none) and (pointer: coarse) {
   .gnb.scrolled { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-  .gnb-mobile { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 }
 
 /* 320px 최소 폭 대응 */
@@ -1055,11 +1251,31 @@ footer {
       <img src="assets/logo_b.svg" alt="" class="gnb-logo-img gnb-logo-hover" aria-hidden="true">
     </a>
     <nav class="gnb-nav" aria-label="주요 메뉴">
-      <a href="#services" data-i18n="nav.services">서비스</a>
-      <a href="#why" data-i18n="nav.solutions">솔루션</a>
-      <a href="#why" data-i18n="nav.capability">역량</a>
-      <a href="#reference" data-i18n="nav.reference">레퍼런스</a>
-      <a href="#news" data-i18n="nav.news">소식</a>
+      <div class="gnb-dropdown">
+        <a href="pages/about-intro.html" class="gnb-trigger" data-i18n="nav.about">회사소개</a>
+        <div class="gnb-submenu">
+          <div class="gnb-submenu-inner">
+            <a href="pages/about-history.html" data-i18n="nav.about.history">연혁</a>
+            <a href="pages/about-awards.html" data-i18n="nav.about.awards">인증·수상</a>
+            <a href="pages/about-ci.html" data-i18n="nav.about.ci">CI소개</a>
+            <a href="pages/about-intro.html" data-i18n="nav.about.intro">비디젠소개</a>
+          </div>
+        </div>
+      </div>
+      <a href="pages/business.html" data-i18n="nav.business">사업영역</a>
+      <div class="gnb-dropdown">
+        <a href="pages/solution-genid.html" class="gnb-trigger" data-i18n="nav.solution">솔루션</a>
+        <div class="gnb-submenu">
+          <div class="gnb-submenu-inner">
+            <a href="pages/solution-genid.html" data-i18n="nav.solution.genid">GenID</a>
+            <a href="pages/solution-passkey.html" data-i18n="nav.solution.passkey">Passkey</a>
+          </div>
+        </div>
+      </div>
+      <a href="pages/reference.html" data-i18n="nav.reference">레퍼런스</a>
+      <a href="pages/careers.html" data-i18n="nav.careers">채용</a>
+    </nav>
+    <div class="gnb-right">
       <div class="lang-switcher" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-label="언어 선택">
         <button type="button" class="lang-switcher-trigger" aria-label="언어 선택" title="언어 선택">
           <svg class="lang-globe" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1072,22 +1288,53 @@ footer {
           <button type="button" role="option" data-lang="en" class="lang-option" aria-selected="false">EN</button>
         </div>
       </div>
-    </nav>
-    <button type="button" class="gnb-hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileMenu">
-      <span></span><span></span><span></span>
-    </button>
+      <button type="button" class="gnb-menu-btn" id="gnbMenuBtn" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="fullMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
-<!-- Mobile Nav (TODO: SPA 라우트 또는 실제 페이지 URL로 교체) -->
-<div class="gnb-mobile" id="mobileMenu" role="dialog" aria-label="모바일 메뉴" aria-modal="true" hidden>
-  <button type="button" class="gnb-mobile-close" aria-label="메뉴 닫기">✕</button>
-  <a href="#services" data-i18n="nav.services">서비스</a>
-  <a href="#why" data-i18n="nav.solutions">솔루션</a>
-  <a href="#why" data-i18n="nav.capability">역량</a>
-  <a href="#reference" data-i18n="nav.reference">레퍼런스</a>
-  <a href="#news" data-i18n="nav.news">소식</a>
-  <a href="#cta" class="btn btn-primary">문의하기</a>
+<!-- Full-screen menu overlay (데스크톱/모바일 공통) -->
+<div class="gnb-fullmenu" id="fullMenu" role="dialog" aria-label="전체 메뉴" aria-modal="true" aria-hidden="true" hidden>
+  <div class="gnb-fullmenu-inner">
+    <header class="gnb-fullmenu-header">
+      <a href="./" class="gnb-fullmenu-logo">
+        <img src="assets/logo_b.svg" alt="BDGen" width="120" height="32">
+      </a>
+      <button type="button" class="gnb-fullmenu-close" id="fullMenuClose" aria-label="메뉴 닫기">✕</button>
+    </header>
+    <div class="gnb-fullmenu-watermark" aria-hidden="true">BDGen</div>
+    <nav class="gnb-fullmenu-nav">
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">BDGen</span>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title" data-i18n="nav.about">회사소개</span>
+        <a href="pages/about-history.html" data-i18n="nav.about.history">연혁</a>
+        <a href="pages/about-awards.html" data-i18n="nav.about.awards">인증·수상</a>
+        <a href="pages/about-ci.html" data-i18n="nav.about.ci">CI소개</a>
+        <a href="pages/about-intro.html" data-i18n="nav.about.intro">비디젠소개</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title" data-i18n="nav.business">사업영역</span>
+        <a href="pages/business.html">사업 소개</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title" data-i18n="nav.solution">솔루션</span>
+        <a href="pages/solution-genid.html" data-i18n="nav.solution.genid">GenID</a>
+        <a href="pages/solution-passkey.html" data-i18n="nav.solution.passkey">Passkey</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title" data-i18n="nav.reference">레퍼런스</span>
+        <a href="pages/reference.html">레퍼런스</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title" data-i18n="nav.careers">채용</span>
+        <a href="pages/careers.html">채용</a>
+      </div>
+    </nav>
+  </div>
 </div>
 
 <main id="main-content">
@@ -1109,8 +1356,14 @@ footer {
     </p>
   </div>
   <div class="hero-scroll" aria-hidden="true">
-    <div class="hero-scroll-line"></div>
-    <span>SCROLL</span>
+    <div class="hero-scroll-mouse">
+      <svg class="hero-mouse-icon" viewBox="0 0 26 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="38" rx="12" stroke="currentColor" stroke-width="2"/>
+        <rect x="11" y="8" width="4" height="8" rx="2" fill="currentColor" class="hero-mouse-wheel"/>
+        <circle cx="13" cy="22" r="1.5" fill="currentColor" class="hero-mouse-dot"/>
+      </svg>
+    </div>
+    <span class="hero-scroll-label">SCROLL</span>
   </div>
 </section>
 
@@ -1135,46 +1388,72 @@ footer {
   </div>
 </section>
 
-<!-- ===== SERVICES (제공 서비스 - 두 번째 이미지 스타일) ===== -->
-<section id="services" class="section section-alt" aria-labelledby="services-title">
+<!-- ===== SERVICES (핵심 기술 및 제공 서비스) ===== -->
+<section id="services" class="section section-services" aria-labelledby="services-title">
   <div class="container">
     <div class="section-header">
       <div class="section-label reveal">SERVICES</div>
-      <h2 id="services-title" class="section-title reveal reveal-delay-1" data-i18n="servicesTitle">제공 서비스</h2>
-      <p class="section-sub reveal reveal-delay-2" data-i18n="servicesSub">블록체인 DID 기반 개발·구축·운영을 단일 딜에서 담당합니다</p>
+      <h2 id="services-title" class="section-title reveal reveal-delay-1" data-i18n="servicesTitle">핵심 기술 및 제공 서비스</h2>
+      <p class="section-sub reveal reveal-delay-2" data-i18n="servicesSub">블록체인 기반 디지털 서비스 구축을 위한 핵심 기술을 제공합니다</p>
     </div>
-    <div class="services-grid" data-content-source="services">
+    <div class="services-grid">
       <div class="service-card reveal" data-content-index="1">
-        <div class="service-num">01</div>
-        <h3 class="service-title" data-i18n="svc1Title">블록체인 응용 서비스 개발</h3>
-        <p class="service-desc" data-i18n="svc1Desc">DID·NFT·스마트컨트랙트 등 Web3 핵심 기술 기반 서비스를 설계하고 개발합니다. Hyperledger Fabric과 Ethereum 등 주요 블록체인 플랫폼 기술을 직접 보유합니다.</p>
-        <div class="service-tags">
-          <span class="service-tag">DID</span>
-          <span class="service-tag">NFT</span>
-          <span class="service-tag">Blockchain</span>
-          <span class="service-tag">AI</span>
-          <span class="service-tag">IoT</span>
+        <div class="service-card-image">
+          <img src="assets/services_01.png" alt="블록체인 DID" loading="lazy">
+        </div>
+        <div class="service-card-body">
+          <h3 class="service-title">
+            <span data-i18n="svc1Title">블록체인 DID</span>
+            <span class="service-title-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path pathLength="1" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </span>
+          </h3>
+          <p class="service-subtitle" data-i18n="svc1Sub">Web3 인프라 기술</p>
+          <div class="service-tags">
+            <span class="service-tag">DID</span>
+            <span class="service-tag">NFT</span>
+            <span class="service-tag">Blockchain</span>
+            <span class="service-tag">AI</span>
+            <span class="service-tag">IoT</span>
+          </div>
         </div>
       </div>
       <div class="service-card reveal reveal-delay-2" data-content-index="2">
-        <div class="service-num">02</div>
-        <h3 class="service-title" data-i18n="svc2Title">모바일 앱 개발</h3>
-        <p class="service-desc" data-i18n="svc2Desc">사용자 경험(UX)을 최우선으로 설계하는 Android·iOS Native App과 Web App을 개발합니다. DID 기반 인증 모듈을 포함한 보안 특화 모바일 서비스를 구현합니다.</p>
-        <div class="service-tags">
-          <span class="service-tag">Android</span>
-          <span class="service-tag">iOS</span>
-          <span class="service-tag">Native App</span>
-          <span class="service-tag">Web App</span>
+        <div class="service-card-image">
+          <img src="assets/services_02.png" alt="모바일·서비스 개발" loading="lazy">
+        </div>
+        <div class="service-card-body">
+          <h3 class="service-title">
+            <span data-i18n="svc2Title">모바일·서비스 개발</span>
+            <span class="service-title-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path pathLength="1" d="M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"/><path pathLength="1" d="M12 18h.01"/></svg>
+            </span>
+          </h3>
+          <p class="service-subtitle" data-i18n="svc2Sub">UX 중심 플랫폼 구축</p>
+          <div class="service-tags">
+            <span class="service-tag">Android</span>
+            <span class="service-tag">iOS</span>
+            <span class="service-tag">Native App</span>
+            <span class="service-tag">Web App</span>
+          </div>
         </div>
       </div>
       <div class="service-card reveal reveal-delay-4" data-content-index="3">
-        <div class="service-num">03</div>
-        <h3 class="service-title" data-i18n="svc3Title">플랫폼 구축 및 운영 솔루션</h3>
-        <p class="service-desc" data-i18n="svc3Desc">서비스 기획 단계부터 런칭, 운영, 고도화까지 원스톱으로 지원합니다. 맞춤형 VNC 기반 솔루션 및 파트너 연계 통합까지 담당합니다.</p>
-        <div class="service-tags">
-          <span class="service-tag">구축 솔루션</span>
-          <span class="service-tag">운영 프로세스</span>
-          <span class="service-tag">모니터링</span>
+        <div class="service-card-image">
+          <img src="assets/services_03.png" alt="플랫폼 구축 및 운영 솔루션" loading="lazy">
+        </div>
+        <div class="service-card-body">
+          <h3 class="service-title service-title-block">
+            <span><span data-i18n="svc3Title">플랫폼 구축 및</span><br><span data-i18n="svc3Sub">운영 솔루션</span></span>
+            <span class="service-title-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path pathLength="1" d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
+            </span>
+          </h3>
+          <div class="service-tags">
+            <span class="service-tag">플랫폼 구축</span>
+            <span class="service-tag">백오피스</span>
+            <span class="service-tag">운영 고도화</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1211,40 +1490,64 @@ footer {
     </div>
     <div class="why-grid">
       <div class="why-card reveal">
+        <span class="why-card-border-flow" aria-hidden="true"></span>
+        <div class="why-card-inner">
         <div class="why-num">01</div>
         <div class="why-icon">🏆</div>
         <h3 class="why-title" data-i18n="why1Title">상용화로 증명된<br>블록체인 역량</h3>
         <p class="why-desc" data-i18n="why1Desc">SKT PASS 모바일지갑, 디지털 혁신대학 출입 서비스 등 수백만 사용자 규모의 서비스를 실제로 상용화한 검증된 실전 경험을 보유합니다.</p>
+        </div>
+        <span class="why-card-line" aria-hidden="true"></span>
       </div>
       <div class="why-card reveal reveal-delay-1">
+        <span class="why-card-border-flow" aria-hidden="true"></span>
+        <div class="why-card-inner">
         <div class="why-num">02</div>
         <div class="why-icon">🔩</div>
         <h3 class="why-title" data-i18n="why2Title">다층적<br>블록체인 기술 스택</h3>
         <p class="why-desc" data-i18n="why2Desc">DID·NFT·출입인증 등 응용 솔루션부터 Hyperledger Fabric·Ethereum 인프라까지, 전 계층을 자체 개발·운영하는 기술 보유 기업입니다.</p>
+        </div>
+        <span class="why-card-line" aria-hidden="true"></span>
       </div>
       <div class="why-card reveal reveal-delay-2">
+        <span class="why-card-border-flow" aria-hidden="true"></span>
+        <div class="why-card-inner">
         <div class="why-num">03</div>
         <div class="why-icon">🏗️</div>
         <h3 class="why-title" data-i18n="why3Title">완전한<br>플랫폼 구축 역량</h3>
         <p class="why-desc" data-i18n="why3Desc">모바일 앱·웹·IF 서버·백오피스를 포함한 풀스택 플랫폼을 처음부터 끝까지 직접 설계하고 납품합니다.</p>
+        </div>
+        <span class="why-card-line" aria-hidden="true"></span>
       </div>
       <div class="why-card reveal reveal-delay-3">
+        <span class="why-card-border-flow" aria-hidden="true"></span>
+        <div class="why-card-inner">
         <div class="why-num">04</div>
         <div class="why-icon">✨</div>
         <h3 class="why-title" data-i18n="why4Title">기획부터 런칭까지<br>단일 팀 완결</h3>
         <p class="why-desc" data-i18n="why4Desc">서비스 기획 → UX 디자인 → 개발 → QA → 런칭의 전 과정을 하나의 팀에서 일관되게 처리하여 품질과 일정을 모두 보장합니다.</p>
+        </div>
+        <span class="why-card-line" aria-hidden="true"></span>
       </div>
       <div class="why-card reveal reveal-delay-4">
+        <span class="why-card-border-flow" aria-hidden="true"></span>
+        <div class="why-card-inner">
         <div class="why-num">05</div>
         <div class="why-icon">📈</div>
         <h3 class="why-title" data-i18n="why5Title">대규모 플랫폼<br>장기 운영 경험</h3>
         <p class="why-desc" data-i18n="why5Desc">체계적인 프로세스 기반의 효율적 운영과 UX 개선, VoC 피드백 루프로 대형 통신사 플랫폼을 장기간 안정적으로 운영한 노하우를 보유합니다.</p>
+        </div>
+        <span class="why-card-line" aria-hidden="true"></span>
       </div>
       <div class="why-card reveal reveal-delay-5">
+        <span class="why-card-border-flow" aria-hidden="true"></span>
+        <div class="why-card-inner">
         <div class="why-num">06</div>
         <div class="why-icon">🔑</div>
         <h3 class="why-title" data-i18n="why6Title">차세대<br>Passkey 인증 기술</h3>
         <p class="why-desc" data-i18n="why6Desc">피싱 불가·생체인식 기반의 FIDO 표준 Passkey 인증으로 비밀번호 없는 안전하고 편리한 인증 환경을 구현합니다.</p>
+        </div>
+        <span class="why-card-line" aria-hidden="true"></span>
       </div>
     </div>
   </div>
@@ -1381,6 +1684,8 @@ footer {
   </div>
 </section>
 
+<!-- ===== CAREERS (TODO: 채용 섹션 콘텐츠 추가) ===== -->
+<section id="careers" class="section" style="min-height:1px;padding:60px 0;background:var(--dark2)" aria-label="채용"><div class="container"><h2 class="section-title" data-i18n="careersTitle">채용</h2><p class="section-sub" data-i18n="careersSub">준비 중입니다</p></div></section>
 <!-- ===== CTA: 프로젝트 기술협업 문의하기 ===== -->
 <section id="cta" class="landing-cta" aria-labelledby="cta-title">
   <div class="cta-bg-orb"></div>
@@ -1606,6 +1911,7 @@ footer {
 (function(){
   var gnb = document.getElementById('gnb');
   var backTop = document.getElementById('backTop');
+  var servicesSection = document.getElementById('services');
   function onScroll(){
     var y = window.scrollY || window.pageYOffset;
     if(gnb) gnb.classList.toggle('scrolled', y>50);
@@ -1617,32 +1923,41 @@ footer {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+  /* 제공서비스 섹션 진입 시 헤더 흰색 테마 */
+  if(gnb && servicesSection){
+    var servicesObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        gnb.classList.toggle('gnb-light', entry.isIntersecting);
+      });
+    }, { root: null, rootMargin: '0px', threshold: 0 });
+    servicesObserver.observe(servicesSection);
+  }
 })();
 
-/* ---------- 모바일 메뉴 (접근성: aria-expanded, 포커스 트랩 고려) ---------- */
+/* ---------- 풀스크린 전체 메뉴 (데스크톱/모바일 공통) ---------- */
 (function(){
-  var hamburger = document.getElementById('hamburger');
-  var mobileMenu = document.getElementById('mobileMenu');
-  var closeBtn = mobileMenu && mobileMenu.querySelector('.gnb-mobile-close');
-  function openMobile(){
-    if(!mobileMenu) return;
-    mobileMenu.classList.add('open');
-    mobileMenu.removeAttribute('hidden');
-    if(hamburger) hamburger.setAttribute('aria-expanded', 'true');
+  var menuBtn = document.getElementById('gnbMenuBtn');
+  var fullMenu = document.getElementById('fullMenu');
+  var closeBtn = document.getElementById('fullMenuClose');
+  function openFullMenu(){
+    if(!fullMenu) return;
+    fullMenu.removeAttribute('hidden');
+    fullMenu.setAttribute('aria-hidden', 'false');
+    if(menuBtn){ menuBtn.setAttribute('aria-expanded', 'true'); menuBtn.classList.add('is-open'); }
     document.body.style.overflow = 'hidden';
   }
-  function closeMobile(){
-    if(!mobileMenu) return;
-    mobileMenu.classList.remove('open');
-    mobileMenu.setAttribute('hidden', '');
-    if(hamburger) hamburger.setAttribute('aria-expanded', 'false');
+  function closeFullMenu(){
+    if(!fullMenu) return;
+    fullMenu.setAttribute('hidden', '');
+    fullMenu.setAttribute('aria-hidden', 'true');
+    if(menuBtn){ menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.classList.remove('is-open'); }
     document.body.style.overflow = '';
   }
-  if(hamburger) hamburger.addEventListener('click', openMobile);
-  if(closeBtn) closeBtn.addEventListener('click', closeMobile);
-  if(mobileMenu){
-    mobileMenu.addEventListener('click', function(e){
-      if(e.target.tagName === 'A') closeMobile();
+  if(menuBtn) menuBtn.addEventListener('click', openFullMenu);
+  if(closeBtn) closeBtn.addEventListener('click', closeFullMenu);
+  if(fullMenu){
+    fullMenu.addEventListener('click', function(e){
+      if(e.target.tagName === 'A') closeFullMenu();
     });
   }
 })();
@@ -1651,14 +1966,15 @@ footer {
 var LANG = localStorage.getItem('bdgen-lang') || 'ko';
 var I18N = {
   ko: {
-    'nav.services':'서비스','nav.solutions':'솔루션','nav.capability':'역량','nav.reference':'레퍼런스','nav.news':'소식',
+    'nav.about':'회사소개','nav.about.history':'연혁','nav.about.awards':'인증·수상','nav.about.ci':'CI소개','nav.about.intro':'비디젠소개',
+    'nav.business':'사업영역','nav.solution':'솔루션','nav.solution.genid':'GenID','nav.solution.passkey':'Passkey','nav.reference':'레퍼런스','nav.careers':'채용',
     hero1:'디지털 신원', hero2:' 기술로', hero3:'산업의 신뢰를 설계합니다.',
     heroSub:'㈜비디젠은 DID·Passkey·블록체인 기술을 보유하고,<br>통신·금융·공공·의료·교육 산업의 인증·증명 솔루션을 제공합니다.',
     partnerTitle:'검증된 기술력, 신뢰할 수 있는 파트너', partnerM1:'성공화 프로젝트', partnerM2:'핵심 산업 분야', partnerM3:'중소벤처기업부 인증',
-    servicesTitle:'제공 서비스', servicesSub:'블록체인 DID 기반 개발·구축·운영을 단일 딜에서 담당합니다',
-    svc1Title:'블록체인 응용 서비스 개발', svc1Desc:'DID·NFT·스마트컨트랙트 등 Web3 핵심 기술 기반 서비스를 설계하고 개발합니다. Hyperledger Fabric과 Ethereum 등 주요 블록체인 플랫폼 기술을 직접 보유합니다.',
-    svc2Title:'모바일 앱 개발', svc2Desc:'사용자 경험(UX)을 최우선으로 설계하는 Android·iOS Native App과 Web App을 개발합니다. DID 기반 인증 모듈을 포함한 보안 특화 모바일 서비스를 구현합니다.',
-    svc3Title:'플랫폼 구축 및 운영 솔루션', svc3Desc:'서비스 기획 단계부터 런칭, 운영, 고도화까지 원스톱으로 지원합니다. 맞춤형 VNC 기반 솔루션 및 파트너 연계 통합까지 담당합니다.',
+    servicesTitle:'핵심 기술 및 제공 서비스', servicesSub:'블록체인 기반 디지털 서비스 구축을 위한 핵심 기술을 제공합니다',
+    svc1Title:'블록체인 DID', svc1Sub:'Web3 인프라 기술', svc1Desc:'DID·NFT·스마트컨트랙트 등 Web3 핵심 기술 기반 서비스를 설계하고 개발합니다. Hyperledger Fabric과 Ethereum 등 주요 블록체인 플랫폼 기술을 직접 보유합니다.',
+    svc2Title:'모바일·서비스 개발', svc2Sub:'UX 중심 플랫폼 구축', svc2Desc:'사용자 경험(UX)을 최우선으로 설계하는 Android·iOS Native App과 Web App을 개발합니다. DID 기반 인증 모듈을 포함한 보안 특화 모바일 서비스를 구현합니다.',
+    svc3Title:'플랫폼 구축 및', svc3Sub:'운영 솔루션', svc3Desc:'서비스 기획 단계부터 런칭, 운영, 고도화까지 원스톱으로 지원합니다. 맞춤형 VNC 기반 솔루션 및 파트너 연계 통합까지 담당합니다.',
     aboutLine1:'Web3 기술로', aboutLine2:'<span>산업의 신뢰 인프라</span>를', aboutLine3:'설계합니다',
     aboutSub:'(주)비디젠(BDGen)은 2019년 설립 이후 블록체인 응용 서비스 상용화에 집중해온 전문 기업입니다. DID·NFT·Passkey 등 Web3 핵심 기술을 실제 산업에 구현하며 신뢰할 수 있는 디지털 환경을 만들어 나가고 있습니다.',
     whyTitle:'비디젠이 <span>강한 이유</span> 6가지', whySub:'수년간 축적된 기술 역량과 상용화 경험이 만드는 경쟁력',
@@ -1686,17 +2002,19 @@ var I18N = {
     ref3Tag:'블록체인 · 전자계약', ref3Proj:'블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축. 공공 행정 디지털 전환 선도.',
     ref4Tag:'블록체인 · STO', ref4Proj:'공익적 토큰증권 플랫폼(STO) 구축 사업 참여기관 선정. 블록체인 기반 증권형 토큰 발행·거래 시스템.',
     ref5Tag:'블록체인 · 의약품관리', ref5Proj:'블록체인 기반 마약류 의약품 관리 플랫폼 개발. 유통 이력의 완전한 추적과 위변조 방지 실현.',
-    ref6Tag:'DID · 의료인증', ref6Proj:'DID 기반 백신접종증명 서비스 개발. 개인 의료 정보를 안전하게 보관하고 선택적으로 제출.'
+    ref6Tag:'DID · 의료인증', ref6Proj:'DID 기반 백신접종증명 서비스 개발. 개인 의료 정보를 안전하게 보관하고 선택적으로 제출.',
+    careersTitle:'채용', careersSub:'준비 중입니다.'
   },
   en: {
-    'nav.services':'Services','nav.solutions':'Solutions','nav.capability':'Capability','nav.reference':'Reference','nav.news':'News',
+    'nav.about':'Company','nav.about.history':'History','nav.about.awards':'Certification & Awards','nav.about.ci':'CI','nav.about.intro':'About BDGen',
+    'nav.business':'Business','nav.solution':'Solution','nav.solution.genid':'GenID','nav.solution.passkey':'Passkey','nav.reference':'Reference','nav.careers':'Careers',
     hero1:'Digital Identity', hero2:' technology', hero3:'Designing trust for industry.',
     heroSub:'BDGen holds DID·Passkey·blockchain technologies and provides authentication and verification solutions for telecom, finance, public, healthcare, and education industries.',
     partnerTitle:'Proven technology, a partner you can trust', partnerM1:'Successful projects', partnerM2:'Core industries', partnerM3:'INNOBIZ certified',
-    servicesTitle:'Services', servicesSub:'We deliver blockchain DID development, deployment, and operations in a single engagement.',
-    svc1Title:'Blockchain application development', svc1Desc:'We design and develop services based on Web3 technologies including DID, NFT, and smart contracts. We possess direct expertise in major blockchain platforms including Hyperledger Fabric and Ethereum.',
-    svc2Title:'Mobile app development', svc2Desc:'We develop Android·iOS Native Apps and Web Apps with UX as top priority. We implement security-focused mobile services including DID-based authentication modules.',
-    svc3Title:'Platform deployment and operations', svc3Desc:'We provide end-to-end support from service planning through launch, operations, and enhancement. Custom VNC-based solutions and partner integration.',
+    servicesTitle:'Core technologies and services', servicesSub:'We provide core technologies for building blockchain-based digital services.',
+    svc1Title:'Blockchain DID', svc1Sub:'Web3 infrastructure', svc1Desc:'We design and develop services based on Web3 technologies including DID, NFT, and smart contracts. We possess direct expertise in major blockchain platforms including Hyperledger Fabric and Ethereum.',
+    svc2Title:'Mobile & service development', svc2Sub:'UX-centric platform', svc2Desc:'We develop Android·iOS Native Apps and Web Apps with UX as top priority. We implement security-focused mobile services including DID-based authentication modules.',
+    svc3Title:'Platform construction', svc3Sub:'& operations solution', svc3Desc:'We provide end-to-end support from service planning through launch, operations, and enhancement. Custom VNC-based solutions and partner integration.',
     aboutLine1:'Web3 technology', aboutLine2:'Trust infrastructure for industry', aboutLine3:'We design it.',
     aboutSub:'BDGen, founded in 2019, is a specialized company focused on commercializing blockchain applications. We implement core Web3 technologies—DID, NFT, Passkey—into real-world industries to build trusted digital environments.',
     whyTitle:'Why BDGen <span>stands out</span>', whySub:'Competitive edge from years of accumulated technical capability and commercialization experience',
@@ -1724,7 +2042,8 @@ var I18N = {
     ref3Tag:'Blockchain · E-contract', ref3Proj:'Blockchain-based public job electronic labor contract and history platform. Leading public sector digital transformation.',
     ref4Tag:'Blockchain · STO', ref4Proj:'Selected for public-interest token securities (STO) platform. Blockchain-based security token issuance and trading system.',
     ref5Tag:'Blockchain · Drug management', ref5Proj:'Blockchain-based controlled substance management platform. Complete traceability and counterfeit prevention.',
-    ref6Tag:'DID · Medical verification', ref6Proj:'DID-based vaccination certificate service. Secure storage and selective disclosure of personal medical information.'
+    ref6Tag:'DID · Medical verification', ref6Proj:'DID-based vaccination certificate service. Secure storage and selective disclosure of personal medical information.',
+    careersTitle:'Careers', careersSub:'Coming soon.'
   }
 };
 function applyLang(lang, skipHero){
@@ -1906,14 +2225,24 @@ function applyLang(lang, skipHero){
 
   observer.observe(partnerSection);
 
-  /* 파트너 타이틀 타이핑 인터랙션 */
+  /* 파트너 타이틀 타이핑 (뷰포트 진입할 때마다 재생) */
   var typingEl = document.getElementById('partner-typing');
   if(typingEl){
     var fullText = typingEl.getAttribute('data-text') || '';
+    var isTyping = false;
     var typingObserver = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        if(!entry.isIntersecting) return;
-        typingObserver.unobserve(entry.target);
+        if(!entry.isIntersecting){
+          typingEl.textContent = '';
+          typingEl.classList.add('partner-typing');
+          typingEl.style.borderRight = '';
+          return;
+        }
+        if(isTyping) return;
+        isTyping = true;
+        typingEl.textContent = '';
+        typingEl.classList.add('partner-typing');
+        typingEl.style.borderRight = '';
         var i = 0;
         function type(){
           if(i < fullText.length){
@@ -1923,11 +2252,12 @@ function applyLang(lang, skipHero){
           } else {
             typingEl.classList.remove('partner-typing');
             typingEl.style.borderRight = 'none';
+            isTyping = false;
           }
         }
         type();
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.2 });
     typingObserver.observe(partnerSection);
   }
 })();

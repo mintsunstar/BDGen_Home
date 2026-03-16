@@ -245,6 +245,11 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   display: flex; align-items: center; margin-right: 48px; flex-shrink: 0;
   position: relative;
 }
+.gnb-logo-hidden-intro {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
 .gnb-logo-img {
   height: 32px; width: auto; display: block; transition: opacity 0.3s;
 }
@@ -442,6 +447,46 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   max-width: var(--container-max); width: 100%; margin: 0 auto;
   padding: 0 var(--container-padding-x);
   box-sizing: border-box;
+}
+.hero-logo-intro {
+  position: absolute;
+  top: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  animation: heroLogoIntro 3.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+.hero-logo-intro img {
+  height: 52px;
+  width: auto;
+  display: block;
+}
+@media (max-width: 767px) {
+  .hero-logo-intro {
+    top: -74px;
+  }
+  .hero-logo-intro img {
+    height: 42px;
+  }
+}
+@keyframes heroLogoIntro {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -10px) scale(1);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-120%, -35px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-210%, -70px) scale(0.8);
+  }
 }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -1745,7 +1790,7 @@ footer {
 <!-- ===== GNB (Semantic Header + Nav) ===== -->
 <header class="gnb" id="gnb" role="banner">
   <div class="gnb-inner container">
-    <a href="#hero" class="gnb-logo" aria-label="BDGen 홈">
+    <a href="#hero" class="gnb-logo gnb-logo-hidden-intro" aria-label="BDGen 홈">
       <img src="assets/logo_w.svg" alt="BDGen" class="gnb-logo-img gnb-logo-default">
       <img src="assets/logo_b.svg" alt="" class="gnb-logo-img gnb-logo-hover" aria-hidden="true">
     </a>
@@ -1842,6 +1887,9 @@ footer {
   <canvas id="hero-canvas"></canvas>
   <div class="hero-bg-gradient"></div>
   <div class="hero-content">
+    <div class="hero-logo-intro">
+      <img src="assets/logo_w.svg" alt="BDGen">
+    </div>
     <h1 id="hero-title" class="hero-title">
       <span class="hero-line1"><span class="gradient-text"><span id="hero-typing-1"></span></span><span id="hero-typing-2"></span></span><br>
       <span class="hero-line2"><span id="hero-typing-3" class="hero-typing-cursor"></span></span>
@@ -2904,6 +2952,16 @@ function applyLang(lang, skipHero){
     el3.style.borderRight = 'none';
   } else {
     setTimeout(run, 600);
+  }
+
+  /* 헤더 로고 인트로: 처음 로드 시 히어로 상단에 로고가 나타났다 헤더 위치로 자연스럽게 전환 */
+  var heroIntroLogo = document.querySelector('.hero-logo-intro');
+  var gnbLogo = document.querySelector('.gnb-logo');
+  if(heroIntroLogo && gnbLogo){
+    heroIntroLogo.addEventListener('animationend', function(){
+      gnbLogo.classList.remove('gnb-logo-hidden-intro');
+      heroIntroLogo.style.display = 'none';
+    }, { once: true });
   }
 })();
 

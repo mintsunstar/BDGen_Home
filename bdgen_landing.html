@@ -390,20 +390,25 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   white-space: nowrap; pointer-events: none; user-select: none;
 }
 .gnb-fullmenu-nav {
-  display: grid; grid-template-columns: auto repeat(5, 1fr); gap: 0 48px; align-items: start;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 0 48px; align-items: start;
 }
 .gnb-fullmenu-col {
   display: flex; flex-direction: column; gap: 12px;
 }
 .gnb-fullmenu-col-title {
-  font-size: 1rem; font-weight: 800; color: #111; margin-bottom: 8px; letter-spacing: 0.02em;
+  font-size: 18px; font-weight: 800; color: #111; margin-bottom: 8px; letter-spacing: 0.02em;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
 }
+.gnb-fullmenu-col-title:hover { color: #0065FA; border-bottom-color: #0065FA; }
 .gnb-fullmenu-col a {
-  font-size: 0.95rem; color: #333; text-decoration: none;
-  padding: 4px 0; transition: color 0.2s;
+  font-size: 18px; color: #333; text-decoration: none;
+  padding: 4px 0; transition: color 0.2s, border-color 0.2s;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
 }
-.gnb-fullmenu-col a:hover { color: var(--primary); }
-.gnb-fullmenu-col:first-child .gnb-fullmenu-col-title { font-size: 1.1rem; }
+.gnb-fullmenu-col a:hover { color: #0065FA; border-bottom-color: #0065FA; }
 @media (max-width: 1023px) {
   .gnb-fullmenu-nav { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
 }
@@ -1106,14 +1111,57 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   display: flex;
   flex-direction: column;
 }
+.news-hero-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 40px;
+  position: relative;
+  padding-right: 60px;
+}
 .news-hero-title {
   font-size: 66px;
   font-weight: 800;
   line-height: 1.3;
   color: #111;
-  margin: 0 0 40px 0;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
 }
+.news-hero-arrows {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.news-arrow-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: opacity 0.2s;
+}
+.news-arrow-btn:hover { opacity: 0.85; }
+.news-arrow-btn:active { opacity: 0.95; }
+.news-arrow-btn img { display: block; width: 36px; height: 36px; vertical-align: middle; }
 .news-hero-title span { color: var(--primary); background: linear-gradient(135deg, #00c8ff, #1e63d6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.news-hero-title .news-hero-typing-line2 {
+  color: #111 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: #111 !important;
+}
+.news-hero-typing { border-right: 2px solid var(--primary); animation: blink 0.7s step-end infinite; }
+.news-hero-typing:empty { border-right-color: transparent; }
 .news-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1214,6 +1262,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   text-align: center;
 }
 .cta-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 16px; line-height: 1.2; white-space: nowrap; }
+.cta-typing { border-right: 2px solid rgba(255,255,255,0.6); animation: blink 0.7s step-end infinite; }
+.cta-typing:empty { border-right-color: transparent; }
 .cta-sub { font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 40px; }
 .cta-split {
   text-align: left;
@@ -1249,6 +1299,12 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   font-size: 0.95rem;
   color: var(--text-secondary);
   line-height: 1.6;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+.cta-required-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
   margin-bottom: 16px;
   flex-shrink: 0;
 }
@@ -1294,6 +1350,29 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   background: #fff;
 }
 .cta-form-textarea { min-height: 140px; resize: vertical; }
+.cta-form-agrees {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cta-form-agree {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.cta-form-agree input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #0065FA;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.cta-form-agree span {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.cta-form-agree a { color: var(--primary); text-decoration: underline; }
 /* 문의 보내기: 기본 아웃라인(#0065FA), 양식 전부 작성 시 채워짐 */
 .cta-form-submit {
   position: relative;
@@ -1382,9 +1461,61 @@ footer {
   padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.05);
   font-size: 0.8rem; color: var(--text-muted);
 }
+.footer-bottom-right { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
 .footer-bottom-links { display: flex; gap: 20px; }
 .footer-bottom-links a { color: var(--text-muted); transition: color 0.3s; }
 .footer-bottom-links a:hover { color: var(--text-secondary); }
+
+/* 푸터 패밀리사이트 드롭다운 (위로 열림) */
+.footer-family-site {
+  position: relative;
+  display: inline-block;
+}
+.footer-family-site-trigger {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.9rem; font-weight: 600; color: #0065FA;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-family);
+  padding: 8px 12px;
+  transition: opacity 0.2s;
+}
+.footer-family-site-trigger:hover { opacity: 0.9; }
+.footer-family-site-trigger svg {
+  width: 12px; height: 12px;
+  transition: transform 0.2s;
+}
+.footer-family-site.open .footer-family-site-trigger svg { transform: rotate(180deg); } /* 열리면 아래로 */
+.footer-family-site-list {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 4px;
+  min-width: 160px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+  z-index: 10;
+}
+.footer-family-site.open .footer-family-site-list {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.footer-family-site-list a {
+  display: block;
+  padding: 10px 16px;
+  font-size: 0.9rem; color: #111;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.footer-family-site-list a:hover { background: rgba(0,101,250,0.08); color: #0065FA; }
 
 /* Back to top */
 .back-top {
@@ -1675,9 +1806,6 @@ footer {
     <div class="gnb-fullmenu-watermark" aria-hidden="true">BDGen</div>
     <nav class="gnb-fullmenu-nav">
       <div class="gnb-fullmenu-col">
-        <span class="gnb-fullmenu-col-title">BDGen</span>
-      </div>
-      <div class="gnb-fullmenu-col">
         <span class="gnb-fullmenu-col-title" data-i18n="nav.about">회사소개</span>
         <a href="pages/about-history.html" data-i18n="nav.about.history">연혁</a>
         <a href="pages/about-awards.html" data-i18n="nav.about.awards">인증·수상</a>
@@ -1749,7 +1877,7 @@ footer {
         <span class="partner-metric-label" data-i18n="partnerM2">핵심 산업 분야</span>
       </li>
       <li class="partner-metric">
-        <span class="partner-metric-value" data-metric-type="text">이노비즈</span>
+        <span class="partner-metric-value" data-metric-type="text" data-i18n="partnerV3">이노비즈</span>
         <span class="partner-metric-label" data-i18n="partnerM3">중소벤처기업부 인증</span>
       </li>
     </ul>
@@ -2033,7 +2161,13 @@ footer {
         </a>
       </div>
       <div class="news-hero-text">
-        <h2 id="news-title" class="news-hero-title reveal reveal-delay-1" data-i18n="newsTitle">비디젠의 <span>새로운 소식을</span><br>전해드립니다.</h2>
+        <div class="news-hero-header">
+          <h2 id="news-title" class="news-hero-title reveal reveal-delay-1"><span id="news-hero-typing-1" class="news-hero-typing" data-text="비디젠의 새로운 소식을" aria-hidden="false"></span><br><span id="news-hero-typing-2" class="news-hero-typing news-hero-typing-line2" data-text="전해드립니다." aria-hidden="false"></span></h2>
+          <div class="news-hero-arrows reveal reveal-delay-1">
+            <button type="button" class="news-arrow-btn news-arrow-prev" aria-label="이전 소식"><img src="assets/arrow-left.svg" width="36" height="36" alt=""></button>
+            <button type="button" class="news-arrow-btn news-arrow-next" aria-label="다음 소식"><img src="assets/arrow-right.svg" width="36" height="36" alt=""></button>
+          </div>
+        </div>
         <div class="news-grid" data-content-source="news">
           <a href="https://www.pointdaily.co.kr/news/articleView.html?idxno=221889" class="news-card reveal reveal-delay-1" target="_blank" rel="noopener noreferrer" title="포인트데일리 기사 보기 (2번)">
             <div class="news-thumb">
@@ -2089,7 +2223,7 @@ footer {
   <div class="container">
   <div class="cta-content">
     <div class="section-label reveal" style="justify-content:center">CONTACT</div>
-    <h2 id="cta-title" class="cta-title reveal reveal-delay-1" data-i18n="ctaTitle">프로젝트를 시작할 준비가 되셨나요?</h2>
+    <h2 id="cta-title" class="cta-title reveal reveal-delay-1"><span id="cta-typing" class="cta-typing" data-text="프로젝트를 시작할 준비가 되셨나요?"></span></h2>
     <p class="cta-sub reveal reveal-delay-2" data-i18n="ctaSub">도입 검토부터 기술 상담까지, 비디젠 전문가가 함께합니다.</p>
     <div class="cta-split reveal reveal-delay-3">
       <div class="cta-form-wrap">
@@ -2128,12 +2262,23 @@ footer {
         <label for="cta-message" class="cta-form-label" data-i18n="ctaMsg">문의 내용</label>
         <textarea id="cta-message" name="message" class="cta-form-textarea" placeholder="프로젝트 개요, 도입 목적, 일정 등 자유롭게 작성해 주세요." required></textarea>
       </div>
+      <div class="cta-form-agrees">
+        <label class="cta-form-agree">
+          <input type="checkbox" id="cta-agree-privacy" name="agree_privacy" required aria-required="true">
+          <span>개인정보 제공 및 활용동의 <em>(필수)</em></span>
+        </label>
+        <label class="cta-form-agree">
+          <input type="checkbox" id="cta-agree-marketing" name="agree_marketing" value="Y">
+          <span>마케팅 수신동의</span>
+        </label>
+      </div>
       <button type="submit" class="cta-form-submit" data-i18n="ctaSubmit">문의 보내기</button>
         </form>
       </div>
       <div class="cta-map-wrap">
         <h3 class="cta-map-title">오시는 길</h3>
         <p class="cta-address">서울 구로구 디지털로26길 43, R동 304호</p>
+        <p class="cta-required-note">*표시는 필수 입력 항목입니다.</p>
         <iframe class="cta-map-embed" src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8+%EA%B5%AC%EB%A1%9C%EA%B5%AC+%EB%94%94%EC%A7%80%ED%84%B8%EB%A1%9C26%EA%B8%B8+43+R%EB%8F%99+304%ED%98%B8&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="비디젠 오시는 길 지도"></iframe>
       </div>
     </div>
@@ -2191,9 +2336,23 @@ footer {
     </div>
     <div class="footer-bottom">
       <span>© 2024 ㈜비디젠. All rights reserved.</span>
-      <div class="footer-bottom-links">
-        <a href="#" data-placeholder="href" data-i18n="footerPolicy" title="TODO: 개인정보처리방침 페이지 URL 확정 후 연결">개인정보처리방침</a>
-        <a href="#" data-placeholder="href" data-i18n="footerTerms" title="TODO: 이용약관 페이지 URL 확정 후 연결">이용약관</a>
+      <div class="footer-bottom-right">
+        <div class="footer-family-site" id="footerFamilySite">
+          <button type="button" class="footer-family-site-trigger" aria-expanded="false" aria-haspopup="true" aria-label="패밀리 사이트 선택">
+            Family Site
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 9l-6 6-6-6"/></svg>
+          </button>
+          <ul class="footer-family-site-list" role="menu">
+            <li role="none"><a href="https://www.bluedigm.com/" role="menuitem" target="_blank" rel="noopener">BD Convergence</a></li>
+            <li role="none"><a href="https://www.bluedigm.co.kr/" role="menuitem" target="_blank" rel="noopener">Bluedigm</a></li>
+            <li role="none"><a href="https://www.beyondigital.co.kr/" role="menuitem" target="_blank" rel="noopener">BD</a></li>
+            <li role="none"><a href="https://dtinc.co.kr/" role="menuitem" target="_blank" rel="noopener">DT</a></li>
+          </ul>
+        </div>
+        <div class="footer-bottom-links">
+          <a href="#" data-placeholder="href" data-i18n="footerPolicy" title="TODO: 개인정보처리방침 페이지 URL 확정 후 연결">개인정보처리방침</a>
+          <a href="#" data-placeholder="href" data-i18n="footerTerms" title="TODO: 이용약관 페이지 URL 확정 후 연결">이용약관</a>
+        </div>
       </div>
     </div>
   </div>
@@ -2441,16 +2600,18 @@ footer {
   var emailEl = document.getElementById('cta-email');
   var messageEl = document.getElementById('cta-message');
   var typeEl = document.getElementById('cta-type');
+  var agreePrivacyEl = document.getElementById('cta-agree-privacy');
   function checkValid(){
     if(!submitBtn) return;
     var nameOk = nameEl && nameEl.value.trim() !== '';
     var emailOk = emailEl && emailEl.value.trim() !== '';
     var messageOk = messageEl && messageEl.value.trim() !== '';
     var typeOk = typeEl && typeEl.value !== '';
-    submitBtn.classList.toggle('valid', nameOk && emailOk && messageOk && typeOk);
+    var agreeOk = agreePrivacyEl && agreePrivacyEl.checked;
+    submitBtn.classList.toggle('valid', nameOk && emailOk && messageOk && typeOk && agreeOk);
   }
   if(form){
-    [nameEl, emailEl, messageEl, typeEl].forEach(function(el){
+    [nameEl, emailEl, messageEl, typeEl, agreePrivacyEl].forEach(function(el){
       if(el){ el.addEventListener('input', checkValid); el.addEventListener('change', checkValid); }
     });
     checkValid();
@@ -2529,7 +2690,7 @@ var I18N = {
     'nav.business':'사업영역','nav.solution':'솔루션','nav.solution.genid':'GenID','nav.solution.passkey':'Passkey','nav.reference':'레퍼런스','nav.careers':'채용',
     hero1:'디지털 신원', hero2:' 기술로', hero3:'산업의 신뢰를 설계합니다.',
     heroSub:'㈜비디젠은 DID·Passkey·블록체인 기술을 보유하고,<br>통신·금융·공공·의료·교육 산업의 인증·증명 솔루션을 제공합니다.',
-    partnerTitle:'검증된 기술력, 신뢰할 수 있는 파트너', partnerM1:'성공화 프로젝트', partnerM2:'핵심 산업 분야', partnerM3:'중소벤처기업부 인증',
+    partnerTitle:'검증된 기술력, 신뢰할 수 있는 파트너', partnerM1:'성공화 프로젝트', partnerM2:'핵심 산업 분야', partnerM3:'중소벤처기업부 인증', partnerV3:'이노비즈',
     servicesTitle:'핵심 기술 및 제공 서비스', servicesSub:'블록체인 기반 디지털 서비스 구축을 위한 핵심 기술을 제공합니다',
     svc1Title:'블록체인 DID', svc1Sub:'Web3 인프라 기술', svc1Desc:'DID·NFT·스마트컨트랙트 등 Web3 핵심 기술 기반 서비스를 설계하고 개발합니다. Hyperledger Fabric과 Ethereum 등 주요 블록체인 플랫폼 기술을 직접 보유합니다.',
     svc2Title:'모바일·서비스 개발', svc2Sub:'UX 중심 플랫폼 구축', svc2Desc:'사용자 경험(UX)을 최우선으로 설계하는 Android·iOS Native App과 Web App을 개발합니다. DID 기반 인증 모듈을 포함한 보안 특화 모바일 서비스를 구현합니다.',
@@ -2569,7 +2730,7 @@ var I18N = {
     'nav.business':'Business','nav.solution':'Solution','nav.solution.genid':'GenID','nav.solution.passkey':'Passkey','nav.reference':'Reference','nav.careers':'Careers',
     hero1:'Digital Identity', hero2:' technology', hero3:'Designing trust for industry.',
     heroSub:'BDGen holds DID·Passkey·blockchain technologies and provides authentication and verification solutions for telecom, finance, public, healthcare, and education industries.',
-    partnerTitle:'Proven technology, a partner you can trust', partnerM1:'Successful projects', partnerM2:'Core industries', partnerM3:'INNOBIZ certified',
+    partnerTitle:'Proven technology, a partner you can trust', partnerM1:'Successful projects', partnerM2:'Core industries', partnerM3:'INNOBIZ certified', partnerV3:'INNOBIZ',
     servicesTitle:'Core technologies and services', servicesSub:'We provide core technologies for building blockchain-based digital services.',
     svc1Title:'Blockchain DID', svc1Sub:'Web3 infrastructure', svc1Desc:'We design and develop services based on Web3 technologies including DID, NFT, and smart contracts. We possess direct expertise in major blockchain platforms including Hyperledger Fabric and Ethereum.',
     svc2Title:'Mobile & service development', svc2Sub:'UX-centric platform', svc2Desc:'We develop Android·iOS Native Apps and Web Apps with UX as top priority. We implement security-focused mobile services including DID-based authentication modules.',
@@ -2624,11 +2785,25 @@ function applyLang(lang, skipHero){
     btn.setAttribute('aria-selected', btn.getAttribute('data-lang') === lang);
   });
   var pt = document.getElementById('partner-typing'); if(pt) { pt.setAttribute('data-text', T.partnerTitle); pt.textContent = T.partnerTitle; pt.classList.remove('partner-typing'); pt.style.borderRight = 'none'; }
+  /* 두 번째 섹션(PARTNER) 지표 라벨 영문/한글 확실히 반영 */
+  document.querySelectorAll('#partner .partner-metric-label[data-i18n]').forEach(function(el){
+    var key = el.getAttribute('data-i18n'); var val = T[key]; if(val) el.textContent = val;
+  });
   var st = document.getElementById('services-typing-title'); var ss = document.getElementById('services-typing-sub');
   if(st) { st.setAttribute('data-text', T.servicesTitle); if(st.textContent) { st.textContent = T.servicesTitle; st.classList.remove('services-typing'); st.style.borderRight = 'none'; } }
   if(ss) { ss.setAttribute('data-text', T.servicesSub); if(ss.textContent) { ss.textContent = T.servicesSub; ss.classList.remove('services-typing'); ss.style.borderRight = 'none'; } }
+  var newsLine1 = document.getElementById('news-hero-typing-1');
+  var newsLine2 = document.getElementById('news-hero-typing-2');
+  if(newsLine1 && newsLine2 && T.newsTitle) {
+    var newsPlain = T.newsTitle.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    var idx = lang === 'en' ? newsPlain.indexOf(' from') : newsPlain.indexOf(' 전해');
+    var line1 = idx >= 0 ? newsPlain.slice(0, idx) : newsPlain;
+    var line2 = idx >= 0 ? newsPlain.slice(idx + 1) : '';
+    newsLine1.setAttribute('data-text', line1);
+    newsLine2.setAttribute('data-text', line2);
+  }
   var suffixEl = document.querySelector('.partner-metric-value[data-suffix="개"]'); if(suffixEl) suffixEl.setAttribute('data-suffix', lang==='ko'?'개':'');
-  if(skipHero){ var ab=document.querySelector('#about-bdgen-title'); if(ab&&T.aboutLine1) ab.innerHTML='<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>'; var ph=document.getElementById('cta-message'); if(ph&&T.ctaMsgPlaceholder) ph.placeholder=T.ctaMsgPlaceholder; var sel=document.getElementById('cta-type'); if(sel&&sel.options[0]&&T.ctaPlaceholder) sel.options[0].textContent=T.ctaPlaceholder; return; }
+  if(skipHero){ var ab=document.querySelector('#about-bdgen-title'); if(ab&&T.aboutLine1) ab.innerHTML='<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>'; var ph=document.getElementById('cta-message'); if(ph&&T.ctaMsgPlaceholder) ph.placeholder=T.ctaMsgPlaceholder; var sel=document.getElementById('cta-type'); if(sel&&sel.options[0]&&T.ctaPlaceholder) sel.options[0].textContent=T.ctaPlaceholder; var ctaT=document.getElementById('cta-typing'); if(ctaT&&T.ctaTitle) ctaT.setAttribute('data-text',T.ctaTitle); return; }
   var heroSub = document.querySelector('.hero-sub'); if(heroSub) heroSub.innerHTML = T.heroSub;
   var el1=document.getElementById('hero-typing-1'),el2=document.getElementById('hero-typing-2'),el3=document.getElementById('hero-typing-3');
   if(el1&&el2&&el3){ el1.textContent=T.hero1; el2.textContent=T.hero2; el3.textContent=T.hero3; el3.classList.remove('hero-typing-cursor'); el3.style.borderRight='none'; }
@@ -2637,6 +2812,13 @@ function applyLang(lang, skipHero){
   }
   var ph = document.getElementById('cta-message'); if(ph && T.ctaMsgPlaceholder) ph.placeholder = T.ctaMsgPlaceholder;
   var sel = document.getElementById('cta-type'); if(sel){ var opt0 = sel.options[0]; if(opt0 && T.ctaPlaceholder) opt0.textContent = T.ctaPlaceholder; }
+  var ctaTypingEl = document.getElementById('cta-typing');
+  if(ctaTypingEl && T.ctaTitle) {
+    ctaTypingEl.setAttribute('data-text', T.ctaTitle);
+    ctaTypingEl.textContent = T.ctaTitle;
+    ctaTypingEl.classList.remove('cta-typing');
+    ctaTypingEl.style.borderRight = 'none';
+  }
 }
 (function(){
   var sw = document.querySelector('.lang-switcher');
@@ -2659,6 +2841,24 @@ function applyLang(lang, skipHero){
     sw.setAttribute('aria-expanded', 'false');
   });
   if(LANG !== 'ko') applyLang(LANG, true);
+})();
+
+/* ---------- 푸터 패밀리사이트 드롭다운 ---------- */
+(function(){
+  var wrap = document.getElementById('footerFamilySite');
+  if(!wrap) return;
+  var trigger = wrap.querySelector('.footer-family-site-trigger');
+  var list = wrap.querySelector('.footer-family-site-list');
+  if(!trigger || !list) return;
+  trigger.addEventListener('click', function(e){
+    e.stopPropagation();
+    var isOpen = wrap.classList.toggle('open');
+    trigger.setAttribute('aria-expanded', isOpen);
+  });
+  document.addEventListener('click', function(){
+    wrap.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+  });
 })();
 
 /* ---------- Hero 타이틀 타이핑 인터랙션 ---------- */
@@ -2792,10 +2992,9 @@ function applyLang(lang, skipHero){
 
   observer.observe(partnerSection);
 
-  /* 파트너 타이틀 타이핑 (뷰포트 진입할 때마다 재생) */
+  /* 파트너 타이틀 타이핑 (뷰포트 진입할 때마다 재생, data-text는 언어 전환 시 applyLang에서 갱신됨) */
   var typingEl = document.getElementById('partner-typing');
   if(typingEl){
-    var fullText = typingEl.getAttribute('data-text') || '';
     var isTyping = false;
     var typingObserver = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
@@ -2806,6 +3005,7 @@ function applyLang(lang, skipHero){
           return;
         }
         if(isTyping) return;
+        var fullText = typingEl.getAttribute('data-text') || '';
         isTyping = true;
         typingEl.textContent = '';
         typingEl.classList.add('partner-typing');
@@ -2880,6 +3080,113 @@ function applyLang(lang, skipHero){
       });
     }, { threshold: 0.2 });
     servicesTypingObserver.observe(servicesSection);
+  }
+
+  /* 뉴스 헤드타이틀 타이핑 (1줄: 비디젠의 새로운 소식을 / 2줄: 전해드립니다. 검은색, 연속 반복) */
+  var newsSection = document.getElementById('news');
+  var newsLine1 = document.getElementById('news-hero-typing-1');
+  var newsLine2 = document.getElementById('news-hero-typing-2');
+  if(newsSection && newsLine1 && newsLine2){
+    var newsTypingStarted = false;
+    var newsTypingSpeed = 80;
+    var newsTypingPause = 2000;
+    var newsTypingGap = 500;
+    function typeNewsLoop(){
+      var text1 = (newsLine1.getAttribute('data-text') || '').trim();
+      var text2 = (newsLine2.getAttribute('data-text') || '').trim();
+      if(!text1 && !text2) return;
+      newsLine1.textContent = '';
+      newsLine2.textContent = '';
+      newsLine1.classList.add('news-hero-typing');
+      newsLine2.classList.add('news-hero-typing');
+      newsLine1.style.borderRight = '';
+      newsLine2.style.borderRight = '';
+      var i = 0, j = 0;
+      function typeLine1(){
+        if(i < text1.length){
+          newsLine1.textContent += text1.charAt(i);
+          i++;
+          setTimeout(typeLine1, newsTypingSpeed);
+        } else {
+          newsLine1.classList.remove('news-hero-typing');
+          newsLine1.style.borderRight = 'none';
+          setTimeout(typeLine2, 150);
+        }
+      }
+      function typeLine2(){
+        if(j < text2.length){
+          newsLine2.textContent += text2.charAt(j);
+          j++;
+          newsLine2.classList.add('news-hero-typing');
+          newsLine2.style.borderRight = '';
+          setTimeout(typeLine2, newsTypingSpeed);
+        } else {
+          newsLine2.classList.remove('news-hero-typing');
+          newsLine2.style.borderRight = 'none';
+          setTimeout(function(){
+            newsLine1.textContent = '';
+            newsLine2.textContent = '';
+            setTimeout(typeNewsLoop, newsTypingGap);
+          }, newsTypingPause);
+        }
+      }
+      typeLine1();
+    }
+    var newsTypingObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting || newsTypingStarted) return;
+        newsTypingStarted = true;
+        if(reducedMotion){
+          newsLine1.textContent = (newsLine1.getAttribute('data-text') || '').trim();
+          newsLine2.textContent = (newsLine2.getAttribute('data-text') || '').trim();
+          newsLine1.classList.remove('news-hero-typing');
+          newsLine2.classList.remove('news-hero-typing');
+          newsLine1.style.borderRight = 'none';
+          newsLine2.style.borderRight = 'none';
+        } else {
+          typeNewsLoop();
+        }
+      });
+    }, { threshold: 0.15 });
+    newsTypingObserver.observe(newsSection);
+  }
+
+  /* CTA 타이틀 타이핑 (뷰포트 진입 시 1회 재생) */
+  var ctaSection = document.getElementById('cta');
+  var ctaTypingEl = document.getElementById('cta-typing');
+  if(ctaSection && ctaTypingEl){
+    var ctaTypingDone = false;
+    var ctaTypingObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting || ctaTypingDone) return;
+        ctaTypingDone = true;
+        var fullText = (ctaTypingEl.getAttribute('data-text') || '').trim();
+        if(!fullText) return;
+        if(reducedMotion){
+          ctaTypingEl.textContent = fullText;
+          ctaTypingEl.classList.remove('cta-typing');
+          ctaTypingEl.style.borderRight = 'none';
+          return;
+        }
+        ctaTypingEl.textContent = '';
+        ctaTypingEl.classList.add('cta-typing');
+        ctaTypingEl.style.borderRight = '';
+        var i = 0;
+        var speed = 70;
+        function type(){
+          if(i < fullText.length){
+            ctaTypingEl.textContent += fullText.charAt(i);
+            i++;
+            setTimeout(type, speed);
+          } else {
+            ctaTypingEl.classList.remove('cta-typing');
+            ctaTypingEl.style.borderRight = 'none';
+          }
+        }
+        type();
+      });
+    }, { threshold: 0.2 });
+    ctaTypingObserver.observe(ctaSection);
   }
 })();
 

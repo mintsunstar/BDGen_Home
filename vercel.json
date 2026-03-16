@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/bdgen_landing.html" }
+  ]
+}

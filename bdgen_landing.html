@@ -12,8 +12,8 @@
 /* ===== DESIGN TOKENS (실무용 토큰화) ===== */
 :root {
   /* Color */
-  --primary: #00C8FF;
-  --primary-dark: #0090CC;
+  --primary: #0065FA;
+  --primary-dark: #0052C9;
   --accent: #6C3FFF;
   --accent2: #00FFB2;
   --dark: #050B18;
@@ -25,7 +25,7 @@
   --text-secondary: #8FA3C0;
   --text-muted: #5A7090;
   /* Gradient */
-  --gradient-primary: linear-gradient(135deg, #00C8FF 0%, #6C3FFF 100%);
+  --gradient-primary: linear-gradient(135deg, #0065FA 0%, #0052C9 100%);
   --gradient-dark: linear-gradient(180deg, #050B18 0%, #0A1428 100%);
   /* Spacing (rem 기반) */
   --space-xs: 0.25rem;
@@ -123,24 +123,54 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .section-header .section-label { justify-content: center; }
 .section-header .section-sub { margin-left: auto; margin-right: auto; }
 
-/* ===== BUTTONS (터치 영역 44px 이상 확보) ===== */
+/* ===== BUTTONS (공통 300px x 58px) ===== */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
-  gap: 8px; min-height: 44px; min-width: 44px;
-  padding: 14px 28px; border-radius: var(--radius-pill);
+  gap: 8px;
+  width: 300px; height: 58px; min-width: 300px; min-height: 58px;
+  padding: 0 24px;
+  border-radius: var(--radius-pill);
   font-size: 0.95rem; font-weight: 700;
   transition: var(--transition); white-space: nowrap;
 }
 .btn-primary {
-  background: var(--gradient-primary);
-  color: #fff; box-shadow: 0 4px 20px rgba(0,200,255,0.35);
+  background: #0065FA;
+  color: #fff; box-shadow: 0 4px 20px rgba(0,101,250,0.35);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,200,255,0.5); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,101,250,0.5); }
+
+/* 기본: 보더만 / 호버: 물처럼 채워짐 (#0065FA) */
 .btn-outline {
-  border: 1.5px solid rgba(0,200,255,0.5); color: var(--primary);
-  background: rgba(0,200,255,0.05);
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  border: 1.5px solid #0065FA;
+  color: #0065FA;
+  background: transparent;
+  transition: color 0.35s ease, border-color 0.35s ease, transform 0.3s ease;
 }
-.btn-outline:hover { background: rgba(0,200,255,0.12); border-color: var(--primary); transform: translateY(-2px); }
+.btn-outline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  background: #0065FA;
+  border-radius: inherit;
+  z-index: -1;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-outline:hover {
+  color: #fff;
+  border-color: #0065FA;
+  transform: translateY(-2px);
+}
+.btn-outline:hover::before {
+  transform: scaleY(1);
+}
 
 /* ===== LAYOUT ===== */
 .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding-x); }
@@ -440,10 +470,11 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   animation: fadeInUp 0.9s 0.4s ease both;
 }
 .hero-cta {
+  margin-top: 80px;
   display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
   animation: fadeInUp 0.9s 0.6s ease both;
 }
-.hero-cta .btn { padding: 14px 56px; min-width: 280px; }
+.hero-cta .btn { padding: 0 24px; }
 .hero-scroll {
   position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
   z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 12px;
@@ -604,7 +635,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
    SERVICES (핵심 기술 및 제공 서비스)
 ======================== */
 #services {
-  padding: 170px 0 120px; background: #ffffff;
+  padding: 170px 0 220px; background: #ffffff; /* 하단 100px 여백 추가 (120+100) */
 }
 .section-services .section-label { color: var(--primary); }
 .section-services .section-title { font-size: 74px; color: #000; }
@@ -895,7 +926,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   font-size: 1.5rem; color: var(--primary); padding: 0 8px;
   flex-shrink: 0;
 }
-.genid-cta-wrap { text-align: center; margin-top: 48px; }
+.genid-cta-wrap { text-align: center; margin-top: 80px; }
 
 /* ========================
    WHY BDGEN (Staggered + Glassmorphism)
@@ -1035,29 +1066,98 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .ref-card-project { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; }
 .ref-card-period { font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
 .ref-card-period::before { content: ''; width: 16px; height: 1px; background: var(--text-muted); }
-.ref-more-wrap { text-align: center; margin-top: 40px; }
+.ref-more-wrap { text-align: center; margin-top: 80px; }
 
 /* ========================
-   NEWS
+   NEWS (참고: preview (5).html – 좌 히어로 이미지 + 우 제목·3열 뉴스)
 ======================== */
-#news { padding: 120px 0; background: var(--dark2); }
-.news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+#news { padding: 220px 0; background: #fff; } /* 상하 100px 추가 (120+100) */
+#news .news-card { background: #fff; border-color: rgba(0,0,0,0.08); }
+#news .news-card:hover { border-color: rgba(0,200,255,0.4); box-shadow: 0 20px 50px rgba(0,0,0,0.12); }
+#news .news-title { color: #111; }
+#news .news-date { color: #666; }
+#news .news-excerpt { color: #555; }
+.news-hero {
+  display: flex;
+  gap: 60px;
+  align-items: stretch;
+  margin-top: 48px;
+}
+.news-hero-image {
+  width: 380px;
+  min-width: 380px;
+  flex-shrink: 0;
+}
+.news-hero-image .news-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.news-hero-image .news-thumb {
+  aspect-ratio: 380/270;
+  min-height: 270px;
+  flex: 1;
+}
+.news-hero-image .news-body { padding: 28px 24px; }
+.news-hero-image .news-title { font-size: 1.05rem; }
+.news-hero-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.news-hero-title {
+  font-size: 66px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #111;
+  margin: 0 0 40px 0;
+}
+.news-hero-title span { color: var(--primary); background: linear-gradient(135deg, #00c8ff, #1e63d6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: auto;
+  align-content: end;
+}
 .news-card {
-  border-radius: var(--radius); overflow: hidden;
-  background: var(--card-bg); border: 1px solid var(--card-border);
-  transition: var(--transition); display: flex; flex-direction: column;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
 }
-.news-card:hover { transform: translateY(-8px); border-color: rgba(0,200,255,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
+.news-card:hover { transform: translateY(-6px); border-color: rgba(0,200,255,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
 .news-thumb {
-  aspect-ratio: 16/9; background: var(--dark3); overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 3rem; position: relative;
+  aspect-ratio: 16/9;
+  background: var(--dark3);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  position: relative;
 }
-.news-thumb-bg {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, var(--dark3), var(--dark2));
+.news-thumb-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--dark3), var(--dark2)); z-index: 0; }
+.news-thumb-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.news-thumb-img[src]:not([src=""]) { z-index: 1; }
+.news-thumb-emoji { position: relative; z-index: 2; }
+.news-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  background: #111;
+  color: #fff;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+  z-index: 2;
 }
-.news-thumb-emoji { position: relative; z-index: 1; }
 .news-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
 .news-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 .news-category {
@@ -1073,6 +1173,23 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   transition: gap 0.3s;
 }
 .news-card:hover .news-link { gap: 10px; }
+/* 우측 3열 카드: 이미지 + 뉴스 배지 + 제목만 강조 (요약/날짜 선택 노출) */
+.news-grid .news-card .news-thumb { aspect-ratio: 1.2; min-height: 180px; }
+.news-grid .news-card .news-body { padding: 16px 18px; }
+.news-grid .news-card .news-title { font-size: 0.9rem; margin-bottom: 0; line-height: 1.45; }
+.news-grid .news-card .news-excerpt { display: none; }
+.news-grid .news-card .news-meta { margin-bottom: 8px; }
+@media (max-width: 1023px) {
+  .news-hero { flex-direction: column; gap: 40px; align-items: flex-start; }
+  .news-hero-text { display: block; }
+  .news-hero-title { font-size: clamp(1.75rem, 5vw, 2.5rem); }
+  .news-grid { margin-top: 40px; align-content: start; grid-template-columns: 1fr; gap: 24px; }
+  .news-hero-image { width: 100%; min-width: 0; }
+  .news-hero-image .news-thumb { min-height: 130px; aspect-ratio: 16/9; }
+}
+@media (max-width: 767px) {
+  .news-grid { grid-template-columns: 1fr; }
+}
 
 /* ========================
    CTA (프로젝트 기술협업 문의하기)
@@ -1090,14 +1207,59 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 }
 .cta-content {
   position: relative; z-index: 1;
-  max-width: 720px; width: 100%;
+  max-width: 1100px; width: 100%;
   margin: 0 auto;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0;
   box-sizing: border-box;
-  text-align: left;
+  text-align: center;
 }
 .cta-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 16px; line-height: 1.2; white-space: nowrap; }
-.cta-sub { font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 48px; }
+.cta-sub { font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 40px; }
+.cta-split {
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: stretch;
+  margin-bottom: 0;
+}
+@media (max-width: 900px) {
+  .cta-split { grid-template-columns: 1fr; gap: 40px; }
+}
+.cta-form-wrap { display: flex; flex-direction: column; }
+.cta-map-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  padding: 24px;
+  box-sizing: border-box;
+}
+.cta-map-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+.cta-address {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+.cta-map-embed {
+  width: 100%;
+  flex: 1;
+  min-height: 220px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: rgba(0,0,0,0.2);
+}
 /* 문의 폼 */
 .cta-form { display: flex; flex-direction: column; gap: 20px; }
 .cta-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -1127,17 +1289,59 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238FA3C0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 18px center; padding-right: 40px;
 }
+.cta-form-select option {
+  color: #000;
+  background: #fff;
+}
 .cta-form-textarea { min-height: 140px; resize: vertical; }
+/* 문의 보내기: 기본 아웃라인(#0065FA), 양식 전부 작성 시 채워짐 */
 .cta-form-submit {
-  margin-top: 8px; width: 100%; min-height: 52px;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  margin-top: 8px;
+  width: 300px; height: 58px; min-height: 58px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--gradient-primary); color: #fff;
-  font-size: 1rem; font-weight: 700; border-radius: var(--radius-pill);
-  transition: var(--transition); border: none; cursor: pointer;
-  font-family: var(--font-family); box-shadow: 0 4px 20px rgba(0,200,255,0.35);
+  border: 1.5px solid #0065FA;
+  color: #0065FA;
+  background: transparent;
+  font-size: 0.95rem; font-weight: 700; border-radius: var(--radius-pill);
+  transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  font-family: var(--font-family);
+  cursor: pointer;
+}
+.cta-form-submit::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 100%;
+  background: #0065FA;
+  border-radius: inherit;
+  z-index: -1;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .cta-form-submit:hover {
-  transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,200,255,0.5);
+  color: #fff;
+  border-color: #0065FA;
+  transform: translateY(-2px);
+}
+.cta-form-submit:hover::before {
+  transform: scaleY(1);
+}
+.cta-form-submit.valid {
+  color: #fff;
+  border-color: #0065FA;
+  background: #0065FA;
+  box-shadow: 0 4px 20px rgba(0,101,250,0.35);
+}
+.cta-form-submit.valid::before {
+  transform: scaleY(1);
+}
+.cta-form-submit.valid:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,101,250,0.5);
 }
 
 /* ========================
@@ -1154,16 +1358,17 @@ footer {
 }
 .footer-brand { }
 .footer-logo {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 1.3rem; font-weight: 900; margin-bottom: 16px;
+  display: inline-block;
+  margin-bottom: 16px;
+  transition: opacity 0.3s;
 }
-.footer-logo-icon {
-  width: 32px; height: 32px; border-radius: 7px;
-  background: var(--gradient-primary);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.95rem; font-weight: 900; color: #fff;
+.footer-logo:hover { opacity: 0.9; }
+.footer-logo-img {
+  display: block;
+  height: 32px;
+  width: auto;
+  max-width: 170px;
 }
-.footer-logo span { background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .footer-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; max-width: 280px; }
 .footer-info { font-size: 0.8rem; color: var(--text-muted); line-height: 1.9; }
 .footer-info a { color: inherit; transition: color 0.3s; }
@@ -1329,7 +1534,7 @@ footer {
   .genid-flow { flex-direction: column; gap: 12px; }
   .genid-flow-step { min-width: 0; padding: 20px 16px; }
   .genid-flow-arrow { transform: rotate(90deg); padding: 8px 0; }
-  .genid-cta-wrap { margin-top: 32px; }
+  .genid-cta-wrap { margin-top: 80px; }
   .why-grid { grid-template-columns: 1fr; row-gap: 16px; column-gap: 0; }
   .why-card-stagger { margin-top: 0; }
   .why-card { padding: 24px 20px; }
@@ -1348,12 +1553,14 @@ footer {
   .news-card .news-body { padding: 20px; }
   .news-title { font-size: 0.95rem; }
   .news-excerpt { font-size: 0.8rem; margin-bottom: 16px; }
-  .ref-more-wrap { margin-top: 32px; }
+  .ref-more-wrap { margin-top: 80px; }
   #cta { padding: 60px 0; }
   .cta-title { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom: 12px; white-space: normal; }
-  .cta-sub { font-size: 0.9rem; margin-bottom: 28px; }
+  .cta-sub { font-size: 0.9rem; margin-bottom: 80px; }
   .cta-buttons { flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 32px; }
   .cta-buttons .btn { width: 100%; justify-content: center; }
+  .btn { width: 100%; min-width: 0; height: 58px; min-height: 58px; }
+  .cta-form-submit { width: 100%; min-width: 0; }
   .cta-contact-row { flex-direction: column; gap: 16px; align-items: center; }
   .cta-contact-item { font-size: 0.85rem; }
   footer { padding: 36px 0 24px; }
@@ -1397,6 +1604,7 @@ footer {
 @media (max-width: 360px) {
   .container { padding: 0 1rem; }
   .hero-cta .btn, .cta-buttons .btn { padding: 12px 20px; font-size: 0.9rem; }
+  .btn { height: 58px; min-height: 58px; }
   .genid-tab { padding: 10px 16px; font-size: 0.8rem; }
 }
 </style>
@@ -1804,58 +2012,68 @@ footer {
   </div>
 </section>
 
-<!-- ===== NEWS - data-api: news[] { category, date, title, excerpt, url, thumb? } / 운영: 상세 페이지 없으면 #news 앵커 유지 ===== -->
+<!-- ===== NEWS 1: 한스경제(좌 대형) / 2~4: 포인트데일리·문화일보·뉴데일리(우 3열) ===== -->
 <section id="news" class="section section-alt" aria-labelledby="news-title">
   <div class="container">
-    <div class="section-header">
-      <div class="section-label reveal">NEWS & INSIGHTS</div>
-      <h2 id="news-title" class="section-title reveal reveal-delay-1" data-i18n="newsTitle">비디젠 <span>소식</span></h2>
-      <p class="section-sub reveal reveal-delay-2" data-i18n="newsSub">수주·파트너십·사업 확장 등 비디젠의 주요 소식을 전합니다</p>
-    </div>
-    <div class="news-grid" data-content-source="news">
-      <div class="news-card reveal">
-        <div class="news-thumb" data-placeholder="thumb">
-          <div class="news-thumb-bg"></div>
-          <div class="news-thumb-emoji" aria-hidden="true">🤝</div>
-        </div>
-        <div class="news-body">
-          <div class="news-meta">
-            <span class="news-category" data-i18n="news1Cat">파트너십</span>
-            <span class="news-date">2024.06.15</span>
+    <div class="news-hero">
+      <div class="news-hero-image reveal">
+        <a href="https://www.hansbiz.co.kr/news/articleView.html?idxno=729523" class="news-card" target="_blank" rel="noopener noreferrer" title="한스경제 기사 보기 (1번)">
+          <div class="news-thumb">
+            <img src="https://cdn.hansbiz.co.kr/news/photo/202501/729523_715873_429.jpg" alt="STO·조각투자 제도권 진입 은행권 시장 경쟁" class="news-thumb-img">
+            <div class="news-thumb-bg" style="background:linear-gradient(135deg,#0A1428,#0F2A50)"></div>
           </div>
-          <h3 class="news-title" data-i18n="news1Title">비디젠–소금광산, 블록체인 기술 R&D 및 서비스 개발 업무 협약 체결</h3>
-          <p class="news-excerpt" data-i18n="news1Excerpt">DID 기술 및 블록체인 인프라 기술 R&D 등 기술 고도화를 통해 급변하는 Web3 환경 전환 시장에 공동 대응한다는 전략으로 MOU를 체결하였습니다.</p>
-          <a href="#news" class="news-link" data-placeholder="href" data-i18n="newsLink" title="TODO: 뉴스 상세 페이지 URL 연결">자세히 보기</a>
-        </div>
+          <div class="news-body">
+            <div class="news-meta">
+              <span class="news-category">뉴스</span>
+              <span class="news-date">2025.01.12</span>
+            </div>
+            <h3 class="news-title">STO·조각투자 '제도권 진입'...은행권 시장 경쟁 격화되나</h3>
+            <p class="news-excerpt">금융당국이 STO와 조각투자 플랫폼을 제도화하겠다고 밝히며 은행권 시장 선점 경쟁이 치열해질 전망이다. NH농협은행은 '2024 블록체인 민간분야 집중·확산사업' 사업자로 선정돼 한국인터넷진흥원, 비디젠 등과 컨소시엄을 구성해 토큰증권 발행 플랫폼을 구축하고 있다.</p>
+          </div>
+        </a>
       </div>
-      <div class="news-card reveal reveal-delay-2">
-        <div class="news-thumb">
-          <div class="news-thumb-bg" style="background:linear-gradient(135deg,#0A1428,#0F1E3A)"></div>
-          <div class="news-thumb-emoji">🏆</div>
-        </div>
-        <div class="news-body">
-          <div class="news-meta">
-            <span class="news-category" data-i18n="news2Cat">수주</span>
-            <span class="news-date">2024.06.01</span>
-          </div>
-          <h3 class="news-title" data-i18n="news2Title">디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관으로 선정</h3>
-          <p class="news-excerpt" data-i18n="news2Excerpt">NIPA(정보통신산업진흥원)가 추진하는 디지털배지 기반 통합 취업지원서비스 구축 사업의 참여기관으로 최종 선정되었습니다.</p>
-          <a href="#news" class="news-link" data-placeholder="href" data-i18n="newsLink" title="TODO: 뉴스 상세 페이지 URL 연결">자세히 보기</a>
-        </div>
-      </div>
-      <div class="news-card reveal reveal-delay-4">
-        <div class="news-thumb">
-          <div class="news-thumb-bg" style="background:linear-gradient(135deg,#100A28,#1A0F3A)"></div>
-          <div class="news-thumb-emoji">💰</div>
-        </div>
-        <div class="news-body">
-          <div class="news-meta">
-            <span class="news-category" data-i18n="news3Cat">사업확장</span>
-            <span class="news-date">2024.05.20</span>
-          </div>
-          <h3 class="news-title" data-i18n="news3Title">공익적 토큰증권 플랫폼(STO) 구축 사업 참여기관으로 선정</h3>
-          <p class="news-excerpt" data-i18n="news3Excerpt">조각투자사업자를 위한 공익적 토큰증권(STO) 플랫폼 구축 사업에 참여기관으로 선정, 블록체인 금융 시장으로의 사업 영역을 확대합니다.</p>
-          <a href="#news" class="news-link" data-placeholder="href" data-i18n="newsLink" title="TODO: 뉴스 상세 페이지 URL 연결">자세히 보기</a>
+      <div class="news-hero-text">
+        <h2 id="news-title" class="news-hero-title reveal reveal-delay-1" data-i18n="newsTitle">비디젠의 <span>새로운 소식을</span><br>전해드립니다.</h2>
+        <div class="news-grid" data-content-source="news">
+          <a href="https://www.pointdaily.co.kr/news/articleView.html?idxno=221889" class="news-card reveal reveal-delay-1" target="_blank" rel="noopener noreferrer" title="포인트데일리 기사 보기 (2번)">
+            <div class="news-thumb">
+              <img src="https://cdn.pointdaily.co.kr/news/photo/202410/221889_213140_934.jpg" alt="367조 시장 STO 사업 확장하는 은행" class="news-thumb-img">
+              <div class="news-thumb-bg" style="background:linear-gradient(135deg,#0A1428,#0F1E3A)"></div>
+            </div>
+            <div class="news-body">
+              <div class="news-meta">
+                <span class="news-category">뉴스</span>
+                <span class="news-date">2024.10.16</span>
+              </div>
+              <h3 class="news-title">'367조 시장' 군침... STO 사업 확장하는 은행, 준비 상황은</h3>
+            </div>
+          </a>
+          <a href="https://www.munhwa.com/article/11439059" class="news-card reveal reveal-delay-2" target="_blank" rel="noopener noreferrer" title="문화일보 기사 보기 (3번)">
+            <div class="news-thumb">
+              <img src="https://wimg.munhwa.com/news/legacy/gen_news/202407/2024070301031805054002_b.jpg" alt="비디젠 문화일보 기사" class="news-thumb-img">
+              <div class="news-thumb-bg" style="background:linear-gradient(135deg,#100A28,#1A0F3A)"></div>
+            </div>
+            <div class="news-body">
+              <div class="news-meta">
+                <span class="news-category">뉴스</span>
+                <span class="news-date">2024</span>
+              </div>
+              <h3 class="news-title">내 손안의 '올인원 은행'… 딥러닝 활용 절세부터 투자까지</h3>
+            </div>
+          </a>
+          <a href="https://biz.newdaily.co.kr/site/data/html/2024/07/02/2024070200204.html" class="news-card reveal reveal-delay-3" target="_blank" rel="noopener noreferrer" title="뉴데일리 기사 보기 (4번)">
+            <div class="news-thumb">
+              <img src="https://image.newdaily.co.kr/site/data/img/2024/07/02/2024070200204_0.jpg?u=20240702140834" alt="달아오르는 은행 조각투자 경쟁" class="news-thumb-img">
+              <div class="news-thumb-bg" style="background:linear-gradient(135deg,#0F1E3A,#0A1428)"></div>
+            </div>
+            <div class="news-body">
+              <div class="news-meta">
+                <span class="news-category">뉴스</span>
+                <span class="news-date">2024.07.02</span>
+              </div>
+              <h3 class="news-title">달아오르는 은행 '조각투자' 경쟁… 꾸물대는 법 개정</h3>
+            </div>
+          </a>
         </div>
       </div>
     </div>
@@ -1865,16 +2083,17 @@ footer {
   </div>
 </section>
 
-<!-- ===== CAREERS (TODO: 채용 섹션 콘텐츠 추가) ===== -->
-<section id="careers" class="section" style="min-height:1px;padding:60px 0;background:var(--dark2)" aria-label="채용"><div class="container"><h2 class="section-title" data-i18n="careersTitle">채용</h2><p class="section-sub" data-i18n="careersSub">준비 중입니다</p></div></section>
 <!-- ===== CTA: 프로젝트 기술협업 문의하기 ===== -->
 <section id="cta" class="landing-cta" aria-labelledby="cta-title">
   <div class="cta-bg-orb"></div>
+  <div class="container">
   <div class="cta-content">
     <div class="section-label reveal" style="justify-content:center">CONTACT</div>
     <h2 id="cta-title" class="cta-title reveal reveal-delay-1" data-i18n="ctaTitle">프로젝트를 시작할 준비가 되셨나요?</h2>
     <p class="cta-sub reveal reveal-delay-2" data-i18n="ctaSub">도입 검토부터 기술 상담까지, 비디젠 전문가가 함께합니다.</p>
-    <form class="cta-form reveal reveal-delay-3" action="#" method="post" aria-label="프로젝트 기술협업 문의 양식">
+    <div class="cta-split reveal reveal-delay-3">
+      <div class="cta-form-wrap">
+        <form class="cta-form" action="#" method="post" aria-label="프로젝트 기술협업 문의 양식">
       <div class="cta-form-row">
         <div class="cta-form-field">
           <label for="cta-name" class="cta-form-label" data-i18n="ctaName">성함</label>
@@ -1910,7 +2129,15 @@ footer {
         <textarea id="cta-message" name="message" class="cta-form-textarea" placeholder="프로젝트 개요, 도입 목적, 일정 등 자유롭게 작성해 주세요." required></textarea>
       </div>
       <button type="submit" class="cta-form-submit" data-i18n="ctaSubmit">문의 보내기</button>
-    </form>
+        </form>
+      </div>
+      <div class="cta-map-wrap">
+        <h3 class="cta-map-title">오시는 길</h3>
+        <p class="cta-address">서울 구로구 디지털로26길 43, R동 304호</p>
+        <iframe class="cta-map-embed" src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8+%EA%B5%AC%EB%A1%9C%EA%B5%AC+%EB%94%94%EC%A7%80%ED%84%B8%EB%A1%9C26%EA%B8%B8+43+R%EB%8F%99+304%ED%98%B8&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="비디젠 오시는 길 지도"></iframe>
+      </div>
+    </div>
+  </div>
   </div>
 </section>
 
@@ -1921,10 +2148,9 @@ footer {
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="footer-logo">
-          <div class="footer-logo-icon">B</div>
-          <span>BDGen</span>
-        </div>
+        <a href="#hero" class="footer-logo" aria-label="비디젠 홈">
+          <img src="assets/logo_w.svg" alt="비디젠" class="footer-logo-img" width="170" height="34">
+        </a>
         <p class="footer-desc" data-i18n="footerDesc">블록체인·DID 전문기업. 통신·금융·공공·의료 등 산업의 인증·증명 솔루션을 제공합니다.</p>
         <div class="footer-info">
           <span>㈜비디젠</span><br>
@@ -2207,11 +2433,36 @@ footer {
   });
 })();
 
+/* ---------- CTA 문의 폼: 양식 전부 작성 시 버튼 채워짐 ---------- */
+(function(){
+  var form = document.querySelector('#cta .cta-form');
+  var submitBtn = form ? form.querySelector('.cta-form-submit') : null;
+  var nameEl = document.getElementById('cta-name');
+  var emailEl = document.getElementById('cta-email');
+  var messageEl = document.getElementById('cta-message');
+  var typeEl = document.getElementById('cta-type');
+  function checkValid(){
+    if(!submitBtn) return;
+    var nameOk = nameEl && nameEl.value.trim() !== '';
+    var emailOk = emailEl && emailEl.value.trim() !== '';
+    var messageOk = messageEl && messageEl.value.trim() !== '';
+    var typeOk = typeEl && typeEl.value !== '';
+    submitBtn.classList.toggle('valid', nameOk && emailOk && messageOk && typeOk);
+  }
+  if(form){
+    [nameEl, emailEl, messageEl, typeEl].forEach(function(el){
+      if(el){ el.addEventListener('input', checkValid); el.addEventListener('change', checkValid); }
+    });
+    checkValid();
+  }
+})();
+
 /* ---------- GNB 스크롤 & Back to Top ---------- */
 (function(){
   var gnb = document.getElementById('gnb');
   var backTop = document.getElementById('backTop');
   var servicesSection = document.getElementById('services');
+  var newsSection = document.getElementById('news');
   function onScroll(){
     var y = window.scrollY || window.pageYOffset;
     if(gnb) gnb.classList.toggle('scrolled', y>50);
@@ -2223,14 +2474,22 @@ footer {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-  /* 제공서비스 섹션 진입 시 헤더 흰색 테마 */
-  if(gnb && servicesSection){
-    var servicesObserver = new IntersectionObserver(function(entries){
+  /* 흰 배경 섹션(제공서비스, 비디젠 소식) 진입 시 헤더 흰색 테마 */
+  if(gnb && (servicesSection || newsSection)){
+    var lightSections = { services: false, news: false };
+    function updateGnbLight(){
+      var anyLight = lightSections.services || lightSections.news;
+      gnb.classList.toggle('gnb-light', anyLight);
+    }
+    var sectionObserver = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        gnb.classList.toggle('gnb-light', entry.isIntersecting);
+        if(entry.target.id === 'services') lightSections.services = entry.isIntersecting;
+        if(entry.target.id === 'news') lightSections.news = entry.isIntersecting;
+        updateGnbLight();
       });
     }, { root: null, rootMargin: '0px', threshold: 0 });
-    servicesObserver.observe(servicesSection);
+    if(servicesSection) sectionObserver.observe(servicesSection);
+    if(newsSection) sectionObserver.observe(newsSection);
   }
 })();
 
@@ -2285,7 +2544,7 @@ var I18N = {
     why5Title:'대규모 플랫폼<br>장기 운영 경험', why5Desc:'체계적인 프로세스 기반의 효율적 운영과 UX 개선, VoC 피드백 루프로 대형 통신사 플랫폼을 장기간 안정적으로 운영한 노하우를 보유합니다.',
     why6Title:'차세대<br>Passkey 인증 기술', why6Desc:'피싱 불가·생체인식 기반의 FIDO 표준 Passkey 인증으로 비밀번호 없는 안전하고 편리한 인증 환경을 구현합니다.',
     refTitle:'국내 주요 기관이<br><span>비디젠을 선택</span>했습니다', refSub:'통신 대기업부터 정부 기관까지 — 실제 운영 중인 서비스로 신뢰를 증명합니다',
-    refMore:'전체 레퍼런스 보기', newsTitle:'비디젠 <span>소식</span>', newsSub:'수주·파트너십·사업 확장 등 비디젠의 주요 소식을 전합니다',
+    refMore:'전체 레퍼런스 보기', newsTitle:'비디젠의 <span>새로운 소식을</span><br>전해드립니다.', newsSub:'수주·파트너십·사업 확장 등 비디젠의 주요 소식을 전합니다',
     news1Cat:'파트너십', news1Title:'비디젠–소금광산, 블록체인 기술 R&D 및 서비스 개발 업무 협약 체결', news1Excerpt:'DID 기술 및 블록체인 인프라 기술 R&D 등 기술 고도화를 통해 급변하는 Web3 환경 전환 시장에 공동 대응한다는 전략으로 MOU를 체결하였습니다.',
     news2Cat:'수주', news2Title:'디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관으로 선정', news2Excerpt:'NIPA(정보통신산업진흥원)가 추진하는 디지털배지 기반 통합 취업지원서비스 구축 사업의 참여기관으로 최종 선정되었습니다.',
     news3Cat:'사업확장', news3Title:'공익적 토큰증권 플랫폼(STO) 구축 사업 참여기관으로 선정', news3Excerpt:'조각투자사업자를 위한 공익적 토큰증권(STO) 플랫폼 구축 사업에 참여기관으로 선정, 블록체인 금융 시장으로의 사업 영역을 확대합니다.',
@@ -2325,7 +2584,7 @@ var I18N = {
     why5Title:'Large-scale platform<br>operations experience', why5Desc:'Efficient process-based operations, UX improvements, and VoC feedback loops—operating major telecom platforms stably over the long term.',
     why6Title:'Next-generation<br>Passkey authentication', why6Desc:'FIDO-standard Passkey authentication: phishing-resistant, biometric-based, passwordless, and user-friendly.',
     refTitle:'Leading institutions<br><span>choose BDGen</span>', refSub:'From telecom giants to government—we prove trust through live services',
-    refMore:'View all references', newsTitle:'BDGen <span>News</span>', newsSub:'BDGen updates on contracts, partnerships, and business expansion',
+    refMore:'View all references', newsTitle:'We deliver <span>the latest news</span> from BDGen.', newsSub:'BDGen updates on contracts, partnerships, and business expansion',
     news1Cat:'Partnership', news1Title:'BDGen–SogeumGwang San MOU for blockchain R&D and service development', news1Excerpt:'Strategic MOU to jointly address the evolving Web3 market through R&D in DID and blockchain infrastructure.',
     news2Cat:'Contract', news2Title:'Selected as participant for digital badge-based integrated employment support service', news2Excerpt:'Final selection as a participant in NIPA\'s digital badge-based integrated employment support service project.',
     news3Cat:'Expansion', news3Title:'Selected as participant for public-interest token securities (STO) platform', news3Excerpt:'Selected as participant for STO platform project, expanding into the blockchain financial market.',

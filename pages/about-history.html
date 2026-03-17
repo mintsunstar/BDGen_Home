@@ -19,40 +19,82 @@
       <div class="gnb-dropdown">
         <a href="about-intro.html" class="gnb-trigger">회사소개</a>
         <div class="gnb-submenu">
-          <a href="about-history.html">연혁</a>
-          <a href="about-awards.html">인증·수상</a>
-          <a href="about-ci.html">CI소개</a>
-          <a href="about-intro.html">비디젠소개</a>
+          <div class="gnb-submenu-inner">
+            <a href="about-history.html">연혁</a>
+            <a href="about-awards.html">인증·수상</a>
+            <a href="about-ci.html">CI소개</a>
+            <a href="about-intro.html">비디젠소개</a>
+          </div>
         </div>
       </div>
       <a href="business.html">사업영역</a>
       <div class="gnb-dropdown">
         <a href="solution-genid.html" class="gnb-trigger">솔루션</a>
         <div class="gnb-submenu">
-          <a href="solution-genid.html">GenID</a>
-          <a href="solution-passkey.html">Passkey</a>
+          <div class="gnb-submenu-inner">
+            <a href="solution-genid.html">GenID</a>
+            <a href="solution-passkey.html">Passkey</a>
+          </div>
         </div>
       </div>
       <a href="reference.html">레퍼런스</a>
       <a href="careers.html">채용</a>
     </nav>
-    <button type="button" class="gnb-hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+    <div class="gnb-right">
+      <div class="lang-switcher" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-label="언어 선택">
+        <button type="button" class="lang-switcher-trigger" aria-label="언어 선택" title="언어 선택">
+          <svg class="lang-globe" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </button>
+        <div class="lang-dropdown" role="listbox" hidden>
+          <button type="button" role="option" data-lang="ko" class="lang-option" aria-selected="true">한글</button>
+          <button type="button" role="option" data-lang="en" class="lang-option" aria-selected="false">EN</button>
+        </div>
+      </div>
+      <button type="button" class="gnb-menu-btn" id="gnbMenuBtn" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="fullMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
-<div class="gnb-mobile" id="mobileMenu" role="dialog" aria-label="모바일 메뉴" hidden>
-  <button type="button" class="gnb-mobile-close" aria-label="메뉴 닫기">✕</button>
-  <a href="about-intro.html">회사소개</a>
-  <a href="about-history.html" class="mobile-sub">연혁</a>
-  <a href="about-awards.html" class="mobile-sub">인증·수상</a>
-  <a href="about-ci.html" class="mobile-sub">CI소개</a>
-  <a href="about-intro.html" class="mobile-sub">비디젠소개</a>
-  <a href="business.html">사업영역</a>
-  <a href="solution-genid.html">솔루션</a>
-  <a href="solution-genid.html" class="mobile-sub">GenID</a>
-  <a href="solution-passkey.html" class="mobile-sub">Passkey</a>
-  <a href="reference.html">레퍼런스</a>
-  <a href="careers.html">채용</a>
-  <a href="../bdgen_landing.html#cta" class="btn btn-primary">문의하기</a>
+<div class="gnb-fullmenu" id="fullMenu" role="dialog" aria-label="전체 메뉴" aria-modal="true" aria-hidden="true" hidden>
+  <div class="gnb-fullmenu-inner">
+    <header class="gnb-fullmenu-header">
+      <a href="../bdgen_landing.html" class="gnb-fullmenu-logo">
+        <img src="../assets/logo_b.svg" alt="BDGen" width="120" height="32">
+      </a>
+      <button type="button" class="gnb-fullmenu-close" id="fullMenuClose" aria-label="메뉴 닫기">✕</button>
+    </header>
+    <div class="gnb-fullmenu-watermark" aria-hidden="true">BDGen</div>
+    <nav class="gnb-fullmenu-nav">
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">회사소개</span>
+        <a href="about-history.html">연혁</a>
+        <a href="about-awards.html">인증·수상</a>
+        <a href="about-ci.html">CI소개</a>
+        <a href="about-intro.html">비디젠소개</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">사업영역</span>
+        <a href="business.html">사업 소개</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">솔루션</span>
+        <a href="solution-genid.html">GenID</a>
+        <a href="solution-passkey.html">Passkey</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">레퍼런스</span>
+        <a href="reference.html">레퍼런스</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">채용</span>
+        <a href="careers.html">채용</a>
+      </div>
+    </nav>
+  </div>
 </div>
 <main class="page-main">
   <div class="container">
@@ -64,38 +106,95 @@
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="footer-logo"><div class="footer-logo-icon">B</div><span>BDGen</span></div>
+        <a href="../bdgen_landing.html" class="footer-logo" aria-label="비디젠 홈">
+          <img src="../assets/logo_w.svg" alt="비디젠" class="footer-logo-img" width="170" height="34">
+        </a>
         <p class="footer-desc">블록체인·DID 전문기업. 통신·금융·공공·의료 등 산업의 인증·증명 솔루션을 제공합니다.</p>
-        <div class="footer-info">㈜비디젠 | 대표이사 : 유성종 | 사업자등록번호 : 113-86-78453<br>주소 : 서울 구로구 디지털로26길 43, R동 304호 | 전화 : 02-6091-1533</div>
+        <div class="footer-info">
+          <span>㈜비디젠</span><br>
+          대표이사 : 유성종<br>
+          사업자등록번호 : 113-86-78453<br>
+          주소 : 서울 구로구 디지털로26길 43, R동 304호<br>
+          전화 : <a href="tel:02-6091-1533">02-6091-1533</a><br>
+          이메일 : <a href="mailto:[email protected]">[email protected]</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">서비스</div>
+        <ul>
+          <li><a href="../bdgen_landing.html#services">블록체인 서비스 개발</a></li>
+          <li><a href="../bdgen_landing.html#services">모바일 앱 개발</a></li>
+          <li><a href="../bdgen_landing.html#services">플랫폼 운영 솔루션</a></li>
+          <li><a href="../bdgen_landing.html#services">GenID 솔루션</a></li>
+        </ul>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">회사</div>
         <ul>
-          <li><a href="about-intro.html">회사소개</a></li>
-          <li><a href="business.html">사업영역</a></li>
-          <li><a href="reference.html">레퍼런스</a></li>
-          <li><a href="careers.html">채용</a></li>
+          <li><a href="../bdgen_landing.html#about-bdgen">회사소개</a></li>
+          <li><a href="../bdgen_landing.html#why">핵심역량</a></li>
+          <li><a href="../bdgen_landing.html#reference">레퍼런스</a></li>
+          <li><a href="../bdgen_landing.html#news">소식</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">문의</div>
         <ul>
           <li><a href="tel:02-6091-1533">02-6091-1533</a></li>
+          <li><a href="mailto:[email protected]">[email protected]</a></li>
           <li><a href="../bdgen_landing.html#cta">프로젝트 문의</a></li>
+          <li><a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" target="_blank" rel="noopener">회사소개서</a></li>
         </ul>
       </div>
     </div>
-    <div class="footer-bottom"><span>© 2024 ㈜비디젠. All rights reserved.</span></div>
+    <div class="footer-bottom">
+      <span>© 2024 ㈜비디젠. All rights reserved.</span>
+      <div class="footer-bottom-right">
+        <div class="footer-family-site" id="footerFamilySite">
+          <button type="button" class="footer-family-site-trigger" aria-expanded="false" aria-haspopup="true" aria-label="패밀리 사이트 선택">
+            Family Site
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 9l-6 6-6-6"/></svg>
+          </button>
+          <ul class="footer-family-site-list" role="menu">
+            <li role="none"><a href="https://www.bluedigm.com/" role="menuitem" target="_blank" rel="noopener">BD Convergence</a></li>
+            <li role="none"><a href="https://www.bluedigm.co.kr/" role="menuitem" target="_blank" rel="noopener">Bluedigm</a></li>
+            <li role="none"><a href="https://www.beyondigital.co.kr/" role="menuitem" target="_blank" rel="noopener">BD</a></li>
+            <li role="none"><a href="https://dtinc.co.kr/" role="menuitem" target="_blank" rel="noopener">DT</a></li>
+          </ul>
+        </div>
+        <div class="footer-bottom-links">
+          <a href="#" title="개인정보처리방침 페이지 URL 확정 후 연결">개인정보처리방침</a>
+          <a href="#" title="이용약관 페이지 URL 확정 후 연결">이용약관</a>
+        </div>
+      </div>
+    </div>
   </div>
 </footer>
-<button type="button" class="back-top" id="backTop" aria-label="맨 위로">↑</button>
+<a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" class="floating-brochure" target="_blank" rel="noopener" aria-label="회사소개서 다운받기" title="회사소개서 다운받기">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15l3 3 3-3"/></svg>
+</a>
+<button type="button" class="back-top" id="backTop" aria-label="맨 위로 이동">↑</button>
 <script>
 (function(){
-  var h=document.getElementById('hamburger'),m=document.getElementById('mobileMenu'),c=m&&m.querySelector('.gnb-mobile-close');
-  if(h)h.addEventListener('click',function(){m.classList.add('open');m.removeAttribute('hidden');});
-  if(c)c.addEventListener('click',function(){m.classList.remove('open');m.setAttribute('hidden','');});
-  window.addEventListener('scroll',function(){var y=window.scrollY;document.getElementById('gnb').classList.toggle('scrolled',y>50);document.getElementById('backTop').classList.toggle('visible',y>400);});
-  document.getElementById('backTop').addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  var gnb=document.getElementById('gnb'), backTop=document.getElementById('backTop');
+  window.addEventListener('scroll',function(){var y=window.scrollY; if(gnb)gnb.classList.toggle('scrolled',y>50); if(backTop)backTop.classList.toggle('visible',y>400);},{passive:true});
+  if(backTop)backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+(function(){
+  var menuBtn=document.getElementById('gnbMenuBtn'), fullMenu=document.getElementById('fullMenu'), closeBtn=document.getElementById('fullMenuClose');
+  function openFullMenu(){if(!fullMenu)return; fullMenu.removeAttribute('hidden'); fullMenu.setAttribute('aria-hidden','false'); if(menuBtn){menuBtn.setAttribute('aria-expanded','true');menuBtn.classList.add('is-open');} document.body.style.overflow='hidden';}
+  function closeFullMenu(){if(!fullMenu)return; fullMenu.setAttribute('hidden',''); fullMenu.setAttribute('aria-hidden','true'); if(menuBtn){menuBtn.setAttribute('aria-expanded','false');menuBtn.classList.remove('is-open');} document.body.style.overflow='';}
+  if(menuBtn)menuBtn.addEventListener('click',openFullMenu);
+  if(closeBtn)closeBtn.addEventListener('click',closeFullMenu);
+  if(fullMenu)fullMenu.addEventListener('click',function(e){if(e.target.tagName==='A')closeFullMenu();});
+})();
+(function(){
+  var wrap=document.getElementById('footerFamilySite');
+  if(!wrap)return;
+  var trigger=wrap.querySelector('.footer-family-site-trigger'), list=wrap.querySelector('.footer-family-site-list');
+  if(!trigger||!list)return;
+  trigger.addEventListener('click',function(e){e.stopPropagation(); var isOpen=wrap.classList.toggle('open'); trigger.setAttribute('aria-expanded',isOpen);});
+  document.addEventListener('click',function(){wrap.classList.remove('open'); trigger.setAttribute('aria-expanded','false');});
 })();
 </script>
 </body>

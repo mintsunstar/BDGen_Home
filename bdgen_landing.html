@@ -471,10 +471,18 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   display: flex; align-items: center; justify-content: center;
   overflow: hidden; padding: 160px 0 120px;
 }
-.hero-bg-video {
+.hero-bg-videos {
   position: absolute; inset: 0; z-index: 0;
-  width: 100%; height: 100%; object-fit: cover;
 }
+.hero-bg-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: opacity 1.2s ease;
+}
+.hero-bg-video-1 { opacity: 1; z-index: 1; }
+.hero-bg-video-2 { opacity: 0; z-index: 0; }
+.hero-bg-videos.crossfade .hero-bg-video-1 { opacity: 0; }
+.hero-bg-videos.crossfade .hero-bg-video-2 { opacity: 1; z-index: 1; }
 #hero-canvas {
   position: absolute; inset: 0; z-index: 0;
 }
@@ -1030,7 +1038,16 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 }
 #why .section-label { color: var(--primary); }
 #why .section-title { font-size: 74px; color: #111; }
-#why .section-title span { color: var(--primary); }
+#why .section-title span:not(.why-wave-char) { color: var(--primary); }
+#why-title.why-wave-done .why-wave-char { display: inline-block; color: #111; animation: whyTitleWave 2.8s ease-in-out infinite; }
+#why-title.why-wave-done .why-wave-char.why-wave-highlight,
+#why-title.why-wave-done span.why-wave-highlight-wrap .why-wave-char { color: var(--primary); }
+#why-title.why-wave-done .why-wave-char.why-wave-space { min-width: 0.35em; }
+@keyframes whyTitleWave {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-5px); }
+  75% { transform: translateY(5px); }
+}
 #why .section-sub { color: #888; }
 #why .container { position: relative; z-index: 1; }
 .why-grid {
@@ -1376,6 +1393,9 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   background: var(--dark);
   border-top: 1px solid rgba(0,200,255,0.1);
   text-align: center; position: relative; overflow: hidden;
+}
+#cta-canvas {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
 }
 .cta-bg-orb {
   position: absolute; width: 600px; height: 600px; border-radius: 50%;
@@ -1965,9 +1985,14 @@ footer {
 <main id="main-content">
 <!-- ===== HERO ===== -->
 <section id="hero" class="landing-hero" aria-labelledby="hero-title">
-  <video class="hero-bg-video" id="heroBgVideo" autoplay muted playsinline aria-hidden="true" data-first="assets/hero_03.mp4" data-second="assets/hero_main_01.mp4">
-    <source src="assets/hero_03.mp4" type="video/mp4">
-  </video>
+  <div class="hero-bg-videos" id="heroBgVideos">
+    <video class="hero-bg-video hero-bg-video-1" autoplay muted playsinline aria-hidden="true">
+      <source src="assets/hero_02.mp4" type="video/mp4">
+    </video>
+    <video class="hero-bg-video hero-bg-video-2" muted loop playsinline aria-hidden="true">
+      <source src="assets/hero_main_01.mp4" type="video/mp4">
+    </video>
+  </div>
   <canvas id="hero-canvas"></canvas>
   <div class="hero-bg-gradient"></div>
   <div class="hero-content">
@@ -2329,6 +2354,7 @@ footer {
 
 <!-- ===== CTA: 프로젝트 기술협업 문의하기 ===== -->
 <section id="cta" class="landing-cta" aria-labelledby="cta-title">
+  <canvas id="cta-canvas" class="cta-canvas" aria-hidden="true"></canvas>
   <div class="cta-bg-orb"></div>
   <div class="container">
   <div class="cta-content">
@@ -2506,8 +2532,8 @@ footer {
   if(!canvas) return;
   var ctx = canvas.getContext('2d');
   var W, H, nodes = [], animId, visible = true;
-  var NODE_COUNT = 70;
-  var CONNECTION_DIST = 130;
+  var NODE_COUNT = 85;
+  var CONNECTION_DIST = 150;
   var MOUSE = { x: -999, y: -999 };
 
   function resize(){
@@ -2518,7 +2544,7 @@ footer {
     return {
       x: Math.random()*W, y: Math.random()*H,
       vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5,
-      r: Math.random()*2+1, opacity: Math.random()*0.6+0.2
+      r: Math.random()*2.2+1.2, opacity: Math.random()*0.5+0.45
     };
   }
   function init(){
@@ -2534,9 +2560,9 @@ footer {
         var dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
         var dist = Math.sqrt(dx*dx+dy*dy);
         if(dist<CONNECTION_DIST){
-          var alpha = (1-dist/CONNECTION_DIST)*0.25;
-          ctx.strokeStyle = 'rgba(0,200,255,'+alpha+')';
-          ctx.lineWidth = 0.7;
+          var alpha = (1-dist/CONNECTION_DIST)*0.5;
+          ctx.strokeStyle = 'rgba(0,220,255,'+alpha+')';
+          ctx.lineWidth = 1.1;
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -2547,10 +2573,10 @@ footer {
     nodes.forEach(function(n){
       var dx = n.x - MOUSE.x, dy = n.y - MOUSE.y;
       var dist = Math.sqrt(dx*dx+dy*dy);
-      if(dist<180){
-        var alpha = (1-dist/180)*0.4;
+      if(dist<200){
+        var alpha = (1-dist/200)*0.6;
         ctx.strokeStyle = 'rgba(108,63,255,'+alpha+')';
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 1.3;
         ctx.beginPath();
         ctx.moveTo(n.x, n.y);
         ctx.lineTo(MOUSE.x, MOUSE.y);
@@ -2560,7 +2586,7 @@ footer {
     nodes.forEach(function(n){
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
-      ctx.fillStyle = 'rgba(0,200,255,'+n.opacity+')';
+      ctx.fillStyle = 'rgba(0,220,255,'+Math.min(1,n.opacity)+')';
       ctx.fill();
     });
   }
@@ -2588,17 +2614,121 @@ footer {
   loop();
 })();
 
-/* ---------- Hero 배경 영상 순차 재생: hero_03 (4초) → hero_main_01 ---------- */
+/* ---------- Hero 배경 영상 크로스페이드: hero_02 (4초) → hero_main_01 ---------- */
 (function(){
-  var video = document.getElementById('heroBgVideo');
-  if(!video) return;
-  var secondSrc = video.getAttribute('data-second') || 'assets/hero_main_01.mp4';
+  var wrap = document.getElementById('heroBgVideos');
+  var video1 = wrap ? wrap.querySelector('.hero-bg-video-1') : null;
+  var video2 = wrap ? wrap.querySelector('.hero-bg-video-2') : null;
+  if(!wrap || !video2) return;
   setTimeout(function(){
-    video.loop = true;
-    video.src = secondSrc;
-    video.load();
-    video.play();
+    video2.play();
+  }, 2500);
+  setTimeout(function(){
+    wrap.classList.add('crossfade');
   }, 4000);
+})();
+
+/* ---------- CTA 노드 배경 (히어로와 동일 스타일, 가시성 강화) ---------- */
+(function(){
+  var canvas = document.getElementById('cta-canvas');
+  var section = document.getElementById('cta');
+  if(!canvas || !section) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, nodes = [], animId, visible = false, sectionInView = false;
+  var NODE_COUNT = 70;
+  var CONNECTION_DIST = 145;
+  var MOUSE = { x: -999, y: -999 };
+
+  function resize(){
+    var rect = section.getBoundingClientRect();
+    W = canvas.width = rect.width;
+    H = canvas.height = rect.height;
+  }
+  function createNode(){
+    return {
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4,
+      r: Math.random()*2+1, opacity: Math.random()*0.55+0.4
+    };
+  }
+  function init(){
+    resize();
+    nodes = [];
+    for(var i=0;i<NODE_COUNT;i++) nodes.push(createNode());
+  }
+  function draw(){
+    if(!visible) return;
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<nodes.length;i++){
+      for(var j=i+1;j<nodes.length;j++){
+        var dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        var dist = Math.sqrt(dx*dx+dy*dy);
+        if(dist<CONNECTION_DIST){
+          var alpha = (1-dist/CONNECTION_DIST)*0.45;
+          ctx.strokeStyle = 'rgba(0,200,255,'+alpha+')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(function(n){
+      var dx = n.x - MOUSE.x, dy = n.y - MOUSE.y;
+      var dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist<180){
+        var alpha = (1-dist/180)*0.6;
+        ctx.strokeStyle = 'rgba(108,63,255,'+alpha+')';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(n.x, n.y);
+        ctx.lineTo(MOUSE.x, MOUSE.y);
+        ctx.stroke();
+      }
+    });
+    nodes.forEach(function(n){
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(0,220,255,'+Math.min(1,n.opacity)+')';
+      ctx.fill();
+    });
+  }
+  function update(){
+    nodes.forEach(function(n){
+      n.x += n.vx; n.y += n.vy;
+      if(n.x<0||n.x>W) n.vx *= -1;
+      if(n.y<0||n.y>H) n.vy *= -1;
+    });
+  }
+  function loop(){
+    update();
+    draw();
+    animId = requestAnimationFrame(loop);
+  }
+  function updateVisible(){
+    visible = sectionInView && document.visibilityState === 'visible';
+    if(animId){ cancelAnimationFrame(animId); animId = null; }
+    if(visible) { resize(); loop(); }
+  }
+  section.addEventListener('mousemove', function(e){
+    var rect = section.getBoundingClientRect();
+    MOUSE.x = e.clientX - rect.left;
+    MOUSE.y = e.clientY - rect.top;
+  });
+  section.addEventListener('mouseleave', function(){ MOUSE.x = -999; MOUSE.y = -999; });
+  window.addEventListener('resize', function(){ resize(); });
+  window.addEventListener('scroll', function(){ resize(); }, { passive: true });
+  document.addEventListener('visibilitychange', updateVisible);
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      sectionInView = entry.isIntersecting;
+      updateVisible();
+    });
+  }, { threshold: 0.1 });
+  io.observe(section);
+  init();
+  updateVisible();
 })();
 
 /* ---------- About BDGen: 노드 배경 (커서 150px 반경에서만 선 연결) + 틸트 ---------- */
@@ -2608,8 +2738,9 @@ footer {
   if(!canvas) return;
   var ctx = canvas.getContext('2d');
   var W, H, nodes = [], animId;
-  var NODE_COUNT = 80;
-  var CURSOR_RADIUS = 150;
+  var NODE_COUNT = 90;
+  var CONNECTION_DIST = 130;
+  var CURSOR_RADIUS = 180;
   var MOUSE = { x: -1e4, y: -1e4 };
   var section = document.getElementById('about-bdgen');
 
@@ -2632,6 +2763,21 @@ footer {
   }
   function draw(){
     ctx.clearRect(0,0,W,H);
+    for(var i=0;i<nodes.length;i++){
+      for(var j=i+1;j<nodes.length;j++){
+        var dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        var dist = Math.sqrt(dx*dx+dy*dy);
+        if(dist<CONNECTION_DIST){
+          var alpha = (1-dist/CONNECTION_DIST)*0.4;
+          ctx.strokeStyle = 'rgba(0,220,255,'+alpha+')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
     var mx = MOUSE.x, my = MOUSE.y;
     var inRadius = [];
     for(var i=0;i<nodes.length;i++){
@@ -2639,8 +2785,8 @@ footer {
       var dx = n.x - mx, dy = n.y - my;
       if(dx*dx + dy*dy <= CURSOR_RADIUS*CURSOR_RADIUS) inRadius.push(n);
     }
-    ctx.strokeStyle = 'rgba(0,200,255,0.35)';
-    ctx.lineWidth = 0.8;
+    ctx.strokeStyle = 'rgba(108,63,255,0.55)';
+    ctx.lineWidth = 1.2;
     for(var i=0;i<inRadius.length;i++)
       for(var j=i+1;j<inRadius.length;j++){
         ctx.beginPath();
@@ -2648,10 +2794,13 @@ footer {
         ctx.lineTo(inRadius[j].x, inRadius[j].y);
         ctx.stroke();
       }
-    ctx.fillStyle = 'rgba(0,200,255,0.6)';
     nodes.forEach(function(n){
+      var dx = n.x - mx, dy = n.y - my;
+      var dist = Math.sqrt(dx*dx+dy*dy);
+      var alpha = dist < CURSOR_RADIUS ? 0.9 : 0.75;
+      ctx.fillStyle = 'rgba(0,220,255,'+alpha+')';
       ctx.beginPath();
-      ctx.arc(n.x, n.y, 1.5, 0, Math.PI*2);
+      ctx.arc(n.x, n.y, 2, 0, Math.PI*2);
       ctx.fill();
     });
   }
@@ -2927,7 +3076,7 @@ function applyLang(lang, skipHero){
     newsLine2.setAttribute('data-text', line2);
   }
   var suffixEl = document.querySelector('.partner-metric-value[data-suffix="개"]'); if(suffixEl) suffixEl.setAttribute('data-suffix', lang==='ko'?'개':'');
-  if(skipHero){ var ab=document.querySelector('#about-bdgen-title'); if(ab&&T.aboutLine1) ab.innerHTML='<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>'; var ph=document.getElementById('cta-message'); if(ph&&T.ctaMsgPlaceholder) ph.placeholder=T.ctaMsgPlaceholder; var sel=document.getElementById('cta-type'); if(sel&&sel.options[0]&&T.ctaPlaceholder) sel.options[0].textContent=T.ctaPlaceholder; var ctaT=document.getElementById('cta-typing'); if(ctaT&&T.ctaTitle) ctaT.setAttribute('data-text',T.ctaTitle); return; }
+  if(skipHero){ var ab=document.querySelector('#about-bdgen-title'); if(ab&&T.aboutLine1) ab.innerHTML='<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>'; var ph=document.getElementById('cta-message'); if(ph&&T.ctaMsgPlaceholder) ph.placeholder=T.ctaMsgPlaceholder; var sel=document.getElementById('cta-type'); if(sel&&sel.options[0]&&T.ctaPlaceholder) sel.options[0].textContent=T.ctaPlaceholder; var ctaT=document.getElementById('cta-typing'); if(ctaT&&T.ctaTitle) ctaT.setAttribute('data-text',T.ctaTitle); if(typeof window.wrapWhyTitleWave==='function') window.wrapWhyTitleWave(); return; }
   var heroSub = document.querySelector('.hero-sub'); if(heroSub) heroSub.innerHTML = T.heroSub;
   var el1=document.getElementById('hero-typing-1'),el2=document.getElementById('hero-typing-2'),el3=document.getElementById('hero-typing-3');
   if(el1&&el2&&el3){ el1.textContent=T.hero1; el2.textContent=T.hero2; el3.textContent=T.hero3; el3.classList.remove('hero-typing-cursor'); el3.style.borderRight='none'; }
@@ -2943,7 +3092,52 @@ function applyLang(lang, skipHero){
     ctaTypingEl.classList.remove('cta-typing');
     ctaTypingEl.style.borderRight = 'none';
   }
+  if(typeof window.wrapWhyTitleWave === 'function') window.wrapWhyTitleWave();
 }
+window.wrapWhyTitleWave = function(){
+  var el = document.getElementById('why-title');
+  if(!el) return;
+  if(el.querySelector('.why-wave-char')) return;
+  el.classList.remove('why-wave-done');
+  var idx = 0;
+  function walk(node, isHighlight){
+    if(node.nodeType === 3){
+      var text = node.textContent;
+      var frag = document.createDocumentFragment();
+      for(var i=0;i<text.length;i++){
+        var c = text[i];
+        var span = document.createElement('span');
+        var isSpace = c === ' ' || c === '\u00A0';
+        span.className = 'why-wave-char' + (isHighlight ? ' why-wave-highlight' : '') + (isSpace ? ' why-wave-space' : '');
+        span.style.animationDelay = (idx * 0.055) + 's';
+        span.textContent = isSpace ? '\u00A0' : c;
+        frag.appendChild(span);
+        idx++;
+      }
+      node.parentNode.replaceChild(frag, node);
+    } else if(node.nodeType === 1 && node.classList && !node.classList.contains('why-wave-char')){
+      var isInnerSpan = node.tagName === 'SPAN' && node.parentNode && node.parentNode.id === 'why-title';
+      if(isInnerSpan) node.classList.add('why-wave-highlight-wrap');
+      var hl = isHighlight || isInnerSpan;
+      var child = node.firstChild;
+      while(child){
+        var next = child.nextSibling;
+        walk(child, hl);
+        child = next;
+      }
+    }
+  };
+  walk(el, false);
+  el.classList.add('why-wave-done');
+};
+function runWrapWhyTitleWave(){
+  function run(){ if(typeof window.wrapWhyTitleWave === 'function') window.wrapWhyTitleWave(); }
+  setTimeout(run, 0);
+  setTimeout(run, 300);
+  setTimeout(run, 800);
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', runWrapWhyTitleWave);
+else runWrapWhyTitleWave();
 (function(){
   var sw = document.querySelector('.lang-switcher');
   var trigger = document.querySelector('.lang-switcher-trigger');
@@ -3056,20 +3250,32 @@ function applyLang(lang, skipHero){
   window._revealObserver = observer; /* GenID 탭 전환 시 재사용 */
 })();
 
-/* ---------- Why BDGEN 카드 순차 등장 (Intersection Observer) ---------- */
+/* ---------- Why BDGEN 카드 순차 등장 + 제목 물결 적용 ---------- */
 (function(){
   var whySection = document.getElementById('why');
   var whyGrid = whySection ? whySection.querySelector('.why-grid') : null;
+  var whyTitle = document.getElementById('why-title');
   if(!whyGrid) return;
+  function applyWaveIfNeeded(){
+    if(whyTitle && !whyTitle.querySelector('.why-wave-char') && typeof window.wrapWhyTitleWave === 'function')
+      window.wrapWhyTitleWave();
+  }
   var observer = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
         whyGrid.classList.add('why-cards-revealed');
+        applyWaveIfNeeded();
         observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
   observer.observe(whySection);
+  if(whyTitle){
+    var mo = new MutationObserver(function(){
+      if(!whyTitle.querySelector('.why-wave-char')) setTimeout(applyWaveIfNeeded, 50);
+    });
+    mo.observe(whyTitle, { childList: true, subtree: true });
+  }
 })();
 
 /* ---------- Sparkle (클릭 시 은하수 파티클) ---------- */

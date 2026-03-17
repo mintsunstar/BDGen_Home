@@ -482,7 +482,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   position: absolute; inset: 0; z-index: 1;
   background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(108,63,255,0.15) 0%, transparent 70%),
               radial-gradient(ellipse 60% 50% at 80% 20%, rgba(0,200,255,0.1) 0%, transparent 60%),
-              linear-gradient(180deg, rgba(5,11,24,0.3) 0%, rgba(5,11,24,0.8) 100%);
+              linear-gradient(180deg, rgba(5,11,24,0.4) 0%, rgba(5,11,24,0.4) 100%);
 }
 .hero-content {
   position: relative; z-index: 2; text-align: center;
@@ -1965,8 +1965,8 @@ footer {
 <main id="main-content">
 <!-- ===== HERO ===== -->
 <section id="hero" class="landing-hero" aria-labelledby="hero-title">
-  <video class="hero-bg-video" autoplay muted loop playsinline aria-hidden="true">
-    <source src="assets/hero_main_01.mp4" type="video/mp4">
+  <video class="hero-bg-video" id="heroBgVideo" autoplay muted playsinline aria-hidden="true" data-first="assets/hero_03.mp4" data-second="assets/hero_main_01.mp4">
+    <source src="assets/hero_03.mp4" type="video/mp4">
   </video>
   <canvas id="hero-canvas"></canvas>
   <div class="hero-bg-gradient"></div>
@@ -2586,6 +2586,19 @@ footer {
   document.addEventListener('visibilitychange', onVisibilityChange);
   init();
   loop();
+})();
+
+/* ---------- Hero 배경 영상 순차 재생: hero_03 (4초) → hero_main_01 ---------- */
+(function(){
+  var video = document.getElementById('heroBgVideo');
+  if(!video) return;
+  var secondSrc = video.getAttribute('data-second') || 'assets/hero_main_01.mp4';
+  setTimeout(function(){
+    video.loop = true;
+    video.src = secondSrc;
+    video.load();
+    video.play();
+  }, 4000);
 })();
 
 /* ---------- About BDGen: 노드 배경 (커서 150px 반경에서만 선 연결) + 틸트 ---------- */

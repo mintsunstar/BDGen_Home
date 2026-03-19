@@ -8,6 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg"/>
 <meta name="description" content="블록체인·DID·Passkey 기술로 산업의 디지털 전환을 완성하는 BDGen"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<link rel="stylesheet" href="style.css"/>
 <style>
 /* ===== DESIGN TOKENS (실무용 토큰화) ===== */
 :root {
@@ -595,6 +596,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .hero-scroll-label {
   font-size: 0.7rem; letter-spacing: 0.15em; opacity: 0.9;
 }
+
 @keyframes heroMouseFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(6px); }
@@ -1903,10 +1905,9 @@ footer {
         <a href="pages/about-intro.html" class="gnb-trigger" data-i18n="nav.about">회사소개</a>
         <div class="gnb-submenu">
           <div class="gnb-submenu-inner">
-            <a href="pages/about-history.html" data-i18n="nav.about.history">연혁</a>
-            <a href="pages/about-awards.html" data-i18n="nav.about.awards">인증·수상</a>
+            <a href="pages/about-intro.html" data-i18n="nav.about.intro">회사소개</a>
+            <a href="pages/about-history.html" data-i18n="nav.about.history">연혁·인증</a>
             <a href="pages/about-ci.html" data-i18n="nav.about.ci">CI소개</a>
-            <a href="pages/about-intro.html" data-i18n="nav.about.intro">비디젠소개</a>
           </div>
         </div>
       </div>
@@ -1956,10 +1957,9 @@ footer {
     <nav class="gnb-fullmenu-nav">
       <div class="gnb-fullmenu-col">
         <span class="gnb-fullmenu-col-title" data-i18n="nav.about">회사소개</span>
-        <a href="pages/about-history.html" data-i18n="nav.about.history">연혁</a>
-        <a href="pages/about-awards.html" data-i18n="nav.about.awards">인증·수상</a>
+        <a href="pages/about-intro.html" data-i18n="nav.about.intro">회사소개</a>
+        <a href="pages/about-history.html" data-i18n="nav.about.history">연혁·인증</a>
         <a href="pages/about-ci.html" data-i18n="nav.about.ci">CI소개</a>
-        <a href="pages/about-intro.html" data-i18n="nav.about.intro">비디젠소개</a>
       </div>
       <div class="gnb-fullmenu-col">
         <span class="gnb-fullmenu-col-title" data-i18n="nav.business">사업영역</span>
@@ -2007,6 +2007,14 @@ footer {
       ㈜비디젠은 DID·Passkey·블록체인 기술을 보유하고,<br>
       통신·금융·공공·의료·교육 산업의 인증·증명 솔루션을 제공합니다.
     </p>
+  </div>
+  <!-- Hero Fine-line Slide Indicator -->
+  <div class="hero-fine-indicator" id="heroFineIndicator" aria-hidden="true">
+    <button type="button" class="hero-fine-indicator__pause" aria-label="일시정지 / 재생"></button>
+    <div class="hero-fine-indicator__bar" aria-hidden="true">
+      <span class="hero-fine-indicator__tick is-active" data-slide="1"></span>
+      <span class="hero-fine-indicator__tick" data-slide="2"></span>
+    </div>
   </div>
   <div class="hero-scroll" aria-hidden="true">
     <div class="hero-scroll-mouse">
@@ -2617,11 +2625,23 @@ footer {
   var video1 = wrap ? wrap.querySelector('.hero-bg-video-1') : null;
   var video2 = wrap ? wrap.querySelector('.hero-bg-video-2') : null;
   if(!wrap || !video2) return;
+  var indicator = document.getElementById('heroFineIndicator');
+  var tickEls = indicator ? indicator.querySelectorAll('.hero-fine-indicator__tick') : null;
+  function setActiveSlide(n){
+    if(!tickEls) return;
+    for(var i=0;i<tickEls.length;i++){
+      var el = tickEls[i];
+      var slide = parseInt(el.getAttribute('data-slide') || '0', 10);
+      el.classList.toggle('is-active', slide === n);
+    }
+  }
+  setActiveSlide(1);
   setTimeout(function(){
     video2.play();
   }, 2500);
   setTimeout(function(){
     wrap.classList.add('crossfade');
+    setActiveSlide(2);
   }, 4000);
 })();
 

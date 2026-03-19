@@ -1,0 +1,73 @@
+/* Hero Fine-line Slide Indicator UI (Pause + 6 ticks) */
+
+.hero-fine-indicator{
+  position: absolute;
+  bottom: 56px;
+  top: auto;
+  left: 28px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  pointer-events: none; /* visual only (button is still interactive via pointer-events below) */
+}
+
+.hero-fine-indicator__pause{
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.55);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0;
+}
+
+.hero-fine-indicator__pause::before,
+.hero-fine-indicator__pause::after{
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: 15px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 3px;
+  transform: translateY(-50%);
+}
+
+.hero-fine-indicator__pause::before{ left: 18px; }
+.hero-fine-indicator__pause::after{ left: 26px; }
+
+.hero-fine-indicator__bar{
+  height: 20px; /* keeps the ticks vertically centered */
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  pointer-events: none;
+}
+
+.hero-fine-indicator__tick{
+  width: 44px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.28);
+}
+
+.hero-fine-indicator__tick.is-active{
+  background: rgba(255,255,255,0.98);
+}
+
+@media (max-width: 600px){
+  .hero-fine-indicator{
+    bottom: 48px;
+    top: auto;
+    left: 16px;
+    gap: 14px;
+  }
+  .hero-fine-indicator__bar{ gap: 12px; }
+  .hero-fine-indicator__tick{ width: 32px; }
+}
+

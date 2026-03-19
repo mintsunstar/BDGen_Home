@@ -88,99 +88,75 @@
   .sub-nav a:hover{ color:#111; }
   .sub-nav a.active{ color:#24ACFF; border-bottom-color:#24ACFF; font-weight:400; }
 
-  .content-section{ padding: 72px 0; }
-  .page-hero + .content-section{
-    padding-top: 0;
-    margin-top: -1px;
+  /* section_02 스타일: 컨텐츠 영역 리뉴얼 */
+  .bdgen-white-presentation{
     background: #ffffff;
+    color: #1a1f27;
+    line-height: 1.6;
+    padding: 120px 0;
   }
-  .page-hero + .content-section > .section-inner{ padding-top: 148px; }
-  .divider{ border: none; border-top: 1px solid rgba(0,0,0,0.08); }
+  .bdgen-white-presentation .inner-container{ max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .bdgen-white-presentation .highlight{ color: #0064ff; }
+  .bdgen-white-presentation .section-title{ font-size: 32px; font-weight: 800; margin-bottom: 48px; text-align: center; }
+  .bdgen-white-presentation .section-title span{ color: #0064ff; }
 
-  .mission-grid{ margin-top: 40px; display:grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
-  .mission-quote{
-    padding: 22px 22px;
-    border-left: 3px solid #0065FA;
-    background: #ffffff;
-    color: #111;
-    font-size: 16px;
-    line-height: 1.9;
+  .bdgen-white-presentation .main-title{ font-size: 52px; font-weight: 800; line-height: 1.2; margin-top: 0; margin-bottom: 0; letter-spacing: -1.5px; }
+  .bdgen-white-presentation .hero-desc{ font-size: 20px; color: #4e5968; margin-top: 30px; font-weight: 400; }
+  .bdgen-white-presentation .strategy-box{
+    margin-top: 60px; padding: 40px; background: #f9fafb; border-radius: 24px;
+    display: flex; flex-direction: column; gap: 30px;
   }
-  .mission-cards{ display:grid; gap: 12px; }
-  .mission-card{
-    padding: 18px 18px;
-    border: 1px solid rgba(0,0,0,0.08);
-    background: #f7f8fa;
-    border-radius: 12px;
-  }
-  .mission-card .num{ font-weight: 900; color:#0065FA; font-size: 12px; letter-spacing: .12em; }
-  .mission-card .title{ margin-top: 8px; font-weight: 900; color:#111; }
-  .mission-card .desc{ margin-top: 6px; color: rgba(0,0,0,0.62); line-height: 1.85; font-size: 14px; }
+  .bdgen-white-presentation .strategy-box .statement{ font-size: 22px; font-weight: 600; border-left: 4px solid #0064ff; padding-left: 24px; margin: 0; }
+  .bdgen-white-presentation .core-values{ display: flex; gap: 40px; flex-wrap: wrap; }
+  .bdgen-white-presentation .v-item{ font-size: 16px; color: #1a1f27; }
+  .bdgen-white-presentation .v-item strong{ color: #0064ff; margin-right: 8px; font-size: 18px; }
 
-  .stats-grid{ margin-top: 32px; display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .stat-card{
-    padding: 22px 18px;
-    border: 1px solid rgba(0,0,0,0.08);
-    background: #ffffff;
-    border-radius: 12px;
+  .bdgen-white-presentation .data-section{ padding: 100px 0; }
+  .bdgen-white-presentation .data-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .bdgen-white-presentation .data-card{
+    padding: 50px 24px; border-radius: 24px; background: #fff; border: 1px solid #eee; text-align: center;
+    transition: box-shadow 0.3s ease;
   }
-  .stat-num{ font-size: 42px; line-height: 1; font-weight: 900; letter-spacing: -0.02em; }
-  .stat-num span{ color:#0065FA; font-size: .55em; font-weight: 900; margin-left: 2px; }
-  .stat-label{ margin-top: 10px; color: rgba(0,0,0,0.62); font-size: 13px; }
+  .bdgen-white-presentation .data-card:hover{ box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+  .bdgen-white-presentation .data-card .num{ font-size: 48px; font-weight: 800; color: #0064ff; }
+  .bdgen-white-presentation .data-card .unit{ font-size: 20px; font-weight: 600; color: #0064ff; }
+  .bdgen-white-presentation .data-card p{ font-size: 18px; color: #4e5968; margin-top: 10px; margin-bottom: 0; }
 
-  .strength-grid{ margin-top: 32px; display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .str-card{
-    padding: 22px 18px;
-    border: 1px solid rgba(0,0,0,0.08);
-    background: #f7f8fa;
-    border-radius: 12px;
-    transition: transform .2s, border-color .2s;
+  .bdgen-white-presentation .capability-section{ padding: 100px 0; }
+  .bdgen-white-presentation .capability-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .bdgen-white-presentation .c-item{
+    padding: 32px; border-radius: 20px; background: #f9fafb; border: 1px solid transparent;
+    transition: all 0.3s ease;
   }
-  .str-card:hover{ transform: translateY(-2px); border-color: rgba(0,101,250,0.28); }
-  .str-title{ font-weight: 900; color:#111; }
-  .str-desc{ margin-top: 8px; color: rgba(0,0,0,0.62); line-height: 1.85; font-size: 14px; }
+  .bdgen-white-presentation .c-item:hover{ background: #fff; border-color: #0064ff; transform: translateY(-5px); }
+  .bdgen-white-presentation .c-item h4{ font-size: 19px; font-weight: 700; margin-bottom: 12px; margin-top: 0; }
+  .bdgen-white-presentation .c-item p{ color: #4e5968; font-size: 15px; margin: 0; line-height: 1.6; }
 
-  /* Company Info (text table) */
-  .company-info-block{
-    margin-top: 28px;
-    border-top: 1px solid rgba(0,0,0,0.08);
-    border-bottom: 1px solid rgba(0,0,0,0.08);
+  /* 회사정보 푸터: 공통 footer(검은배경) 스타일이 적용되지 않도록 오버라이드 */
+  .bdgen-white-presentation footer.company-info-footer{
+    background: transparent;
+    border-top: none;
+    padding: 0;
+    margin: 0;
+    color: inherit;
   }
-  .company-info-row{
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 18px;
-    padding: 18px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-  }
-  .company-info-row:last-child{ border-bottom: none; }
-  .company-info-label{
-    font-size: 14px;
-    font-weight: 800;
-    color: rgba(0,0,0,0.55);
-    padding-left: 2px;
-  }
-  .company-info-value{
-    font-size: 14px;
-    color: rgba(0,0,0,0.82);
-    line-height: 1.85;
-    word-break: keep-all;
-  }
+  .bdgen-white-presentation .info-table-wrapper{ background: #fff; border-top: 2px solid #1a1f27; padding-top: 20px; }
+  .bdgen-white-presentation .info-table{ width: 100%; border-collapse: collapse; }
+  .bdgen-white-presentation .info-table th{ text-align: left; width: 160px; padding: 20px; color: #8b95a1; font-weight: 500; border-bottom: 1px solid #eee; }
+  .bdgen-white-presentation .info-table td{ padding: 20px; border-bottom: 1px solid #eee; font-weight: 600; }
 
   @media (max-width: 1023px){
     .hero-inner{ padding: 48px 24px 50px; }
     .sub-nav{ overflow-x: auto; }
-    .mission-grid{ grid-template-columns: 1fr; }
-    .stats-grid{ grid-template-columns: repeat(2, 1fr); }
-    .strength-grid{ grid-template-columns: 1fr; }
+    .bdgen-white-presentation .main-title{ font-size: 40px; }
+    .bdgen-white-presentation .data-grid,
+    .bdgen-white-presentation .capability-grid{ grid-template-columns: 1fr; }
+    .bdgen-white-presentation .core-values{ flex-direction: column; gap: 16px; }
   }
-  @media (max-width: 520px){
-    .company-info-row{
-      grid-template-columns: 1fr;
-      gap: 8px;
-      padding: 14px 0;
-    }
-    .company-info-label{ padding-left: 0; }
+  @media (max-width: 768px){
+    .bdgen-white-presentation .main-title{ font-size: 34px; }
+    .bdgen-white-presentation .data-card{ padding: 40px 20px; }
+    .bdgen-white-presentation .data-card .num{ font-size: 40px; }
   }
   @media (max-width: 520px){
     .stats-grid{ grid-template-columns: 1fr; }
@@ -296,127 +272,81 @@
     </div>
   </div>
 
-  <!-- MISSION -->
-  <section class="content-section" id="mission">
-    <div class="section-inner">
-      <div class="sec-label">Mission & Vision</div>
-      <h2 class="sec-title">고객의 가치를 창출하며 성장하는<br>SW 개발 전문 기업</h2>
-      <p class="sec-desc">Web3 기술 역량과 통신·금융·공공·IoT 분야의 서비스 플랫폼 구축 경험을 바탕으로, 고객과 같은 목표로 최고의 가치를 전달합니다.</p>
-
-      <div class="mission-grid">
-        <div class="mission-quote">
-          비디젠은 블록체인 기반 디지털 신원(DID)과 Passkey 기술을 산업 현장에 적용하며,
-          안전하고 편리한 인증·증명 경험을 설계합니다.
-        </div>
-        <div class="mission-cards">
-          <div class="mission-card">
-            <div class="num">01</div>
-            <div class="title">Web3 & 블록체인 전문성</div>
-            <div class="desc">DID·NFT·Passkey 등 핵심 기술을 실제 서비스로 구현합니다.</div>
-          </div>
-          <div class="mission-card">
-            <div class="num">02</div>
-            <div class="title">고객 중심 가치 창출</div>
-            <div class="desc">요구사항을 깊이 이해하고 비즈니스 성공을 위한 결과물을 제공합니다.</div>
-          </div>
-          <div class="mission-card">
-            <div class="num">03</div>
-            <div class="title">지속적 성장과 혁신</div>
-            <div class="desc">변화에 민감하게 대응하며 기술 경쟁력을 계속 확장합니다.</div>
+  <!-- 컨텐츠 영역: section_02 디자인 -->
+  <section class="bdgen-white-presentation">
+    <div class="inner-container">
+      <header class="hero-section" id="mission">
+        <h2 class="main-title">고객의 가치를 창출하며 성장하는<br><span class="highlight">SW 개발 전문 기업</span></h2>
+        <p class="hero-desc">Web3 기술 역량과 통신·금융·공공·IoT 분야의 서비스 플랫폼 구축 경험을 바탕으로,<br>고객과 같은 목표로 최고의 가치를 전달합니다.</p>
+        <div class="strategy-box">
+          <p class="statement">비디젠은 블록체인 기반 디지털 신원(DID)과 Passkey 기술을 산업 현장에 적용하여,<br>안전하고 편리한 인증·증명 경험을 설계합니다.</p>
+          <div class="core-values">
+            <div class="v-item"><strong>01</strong> <span>Web3 & 블록체인 전문성</span></div>
+            <div class="v-item"><strong>02</strong> <span>고객 중심 가치 창출</span></div>
+            <div class="v-item"><strong>03</strong> <span>지속적 성장과 혁신</span></div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </header>
 
-  <hr class="divider">
-
-  <!-- STATS -->
-  <section class="content-section" id="stats">
-    <div class="section-inner">
-      <div class="sec-label">Numbers</div>
-      <h2 class="sec-title">숫자로 보는 비디젠</h2>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-num">2019<span>년</span></div>
-          <div class="stat-label">회사 설립</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">6<span>개</span></div>
-          <div class="stat-label">핵심 산업 분야</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">28<span>억</span></div>
-          <div class="stat-label">연 매출</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- STRENGTH -->
-  <section class="content-section" id="strength">
-    <div class="section-inner">
-      <div class="sec-label">Core Competency</div>
-      <h2 class="sec-title">비디젠의 핵심 역량</h2>
-      <p class="sec-desc">다년간의 프로젝트 수행을 통해 축적한 기술 노하우와 플랫폼 구축·운영 역량으로 산업의 신뢰 인프라를 설계합니다.</p>
-
-      <div class="strength-grid">
-        <div class="str-card">
-          <div class="str-title">블록체인 응용 서비스 상용화 경험</div>
-          <div class="str-desc">대규모 사용자 환경에서 검증된 상용화 경험을 보유합니다.</div>
-        </div>
-        <div class="str-card">
-          <div class="str-title">상용 서비스 플랫폼 구축 경험</div>
-          <div class="str-desc">모바일·웹·I/F 서버·백오피스를 포함한 풀스택 구축을 수행합니다.</div>
-        </div>
-        <div class="str-card">
-          <div class="str-title">다층적 블록체인 기술 스택</div>
-          <div class="str-desc">응용부터 인프라까지 전 계층의 기술을 내재화하고 운영합니다.</div>
-        </div>
-        <div class="str-card">
-          <div class="str-title">기획·디자인·개발 Full Set</div>
-          <div class="str-desc">서비스 기획부터 런칭까지 단일 팀으로 일관된 품질을 제공합니다.</div>
-        </div>
-        <div class="str-card">
-          <div class="str-title">플랫폼 관련 기술 보유</div>
-          <div class="str-desc">다양한 블록체인 플랫폼 기반의 구축·연동 역량을 확보했습니다.</div>
-        </div>
-        <div class="str-card">
-          <div class="str-title">대규모 서비스 운영 노하우</div>
-          <div class="str-desc">프로세스 기반 운영과 개선 루프로 장기간 안정적 운영을 지원합니다.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMPANY INFO -->
-  <section class="content-section" id="companyInfo">
-    <div class="section-inner">
-      <div class="sec-label">Company Info</div>
-      <h2 class="sec-title">회사정보</h2>
-      <div class="company-info-block" role="table" aria-label="비디젠 회사정보">
-        <div class="company-info-row" role="row">
-          <div class="company-info-label" role="cell">회사명</div>
-          <div class="company-info-value" role="cell">주식회사 비디젠 (BDGen Inc.)</div>
-        </div>
-        <div class="company-info-row" role="row">
-          <div class="company-info-label" role="cell">대표이사</div>
-          <div class="company-info-value" role="cell">유성종</div>
-        </div>
-        <div class="company-info-row" role="row">
-          <div class="company-info-label" role="cell">설립일</div>
-          <div class="company-info-value" role="cell">2019년 11월 1일</div>
-        </div>
-        <div class="company-info-row" role="row">
-          <div class="company-info-label" role="cell">사업영역</div>
-          <div class="company-info-value" role="cell">
-            Web3 글로벌을 통한 서비스 플랫폼 구축 및 운영,
-            DID/Passkey 기반 인증·증명 솔루션 제공
+      <div class="data-section" id="stats">
+        <h2 class="section-title">숫자로 보는 <span>비디젠</span></h2>
+        <div class="data-grid">
+          <div class="data-card">
+            <span class="num">2019</span><span class="unit">년</span>
+            <p>회사 설립</p>
+          </div>
+          <div class="data-card">
+            <span class="num">6</span><span class="unit">개</span>
+            <p>핵심 산업 분야</p>
+          </div>
+          <div class="data-card">
+            <span class="num">28</span><span class="unit">억</span>
+            <p>연 매출(2023)</p>
           </div>
         </div>
       </div>
+
+      <div class="capability-section" id="strength">
+        <h2 class="section-title">비디젠의 핵심 역량</h2>
+        <div class="capability-grid">
+          <div class="c-item">
+            <h4>블록체인 응용 서비스 상용화 경험</h4>
+            <p>대규모 사용자 환경에서 검증된 상용화 경험을 보유합니다.</p>
+          </div>
+          <div class="c-item">
+            <h4>상용 서비스 플랫폼 구축 경험</h4>
+            <p>모바일 앱, UI/UX, 백엔드를 포함한 풀스택 구축을 수행합니다.</p>
+          </div>
+          <div class="c-item">
+            <h4>다중적 블록체인 기술 스택</h4>
+            <p>인프라부터 앱 계층까지 전 계층의 기술을 내재화하여 운영합니다.</p>
+          </div>
+          <div class="c-item">
+            <h4>기획·디자인·개발 Full Set</h4>
+            <p>서비스 기획부터 런칭까지 단일 팀으로 일관된 품질을 제공합니다.</p>
+          </div>
+          <div class="c-item">
+            <h4>플랫폼 관련 기술 보유</h4>
+            <p>다양한 플랫폼 기반의 구축·연동 역량을 확보하였습니다.</p>
+          </div>
+          <div class="c-item">
+            <h4>대규모 서비스 운영 노하우</h4>
+            <p>프로세스 기반 운영과 개선 루프로 장기간 안정적 운영을 지원합니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <footer class="company-info-footer" id="companyInfo">
+        <h2 class="section-title">회사 정보</h2>
+        <div class="info-table-wrapper">
+          <table class="info-table">
+            <tr><th>회사명</th><td>주식회사 비디젠 (BDGen Inc.)</td></tr>
+            <tr><th>대표이사</th><td>유성종</td></tr>
+            <tr><th>설립일</th><td>2019년 11월 1일</td></tr>
+            <tr><th>사업영역</th><td>Web3·글로벌 서비스 플랫폼 구축 및 운영, DID/Passkey 기반 인증·증명 솔루션 제공</td></tr>
+          </table>
+        </div>
+      </footer>
     </div>
   </section>
 </main>

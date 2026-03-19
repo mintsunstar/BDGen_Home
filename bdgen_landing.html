@@ -1681,18 +1681,165 @@ footer {
 .back-top.visible { opacity: 1; pointer-events: all; }
 .back-top:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,200,255,0.5); }
 
-/* Floating: 회사소개서 다운받기 */
-.floating-brochure {
-  position: fixed; bottom: 88px; right: 32px; z-index: var(--z-back-top);
-  width: 48px; height: 48px; border-radius: 50%;
-  background: #fff; color: #111;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  transition: var(--transition);
-  border: 1px solid rgba(0,0,0,0.08);
+/* Floating: 회사소개서 다운받기 — 하이엔드 FAB (Neon-Breathing + Glass + Aurora) */
+.supreme-container {
+  position: fixed;
+  bottom: 60px;
+  right: 60px;
+  perspective: 1500px;
+  z-index: var(--z-back-top);
 }
-.floating-brochure:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); color: var(--primary); }
-.floating-brochure svg { width: 24px; height: 24px; }
+.supreme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  /* 글래스모피즘: 어두운 배경에서도 시인성 확보 */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 999px;
+  text-decoration: none;
+  color: #fff;
+  font-family: var(--font-family), 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+  /* 테두리 + 네온 브리딩 글로우 (항상 표시) */
+  border: 1px solid rgba(0, 242, 255, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 20px rgba(0, 242, 255, 0.35),
+    inset 0 0 20px rgba(0, 242, 255, 0.06);
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* 네온 브리딩: 평상시에도 은은하게 맥동 */
+.supreme-btn .border-glow-always {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  pointer-events: none;
+  border: 1px solid transparent;
+  box-shadow: 0 0 18px rgba(0, 242, 255, 0.5);
+  animation: fab-neon-breathe 2.5s ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes fab-neon-breathe {
+  0%, 100% { opacity: 0.7; box-shadow: 0 0 12px rgba(0, 242, 255, 0.4), inset 0 0 12px rgba(0, 242, 255, 0.05); }
+  50% { opacity: 1; box-shadow: 0 0 24px rgba(0, 242, 255, 0.65), 0 0 40px rgba(0, 242, 255, 0.2), inset 0 0 16px rgba(0, 242, 255, 0.08); }
+}
+.supreme-btn .content-shield {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 5;
+  white-space: nowrap;
+}
+/* 아이콘: 순백 → 호버 시 네온 청록 (시인성 최우선) */
+.supreme-btn .icon-section {
+  min-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+}
+.supreme-btn .icon-section svg { width: 24px; height: 24px; stroke: currentColor; }
+.supreme-btn .text-section {
+  opacity: 0;
+  margin-left: 0;
+  width: 0;
+  overflow: hidden;
+  transition: opacity 0.4s ease 0.1s, width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), margin-left 0.4s ease;
+}
+.supreme-btn .text-track {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(14px);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+}
+.supreme-btn .label-top { font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6); }
+.supreme-btn .label-main { font-size: 15px; font-weight: 800; margin: 2px 0; color: #fff; letter-spacing: -0.02em; }
+.supreme-btn .label-bottom { font-size: 10px; color: #00f2ff; font-weight: 600; }
+/* 오로라 배경: 호버 시에만 유기적 그라데이션 애니메이션 */
+.supreme-btn .aurora-bg {
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 180deg at 50% 50%, #00f2ff 0deg, rgba(0,242,255,0.4) 90deg, #a855f7 180deg, #00f2ff 270deg, #00f2ff 360deg);
+  filter: blur(28px);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  animation: fab-aurora-rotate 6s linear infinite;
+  z-index: 0;
+}
+@keyframes fab-aurora-rotate {
+  from { transform: translate(-25%, -25%) rotate(0deg); }
+  to { transform: translate(-25%, -25%) rotate(360deg); }
+}
+/* ——— Hover: 원형 → 타원형 모핑 + 텍스트 Slide-up + 오로라 ——— */
+.supreme-btn:hover {
+  width: 260px;
+  border-color: rgba(0, 242, 255, 0.7);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 28px rgba(0, 242, 255, 0.5),
+    0 0 56px rgba(0, 242, 255, 0.15),
+    inset 0 0 24px rgba(0, 242, 255, 0.08);
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+.supreme-btn:hover .border-glow-always {
+  animation: fab-neon-breathe 1.8s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
+  opacity: 0.9;
+}
+.supreme-btn:hover .aurora-bg { opacity: 0.5; }
+.supreme-btn:hover .text-section {
+  opacity: 1;
+  width: 180px;
+  margin-left: 16px;
+}
+.supreme-btn:hover .text-track {
+  transform: translateY(0);
+  opacity: 1;
+}
+.supreme-btn:hover .icon-section {
+  color: #00f2ff;
+  transform: scale(1.08);
+}
+
+/* ——— 흰색 배경 구간: FAB 원래 스타일 (밝은 배경용) ——— */
+.supreme-container.fab-light .supreme-btn {
+  background: #fff;
+  color: #111;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+.supreme-container.fab-light .supreme-btn .border-glow-always {
+  display: none;
+}
+.supreme-container.fab-light .supreme-btn .icon-section {
+  color: #111;
+}
+.supreme-container.fab-light .supreme-btn .label-top { color: rgba(0, 0, 0, 0.5); }
+.supreme-container.fab-light .supreme-btn .label-main { color: #111; }
+.supreme-container.fab-light .supreme-btn .label-bottom { color: var(--primary); }
+.supreme-container.fab-light .supreme-btn:hover {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+}
+.supreme-container.fab-light .supreme-btn:hover .icon-section {
+  color: var(--primary);
+}
 
 /* ========================
    RESPONSIVE - Desktop 1280+ | Laptop 1024~1279 | Tablet 768~1023 | Mobile ~767 | Small ~480
@@ -1851,8 +1998,9 @@ footer {
   .footer-bottom { flex-direction: column; align-items: center; text-align: center; padding-top: 24px; gap: 12px; }
   .footer-bottom-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
   .back-top { bottom: 20px; right: 20px; width: 48px; height: 48px; }
-  .floating-brochure { bottom: 76px; right: 20px; width: 44px; height: 44px; }
-  .floating-brochure svg { width: 22px; height: 22px; }
+  .supreme-container { bottom: 76px; right: 20px; }
+  .supreme-btn { width: 56px; height: 56px; }
+  .supreme-btn .icon-section svg { width: 22px; height: 22px; }
 }
 
 /* Small mobile (~480) */
@@ -2029,7 +2177,7 @@ footer {
 </section>
 
 <!-- ===== PARTNER (검증된 기술력 - 배경이미지 + 숫자지표 인터랙션) ===== -->
-<section id="partner" class="landing-partner" aria-label="검증된 기술력, 신뢰할 수 있는 파트너">
+<section id="partner" class="landing-partner" data-fab-theme="light" aria-label="검증된 기술력, 신뢰할 수 있는 파트너">
   <div class="container">
     <h2 class="partner-title"><span id="partner-typing" class="partner-typing" data-text="검증된 기술력, 신뢰할 수 있는 파트너" aria-hidden="false"></span></h2>
     <ul class="partner-metrics" role="list">
@@ -2214,7 +2362,7 @@ footer {
 </section>
 
 <!-- ===== REFERENCE (고객사/프로젝트) ===== -->
-<section id="reference" class="section" aria-labelledby="reference-title">
+<section id="reference" class="section" data-fab-theme="light" aria-labelledby="reference-title">
   <div class="container">
     <div class="section-header">
       <div class="section-label reveal">REFERENCE</div>
@@ -2284,7 +2432,7 @@ footer {
 </section>
 
 <!-- ===== NEWS 1: 한스경제(좌 대형) / 2~4: 포인트데일리·문화일보·뉴데일리(우 3열) ===== -->
-<section id="news" class="section section-alt" aria-labelledby="news-title">
+<section id="news" class="section section-alt" data-fab-theme="light" aria-labelledby="news-title">
   <div class="container">
     <div class="news-hero">
       <div class="news-hero-image reveal">
@@ -2499,10 +2647,30 @@ footer {
   </div>
 </footer>
 
-<!-- 회사소개서 다운받기 (플로팅) -->
-<a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" id="floatingBrochure" class="floating-brochure" target="_blank" rel="noopener" aria-label="회사소개서 다운받기" title="회사소개서 다운받기" data-i18n-title="brochureDownload">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15l3 3 3-3"/></svg>
-</a>
+<!-- 회사소개서 다운받기 (플로팅) - supreme-btn 스타일 -->
+<div class="supreme-container">
+  <a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" id="floatingBrochure" class="supreme-btn" target="_blank" rel="noopener" aria-label="회사소개서 다운받기" title="회사소개서 다운받기" data-i18n-title="brochureDownload">
+    <div class="aurora-bg"></div>
+    <div class="content-shield">
+      <div class="icon-section">
+        <div class="arrow-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 3V16M12 16L7 11M12 16L17 11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 20H20" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="text-section">
+        <div class="text-track">
+          <span class="label-top">Corporate Assets</span>
+          <span class="label-main">Download Profile</span>
+          <span class="label-bottom">v2026.03.19</span>
+        </div>
+      </div>
+    </div>
+    <div class="border-glow-always"></div>
+  </a>
+</div>
 
 <!-- Back to Top -->
 <button type="button" class="back-top" id="backTop" aria-label="맨 위로 이동">↑</button>
@@ -2907,18 +3075,33 @@ footer {
   }
 })();
 
-/* ---------- GNB 스크롤 & Back to Top ---------- */
+/* ---------- GNB 스크롤 & Back to Top & FAB 배경 감지 ---------- */
 (function(){
   var gnb = document.getElementById('gnb');
   var backTop = document.getElementById('backTop');
+  var fabContainer = document.querySelector('.supreme-container');
   var servicesSection = document.getElementById('services');
   var newsSection = document.getElementById('news');
   function onScroll(){
     var y = window.scrollY || window.pageYOffset;
     if(gnb) gnb.classList.toggle('scrolled', y>50);
     if(backTop) backTop.classList.toggle('visible', y>400);
+    updateFabTheme();
+  }
+  function updateFabTheme(){
+    if(!fabContainer) return;
+    var rect = fabContainer.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.top + rect.height / 2;
+    fabContainer.style.pointerEvents = 'none';
+    var el = document.elementFromPoint(cx, cy);
+    fabContainer.style.pointerEvents = '';
+    var overLight = el && el.closest('[data-fab-theme="light"]');
+    fabContainer.classList.toggle('fab-light', !!overLight);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', updateFabTheme);
+  if(fabContainer) updateFabTheme();
   if(backTop){
     backTop.addEventListener('click', function(){
       window.scrollTo({ top: 0, behavior: 'smooth' });

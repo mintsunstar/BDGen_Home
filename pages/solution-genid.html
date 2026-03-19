@@ -7,8 +7,51 @@
 <link rel="icon" type="image/svg+xml" href="../assets/logo.svg"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
 <link rel="stylesheet" href="bdgen-common.css"/>
+<style>
+  /* about-intro 기준: 헤더/배경/hero(=page-title 영역) 통일 */
+  body { background: #ffffff; color: #111; }
+  .page-main { padding: 0; background: #ffffff; }
+
+  /* GNB: dark text/logo */
+  .gnb-nav a { color: #111 !important; }
+  .gnb-logo-default { opacity: 0 !important; }
+  .gnb-logo-hover { opacity: 1 !important; }
+  .gnb-menu-btn span { background: #111 !important; }
+  .lang-switcher-trigger { color: #111 !important; }
+  .gnb-submenu { background: #ffffff !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; }
+  .gnb-submenu a { color: #111 !important; }
+  .gnb-submenu a:hover { color: #24ACFF !important; }
+  .lang-dropdown { background: #ffffff !important; border-color: rgba(0,0,0,0.08) !important; }
+  .lang-option { color: #111 !important; }
+
+  /* hero-inner 역할: page-main 내부 컨테이너 정렬 */
+  .page-main .container{
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding-top: 24px;
+    padding-bottom: 50px;
+  }
+  .page-title{
+    font-size: 55px !important;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .page-sub{
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-top: 14px;
+    color: rgba(0,0,0,0.62) !important;
+    line-height: 1.85;
+    max-width: 760px;
+  }
+</style>
 </head>
-<body>
+<body class="bdgen-subpage">
 <header class="gnb" id="gnb" role="banner">
   <div class="gnb-inner container">
     <a href="../bdgen_landing.html" class="gnb-logo" aria-label="BDGen 홈">
@@ -95,6 +138,16 @@
   </div>
 </div>
 <main class="page-main">
+  <div class="sub-nav-spacer" style="height:100px" aria-hidden="true"></div>
+  <div class="sub-nav section-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../bdgen_landing.html"><svg class="home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> HOME</a>
+      <span class="sep">&gt;</span>
+      <a href="solution-genid.html">SOLUTION</a>
+      <span class="sep">&gt;</span>
+      <span class="current">GenID</span>
+    </nav>
+  </div>
   <div class="container">
     <h1 class="page-title">GenID</h1>
     <p class="page-sub">콘텐츠 준비 중입니다.</p>
@@ -172,8 +225,26 @@
 <script>
 (function(){
   var gnb=document.getElementById('gnb'), backTop=document.getElementById('backTop');
-  window.addEventListener('scroll',function(){var y=window.scrollY; if(gnb)gnb.classList.toggle('scrolled',y>50); if(backTop)backTop.classList.toggle('visible',y>400);},{passive:true});
+  var lastY=0;
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    if(gnb){
+      gnb.classList.toggle('scrolled',y>50);
+      if(y>100&&y>lastY) gnb.classList.add('gnb-hidden');
+      else if(y<50||y<lastY) gnb.classList.remove('gnb-hidden');
+    }
+    lastY=y;
+    if(backTop) backTop.classList.toggle('visible',y>400);
+  },{passive:true});
   if(backTop)backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+(function(){
+  var sw=document.querySelector('.lang-switcher'), trigger=document.querySelector('.lang-switcher-trigger'), dropdown=document.querySelector('.lang-dropdown');
+  if(sw&&trigger&&dropdown){
+    trigger.addEventListener('click',function(e){ e.stopPropagation(); var open=dropdown.hidden; dropdown.hidden=!open; sw.setAttribute('aria-expanded',open); });
+    document.addEventListener('click',function(){ dropdown.hidden=true; if(sw) sw.setAttribute('aria-expanded','false'); });
+    dropdown.addEventListener('click',function(e){ if(e.target.closest('.lang-option')){ dropdown.hidden=true; if(sw) sw.setAttribute('aria-expanded','false'); } });
+  }
 })();
 (function(){
   var menuBtn=document.getElementById('gnbMenuBtn'), fullMenu=document.getElementById('fullMenu'), closeBtn=document.getElementById('fullMenuClose');

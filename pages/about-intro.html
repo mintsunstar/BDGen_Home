@@ -11,30 +11,34 @@
   /* page-only: keep existing header/footer, make content visible on white */
   body { background: #ffffff; color: #111; }
   .page-main { padding: 0; background: #ffffff; }
-  /* GNB: override to dark text/logo for white page */
-  .gnb-nav a{ color:#111 !important; }
-  .gnb-logo-default{ opacity:0 !important; }
-  .gnb-logo-hover{ opacity:1 !important; }
-  .gnb-menu-btn span{ background:#111 !important; }
-  .lang-switcher-trigger{ color:#111 !important; }
-  .gnb-submenu{ background:#ffffff !important; border-bottom:1px solid rgba(0,0,0,0.08) !important; }
+  /* GNB: 기본 흰색, 호버 시 검정으로 전환 */
+  .gnb-nav a{ color:#ffffff !important; }
+  .gnb-logo-default{ opacity:1 !important; }
+  .gnb-logo-hover{ opacity:0 !important; }
+  .gnb-menu-btn span{ background:#ffffff !important; }
+  .lang-switcher-trigger{ color:#ffffff !important; }
+  .gnb:hover .gnb-nav a{ color:#111 !important; }
+  .gnb:hover .gnb-logo-default{ opacity:0 !important; }
+  .gnb:hover .gnb-logo-hover{ opacity:1 !important; }
+  .gnb:hover .gnb-menu-btn span{ background:#111 !important; }
+  .gnb:hover .lang-switcher-trigger{ color:#111 !important; }
+  .gnb-submenu{ background:rgba(255,255,255,0.98) !important; border-bottom:1px solid rgba(0,0,0,0.08) !important; }
   .gnb-submenu a{ color:#111 !important; }
   .gnb-submenu a:hover{ color:#24ACFF !important; }
-  .gnb:hover .gnb-submenu a{ color:#24ACFF !important; }
-  .lang-dropdown{ background:#ffffff !important; border-color: rgba(0,0,0,0.08) !important; }
+  .lang-dropdown{ background:#fff !important; border-color: rgba(0,0,0,0.08) !important; }
   .lang-option{ color:#111 !important; }
 
   .page-hero{
     padding-top: 100px; /* fixed gnb */
-    border-bottom: 1px solid rgba(0,0,0,0.08);
     position: relative;
     overflow: hidden;
-    background: #ffffff;
+    background: #1a1a1a url(../assets/hero-inner_01.jpg) no-repeat center top;
+    background-size: cover;
   }
   .page-hero::before{
     content:"";
     position:absolute; inset:0;
-    background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(0,101,250,0.07) 0%, transparent 70%);
+    background: rgba(0,0,0,0.2);
     pointer-events:none;
   }
   /* Taller + vertically centered hero text block */
@@ -50,16 +54,29 @@
     min-height: 360px;
     text-align: left;
   }
-  .hero-label{ font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #0065FA; font-weight: 800; opacity: .88; }
-  .hero-title{
+  .page-hero .hero-label{ font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.9); font-weight: 800; opacity: .88; }
+  .page-hero .hero-title{
     font-size: 55px;
     line-height: 1.05;
     letter-spacing: -0.02em;
     margin-top: 0;
+    color: #ffffff;
   }
-  .hero-desc{ margin-top: 14px; color: rgba(0,0,0,0.62); max-width: 760px; line-height: 1.85; }
+  .page-hero .hero-desc{ margin-top: 14px; color: rgba(255,255,255,0.85); max-width: 760px; line-height: 1.85; }
 
-  .sub-nav{ display:flex; gap:0; margin-top: 44px; border-top: 1px solid rgba(0,0,0,0.08); position: relative; }
+  /* sub-nav: 좌우 끝까지 흰색 배경 풀폭, 틈 없이 붙이기 */
+  .page-hero .sub-nav.section-inner{
+    width: 100vw;
+    max-width: none;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 63px;
+    margin-bottom: 0;
+    background: #ffffff;
+    padding: 12px max(24px, calc(50vw - 600px)) 0;
+    box-shadow: 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.06);
+  }
+  .sub-nav{ display:flex; gap:0; border-top: none; position: relative; }
   .sub-nav a{
     padding: 16px 22px;
     font-size: 18px;
@@ -69,13 +86,15 @@
     white-space: nowrap;
   }
   .sub-nav a:hover{ color:#111; }
-  .sub-nav a.active{ color:#24ACFF; border-bottom-color:#24ACFF; font-weight:800; }
+  .sub-nav a.active{ color:#24ACFF; border-bottom-color:#24ACFF; font-weight:400; }
 
   .content-section{ padding: 72px 0; }
-  .section-inner{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-  .sec-label{ font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color:#0065FA; font-weight: 900; margin-bottom: 12px; }
-  .sec-title{ font-size: clamp(24px, 3.2vw, 36px); letter-spacing: -0.02em; margin-bottom: 14px; }
-  .sec-desc{ color: rgba(0,0,0,0.62); line-height: 1.9; max-width: 820px; }
+  .page-hero + .content-section{
+    padding-top: 0;
+    margin-top: -1px;
+    background: #ffffff;
+  }
+  .page-hero + .content-section > .section-inner{ padding-top: 148px; }
   .divider{ border: none; border-top: 1px solid rgba(0,0,0,0.08); }
 
   .mission-grid{ margin-top: 40px; display:grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
@@ -168,7 +187,7 @@
   }
 </style>
 </head>
-<body>
+<body class="bdgen-subpage">
 <header class="gnb" id="gnb" role="banner">
   <div class="gnb-inner container">
     <a href="../bdgen_landing.html" class="gnb-logo" aria-label="BDGen 홈">
@@ -262,9 +281,18 @@
       <p class="hero-desc">Web3 기술로 산업의 신뢰 인프라를 설계하는 블록체인·DID 전문 기업입니다.</p>
     </div>
     <div class="sub-nav section-inner" aria-label="회사소개 서브 메뉴">
-      <a href="about-intro.html" class="active" aria-current="page">회사소개</a>
-      <a href="about-history.html">연혁·인증</a>
-      <a href="about-ci.html">CI소개</a>
+      <div class="sub-nav-links">
+        <a href="about-intro.html" class="active" aria-current="page">회사소개</a>
+        <a href="about-history.html">연혁·인증</a>
+        <a href="about-ci.html">CI소개</a>
+      </div>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../bdgen_landing.html"><svg class="home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> HOME</a>
+        <span class="sep">&gt;</span>
+        <a href="about-intro.html">COMPANY</a>
+        <span class="sep">&gt;</span>
+        <span class="current">회사소개</span>
+      </nav>
     </div>
   </div>
 
@@ -464,8 +492,26 @@
 <script>
 (function(){
   var gnb=document.getElementById('gnb'), backTop=document.getElementById('backTop');
-  window.addEventListener('scroll',function(){var y=window.scrollY; if(gnb)gnb.classList.toggle('scrolled',y>50); if(backTop)backTop.classList.toggle('visible',y>400);},{passive:true});
+  var lastY=0;
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    if(gnb){
+      gnb.classList.toggle('scrolled',y>50);
+      if(y>100&&y>lastY) gnb.classList.add('gnb-hidden');
+      else if(y<50||y<lastY) gnb.classList.remove('gnb-hidden');
+    }
+    lastY=y;
+    if(backTop) backTop.classList.toggle('visible',y>400);
+  },{passive:true});
   if(backTop)backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+(function(){
+  var sw=document.querySelector('.lang-switcher'), trigger=document.querySelector('.lang-switcher-trigger'), dropdown=document.querySelector('.lang-dropdown');
+  if(sw&&trigger&&dropdown){
+    trigger.addEventListener('click',function(e){ e.stopPropagation(); var open=dropdown.hidden; dropdown.hidden=!open; sw.setAttribute('aria-expanded',open); });
+    document.addEventListener('click',function(){ dropdown.hidden=true; if(sw) sw.setAttribute('aria-expanded','false'); });
+    dropdown.addEventListener('click',function(e){ if(e.target.closest('.lang-option')){ dropdown.hidden=true; if(sw) sw.setAttribute('aria-expanded','false'); } });
+  }
 })();
 (function(){
   var menuBtn=document.getElementById('gnbMenuBtn'), fullMenu=document.getElementById('fullMenu'), closeBtn=document.getElementById('fullMenuClose');

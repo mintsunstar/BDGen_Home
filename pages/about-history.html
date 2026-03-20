@@ -27,13 +27,26 @@
     border-bottom: 1px solid rgba(0,0,0,0.08);
     position: relative;
     overflow: hidden;
-    background: #ffffff;
+    background: #1a1a1a url(../assets/hero-inner_01.jpg) no-repeat center top;
+    background-size: cover;
   }
   .page-hero::before{
     content:"";
     position:absolute; inset:0;
-    background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(0,101,250,0.07) 0%, transparent 70%);
+    background: rgba(0,0,0,0.2);
     pointer-events:none;
+  }
+  /* about-intro와 동일: sub-nav 풀폭 흰 배경 */
+  .page-hero .sub-nav.section-inner{
+    width: 100vw;
+    max-width: none;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 63px;
+    margin-bottom: 0;
+    background: #ffffff;
+    padding: 12px max(24px, calc(50vw - 600px)) 0;
+    box-shadow: 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.06);
   }
   /* Taller + vertically centered hero text block (same as about-intro) */
   .hero-inner {
@@ -48,9 +61,9 @@
     min-height: 360px;
     text-align: left;
   }
-  .hero-label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #0065FA; font-weight: 700; opacity: 0.85; }
-  .hero-title { font-size: 55px; line-height: 1.05; letter-spacing: -0.02em; margin-top: 0; }
-  .hero-desc { margin-top: 14px; color: rgba(0,0,0,0.62); max-width: 720px; line-height: 1.85; }
+  .hero-label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.9); font-weight: 800; opacity: .88; }
+  .hero-title { font-size: 55px; line-height: 1.05; letter-spacing: -0.02em; margin-top: 0; color: #ffffff; }
+  .hero-desc { margin-top: 14px; color: rgba(255,255,255,0.85); max-width: 760px; line-height: 1.85; font-weight: 400; }
   .sub-nav { display:flex; gap:0; margin-top: 44px; border-top: 1px solid rgba(0,0,0,0.08); position: relative; }
   .sub-nav a{
     padding: 16px 22px;
@@ -65,51 +78,377 @@
 
   .divider { border: none; border-top: 1px solid rgba(0,0,0,0.08); }
 
-  /* timeline */
-  .timeline { margin-top: 40px; display: grid; gap: 18px; }
-  .timeline-item{
-    display: grid; grid-template-columns: 120px 1fr;
-    gap: 18px;
-    padding: 18px 18px;
-    border: 1px solid rgba(0,0,0,0.08);
-    background: #f7f8fa;
-    border-radius: 12px;
+  /* 연혁 스토리텔링 인트로 */
+  #history.content-section { padding-top: 58px; padding-bottom: 100px; }
+  .history-story-intro {
+    position: relative;
+    max-width: 920px;
+    margin: 0 auto 72px;
+    padding: 56px 48px 64px;
+    border-radius: 24px;
+    background: #fff;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 24px 80px rgba(0, 40, 120, 0.06);
   }
-  .timeline-year{
+  .history-story-intro-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(118deg, rgba(0, 100, 255, 0.07) 0%, rgba(0, 100, 255, 0.02) 38%, transparent 58%),
+      linear-gradient(180deg, rgba(249, 250, 251, 0.9) 0%, rgba(255, 255, 255, 0) 100%);
+  }
+  .history-story-intro-bg::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10% auto 40%;
+    width: 120%;
+    height: 140%;
+    background:
+      repeating-linear-gradient(
+        105deg,
+        transparent 0,
+        transparent 47px,
+        rgba(0, 100, 255, 0.045) 47px,
+        rgba(0, 100, 255, 0.045) 48px
+      );
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 75%);
+    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 75%);
+  }
+  .history-story-intro-bg::after {
+    content: "";
+    position: absolute;
+    right: 8%;
+    top: 18%;
+    width: 120px;
+    height: 120px;
+    border: 1px solid rgba(0, 100, 255, 0.12);
+    border-radius: 28px;
+    transform: rotate(12deg);
+  }
+  .history-story-title {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(1.75rem, 4.2vw, 2.65rem);
     font-weight: 900;
-    color: #111;
-    letter-spacing: 0.02em;
-    font-size: 18px;
+    letter-spacing: -0.035em;
+    line-height: 1.28;
+    color: #1a1f27;
+    margin: 0 0 28px;
+    max-width: 18em;
+    opacity: 0;
+    transform: translateY(28px);
+    animation: historyFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
   }
-  .timeline-body ul{ list-style: none; display: grid; gap: 8px; }
-  .timeline-body li{ color: rgba(0,0,0,0.76); }
-  .timeline-body li strong{ color:#111; font-weight: 800; }
+  .history-story-body {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: historyFadeUp 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards;
+  }
+  .history-story-body p {
+    margin: 0 0 1.25em;
+    font-size: 1.0625rem;
+    line-height: 1.92;
+    color: #4e5968;
+    max-width: 52em;
+  }
+  .history-story-body p:last-child { margin-bottom: 0; }
+  @keyframes historyFadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .history-story-title,
+    .history-story-body {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* 시대별 마일스톤 배지 */
+  .history-era-badge {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    margin-bottom: 18px;
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: rgba(0, 100, 255, 0.06);
+    border: 1px solid rgba(0, 100, 255, 0.14);
+  }
+  .history-era-period {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #0064ff;
+    text-transform: uppercase;
+  }
+  .history-era-keyword {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(135deg, #0064ff 0%, #3d8bff 100%);
+    letter-spacing: 0.02em;
+  }
+  .history-era-text {
+    flex: 1 1 100%;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1f27;
+    line-height: 1.55;
+    margin: 0;
+    padding-top: 4px;
+  }
+  @media (min-width: 640px) {
+    .history-era-text { flex: 1 1 auto; padding-top: 0; margin-left: 4px; }
+  }
+
+  /* 연혁 클로징 */
+  .history-story-outro {
+    max-width: none;
+    width: 100%;
+    margin: 96px auto 0;
+    padding: 64px 24px;
+    text-align: center;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+  }
+  .history-story-outro p {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 2.0;
+    color: #1a1f27;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* 상단 타이틀 + 서브카피 */
+  .history-story-top{
+    margin-top: 0;
+    padding: 0;
+  }
+  .history-story-sub{
+    margin: 0;
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.85;
+    color: rgba(0,0,0,0.58);
+    max-width: 820px;
+  }
+  .history-top-divider{
+    margin-top: 24px;
+    border-top: 1px solid rgba(0,0,0,0.2);
+    height: 1px;
+    width: 100%;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* 연혁 레이아웃 (연혁2.html 구조 + 회사소개 톤앤매너) */
+  .history-layout {
+    margin-top: 34px;
+    display: flex;
+    align-items: flex-start;
+    gap: 140px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .history-year-nav {
+    flex: 0 0 260px;
+    position: sticky;
+    top: 120px;
+    align-self: flex-start;
+    padding-right: 0;
+    margin-right: 0;
+    border-right: none;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+  }
+  .history-year-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+  .history-head-text{
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 67px; /* 2줄일 때 행간을 확장(약 15px 추가 느낌) */
+    color: #1a1f27;
+    margin: 0 0 18px;
+    min-height: 134px;
+    opacity: 1;
+    transform: none;
+    animation: none;
+    max-width: 100%;
+    text-align: left;
+    word-break: keep-all;
+  }
+  .history-typing-line{ display: block; }
+  .history-typing-highlight{ color: #0064ff; }
+  .history-typing-cursor{
+    display: inline-block;
+    opacity: 0;
+    width: 0;
+    margin-left: 2px;
+    border-right: 2px solid #0064ff;
+    animation: historyTypingBlink 0.7s step-end infinite;
+    vertical-align: baseline;
+  }
+  @keyframes historyTypingBlink{
+    50%{ border-right-color: transparent; }
+  }
+  .history-year-nav li { margin-bottom: 14px; }
+  .history-year-link {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: 400;
+    color: #8b95a1;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    transition: color 0.25s ease;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+    padding: 0;
+  }
+  .history-year-link:hover,
+  .history-year-link:focus-visible {
+    color: #0064ff;
+    outline: none;
+  }
+  .history-year-link.active {
+    color: #0064ff;
+    font-weight: 800;
+    font-size: 44px;
+  }
+  .history-content {
+    flex: 1;
+    min-width: 0;
+    padding-left: 0;
+    /* 좌측 헤드타이틀 높이만큼 내려서, 우측 첫 연도 배지가
+       '헤드타이틀 라인'이 아닌 '연도 네비 라인'과 맞도록 */
+    padding-top: 0;
+  }
+  .history-year-section {
+    margin-bottom: 64px;
+    padding-top: 28px;
+    border-top: 2px solid #1a1f27;
+    scroll-margin-top: 120px;
+  }
+  .history-section-range {
+    display: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: #8b95a1;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .history-event-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .history-event-item {
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    font-size: 18px;
+    line-height: 1.65;
+    color: #4e5968;
+  }
+  .history-event-item:last-child { border-bottom: none; }
+  .history-badge {
+    display: block;
+    font-weight: 700;
+    color: #1a1f27;
+    font-size: 18px;
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
 
   /* cert grid */
   .cert-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .cert-card{
     padding: 22px 18px;
-    border: 1px solid rgba(0,0,0,0.08);
-    background: #f7f8fa;
-    border-radius: 12px;
+    border: 1px solid #eee;
+    background: #f9fafb;
+    border-radius: 20px;
     transition: transform .2s, border-color .2s;
   }
-  .cert-card:hover{ transform: translateY(-2px); border-color: rgba(0,101,250,0.28); }
+  .cert-card:hover{ transform: translateY(-2px); border-color: rgba(0,100,255,0.22); }
   .cert-badge{
     display:inline-flex; align-items:center;
     font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-    color:#0065FA; background: rgba(0,101,250,0.10);
+    color:#0064ff; background: rgba(0,100,255,0.10);
     padding: 5px 10px; border-radius: 999px;
     margin-bottom: 12px;
     font-weight: 800;
   }
-  .cert-name{ font-weight: 800; color:#111; line-height: 1.5; }
-  .cert-issuer{ margin-top: 8px; color: rgba(0,0,0,0.62); font-size: 13px; }
+  .cert-name{ font-weight: 800; color:#1a1f27; line-height: 1.5; }
+  .cert-issuer{ margin-top: 8px; color: #4e5968; font-size: 13px; }
 
   @media (max-width: 1023px){
     .hero-inner { padding: 48px 24px 50px; }
     .sub-nav { overflow-x: auto; }
-    .timeline-item{ grid-template-columns: 1fr; }
+    #history.content-section { padding-top: 52px; padding-bottom: 72px; }
+    .history-story-intro { padding: 40px 24px 48px; margin-bottom: 48px; }
+    .history-story-outro { margin-top: 48px; padding: 32px 22px; }
+    .history-layout { flex-direction: column; margin-top: 8px; }
+    .history-head-text{
+      font-size: 38px;
+      line-height: 44px;
+      margin: 0 0 14px;
+      transform: none;
+      opacity: 1;
+      animation: none;
+      min-height: 88px;
+    }
+    .history-year-nav {
+      position: relative;
+      top: auto;
+      max-height: none;
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #eee;
+      padding: 0 0 20px;
+      margin-right: 0;
+      margin-bottom: 8px;
+    }
+    .history-year-nav ul {
+      text-align: left;
+      display: block;
+      overflow-x: visible;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0;
+    }
+    .history-year-nav li { margin-bottom: 12px; flex-shrink: initial; }
+    .history-content { padding-left: 0; padding-top: 0; }
     .cert-grid{ grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 520px){
@@ -227,53 +566,133 @@
     </div>
   </div>
 
-  <!-- TIMELINE -->
+  <!-- TIMELINE (스토리텔링 연혁) -->
   <section class="content-section" id="history">
     <div class="section-inner">
       <div class="sec-label">History</div>
-      <h2 class="sec-title">연혁</h2>
-      <p class="sec-desc">핵심 기술 내재화와 산업 적용 경험을 바탕으로, Web3 기반 인증·증명 분야에서 지속적으로 성장하고 있습니다.</p>
 
-      <div class="timeline" role="list">
-        <div class="timeline-item" role="listitem">
-          <div class="timeline-year">2025</div>
-          <div class="timeline-body">
-            <ul>
-              <li><strong>DID/Passkey</strong> 기반 인증 고도화 및 산업 적용 확대</li>
-              <li>통신·금융·공공 분야 서비스 운영 안정화</li>
+      <header class="history-story-top">
+        <h2 class="history-head-text">
+          <span class="history-typing-line"><span id="history-typing-1"></span></span>
+          <span class="history-typing-line">
+            <span id="history-typing-2" class="history-typing-highlight"></span><span class="history-typing-cursor" aria-hidden="true"></span>
+          </span>
+        </h2>
+        <p class="history-story-sub">
+          핵심 기술 내재화와 산업 적용 경험을 바탕으로, Web3 기반 인증·증명 분야에서 지속적으로 성장하고 있습니다.
+        </p>
+        <div class="history-top-divider" aria-hidden="true"></div>
+      </header>
+
+      <div class="history-layout">
+        <nav class="history-year-nav" aria-label="연도별 연혁 이동">
+          <ul>
+            <li><a href="#sec2025" class="history-year-link active">2025</a></li>
+            <li><a href="#sec2024" class="history-year-link">2024</a></li>
+            <li><a href="#sec2023" class="history-year-link">2023</a></li>
+            <li><a href="#sec2022" class="history-year-link">2022</a></li>
+            <li><a href="#sec2021" class="history-year-link">2021</a></li>
+            <li><a href="#sec2020" class="history-year-link">2020</a></li>
+            <li><a href="#sec2019" class="history-year-link">2019</a></li>
+          </ul>
+        </nav>
+        <div class="history-content">
+          <section id="sec2025" class="history-year-section" aria-labelledby="hist-2025">
+            <h3 id="hist-2025" class="visually-hidden">2025년 연혁</h3>
+            <div class="history-era-badge" role="group" aria-label="2025년대 마일스톤">
+              <span class="history-era-period">2025 ~</span>
+              <span class="history-era-keyword">도약</span>
+              <p class="history-era-text">글로벌 표준을 선도하는 기술의 정점</p>
+            </div>
+            <span class="history-section-range">2025</span>
+            <ul class="history-event-list">
+              <li class="history-event-item">SKTelecom PASS 기반 모바일 전자고지 공공알림 서비스 개발 및 운영</li>
+              <li class="history-event-item">25년 행안부 클라우드네이티브 전환 사업 참여</li>
+              <li class="history-event-item">국가기술표준원 &quot;한국형 모바일 신분증 국제 호환을 위한 표준 개발 사업&quot; 참여기관 선정</li>
+              <li class="history-event-item">NH농협은행 CBDC 2차 테스트 사업 참여 - 블록체인 기반 국가보조금 집행 시범사업 대응 개발</li>
             </ul>
-          </div>
-        </div>
-        <div class="timeline-item" role="listitem">
-          <div class="timeline-year">2024</div>
-          <div class="timeline-body">
-            <ul>
-              <li>블록체인 기반 디지털 신원 서비스 구축 프로젝트 수행</li>
-              <li>플랫폼 구축 및 운영 프로세스 고도화</li>
+          </section>
+          <section id="sec2024" class="history-year-section" aria-labelledby="hist-2024">
+            <h3 id="hist-2024" class="visually-hidden">2024년 연혁</h3>
+            <span class="history-section-range">2024</span>
+            <ul class="history-event-list">
+              <li class="history-event-item"><span class="history-badge">OBDIA 협회 (오픈블록체인 DID협회) 이사社 등록</span></li>
+              <li class="history-event-item">NH농협은행-한국은행 CBDC 활용성 1차 테스트 대응 시스템 구축 사업자 선정</li>
+              <li class="history-event-item">KISA 블록체인 공공 집중 사업 - 고용정보원 디지털배지 기반 통합 취업지원서비스 구축 사업 참여</li>
+              <li class="history-event-item">KISA 블록체인 민간 확산 사업 - 농협 조각투자사업자를 위한 공익적 토큰증권 플랫폼(STO) 구축</li>
+              <li class="history-event-item">SKTelecom DID 기반 &quot;모두의 증명&quot; 서비스 개발/상용화</li>
             </ul>
-          </div>
-        </div>
-        <div class="timeline-item" role="listitem">
-          <div class="timeline-year">2023</div>
-          <div class="timeline-body">
-            <ul>
-              <li>기술혁신형 중소기업(Inno-Biz) 확인</li>
-              <li>벤처기업 확인</li>
+          </section>
+          <section id="sec2023" class="history-year-section" aria-labelledby="hist-2023">
+            <h3 id="hist-2023" class="visually-hidden">2023년 연혁</h3>
+            <div class="history-era-badge" role="group" aria-label="2023~2024 마일스톤">
+              <span class="history-era-period">2023~2024</span>
+              <span class="history-era-keyword">확장</span>
+              <p class="history-era-text">신뢰의 영토를 넓히다</p>
+            </div>
+            <ul class="history-event-list">
+              <li class="history-event-item"><span class="history-badge">이노비즈 기업선정 (중소벤처기업부), 벤처기업 확인 ((사)벤처기업협회)</span></li>
+              <li class="history-event-item">SKTelecom DID 서비스 및 PASS 모바일 지갑 서비스 플랫폼 deploy (한국산업인력공단)</li>
+              <li class="history-event-item">SKTelecom DID 서비스 initial 및 PASS 모바일 지갑 서비스 플랫폼 운영/고도화</li>
+              <li class="history-event-item">디지털혁신공유대학 SHARE 출입인증 및 Log-in 시스템 연동 개발</li>
+              <li class="history-event-item">SKTelecom 마이데이터 서비스 플랫폼 운영/고도화</li>
+              <li class="history-event-item">Hyperledger firefly를 이용한 Hyperledger fabric &amp; Ethereum 연동 개발</li>
             </ul>
-          </div>
-        </div>
-        <div class="timeline-item" role="listitem">
-          <div class="timeline-year">2019</div>
-          <div class="timeline-body">
-            <ul>
-              <li>주식회사 비디젠 설립</li>
-              <li>블록체인·DID 기반 서비스 연구/개발 착수</li>
+          </section>
+          <section id="sec2022" class="history-year-section" aria-labelledby="hist-2022">
+            <h3 id="hist-2022" class="visually-hidden">2022년 연혁</h3>
+            <span class="history-section-range">2022</span>
+            <ul class="history-event-list">
+              <li class="history-event-item"><span class="history-badge">직접생산확인증명서 발급, 소프트웨어사업자 확인</span></li>
+              <li class="history-event-item">SKTelecom DID 서비스 initial 및 PASS 모바일 지갑 서비스 플랫폼 운영</li>
+              <li class="history-event-item">22년 KISA 블록체인 선도 사업 - 서울시 블록체인 기반 공공일자리 전자근로계약 플랫폼 구축</li>
+              <li class="history-event-item">SKTelecom DID initial 및 PASS 모바일 지갑 서비스 &quot;정부24 전자문서 API&quot; 연동 개발</li>
             </ul>
-          </div>
+          </section>
+          <section id="sec2021" class="history-year-section" aria-labelledby="hist-2021">
+            <h3 id="hist-2021" class="visually-hidden">2021년 연혁</h3>
+            <div class="history-era-badge" role="group" aria-label="2021~2022 마일스톤">
+              <span class="history-era-period">2021~2022</span>
+              <span class="history-era-keyword">성장</span>
+              <p class="history-era-text">실질적인 가치를 증명하다</p>
+            </div>
+            <ul class="history-event-list">
+              <li class="history-event-item"><span class="history-badge">비디젠 기술 연구소 설립, 일 병행 학습제 업체 선정, OBDIA 회원社 등록</span></li>
+              <li class="history-event-item">21년 KISA 블록체인 선도 사업 - 블록체인 기반 마약류 의약품 관리 플랫폼 개발</li>
+              <li class="history-event-item">21년 NIPA 블록체인 PoC 사업 참여 - 블록체인 기반 부동산 감정평가 이력관리 플랫폼 개발</li>
+              <li class="history-event-item">SKTelecom DID 서비스, initial 운영/고도화 및 고려대학교 출입 인증 서비스 적용 개발</li>
+            </ul>
+          </section>
+          <section id="sec2020" class="history-year-section" aria-labelledby="hist-2020">
+            <h3 id="hist-2020" class="visually-hidden">2020년 연혁</h3>
+            <span class="history-section-range">2020</span>
+            <ul class="history-event-list">
+              <li class="history-event-item">SKTelecom DID 서비스 initial 운영/고도화</li>
+              <li class="history-event-item">S게임사 통합 운영 서비스 개발</li>
+              <li class="history-event-item">SKTelecom 블록체인 플랫폼 사용자 트랜잭션 수집 분석관리 시스템 구축</li>
+              <li class="history-event-item">NIPA 민간지능정보 시스템(AI) 개발 진행</li>
+            </ul>
+          </section>
+          <section id="sec2019" class="history-year-section" aria-labelledby="hist-2019">
+            <h3 id="hist-2019" class="visually-hidden">2019년 연혁</h3>
+            <div class="history-era-badge" role="group" aria-label="2019~2020 마일스톤">
+              <span class="history-era-period">2019~2020</span>
+              <span class="history-era-keyword">태동</span>
+              <p class="history-era-text">변화의 씨앗을 심다</p>
+            </div>
+            <ul class="history-event-list">
+              <li class="history-event-item"><span class="history-badge">주식회사 비디젠 설립</span></li>
+              <li class="history-event-item">SKTelecom 블록체인 Wallet 서비스 개발</li>
+            </ul>
+          </section>
         </div>
       </div>
     </div>
   </section>
+
+  <footer class="history-story-outro">
+    <p>비디젠의 기록은 내일도 계속됩니다. 우리는 기술을 넘어 사람과 사람, 기업과 사회를 잇는 가장 안전한 다리가 되겠습니다.</p>
+  </footer>
 
   <hr class="divider">
 
@@ -417,6 +836,111 @@
   if(!trigger||!list)return;
   trigger.addEventListener('click',function(e){e.stopPropagation(); var isOpen=wrap.classList.toggle('open'); trigger.setAttribute('aria-expanded',isOpen);});
   document.addEventListener('click',function(){wrap.classList.remove('open'); trigger.setAttribute('aria-expanded','false');});
+})();
+(function(){
+  var el1 = document.getElementById('history-typing-1');
+  var el2 = document.getElementById('history-typing-2');
+  var cursor = document.querySelector('.history-typing-cursor');
+  if(!el1 || !el2 || !cursor) return;
+
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var text1 = '기술로 빚은 신뢰,';
+  var text2 = '데이터로 증명한 혁신';
+  var speed = reducedMotion ? 0 : 45;
+  var started = false;
+
+  function typeWriter(el, text, cb){
+    var i = 0;
+    function tick(){
+      if(i < text.length){
+        el.textContent += text.charAt(i);
+        i++;
+        setTimeout(tick, speed);
+      }else if(cb){
+        cb();
+      }
+    }
+    tick();
+  }
+
+  function run(){
+    if(started) return;
+    started = true;
+
+    if(reducedMotion){
+      el1.textContent = text1;
+      el2.textContent = text2;
+      cursor.style.opacity = '0';
+      return;
+    }
+
+    el1.textContent = '';
+    el2.textContent = '';
+    cursor.style.opacity = '1';
+
+    typeWriter(el1, text1, function(){
+      setTimeout(function(){
+        typeWriter(el2, text2, function(){
+          cursor.style.opacity = '0';
+        });
+      }, 120);
+    });
+  }
+
+  var anchor = document.querySelector('.history-story-top') || document.getElementById('history');
+  if(!anchor){
+    run();
+    return;
+  }
+  if(reducedMotion){
+    run();
+    return;
+  }
+
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      obs.disconnect();
+      run();
+    });
+  },{threshold:0.15,rootMargin:'0px 0px -35% 0px'});
+  obs.observe(anchor);
+})();
+(function(){
+  var navLinks=document.querySelectorAll('.history-year-link');
+  var sections=document.querySelectorAll('.history-year-section');
+  if(!navLinks.length||!sections.length)return;
+  function setActive(id){
+    navLinks.forEach(function(a){
+      a.classList.toggle('active',a.getAttribute('href')==='#'+id);
+    });
+  }
+  function getIdFromLink(link){
+    var href=link.getAttribute('href')||'';
+    if(href.charAt(0)==='#') return href.slice(1);
+    return '';
+  }
+  navLinks.forEach(function(link){
+    link.addEventListener('click',function(e){
+      var id=getIdFromLink(this);
+      if(!id) return;
+      e.preventDefault();
+      setActive(id);
+      var target=document.getElementById(id);
+      if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+
+  function onScroll(){
+    var y=window.scrollY+140;
+    var current=sections[0].id;
+    sections.forEach(function(sec){
+      if(sec.offsetTop<=y) current=sec.id;
+    });
+    if(current) setActive(current);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
 })();
 </script>
 </body>

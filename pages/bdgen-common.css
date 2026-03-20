@@ -44,7 +44,7 @@ body.bdgen-subpage .gnb.scrolled{background:#fff!important;backdrop-filter:none;
 .gnb-submenu-inner{max-width:1200px;margin:0 auto;padding:0 var(--container-padding-x);display:flex;justify-content:center;align-items:center;flex-wrap:wrap;}
 .gnb-submenu a{display:block;padding:16px 28px;font-size:1rem;font-weight:500;white-space:nowrap;color:#fff;transition:background 0.2s,color 0.2s;}
 .gnb:hover .gnb-submenu a{color:#333;}
-.gnb-submenu a:hover,.gnb:hover .gnb-submenu a:hover{background:transparent;color:#24ACFF;}
+.gnb-submenu a:hover,.gnb:hover .gnb-submenu a:hover{background:transparent;color:#24ACFF!important;}
 .gnb-submenu a::after{display:none!important;}
 .gnb-submenu a:hover::after{display:none!important;}
 .lang-switcher{position:relative;margin-left:8px;}

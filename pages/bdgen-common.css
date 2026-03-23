@@ -21,6 +21,17 @@ ul{list-style:none;}
 .gnb{position:fixed;top:0;left:0;right:0;z-index:var(--z-gnb);transition:var(--transition);min-height:100px;display:flex;align-items:center;}
 .gnb.scrolled{background:rgba(5,11,24,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,200,255,0.1);box-shadow:0 4px 30px rgba(0,0,0,0.3);}
 body.bdgen-subpage .gnb.scrolled{background:#fff!important;backdrop-filter:none;border-bottom:1px solid rgba(0,0,0,0.08)!important;box-shadow:0 1px 0 rgba(0,0,0,0.08);}
+/* 스크롤 시 헤더 폰트 검정색 */
+body.bdgen-subpage .gnb.scrolled .gnb-nav a{color:#111!important;}
+body.bdgen-subpage .gnb.scrolled .gnb-logo-default{opacity:0!important;}
+body.bdgen-subpage .gnb.scrolled .gnb-logo-hover{opacity:1!important;}
+body.bdgen-subpage .gnb.scrolled .gnb-menu-btn span{background:#111!important;}
+body.bdgen-subpage .gnb.scrolled .lang-switcher-trigger{color:#111!important;}
+body.bdgen-subpage .gnb.scrolled .gnb-submenu{background:#fff!important;border-bottom:1px solid rgba(0,0,0,0.08)!important;}
+body.bdgen-subpage .gnb.scrolled .gnb-submenu a{color:#111!important;}
+body.bdgen-subpage .gnb.scrolled .gnb-submenu a:hover{color:#24ACFF!important;}
+body.bdgen-subpage .gnb.scrolled .lang-dropdown{background:#fff!important;border-color:rgba(0,0,0,0.08)!important;}
+body.bdgen-subpage .gnb.scrolled .lang-option{color:#111!important;}
 .gnb.gnb-hidden{transform:translateY(-100%);transition:transform 0.25s ease;}
 .gnb:hover{background:#fff!important;border-bottom:1px solid rgba(0,0,0,0.08);}
 .gnb:hover .gnb-nav a{color:#333;}
@@ -44,7 +55,8 @@ body.bdgen-subpage .gnb.scrolled{background:#fff!important;backdrop-filter:none;
 .gnb-submenu-inner{max-width:1200px;margin:0 auto;padding:0 var(--container-padding-x);display:flex;justify-content:center;align-items:center;flex-wrap:wrap;}
 .gnb-submenu a{display:block;padding:16px 28px;font-size:1rem;font-weight:500;white-space:nowrap;color:#fff;transition:background 0.2s,color 0.2s;}
 .gnb:hover .gnb-submenu a{color:#333;}
-.gnb-submenu a:hover,.gnb:hover .gnb-submenu a:hover{background:transparent;color:#24ACFF!important;}
+.gnb-submenu a:hover,
+.gnb:hover .gnb-submenu a:hover{background:transparent;color:#24ACFF!important;}
 .gnb-submenu a::after{display:none!important;}
 .gnb-submenu a:hover::after{display:none!important;}
 .lang-switcher{position:relative;margin-left:8px;}
@@ -116,6 +128,43 @@ footer{background:#030812;border-top:1px solid rgba(255,255,255,0.06);padding:48
 .back-top{position:fixed;bottom:32px;right:32px;z-index:var(--z-back-top);width:44px;height:44px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition);font-size:1.1rem;color:#fff;}
 .back-top.visible{opacity:1;pointer-events:all;}
 .back-top:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,200,255,0.5);}
+/* 서브페이지 공통: page-hero 있는 페이지(회사소개, 연혁 등) - GNB 흰색 기본, 호버 시 검정 */
+body.bdgen-subpage:has(.page-hero) .gnb-nav a{color:#fff!important;}
+body.bdgen-subpage:has(.page-hero) .gnb-logo-default{opacity:1!important;}
+body.bdgen-subpage:has(.page-hero) .gnb-logo-hover{opacity:0!important;}
+body.bdgen-subpage:has(.page-hero) .gnb-menu-btn span{background:#fff!important;}
+body.bdgen-subpage:has(.page-hero) .lang-switcher-trigger{color:#fff!important;}
+body.bdgen-subpage:has(.page-hero) .gnb-submenu{background:rgba(255,255,255,0.98)!important;border-bottom:1px solid rgba(0,0,0,0.08)!important;}
+body.bdgen-subpage:has(.page-hero) .gnb-submenu a{color:#111!important;}
+body.bdgen-subpage:has(.page-hero) .gnb-submenu a:hover{color:#24ACFF!important;}
+body.bdgen-subpage:has(.page-hero) .lang-dropdown{background:#fff!important;border-color:rgba(0,0,0,0.08)!important;}
+body.bdgen-subpage:has(.page-hero) .lang-option{color:#111!important;}
+body.bdgen-subpage:has(.page-hero) .gnb:hover .gnb-nav a{color:#111!important;}
+body.bdgen-subpage:has(.page-hero) .gnb:hover .gnb-logo-default{opacity:0!important;}
+body.bdgen-subpage:has(.page-hero) .gnb:hover .gnb-logo-hover{opacity:1!important;}
+body.bdgen-subpage:has(.page-hero) .gnb:hover .gnb-menu-btn span{background:#111!important;}
+body.bdgen-subpage:has(.page-hero) .gnb:hover .lang-switcher-trigger{color:#111!important;}
+body.bdgen-subpage:has(.page-hero) .gnb:hover .gnb-submenu a{color:#111!important;}
+body.bdgen-subpage:has(.page-hero) .gnb:hover .gnb-submenu a:hover{color:#24ACFF!important;}
+body.bdgen-subpage:has(.page-hero) .gnb:hover .lang-option{color:#111!important;}
+/* page-hero 없는 페이지(sub-nav만 있는 페이지) - GNB 검정 (흰 배경 대응) */
+body.bdgen-subpage:not(:has(.page-hero)) .gnb-nav a{color:#111!important;}
+body.bdgen-subpage:not(:has(.page-hero)) .gnb-logo-default{opacity:0!important;}
+body.bdgen-subpage:not(:has(.page-hero)) .gnb-logo-hover{opacity:1!important;}
+body.bdgen-subpage:not(:has(.page-hero)) .gnb-menu-btn span{background:#111!important;}
+body.bdgen-subpage:not(:has(.page-hero)) .lang-switcher-trigger{color:#111!important;}
+body.bdgen-subpage:not(:has(.page-hero)) .gnb-submenu{background:#fff!important;border-bottom:1px solid rgba(0,0,0,0.08)!important;}
+body.bdgen-subpage:not(:has(.page-hero)) .gnb-submenu a{color:#111!important;}
+body.bdgen-subpage:not(:has(.page-hero)) .gnb-submenu a:hover,
+body.bdgen-subpage:not(:has(.page-hero)) .gnb:hover .gnb-submenu a:hover{color:#24ACFF!important;}
+body.bdgen-subpage:not(:has(.page-hero)) .lang-dropdown{background:#fff!important;border-color:rgba(0,0,0,0.08)!important;}
+body.bdgen-subpage:not(:has(.page-hero)) .lang-option{color:#111!important;}
+/* sub-nav 와 섹션(컨테이너) 간 150px 간격 */
+body.bdgen-subpage .page-hero+.bdgen-white-presentation,
+body.bdgen-subpage .page-hero+.content-section,
+body.bdgen-subpage .page-hero+#history.content-section{padding-top:150px!important;}
+body.bdgen-subpage .sub-nav.section-inner+.container,
+body.bdgen-subpage main .sub-nav.section-inner+.container{margin-top:150px!important;}
 .sub-nav.section-inner{position:sticky;top:0;z-index:998;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;max-width:1200px;margin:0 auto;padding:12px 24px;}
 .sub-nav.section-inner .sub-nav-links{display:flex;gap:0;}
 .sub-nav.section-inner .breadcrumb{display:flex;align-items:center;gap:6px 10px;font-size:13px;color:#999;letter-spacing:0.02em;}

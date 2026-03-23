@@ -8,47 +8,25 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
 <link rel="stylesheet" href="bdgen-common.css"/>
 <style>
-  /* about-intro 기준: 헤더/배경/hero(=page-title 영역) 통일 */
+  /* about-intro과 동일 레이아웃 */
   body { background: #ffffff; color: #111; }
   .page-main { padding: 0; background: #ffffff; }
-
-  /* GNB: dark text/logo */
-  .gnb-nav a { color: #111 !important; }
-  .gnb-logo-default { opacity: 0 !important; }
-  .gnb-logo-hover { opacity: 1 !important; }
-  .gnb-menu-btn span { background: #111 !important; }
-  .lang-switcher-trigger { color: #111 !important; }
-  .gnb-submenu { background: #ffffff !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; }
-  .gnb-submenu a { color: #111 !important; }
-  .gnb-submenu a:hover { color: #24ACFF !important; }
-  .lang-dropdown { background: #ffffff !important; border-color: rgba(0,0,0,0.08) !important; }
-  .lang-option { color: #111 !important; }
-
-  /* hero-inner 역할: page-main 내부 컨테이너 정렬 */
-  .page-main .container{
-    min-height: 360px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: left;
-    padding-top: 100px; /* fixed gnb offset */
-    padding-bottom: 50px;
-  }
-  .page-title{
-    font-size: 55px !important;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 14px;
-  }
-  .page-sub{
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-top: 14px;
-    color: rgba(0,0,0,0.62) !important;
-    line-height: 1.85;
-    max-width: 760px;
-  }
+  .page-hero{ padding-top: 100px; position: relative; overflow: hidden; background: #1a1a1a url(../assets/hero-inner_01.jpg) no-repeat center top; background-size: cover; }
+  .page-hero::before{ content:""; position:absolute; inset:0; background: rgba(0,0,0,0.2); pointer-events:none; }
+  .hero-inner{ max-width: 1200px; margin: 0 auto; padding: 64px 24px 50px; position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 360px; text-align: left; }
+  .page-hero .hero-title{ font-size: 55px; line-height: 1.05; letter-spacing: -0.02em; margin-top: 0; color: #ffffff; }
+  .page-hero .hero-desc{ margin-top: 14px; color: rgba(255,255,255,0.85); max-width: 760px; line-height: 1.85; }
+  .page-hero .sub-nav.section-inner{ width: 100vw; max-width: none; margin-left: 50%; transform: translateX(-50%); margin-top: 63px; margin-bottom: 0; background: #ffffff; padding: 12px max(24px, calc(50vw - 600px)) 0; box-shadow: 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.06); }
+  .sub-nav{ display:flex; gap:0; border-top: none; position: relative; }
+  .sub-nav a{ padding: 16px 22px; font-size: 18px; color: rgba(0,0,0,0.62); border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; white-space: nowrap; }
+  .sub-nav a:hover{ color:#111; }
+  .sub-nav a.active{ color:#24ACFF; border-bottom-color:#24ACFF; font-weight:400; }
+  .bdgen-white-presentation{ background: #ffffff; color: #1a1f27; line-height: 1.6; padding: 150px 0 120px; }
+  .bdgen-white-presentation .inner-container{ max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .bdgen-white-presentation .main-title{ font-size: 77px; font-weight: 800; line-height: 100px; margin-top: 0; margin-bottom: 0; letter-spacing: -1.5px; }
+  .bdgen-white-presentation .hero-desc{ font-size: 20px; color: #4e5968; margin-top: 30px; font-weight: 400; }
+  @media (max-width: 1023px){ .hero-inner{ padding: 48px 24px 50px; } .sub-nav{ overflow-x: auto; } .bdgen-white-presentation .main-title{ font-size: 40px; } }
+  @media (max-width: 768px){ .bdgen-white-presentation .main-title{ font-size: 34px; } }
 </style>
 </head>
 <body class="bdgen-subpage">
@@ -138,20 +116,29 @@
   </div>
 </div>
 <main class="page-main">
-  <div class="sub-nav-spacer" style="height:100px" aria-hidden="true"></div>
-  <div class="sub-nav section-inner">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="../bdgen_landing.html"><svg class="home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> HOME</a>
-      <span class="sep">&gt;</span>
-      <a href="about-intro.html">COMPANY</a>
-      <span class="sep">&gt;</span>
-      <span class="current">채용</span>
-    </nav>
+  <div class="page-hero">
+    <div class="hero-inner">
+      <h1 class="hero-title">채용</h1>
+      <p class="hero-desc">함께 성장할 인재를 찾습니다.</p>
+    </div>
+    <div class="sub-nav section-inner" aria-label="채용 서브 메뉴">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../bdgen_landing.html"><svg class="home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> HOME</a>
+        <span class="sep">&gt;</span>
+        <a href="careers.html">CAREERS</a>
+        <span class="sep">&gt;</span>
+        <span class="current">채용</span>
+      </nav>
+    </div>
   </div>
-  <div class="container">
-    <h1 class="page-title">채용</h1>
-    <p class="page-sub">콘텐츠 준비 중입니다.</p>
-  </div>
+  <section class="bdgen-white-presentation">
+    <div class="inner-container">
+      <header class="hero-section">
+        <h2 class="main-title">채용</h2>
+        <p class="hero-desc">콘텐츠 준비 중입니다.</p>
+      </header>
+    </div>
+  </section>
 </main>
 <footer role="contentinfo">
   <div class="container">

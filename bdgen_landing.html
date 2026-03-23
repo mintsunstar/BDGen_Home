@@ -271,7 +271,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .gnb.gnb-light .lang-switcher-trigger:hover { background: rgba(0,0,0,0.06); }
 .gnb.gnb-light .gnb-submenu { background: #fff; border-bottom: 1px solid rgba(0,0,0,0.08); }
 .gnb.gnb-light .gnb-submenu a { color: #333; }
-.gnb.gnb-light .gnb-submenu a:hover { background: transparent; color: #24ACFF; }
+.gnb.gnb-light .gnb-submenu a:hover { background: transparent; color: #24ACFF !important; }
 .gnb.gnb-light .lang-dropdown { background: #fff; border-color: rgba(0,0,0,0.1); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
 .gnb.gnb-light .lang-option { color: #333; }
 .gnb.gnb-light .lang-option:hover { background: rgba(0,0,0,0.06); }
@@ -332,8 +332,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   color: #fff; transition: background 0.2s, color 0.2s; position: relative;
 }
 .gnb:hover .gnb-submenu a { color: #333; }
-.gnb-submenu a:hover { background: transparent; color: #24ACFF; }
-.gnb:hover .gnb-submenu a:hover { background: transparent; color: #24ACFF; }
+.gnb-submenu a:hover,
+.gnb:hover .gnb-submenu a:hover { background: transparent; color: #24ACFF !important; }
 .gnb-submenu a::after { display: none !important; }
 .gnb-submenu a:hover::after { display: none !important; }
 .mobile-sub { padding-left: 24px !important; font-size: 0.95rem !important; }

@@ -253,7 +253,7 @@
     margin-top: 80px;
     display: flex;
     align-items: flex-start;
-    gap: 140px;
+    gap: 40px;
     max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
@@ -304,7 +304,7 @@
   @keyframes historyTypingBlink{
     50%{ border-right-color: transparent; }
   }
-  .history-year-nav li { margin-bottom: 14px; }
+  .history-year-nav li { margin-bottom: 20px; }
   .history-year-link {
     display: inline-block;
     font-size: 22px;
@@ -339,8 +339,8 @@
   }
   .history-year-section {
     margin-bottom: 64px;
-    padding-top: 28px;
-    border-top: 2px solid #1a1f27;
+    padding-top: 0;
+    border-top: none;
     scroll-margin-top: 120px;
   }
   .history-year-section[aria-hidden="true"] { display: none; }
@@ -359,9 +359,9 @@
     padding: 0;
   }
   .history-event-item {
-    padding: 18px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    font-size: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    font-size: 22px;
     line-height: 1.65;
     color: #4e5968;
   }
@@ -370,7 +370,7 @@
     display: block;
     font-weight: 700;
     color: #1a1f27;
-    font-size: 18px;
+    font-size: 22px;
     margin-bottom: 6px;
     line-height: 1.5;
   }
@@ -418,10 +418,10 @@
       max-height: none;
       width: 100%;
       border-right: none;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid rgba(0,0,0,0.15);
       padding: 0 0 20px;
       margin-right: 0;
-      margin-bottom: 8px;
+      margin-bottom: 20px;
     }
     .history-year-nav ul {
       text-align: left;
@@ -430,7 +430,7 @@
       -webkit-overflow-scrolling: touch;
       padding-bottom: 0;
     }
-    .history-year-nav li { margin-bottom: 12px; flex-shrink: initial; }
+    .history-year-nav li { margin-bottom: 20px; flex-shrink: initial; }
     .history-content { padding-left: 0; padding-top: 0; }
     .cert-grid{ grid-template-columns: repeat(2, 1fr); }
   }

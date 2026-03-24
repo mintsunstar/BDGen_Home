@@ -206,20 +206,39 @@
   .history-story-outro {
     max-width: none;
     width: 100%;
-    margin: 96px auto 0;
-    padding: 64px 24px;
+    margin: 0 auto;
+    padding: 164px 24px;
     text-align: center;
     border-radius: 0;
     background: transparent;
     border: none;
   }
-  .history-story-outro p {
-    margin: 0;
-    font-size: 1.25rem;
-    line-height: 2.0;
+  .history-story-outro .outro-typing {
+    line-height: 70px;
+    font-size: 55px;
     color: #1a1f27;
     font-weight: 700;
     letter-spacing: -0.01em;
+  }
+  .history-story-outro .outro-line {
+    margin: 0;
+    min-height: 70px;
+    overflow: hidden;
+  }
+  .history-story-outro .outro-line .outro-text {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #1a1f27;
+    animation: blink 0.7s step-end infinite;
+  }
+  .history-story-outro .outro-line.done .outro-text {
+    border-right: none;
+    white-space: normal;
+    animation: none;
+  }
+  @keyframes blink {
+    50% { border-color: transparent; }
   }
 
   /* 상단 타이틀 + 서브카피 */
@@ -254,7 +273,7 @@
     display: flex;
     align-items: flex-start;
     gap: 40px;
-    max-width: 1100px;
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -318,6 +337,20 @@
     background: none;
     font-family: inherit;
     padding: 0;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .history-year-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: #0064ff;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
   }
   .history-year-link:hover,
   .history-year-link:focus-visible {
@@ -328,6 +361,9 @@
     color: #0064ff;
     font-weight: 800;
     font-size: 36px;
+  }
+  .history-year-link.active::after {
+    transform: scaleX(1);
   }
   .history-content {
     flex: 1;
@@ -376,15 +412,17 @@
   }
 
   /* cert grid */
+  #cert.content-section { padding-bottom: 100px; }
   .cert-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .cert-card{
     padding: 22px 18px;
-    border: 1px solid #eee;
-    background: #f9fafb;
+    border: none;
+    background: #fff;
     border-radius: 20px;
-    transition: transform .2s, border-color .2s;
+    transition: transform .2s;
   }
-  .cert-card:hover{ transform: translateY(-2px); border-color: rgba(0,100,255,0.22); }
+  .cert-card:hover{ transform: translateY(-2px); }
+  .cert-card .cert-img{ display: block; width: 180px !important; min-width: 180px; max-width: 180px; height: 180px !important; min-height: 180px; margin-bottom: 16px; object-fit: contain; background: #fff; }
   .cert-badge{
     display:inline-flex; align-items:center;
     font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
@@ -401,7 +439,7 @@
     .sub-nav { overflow-x: auto; }
     #history.content-section { padding-bottom: 72px; }
     .history-story-intro { padding: 40px 24px 48px; margin-bottom: 48px; }
-    .history-story-outro { margin-top: 48px; padding: 32px 22px; }
+    .history-story-outro { margin-top: 0; padding: 132px 22px; }
     .history-layout { flex-direction: column; margin-top: 48px; }
     .history-head-text{
       font-size: 38px;
@@ -581,14 +619,13 @@
           <section id="sec2025" class="history-year-section" aria-labelledby="hist-2025" aria-hidden="false">
             <h3 id="hist-2025" class="visually-hidden">2025년 연혁</h3>
             <div class="history-era-badge" role="group" aria-label="2025년대 마일스톤">
-              <span class="history-era-period">2025 ~</span>
               <span class="history-era-keyword">도약</span>
               <p class="history-era-text">글로벌 표준을 선도하는 기술의 정점</p>
             </div>
             <span class="history-section-range">2025</span>
             <ul class="history-event-list">
               <li class="history-event-item">SKTelecom PASS 기반 모바일 전자고지 공공알림 서비스 개발 및 운영</li>
-              <li class="history-event-item">25년 행안부 클라우드네이티브 전환 사업 참여</li>
+              <li class="history-event-item">행안부 클라우드네이티브 전환 사업 참여</li>
               <li class="history-event-item">국가기술표준원 &quot;한국형 모바일 신분증 국제 호환을 위한 표준 개발 사업&quot; 참여기관 선정</li>
               <li class="history-event-item">NH농협은행 CBDC 2차 테스트 사업 참여 - 블록체인 기반 국가보조금 집행 시범사업 대응 개발</li>
             </ul>
@@ -607,7 +644,6 @@
           <section id="sec2023" class="history-year-section" aria-labelledby="hist-2023" aria-hidden="true">
             <h3 id="hist-2023" class="visually-hidden">2023년 연혁</h3>
             <div class="history-era-badge" role="group" aria-label="2023~2024 마일스톤">
-              <span class="history-era-period">2023~2024</span>
               <span class="history-era-keyword">확장</span>
               <p class="history-era-text">신뢰의 영토를 넓히다</p>
             </div>
@@ -633,7 +669,6 @@
           <section id="sec2021" class="history-year-section" aria-labelledby="hist-2021" aria-hidden="true">
             <h3 id="hist-2021" class="visually-hidden">2021년 연혁</h3>
             <div class="history-era-badge" role="group" aria-label="2021~2022 마일스톤">
-              <span class="history-era-period">2021~2022</span>
               <span class="history-era-keyword">성장</span>
               <p class="history-era-text">실질적인 가치를 증명하다</p>
             </div>
@@ -657,7 +692,6 @@
           <section id="sec2019" class="history-year-section" aria-labelledby="hist-2019" aria-hidden="true">
             <h3 id="hist-2019" class="visually-hidden">2019년 연혁</h3>
             <div class="history-era-badge" role="group" aria-label="2019~2020 마일스톤">
-              <span class="history-era-period">2019~2020</span>
               <span class="history-era-keyword">태동</span>
               <p class="history-era-text">변화의 씨앗을 심다</p>
             </div>
@@ -672,7 +706,11 @@
   </section>
 
   <footer class="history-story-outro">
-    <p>비디젠의 기록은 내일도 계속됩니다. 우리는 기술을 넘어 사람과 사람, 기업과 사회를 잇는 가장 안전한 다리가 되겠습니다.</p>
+    <div class="outro-typing">
+      <p class="outro-line" data-text="비디젠의 기록은 내일도 계속됩니다."><span class="outro-text"></span></p>
+      <p class="outro-line" data-text="우리는 기술을 넘어 사람과 사람,"><span class="outro-text"></span></p>
+      <p class="outro-line" data-text="기업과 사회를 잇는 가장 안전한 다리가 되겠습니다."><span class="outro-text"></span></p>
+    </div>
   </footer>
 
   <hr class="divider">
@@ -686,21 +724,25 @@
 
       <div class="cert-grid">
         <article class="cert-card">
+          <img src="../assets/Inno-Biz.png" alt="Inno-Biz" class="cert-img" width="180" height="180">
           <div class="cert-badge">Inno-Biz</div>
           <div class="cert-name">기술혁신형 중소기업 확인서</div>
           <div class="cert-issuer">중소벤처기업부 · 2023.03.15</div>
         </article>
         <article class="cert-card">
+          <img src="../assets/Venture.png" alt="Venture" class="cert-img" width="180" height="180">
           <div class="cert-badge">Venture</div>
           <div class="cert-name">벤처기업 확인서</div>
           <div class="cert-issuer">벤처기업확인기관 · 2023.04.05</div>
         </article>
         <article class="cert-card">
+          <img src="../assets/Research.png" alt="Research" class="cert-img" width="180" height="180">
           <div class="cert-badge">Research</div>
           <div class="cert-name">기업부설연구소 인정서</div>
           <div class="cert-issuer">한국산업기술진흥협회 · 2021.11.25</div>
         </article>
         <article class="cert-card">
+          <img src="../assets/Production.png" alt="Production" class="cert-img" width="180" height="180">
           <div class="cert-badge">Production</div>
           <div class="cert-name">직접생산확인 증명서</div>
           <div class="cert-issuer">중소기업유통센터 · 2022.12.28</div>
@@ -747,7 +789,7 @@
         <ul>
           <li><a href="tel:02-6091-1533">02-6091-1533</a></li>
           <li><a href="../bdgen_landing.html#cta">프로젝트 문의</a></li>
-          <li><a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" target="_blank" rel="noopener">회사소개서</a></li>
+          <li><a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" rel="noopener" class="bdgen-force-download" download="Intro_BDGen.pdf">회사소개서</a></li>
         </ul>
       </div>
     </div>
@@ -774,10 +816,12 @@
     </div>
   </div>
 </footer>
-<a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" class="floating-brochure" target="_blank" rel="noopener" aria-label="회사소개서 다운받기" title="회사소개서 다운받기">
+<a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" class="floating-brochure bdgen-force-download" rel="noopener" download="Intro_BDGen.pdf" aria-label="회사소개서 다운받기" title="회사소개서 다운받기">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15l3 3 3-3"/></svg>
 </a>
 <button type="button" class="back-top" id="backTop" aria-label="맨 위로 이동">↑</button>
+<script src="bdgen-hero-desc.js"></script>
+<script src="bdgen-interactions.js"></script>
 <script>
 (function(){
   var gnb=document.getElementById('gnb'), backTop=document.getElementById('backTop');
@@ -827,7 +871,7 @@
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var text1 = '기술로 빚은 신뢰,';
   var text2 = '데이터로 증명한 혁신';
-  var speed = reducedMotion ? 0 : 45;
+  var speed = reducedMotion ? 0 : 32;
   var started = false;
 
   function typeWriter(el, text, cb){
@@ -864,7 +908,7 @@
         typeWriter(el2, text2, function(){
           cursor.style.opacity = '0';
         });
-      }, 120);
+      }, 70);
     });
   }
 
@@ -878,14 +922,24 @@
     return;
   }
 
-  var obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(!entry.isIntersecting) return;
-      obs.disconnect();
-      run();
-    });
-  },{threshold:0.15,rootMargin:'0px 0px -35% 0px'});
-  obs.observe(anchor);
+  function shouldStartNow(){
+    var rect = anchor.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    return rect.top < vh + 120;
+  }
+
+  if(shouldStartNow()){
+    run();
+  } else {
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        obs.disconnect();
+        run();
+      });
+    },{threshold:0,rootMargin:'100px 0px 40% 0px'});
+    obs.observe(anchor);
+  }
 })();
 (function(){
   var navLinks=document.querySelectorAll('.history-year-link');
@@ -914,6 +968,54 @@
     });
   });
   setActive('sec2025');
+})();
+
+/* outro 타이핑 인터랙션 */
+(function(){
+  var lines = document.querySelectorAll('.outro-line');
+  var charDelay = 80;
+  var lineDelay = 400;
+
+  function typeLine(line, idx, cb) {
+    var span = line.querySelector('.outro-text');
+    var text = line.getAttribute('data-text') || '';
+    var i = 0;
+    span.textContent = '';
+    function tick() {
+      if ( i < text.length ) {
+        span.textContent += text.charAt(i);
+        i++;
+        setTimeout(tick, charDelay);
+      } else {
+        line.classList.add('done');
+        if (cb) cb();
+      }
+    }
+    tick();
+  }
+
+  function runSequence() {
+    var idx = 0;
+    function next() {
+      if ( idx < lines.length ) {
+        typeLine(lines[idx], idx, function(){
+          idx++;
+          setTimeout(next, lineDelay);
+        });
+      }
+    }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          observer.disconnect();
+          next();
+        }
+      });
+    }, { threshold: 0.3 });
+    var outro = document.querySelector('.history-story-outro');
+    if (outro) observer.observe(outro);
+  }
+  runSequence();
 })();
 </script>
 </body>

@@ -96,4 +96,103 @@
     },
     true
   );
+
+  /* Subpages language switcher (header nav / full menu) */
+  (function initSubpageLangSwitch() {
+    var switcher = document.querySelector('.lang-switcher');
+    var options = document.querySelectorAll('.lang-option[data-lang]');
+    if (!switcher || !options.length) return;
+
+    var LABELS = {
+      ko: {
+        company: '회사소개',
+        history: '연혁·인증',
+        ci: 'CI소개',
+        business: '사업영역',
+        solution: '솔루션',
+        reference: '레퍼런스',
+        careers: '채용'
+      },
+      en: {
+        company: 'Company',
+        history: 'History',
+        ci: 'CI',
+        business: 'Business',
+        solution: 'Solutions',
+        reference: 'Reference',
+        careers: 'Careers'
+      }
+    };
+
+    function setTextByHref(scope, hrefEndsWith, text) {
+      if (!scope) return;
+      var selector = 'a[href$="' + hrefEndsWith + '"]';
+      scope.querySelectorAll(selector).forEach(function (a) {
+        a.textContent = text;
+      });
+    }
+
+    function applyNavLanguage(lang) {
+      var t = LABELS[lang] || LABELS.ko;
+      var gnbNav = document.querySelector('.gnb-nav');
+      var fullMenu = document.querySelector('.gnb-fullmenu-nav');
+
+      // Top nav labels
+      setTextByHref(gnbNav, 'about-intro.html', t.company);
+      setTextByHref(gnbNav, 'about-history.html', t.history);
+      setTextByHref(gnbNav, 'about-ci.html', t.ci);
+      setTextByHref(gnbNav, 'business.html', t.business);
+      setTextByHref(gnbNav, 'solution-genid.html', t.solution);
+      setTextByHref(gnbNav, 'solution-passkey.html', 'Passkey');
+      setTextByHref(gnbNav, 'reference.html', t.reference);
+      setTextByHref(gnbNav, 'careers.html', t.careers);
+
+      // Full menu section titles and links
+      if (fullMenu) {
+        var cols = fullMenu.querySelectorAll('.gnb-fullmenu-col');
+        cols.forEach(function (col) {
+          var links = col.querySelectorAll('a[href]');
+          if (!links.length) return;
+          var title = col.querySelector('.gnb-fullmenu-col-title');
+          var firstHref = links[0].getAttribute('href') || '';
+          if (firstHref.indexOf('about-') >= 0 && title) title.textContent = t.company;
+          if (firstHref.indexOf('business.html') >= 0 && title) title.textContent = t.business;
+          if (firstHref.indexOf('solution-') >= 0 && title) title.textContent = t.solution;
+          if (firstHref.indexOf('reference.html') >= 0 && title) title.textContent = t.reference;
+          if (firstHref.indexOf('careers.html') >= 0 && title) title.textContent = t.careers;
+        });
+
+        setTextByHref(fullMenu, 'about-intro.html', t.company);
+        setTextByHref(fullMenu, 'about-history.html', t.history);
+        setTextByHref(fullMenu, 'about-ci.html', t.ci);
+        setTextByHref(fullMenu, 'business.html', t.business);
+        setTextByHref(fullMenu, 'solution-genid.html', 'GenID');
+        setTextByHref(fullMenu, 'solution-passkey.html', 'Passkey');
+        setTextByHref(fullMenu, 'reference.html', t.reference);
+        setTextByHref(fullMenu, 'careers.html', t.careers);
+      }
+
+      options.forEach(function (btn) {
+        btn.setAttribute('aria-selected', btn.getAttribute('data-lang') === lang ? 'true' : 'false');
+      });
+      document.documentElement.lang = lang === 'en' ? 'en' : 'ko';
+    }
+
+    var currentLang = localStorage.getItem('bdgen-lang') || 'ko';
+    applyNavLanguage(currentLang);
+    if (typeof window.applySubpageContent === 'function') {
+      window.applySubpageContent(currentLang);
+    }
+
+    options.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var lang = btn.getAttribute('data-lang') || 'ko';
+        localStorage.setItem('bdgen-lang', lang);
+        applyNavLanguage(lang);
+        if (typeof window.applySubpageContent === 'function') {
+          window.applySubpageContent(lang);
+        }
+      });
+    });
+  })();
 })();

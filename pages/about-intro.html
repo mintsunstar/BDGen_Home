@@ -184,12 +184,48 @@
   .bdgen-white-presentation .capability-section{ padding: 100px 0; }
   .bdgen-white-presentation .capability-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
   .bdgen-white-presentation .c-item{
-    padding: 32px; border-radius: 20px; background: #f9fafb; border: 1px solid transparent;
-    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 28px;
+    padding: 28px 32px;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid #e8eaed;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
   }
-  .bdgen-white-presentation .c-item:hover{ background: #fff; border-color: #0064ff; transform: translateY(-5px); }
-  .bdgen-white-presentation .c-item h4{ font-size: 19px; font-weight: 700; margin-bottom: 12px; margin-top: 0; }
-  .bdgen-white-presentation .c-item p{ color: #4e5968; font-size: 15px; margin: 0; line-height: 1.6; }
+  .bdgen-white-presentation .c-item:hover{
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+    border-color: #dce0e5;
+  }
+  .bdgen-white-presentation .c-item-icon{
+    flex-shrink: 0;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bdgen-white-presentation .c-item-icon img{
+    width: 120px;
+    height: auto;
+    display: block;
+  }
+  .bdgen-white-presentation .c-item-body{
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .bdgen-white-presentation .c-item h4{
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: #1a1f27;
+    line-height: 1.45;
+  }
+  .bdgen-white-presentation .c-item h4 .highlight{ color: #0064ff; font-weight: 700; }
+  .bdgen-white-presentation .c-item p{ color: #4e5968; font-size: 15px; margin: 0; line-height: 1.65; }
 
   /* 회사정보 푸터: 공통 footer(검은배경) 스타일이 적용되지 않도록 오버라이드 */
   .bdgen-white-presentation footer.company-info-footer{
@@ -219,6 +255,17 @@
     .bdgen-white-presentation header.hero-section#mission{ margin-top: -40px; }
     .bdgen-white-presentation .data-grid,
     .bdgen-white-presentation .capability-grid{ grid-template-columns: 1fr; }
+    .bdgen-white-presentation .c-item{
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .bdgen-white-presentation .c-item-icon{
+      width: 100%;
+      max-width: 240px;
+      margin: 0 auto;
+    }
+    .bdgen-white-presentation .c-item-body{ width: 100%; }
     .bdgen-white-presentation .core-values{ flex-direction: column; gap: 16px; }
   }
   @media (max-width: 768px){
@@ -385,28 +432,58 @@
         <h2 class="section-title" data-i18n="section-capability">비디젠의 핵심 역량</h2>
         <div class="capability-grid">
           <div class="c-item">
-            <h4 data-i18n="cap-1-h">블록체인 응용 서비스 상용화 경험</h4>
-            <p data-i18n="cap-1-p">대규모 사용자 환경에서 검증된 상용화 경험을 보유합니다.</p>
+            <div class="c-item-icon">
+              <img src="../assets/bd01_icon.png" alt="" width="240" loading="lazy" decoding="async"/>
+            </div>
+            <div class="c-item-body">
+              <h4 data-i18n="cap-1-h" data-i18n-html="true">블록체인 <span class="highlight">응용 서비스 상용화</span> 경험</h4>
+              <p data-i18n="cap-1-p">대규모 사용자 환경에서 검증된 상용화 경험을 보유합니다.</p>
+            </div>
           </div>
           <div class="c-item">
-            <h4 data-i18n="cap-2-h">상용 서비스 플랫폼 구축 경험</h4>
-            <p data-i18n="cap-2-p">모바일 앱, UI/UX, 백엔드를 포함한 풀스택 구축을 수행합니다.</p>
+            <div class="c-item-icon">
+              <img src="../assets/bd02_icon.png" alt="" width="240" loading="lazy" decoding="async"/>
+            </div>
+            <div class="c-item-body">
+              <h4 data-i18n="cap-2-h" data-i18n-html="true">상용 서비스 <span class="highlight">플랫폼 구축</span> 경험</h4>
+              <p data-i18n="cap-2-p">모바일 앱, UI/UX, 백엔드를 포함한 풀스택 구축을 수행합니다.</p>
+            </div>
           </div>
           <div class="c-item">
-            <h4 data-i18n="cap-3-h">다중적 블록체인 기술 스택</h4>
-            <p data-i18n="cap-3-p">인프라부터 앱 계층까지 전 계층의 기술을 내재화하여 운영합니다.</p>
+            <div class="c-item-icon">
+              <img src="../assets/bd03_icon.png" alt="" width="240" loading="lazy" decoding="async"/>
+            </div>
+            <div class="c-item-body">
+              <h4 data-i18n="cap-3-h" data-i18n-html="true"><span class="highlight">다중적 블록체인</span> 기술 스택</h4>
+              <p data-i18n="cap-3-p">인프라부터 앱 계층까지 전 계층의 기술을 내재화하여 운영합니다.</p>
+            </div>
           </div>
           <div class="c-item">
-            <h4 data-i18n="cap-4-h">기획·디자인·개발 Full Set</h4>
-            <p data-i18n="cap-4-p">서비스 기획부터 런칭까지 단일 팀으로 일관된 품질을 제공합니다.</p>
+            <div class="c-item-icon">
+              <img src="../assets/bd04_icon.png" alt="" width="240" loading="lazy" decoding="async"/>
+            </div>
+            <div class="c-item-body">
+              <h4 data-i18n="cap-4-h" data-i18n-html="true">기획·디자인·개발 <span class="highlight">Full Set</span></h4>
+              <p data-i18n="cap-4-p">서비스 기획부터 런칭까지 단일 팀으로 일관된 품질을 제공합니다.</p>
+            </div>
           </div>
           <div class="c-item">
-            <h4 data-i18n="cap-5-h">플랫폼 관련 기술 보유</h4>
-            <p data-i18n="cap-5-p">다양한 플랫폼 기반의 구축·연동 역량을 확보하였습니다.</p>
+            <div class="c-item-icon">
+              <img src="../assets/bd05_icon.png" alt="" width="240" loading="lazy" decoding="async"/>
+            </div>
+            <div class="c-item-body">
+              <h4 data-i18n="cap-5-h" data-i18n-html="true"><span class="highlight">플랫폼 관련 기술</span> 보유</h4>
+              <p data-i18n="cap-5-p">다양한 플랫폼 기반의 구축·연동 역량을 확보하였습니다.</p>
+            </div>
           </div>
           <div class="c-item">
-            <h4 data-i18n="cap-6-h">대규모 서비스 운영 노하우</h4>
-            <p data-i18n="cap-6-p">프로세스 기반 운영과 개선 루프로 장기간 안정적 운영을 지원합니다.</p>
+            <div class="c-item-icon">
+              <img src="../assets/bd06_icon.png" alt="" width="240" loading="lazy" decoding="async"/>
+            </div>
+            <div class="c-item-body">
+              <h4 data-i18n="cap-6-h" data-i18n-html="true"><span class="highlight">대규모 서비스 운영</span> 노하우</h4>
+              <p data-i18n="cap-6-p">프로세스 기반 운영과 개선 루프로 장기간 안정적 운영을 지원합니다.</p>
+            </div>
           </div>
         </div>
       </div>

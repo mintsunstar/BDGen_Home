@@ -352,16 +352,32 @@
 
     var hist1 = document.getElementById('history-typing-1');
     var hist2 = document.getElementById('history-typing-2');
+    var hasHistoryTypingCursor = !!main.querySelector('.history-typing-cursor');
+    var reducedMotion =
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (hist1 && T['history-typing-1']) {
       hist1.setAttribute('data-text', T['history-typing-1']);
       if (!hist1.classList.contains('history-typing-running')) {
-        hist1.textContent = T['history-typing-1'];
+        if (
+          !hasHistoryTypingCursor ||
+          reducedMotion ||
+          hist1.textContent.trim() !== ''
+        ) {
+          hist1.textContent = T['history-typing-1'];
+        }
       }
     }
     if (hist2 && T['history-typing-2']) {
       hist2.setAttribute('data-text', T['history-typing-2']);
       if (!hist2.classList.contains('history-typing-running')) {
-        hist2.textContent = T['history-typing-2'];
+        if (
+          !hasHistoryTypingCursor ||
+          reducedMotion ||
+          hist2.textContent.trim() !== ''
+        ) {
+          hist2.textContent = T['history-typing-2'];
+        }
       }
     }
 

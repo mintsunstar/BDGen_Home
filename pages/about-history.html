@@ -864,6 +864,9 @@
   document.addEventListener('click',function(){wrap.classList.remove('open'); trigger.setAttribute('aria-expanded','false');});
 })();
 (function(){
+  if (window.__bdgenHistoryTypingInitialized) return;
+  window.__bdgenHistoryTypingInitialized = true;
+
   var el1 = document.getElementById('history-typing-1');
   var el2 = document.getElementById('history-typing-2');
   var cursor = document.querySelector('.history-typing-cursor');
@@ -882,7 +885,7 @@
     function tick(){
       if(token !== typingToken) return;
       if(i < text.length){
-        el.textContent += text.charAt(i);
+        el.textContent = text.slice(0, i + 1);
         i++;
         setTimeout(tick, speed);
       }else if(cb){

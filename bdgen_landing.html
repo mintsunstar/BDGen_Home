@@ -1043,10 +1043,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 }
 #why .section-label { color: var(--primary); }
 #why .section-title { font-size: 74px; color: #111; }
-#why .section-title span:not(.why-wave-char) { color: var(--primary); }
+#why .section-title span:not(.why-wave-char) { color: #111; }
 #why-title.why-wave-done .why-wave-char { display: inline-block; color: #111; animation: whyTitleWave 2.8s ease-in-out infinite; }
 #why-title.why-wave-done .why-wave-char.why-wave-highlight,
-#why-title.why-wave-done span.why-wave-highlight-wrap .why-wave-char { color: var(--primary); }
+#why-title.why-wave-done span.why-wave-highlight-wrap .why-wave-char { color: #111; }
 #why-title.why-wave-done .why-wave-char.why-wave-space { min-width: 0.35em; }
 @keyframes whyTitleWave {
   0%, 100% { transform: translateY(0); }
@@ -1102,9 +1102,12 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   background: #f0f7ff;
 }
 .why-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(0, 100, 255, 0.1), 0 8px 20px rgba(17, 24, 39, 0.06);
-  border-color: rgba(0, 102, 255, 0.18);
+  transform: translateY(-2px);
+  border-color: #0064ff;
+  box-shadow:
+    0 14px 34px rgba(0, 100, 255, 0.16),
+    0 0 0 1px rgba(0, 100, 255, 0.08),
+    0 0 24px rgba(0, 100, 255, 0.2);
 }
 .why-icon-wrap {
   width: 72px;

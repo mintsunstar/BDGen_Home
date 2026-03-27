@@ -403,6 +403,12 @@
         ciTitle.textContent = T['ci-concept-title'];
       }
     }
+
+    window.dispatchEvent(
+      new CustomEvent('bdgen:subpage-language-applied', {
+        detail: { lang: lang, pageKey: pageKey }
+      })
+    );
   }
 
   window.applySubpageContent = applyContentLanguage;

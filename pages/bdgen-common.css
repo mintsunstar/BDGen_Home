@@ -256,8 +256,10 @@ body.bdgen-subpage main .sub-nav.section-inner+.container{margin-top:150px!impor
 @media(max-width:1023px){.gnb-nav{display:none;}.gnb-inner{padding:0 var(--container-padding-x);}.gnb{padding:12px 0;}.gnb.scrolled{padding:10px 0;}}
 @media(max-width:767px){.gnb-logo-img{height:28px;}.footer-inner{grid-template-columns:1fr;}.page-main{padding:120px 0 60px;}}
 /* hero-inner 서브텍스트 떨어지는 인터랙션 */
+.hero-inner .hero-title.hero-title-cascade{opacity:0;transform:translateY(18px);animation:hero-title-cascade 0.65s cubic-bezier(0.22,1,0.36,1) forwards;}
 .hero-inner .hero-desc.hero-desc-falling{overflow:hidden;}
 .hero-inner .hero-desc.hero-desc-falling .hero-desc-char{display:inline-block;animation:hero-desc-fall 0.6s cubic-bezier(0.22,1,0.36,1) forwards;opacity:0;transform:translateY(-1em);}
+@keyframes hero-title-cascade{to{opacity:1;transform:translateY(0);}}
 @keyframes hero-desc-fall{to{opacity:1;transform:translateY(0);}}
 
 /* 클릭 스파클 (랜딩과 동일, bdgen-interactions.js) */

@@ -1088,7 +1088,7 @@
     function step(){
       if(el.getAttribute('data-typing-token') !== token) return;
       if(i < text.length){
-        el.textContent += text.charAt(i);
+        el.textContent = text.slice(0, i + 1);
         i++;
         setTimeout(step, speed);
       } else {
@@ -1111,24 +1111,32 @@
     }, { threshold: 0.22, rootMargin: '0px 0px -8% 0px' });
     io.observe(el);
   }
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    document.querySelectorAll('[data-text]').forEach(function(el){
-      el.textContent = el.getAttribute('data-text') || '';
+  function runCiTyping(){
+    /* bdgen-subpage-i18n.js의 DOMContentLoaded 이후에 실행되어 data-text·번역이 반영된 뒤 타이핑 시작 */
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      document.querySelectorAll('[data-text]').forEach(function(el){
+        el.textContent = el.getAttribute('data-text') || '';
+      });
+      return;
+    }
+    var concept = document.getElementById('ciConceptTitle');
+    if(concept) typeInto(concept, speedHero, null);
+    var colorH = document.getElementById('ci-color-h');
+    if(colorH) observeOnce(document.getElementById('ci-color') || colorH, function(){
+      typeInto(colorH, speedSection, null);
     });
-    return;
+    var typeSection = document.getElementById('ci-type');
+    var typeH = document.getElementById('ci-type-h');
+    if(typeSection && typeH){
+      observeOnce(typeSection, function(){
+        typeInto(typeH, speedSection, null);
+      });
+    }
   }
-  var concept = document.getElementById('ciConceptTitle');
-  if(concept) typeInto(concept, speedHero, null);
-  var colorH = document.getElementById('ci-color-h');
-  if(colorH) observeOnce(document.getElementById('ci-color') || colorH, function(){
-    typeInto(colorH, speedSection, null);
-  });
-  var typeSection = document.getElementById('ci-type');
-  var typeH = document.getElementById('ci-type-h');
-  if(typeSection && typeH){
-    observeOnce(typeSection, function(){
-      typeInto(typeH, speedSection, null);
-    });
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', runCiTyping);
+  } else {
+    runCiTyping();
   }
 })();
 (function(){

@@ -21,12 +21,320 @@
   .sub-nav a{ padding: 16px 22px; font-size: 18px; color: rgba(0,0,0,0.62); border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; white-space: nowrap; }
   .sub-nav a:hover{ color:#111; }
   .sub-nav a.active{ color:#24ACFF; border-bottom-color:#24ACFF; font-weight:400; }
-  .bdgen-white-presentation{ background: #ffffff; color: #1a1f27; line-height: 1.6; padding: 150px 0 120px; }
+  .bdgen-white-presentation{ background: #ffffff; color: #1a1f27; line-height: 1.6; padding: 100px 0 120px; }
   .bdgen-white-presentation .inner-container{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-  .bdgen-white-presentation .main-title{ font-size: 77px; font-weight: 800; line-height: 100px; margin-top: 0; margin-bottom: 0; letter-spacing: -1.5px; }
-  .bdgen-white-presentation .hero-desc{ font-size: 20px; color: #4e5968; margin-top: 30px; font-weight: 400; }
-  @media (max-width: 1023px){ .hero-inner{ padding: 48px 24px 50px; } .sub-nav{ overflow-x: auto; } .bdgen-white-presentation .main-title{ font-size: 40px; } }
-  @media (max-width: 768px){ .bdgen-white-presentation .main-title{ font-size: 34px; } }
+
+  /* 사업영역 본문 */
+  .biz-section{ padding: 56px 0 80px; }
+  .biz-section + .biz-section{ border-top: 1px solid #eef0f3; padding-top: 88px; margin-top: 8px; }
+  .biz-section-title{
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-align: center;
+    margin: 0 0 20px;
+    color: #111;
+  }
+  .biz-section-title--en{ font-family: inherit; letter-spacing: 0.02em; }
+  .biz-section-lead{
+    font-size: 17px;
+    line-height: 1.75;
+    color: #666;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 50px;
+  }
+  .biz-grid-3{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+  /* Blockchain Innovation: 헤더·리드·3열(세로 구분선)·하단 이미지 높이 정렬 */
+  .biz-platform{ text-align: center; }
+  /* SERVICES는 가로 카드에서 좌/우 텍스트 정렬이 필요하므로 전체 가운데 정렬을 주지 않습니다. */
+  .biz-services .biz-section-lead{ margin-bottom: 130px; }
+  .biz-platform .biz-section-title{
+    text-align: center;
+    font-size: 77px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 22px;
+    line-height: 1.2;
+  }
+  .biz-platform .biz-section-lead{
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.85;
+    color: #666;
+    max-width: min(920px, 100%);
+    margin: 0 auto 130px;
+    padding: 0 8px;
+  }
+  .biz-platform .biz-grid-3{
+    gap: 0;
+    align-items: stretch;
+  }
+  .biz-platform .biz-card-col{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 이미지가 세로 구분선까지 꽉 차도록 좌우 패딩 제거 */
+    padding: 8px 0 0;
+    min-height: 100%;
+    border-left: 1px solid #e5e8ec;
+  }
+  .biz-platform .biz-card-col:first-child{
+    border-left: none;
+  }
+  .biz-platform .biz-card-col > h3,
+  .biz-platform .biz-card-col > p{
+    /* 텍스트만 좌우 여백을 유지 */
+    padding: 0 36px;
+    box-sizing: border-box;
+  }
+  .biz-platform .biz-card-col h3{
+    font-size: 34px;
+    font-weight: 700;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+    color: #111;
+  }
+  .biz-platform .biz-card-col p{
+    font-size: 15px;
+    line-height: 1.8;
+    color: #666;
+    margin: 0 0 32px;
+    max-width: 100%;
+    min-height: 0;
+    flex: 1 1 auto;
+  }
+  .biz-platform .biz-photo-slot{
+    margin-top: auto;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    aspect-ratio: 16 / 10;
+    /* hover 시 동그랗게 보이도록 클리핑 */
+    clip-path: inset(0 round 0);
+    -webkit-clip-path: inset(0 round 0);
+    transition: clip-path 0.75s cubic-bezier(0.22,1,0.36,1);
+  }
+  .biz-platform .biz-photo-slot:hover{
+    /* 이미지 사각형 전체를 덮도록 원 반지름을 크게 */
+    /* 가장 가까운 변(짧은 변)을 기준으로 원을 만들면 잘리거나 원이 안 보이는 문제를 줄일 수 있습니다. */
+    clip-path: circle(closest-side at 50% 50%);
+    -webkit-clip-path: circle(closest-side at 50% 50%);
+  }
+  .biz-card-col h3{
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: #111;
+    letter-spacing: -0.02em;
+  }
+  .biz-card-col p{
+    font-size: 15px;
+    line-height: 1.7;
+    color: #666;
+    margin: 0 0 22px;
+    min-height: 4.5em;
+  }
+  .biz-photo-slot{
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #eef2f7 0%, #e2e8f0 45%, #dde4ee 100%);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .biz-photo-slot::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      rgba(255,255,255,0.4) 10px,
+      rgba(255,255,255,0.4) 20px
+    );
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .biz-photo-slot:has(img)::after{ opacity: 0; }
+  /* 실제 이미지: .biz-photo-slot 안에 <img src="..." alt=""> 추가 */
+  .biz-photo-slot img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    position: relative;
+    z-index: 1;
+    transition:
+      transform 0.85s cubic-bezier(0.22,1,0.36,1),
+      clip-path 0.75s cubic-bezier(0.22,1,0.36,1);
+    clip-path: inset(0 round 0);
+    -webkit-clip-path: inset(0 round 0);
+  }
+  .biz-platform .biz-photo-slot:hover img{
+    clip-path: circle(closest-side at 50% 50%);
+    -webkit-clip-path: circle(closest-side at 50% 50%);
+    transform: scale(1.03);
+  }
+
+  .biz-alternating{ margin-top: 8px; }
+  .biz-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 4vw, 56px);
+    align-items: start;
+    margin-bottom: clamp(56px, 8vw, 88px);
+  }
+  .biz-row:last-child{ margin-bottom: 0; }
+  .biz-row--flip .biz-row-media{ order: -1; }
+  .biz-row-num{
+    font-size: 13px;
+    font-weight: 600;
+    color: #9aa0a6;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  /* 헤딩 타이핑(글자 단위 출력) */
+  .biz-typing-cursor{
+    border-right: 2px solid #24ACFF;
+    padding-right: 4px;
+    animation: biz-typing-blink 0.75s step-end infinite;
+  }
+  #biz-platform-title,
+  #biz-services-title{
+    display: inline-block;
+  }
+  /* SERVICES 헤드타이틀은 항상 중앙 정렬(본문 좌/우 정렬과 충돌하지 않게 타이틀만 강제) */
+  #biz-services-title{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 77px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  @keyframes biz-typing-blink{
+    50%{ border-color: transparent; }
+  }
+  .biz-row-text h3{
+    font-size: clamp(22px, 2.4vw, 28px);
+    font-weight: 700;
+    margin: 0 0 14px;
+    color: #111;
+    letter-spacing: -0.02em;
+  }
+  /* SERVICES 가로 카드: 좌/우 문구영역 정렬 */
+  .biz-row-text{ text-align: left; }
+  .biz-row--flip .biz-row-text{ text-align: right; }
+  .biz-row-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .biz-row-text p{
+    font-size: 15px;
+    line-height: 1.8;
+    color: #666;
+    margin: 0;
+  }
+  .biz-tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+    justify-content: flex-start;
+  }
+  .biz-row--flip .biz-tags{ justify-content: flex-end; }
+  .biz-tag{
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(36, 172, 255, 0.12);
+    color: #24ACFF;
+    letter-spacing: 0.02em;
+  }
+  /* SERVICES 섹션 카드 이미지 높이 고정 */
+  .biz-row-media .biz-photo-slot{
+    height: 240px;
+    aspect-ratio: auto;
+  }
+  .biz-row-media .biz-photo-slot img{
+    height: 100%;
+    width: 100%;
+  }
+  /* SERVICES 이미지: 데스크톱에서 가로 400px 고정 */
+  .biz-row-media .biz-photo-slot{
+    width: 400px;
+  }
+  .biz-row-media{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+  }
+  .biz-row-media{
+    align-self:flex-start;
+  }
+
+  @media (max-width: 1023px){
+    .hero-inner{ padding: 48px 24px 50px; }
+    .sub-nav{ overflow-x: auto; }
+    .biz-grid-3{ grid-template-columns: 1fr; gap: 40px; }
+    .biz-card-col p{ min-height: 0; }
+    .page-hero .hero-title{ font-size: 40px; }
+    .biz-platform .biz-section-lead{ margin-bottom: 130px; }
+    .biz-services .biz-section-lead{ margin-bottom: 130px; }
+    .biz-platform .biz-grid-3{ gap: 0; }
+    #biz-services-title{ font-size: 40px; }
+    .biz-platform .biz-card-col{
+      border-left: none;
+      border-bottom: 1px solid #e5e8ec;
+      padding: 32px 0 40px;
+    }
+    .biz-platform .biz-card-col:first-child{ padding-top: 0; }
+    .biz-platform .biz-card-col:last-child{
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .biz-platform .biz-card-col > h3,
+    .biz-platform .biz-card-col > p{
+      padding: 0 16px;
+    }
+    .biz-platform .biz-card-col p{ flex: 0 1 auto; margin-bottom: 28px; }
+    /* 컨텐츠 영역 헤드타이틀은 모바일에서 너무 커지지 않게 */
+    .biz-platform .biz-section-title{ font-size: 40px; }
+    .biz-row-media .biz-photo-slot{
+      width: 100%;
+    }
+  }
+  @media (max-width: 900px){
+    .biz-row{
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .biz-row .biz-row-media{ order: -1; }
+    .biz-row--flip .biz-row-media{ order: -1; }
+    /* 모바일에서는 한 열로 쌓이므로 좌측 정렬로 통일 */
+    .biz-row-text{ text-align: left; }
+    .biz-row--flip .biz-row-text{ text-align: left; }
+    .biz-row--flip .biz-tags{ justify-content: flex-start; }
+  }
+
+  @media (max-width: 768px){
+    .page-hero .hero-title{ font-size: 34px; }
+    .biz-platform .biz-section-title{ font-size: 34px; }
+    #biz-services-title{ font-size: 34px; }
+  }
 </style>
 </head>
 <body class="bdgen-subpage">
@@ -125,7 +433,7 @@
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../bdgen_landing.html"><svg class="home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> HOME</a>
         <span class="sep">&gt;</span>
-        <a href="business.html">BUSINESS</a>
+        <a href="about-intro.html">COMPANY</a>
         <span class="sep">&gt;</span>
         <span class="current" data-i18n="breadcrumb-current">사업영역</span>
       </nav>
@@ -133,10 +441,136 @@
   </div>
   <section class="bdgen-white-presentation">
     <div class="inner-container">
-      <header class="hero-section">
-        <h2 class="main-title" data-i18n="main-title">사업영역</h2>
-        <p class="hero-desc" data-i18n="main-desc">콘텐츠 준비 중입니다.</p>
-      </header>
+      <section class="biz-section biz-platform" aria-labelledby="biz-platform-title">
+        <h2 id="biz-platform-title" class="biz-section-title" data-i18n="platform-title">Blockchain Innovation</h2>
+        <p class="biz-section-lead" data-i18n="platform-lead" data-i18n-html="true">㈜비디젠은 Web3.0 시대의 핵심 기술인 블록체인을 기반으로, 응용 서비스 개발부터<br>다양한 플랫폼의 구축 · 운영 및 통합 솔루션 제공까지 아우르는 전문 기업입니다.</p>
+        <div class="biz-grid-3">
+          <article class="biz-card-col">
+            <h3 data-i18n="platform-c1-title">서비스 개발</h3>
+            <p data-i18n="platform-c1-desc">DID, Blockchain, AI, IoT 등 다양한 플랫폼 기반의 서비스 개발</p>
+            <div class="biz-photo-slot">
+              <img src="../assets/Blockchain_01.png" alt="서비스 개발" width="640" height="400" loading="lazy">
+            </div>
+          </article>
+          <article class="biz-card-col">
+            <h3 data-i18n="platform-c2-title">모바일 개발</h3>
+            <p data-i18n="platform-c2-desc">사용자 편의성을 중심으로 서비스의 활용성을 강화하는 Android, iOS 기반 Native App &amp; Web App 개발</p>
+            <div class="biz-photo-slot">
+              <img src="../assets/Blockchain_02.png" alt="모바일 개발" width="640" height="400" loading="lazy">
+            </div>
+          </article>
+          <article class="biz-card-col">
+            <h3 data-i18n="platform-c3-title">플랫폼 운영</h3>
+            <p data-i18n="platform-c3-desc">고객의 안정적인 서비스 사용을 위해 체계적인 운영과 지속적인 최적화 수행</p>
+            <div class="biz-photo-slot">
+              <img src="../assets/Blockchain_03.png" alt="플랫폼 운영" width="640" height="400" loading="lazy">
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="biz-section biz-services" aria-labelledby="biz-services-title">
+        <h2 id="biz-services-title" class="biz-section-title biz-section-title--en" data-i18n="services-title">SERVICES</h2>
+        <p class="biz-section-lead" data-i18n="services-lead">그간 축적한 기술의 혁신성 및 향후 사업 계획의 우수성, 경영 관리 능력 등을 인정 받아 중소벤처기업부 선정 이노비즈 기업으로 등록되었으며 벤처기업으로도 선정되었습니다.</p>
+        <div class="biz-alternating">
+          <article class="biz-row biz-row--text-left" aria-labelledby="svc1-title">
+            <div class="biz-row-text">
+              <h3 id="svc1-title" data-i18n="svc1-title">블록체인 응용 서비스 상용화 경험</h3>
+              <p data-i18n="svc1-desc" data-i18n-html="true">SKT DID initial 및 모바일지갑 Svc 상용화 디지털 혁신대학<br>출입 Svc 상용화</p>
+              <div class="biz-tags">
+                <span class="biz-tag" data-i18n="svc1-t1">#SmartContract</span>
+                <span class="biz-tag" data-i18n="svc1-t2">#Mainnet</span>
+                <span class="biz-tag" data-i18n="svc1-t3">#Web3</span>
+              </div>
+            </div>
+            <div class="biz-row-media">
+              <div class="biz-photo-slot" role="img" aria-label="블록체인 서비스 이미지">
+                <img src="../assets/service_con_01.png" alt="블록체인 서비스 개발" loading="lazy">
+              </div>
+            </div>
+          </article>
+          <article class="biz-row biz-row--flip" aria-labelledby="svc2-title">
+            <div class="biz-row-text">
+              <h3 id="svc2-title" data-i18n="svc2-title">블록체인 솔루션 및 플랫폼 기술 보유</h3>
+              <p data-i18n="svc2-desc" data-i18n-html="true">DID, NFT, 출입 인증 등 다양한 응용 솔루션과 함께<br>Hyperledger Fabric, Ethereum 등<br>다양한 블록체인 플랫폼 관련 기술을 보유</p>
+              <div class="biz-tags">
+                <span class="biz-tag" data-i18n="svc2-t1">#DID</span>
+                <span class="biz-tag" data-i18n="svc2-t2">#VC</span>
+                <span class="biz-tag" data-i18n="svc2-t3">#표준호환</span>
+              </div>
+            </div>
+            <div class="biz-row-media">
+              <div class="biz-photo-slot" role="img" aria-label="DID 이미지">
+                <img src="../assets/service_con_02.png" alt="DID·VC 기반 증명" loading="lazy">
+              </div>
+            </div>
+          </article>
+          <article class="biz-row biz-row--text-left" aria-labelledby="svc3-title">
+            <div class="biz-row-text">
+              <h3 id="svc3-title" data-i18n="svc3-title">상용 서비스 플랫폼 구축 경험</h3>
+              <p data-i18n="svc3-desc" data-i18n-html="true">모바일 App, Web, IF server, 백 오피스 등<br>상용서비스 플랫폼 구축 경험 다수</p>
+              <div class="biz-tags">
+                <span class="biz-tag" data-i18n="svc3-t1">#Passkey</span>
+                <span class="biz-tag" data-i18n="svc3-t2">#FIDO2</span>
+                <span class="biz-tag" data-i18n="svc3-t3">#무패스워드</span>
+              </div>
+            </div>
+            <div class="biz-row-media">
+              <div class="biz-photo-slot" role="img" aria-label="Passkey 이미지">
+                <img src="../assets/service_con_03.png" alt="Passkey·FIDO 인증" loading="lazy">
+              </div>
+            </div>
+          </article>
+          <article class="biz-row biz-row--flip" aria-labelledby="svc4-title">
+            <div class="biz-row-text">
+              <h3 id="svc4-title" data-i18n="svc4-title">기획/디자인/개발 Full Set</h3>
+              <p data-i18n="svc4-desc" data-i18n-html="true">프로젝트 초기 기획부터 서비스 기획, 디자인,<br>개발, QA, 런칭까지 Full Coversing</p>
+              <div class="biz-tags">
+                <span class="biz-tag" data-i18n="svc4-t1">#FullStack</span>
+                <span class="biz-tag" data-i18n="svc4-t2">#운영도구</span>
+                <span class="biz-tag" data-i18n="svc4-t3">#API</span>
+              </div>
+            </div>
+            <div class="biz-row-media">
+              <div class="biz-photo-slot" role="img" aria-label="플랫폼 구축 이미지">
+                <img src="../assets/service_con_04.png" alt="모바일·웹 플랫폼 구축" loading="lazy">
+              </div>
+            </div>
+          </article>
+          <article class="biz-row biz-row--text-left" aria-labelledby="svc5-title">
+            <div class="biz-row-text">
+              <h3 id="svc5-title" data-i18n="svc5-title">대형 서비스 플랫폼 운영 노하우</h3>
+              <p data-i18n="svc5-desc" data-i18n-html="true">체계적 프로세스 기반 효율적 플랫폼 운영<br>UX 및 VoC 반영 지속적 기능 및 성능 개선</p>
+              <div class="biz-tags">
+                <span class="biz-tag" data-i18n="svc5-t1">#NFT</span>
+                <span class="biz-tag" data-i18n="svc5-t2">#토큰</span>
+                <span class="biz-tag" data-i18n="svc5-t3">#STO</span>
+              </div>
+            </div>
+            <div class="biz-row-media">
+              <div class="biz-photo-slot" role="img" aria-label="토큰 이미지">
+                <img src="../assets/service_con_05.png" alt="NFT·토큰·STO 연동" loading="lazy">
+              </div>
+            </div>
+          </article>
+          <article class="biz-row biz-row--flip" aria-labelledby="svc6-title">
+            <div class="biz-row-text">
+              <h3 id="svc6-title" data-i18n="svc6-title">비대칭키 기반 Passkey 인증 기술</h3>
+              <p data-i18n="svc6-desc" data-i18n-html="true">전 세계 주요기업들이 강력한 보안과 편리한 Passkey<br>사용자 편의성과 비대칭키 기반의 인증으로 보안성 강화를<br>위한 필수 인증 기술</p>
+              <div class="biz-tags">
+                <span class="biz-tag" data-i18n="svc6-t1">#SRE</span>
+                <span class="biz-tag" data-i18n="svc6-t2">#관측성</span>
+                <span class="biz-tag" data-i18n="svc6-t3">#이터레이션</span>
+              </div>
+            </div>
+            <div class="biz-row-media">
+              <div class="biz-photo-slot" role="img" aria-label="운영 이미지">
+                <img src="../assets/service_con_06.png" alt="운영·모니터링·고도화" loading="lazy">
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
     </div>
   </section>
 </main>
@@ -251,6 +685,58 @@
   if(!trigger||!list)return;
   trigger.addEventListener('click',function(e){e.stopPropagation(); var isOpen=wrap.classList.toggle('open'); trigger.setAttribute('aria-expanded',isOpen);});
   document.addEventListener('click',function(){wrap.classList.remove('open'); trigger.setAttribute('aria-expanded','false');});
+})();
+
+/* 타이핑 인터랙션: Blockchain Innovation / SERVICES */
+(function(){
+  'use strict';
+
+  function typeInto(el, speed){
+    if(!el) return;
+    var text = el.textContent || '';
+    if(!text.trim()) return;
+
+    var token = String(Date.now() + Math.random());
+    el.setAttribute('data-typing-token', token);
+    el.textContent = '';
+    el.classList.add('biz-typing-cursor');
+
+    var i = 0;
+    function step(){
+      if(el.getAttribute('data-typing-token') !== token) return;
+      if(i < text.length){
+        el.textContent = text.slice(0, i + 1);
+        i++;
+        window.setTimeout(step, speed);
+      } else {
+        el.classList.remove('biz-typing-cursor');
+        el.textContent = text;
+      }
+    }
+    step();
+  }
+
+  function runTypingOnce(){
+    var t1 = document.getElementById('biz-platform-title');
+    var t2 = document.getElementById('biz-services-title');
+    var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reducedMotion) return;
+
+    var speed = 55; // 글자당 ms
+
+    if(t1 && t1.getAttribute('data-biz-typing-done') !== 'true'){
+      t1.setAttribute('data-biz-typing-done','true');
+      typeInto(t1, speed);
+    }
+    if(t2 && t2.getAttribute('data-biz-typing-done') !== 'true'){
+      t2.setAttribute('data-biz-typing-done','true');
+      typeInto(t2, speed);
+    }
+  }
+
+  window.addEventListener('bdgen:subpage-language-applied', function(){
+    window.setTimeout(runTypingOnce, 60);
+  });
 })();
 </script>
 </body>

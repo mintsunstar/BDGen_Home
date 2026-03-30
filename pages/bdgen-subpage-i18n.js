@@ -208,15 +208,126 @@
         'hero-title': '사업영역',
         'hero-desc': '블록체인·DID 기술로 산업별 인증·증명 솔루션을 제공합니다.',
         'breadcrumb-current': '사업영역',
-        'main-title': '사업영역',
-        'main-desc': '콘텐츠 준비 중입니다.'
+        'platform-title': 'Blockchain Innovation',
+        'platform-lead':
+          '㈜비디젠은 Web3.0 시대의 핵심 기술인 블록체인을 기반으로, 응용 서비스 개발부터\n다양한 플랫폼의 구축 · 운영 및 통합 솔루션 제공까지 아우르는 전문 기업입니다.',
+        'platform-c1-title': '서비스 개발',
+        'platform-c1-desc':
+          'DID, Blockchain, AI, IoT 등 다양한 플랫폼 기반의 서비스 개발',
+        'platform-c2-title': '모바일 개발',
+        'platform-c2-desc':
+          '사용자 편의성을 중심으로 서비스의 활용성을 강화하는 Android, iOS 기반 Native App & Web App 개발',
+        'platform-c3-title': '플랫폼 운영',
+        'platform-c3-desc':
+          '고객의 안정적인 서비스 사용을 위해 체계적인 운영과 지속적인 최적화 수행',
+        'services-title': 'SERVICES',
+        'services-lead':
+          '그간 축적한 기술의 혁신성 및 향후 사업 계획의 우수성, 경영 관리 능력 등을 인정 받아 중소벤처기업부 선정 이노비즈 기업으로 등록되었으며 벤처기업으로도 선정되었습니다.',
+        'svc1-num': '01',
+        'svc1-title': '블록체인 응용 서비스 상용화 경험',
+        'svc1-desc':
+          'SKT DID initial 및 모바일지갑 Svc 상용화 디지털 혁신대학 출입 Svc 상용화',
+        'svc1-t1': '#SmartContract',
+        'svc1-t2': '#Mainnet',
+        'svc1-t3': '#Web3',
+        'svc2-num': '02',
+        'svc2-title': '블록체인 솔루션 및 플랫폼 기술 보유',
+        'svc2-desc':
+          'DID, NFT, 출입 인증 등 다양한 응용 솔루션과 함께\nHyperledger Fabric, Ethereum 등\n다양한 블록체인 플랫폼 관련 기술을 보유',
+        'svc2-t1': '#DID',
+        'svc2-t2': '#VC',
+        'svc2-t3': '#표준호환',
+        'svc3-num': '03',
+        'svc3-title': '상용 서비스 플랫폼 구축 경험',
+        'svc3-desc':
+          '모바일 App, Web, IF server, 백 오피스 등\n상용서비스 플랫폼 구축 경험 다수',
+        'svc3-t1': '#Passkey',
+        'svc3-t2': '#FIDO2',
+        'svc3-t3': '#무패스워드',
+        'svc4-num': '04',
+        'svc4-title': '기획/디자인/개발 Full Set',
+        'svc4-desc':
+          '프로젝트 초기 기획부터 서비스 기획, 디자인,\n개발, QA, 런칭까지 Full Coversing',
+        'svc4-t1': '#FullStack',
+        'svc4-t2': '#운영도구',
+        'svc4-t3': '#API',
+        'svc5-num': '05',
+        'svc5-title': '대형 서비스 플랫폼 운영 노하우',
+        'svc5-desc':
+          '체계적 프로세스 기반 효율적 플랫폼 운영\nUX 및 VoC 반영 지속적 기능 및 성능 개선',
+        'svc5-t1': '#NFT',
+        'svc5-t2': '#토큰',
+        'svc5-t3': '#STO',
+        'svc6-num': '06',
+        'svc6-title': '비대칭키 기반 Passkey 인증 기술',
+        'svc6-desc':
+          '전 세계 주요기업들이 강력한 보안과 편리한 Passkey\n사용자 편의성과 비대칭키 기반의 인증으로 보안성 강화를\n위한 필수 인증 기술',
+        'svc6-t1': '#SRE',
+        'svc6-t2': '#관측성',
+        'svc6-t3': '#이터레이션'
       },
       en: {
         'hero-title': 'Business',
-        'hero-desc': 'Providing authentication and attestation solutions across industries with blockchain and DID technology.',
+        'hero-desc':
+          'Providing authentication and attestation solutions across industries with blockchain and DID technology.',
         'breadcrumb-current': 'Business',
-        'main-title': 'Business',
-        'main-desc': 'Content coming soon.'
+        'platform-title': 'Blockchain Innovation',
+        'platform-lead':
+          'BDGen leverages blockchain technology to lead application services and diverse platform building in the Web 3 era.',
+        'platform-c1-title': 'Service development',
+        'platform-c1-desc':
+          'Service development on diverse platforms including DID, Blockchain, AI, and IoT.',
+        'platform-c2-title': 'Mobile development',
+        'platform-c2-desc':
+          'Android and iOS native apps and web apps that strengthen usability with a focus on user convenience.',
+        'platform-c3-title': 'Platform operations',
+        'platform-c3-desc':
+          'Systematic operations and continuous optimization for customers’ stable use of services.',
+        'services-title': 'SERVICES',
+        'services-lead':
+          'We apply blockchain and digital identity technology in context—aligned with industry regulation and domain needs.',
+        'svc1-num': '01',
+        'svc1-title': 'Blockchain service development',
+        'svc1-desc':
+          'Custom on-chain services from mainnet and L2 integration to nodes, wallets, and transaction modules.',
+        'svc1-t1': '#SmartContract',
+        'svc1-t2': '#Mainnet',
+        'svc1-t3': '#Web3',
+        'svc2-num': '02',
+        'svc2-title': 'DID & verifiable credentials',
+        'svc2-desc':
+          'W3C DID and VC flows covering issuance, verification, and revocation across the full lifecycle.',
+        'svc2-t1': '#DID',
+        'svc2-t2': '#VC',
+        'svc2-t3': '#Standards',
+        'svc3-num': '03',
+        'svc3-title': 'Passkey & FIDO authentication',
+        'svc3-desc':
+          'Reduce password reliance and integrate phishing-resistant, next-generation sign-in UX for apps and web.',
+        'svc3-t1': '#Passkey',
+        'svc3-t2': '#FIDO2',
+        'svc3-t3': '#Passwordless',
+        'svc4-num': '04',
+        'svc4-title': 'Mobile & web platform build',
+        'svc4-desc':
+          'Admin and user portals, payments, notifications, dashboards—operations-ready capabilities in one delivery.',
+        'svc4-t1': '#FullStack',
+        'svc4-t2': '#OpsTools',
+        'svc4-t3': '#API',
+        'svc5-num': '05',
+        'svc5-title': 'NFT, token & STO integration',
+        'svc5-desc':
+          'Token economics that reflect issuance, transfer, settlement, and compliance requirements in your product.',
+        'svc5-t1': '#NFT',
+        'svc5-t2': '#Token',
+        'svc5-t3': '#STO',
+        'svc6-num': '06',
+        'svc6-title': 'Operations, monitoring & iteration',
+        'svc6-desc':
+          'Post-launch incident response, performance tuning, and feature expansion with ongoing partnership.',
+        'svc6-t1': '#SRE',
+        'svc6-t2': '#Observability',
+        'svc6-t3': '#Iteration'
       }
     },
     'reference': {

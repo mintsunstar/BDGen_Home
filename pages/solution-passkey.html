@@ -21,12 +21,461 @@
   .sub-nav a{ padding: 16px 22px; font-size: 18px; color: rgba(0,0,0,0.62); border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; white-space: nowrap; }
   .sub-nav a:hover{ color:#111; }
   .sub-nav a.active{ color:#24ACFF; border-bottom-color:#24ACFF; font-weight:400; }
-  .bdgen-white-presentation{ background: #ffffff; color: #1a1f27; line-height: 1.6; padding: 150px 0 120px; }
+  .bdgen-white-presentation{ background: #ffffff; color: #1a1f27; line-height: 1.6; padding: 72px 0 120px; }
   .bdgen-white-presentation .inner-container{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-  .bdgen-white-presentation .main-title{ font-size: 77px; font-weight: 800; line-height: 100px; margin-top: 0; margin-bottom: 0; letter-spacing: -1.5px; }
-  .bdgen-white-presentation .hero-desc{ font-size: 20px; color: #4e5968; margin-top: 30px; font-weight: 400; }
-  @media (max-width: 1023px){ .hero-inner{ padding: 48px 24px 50px; } .sub-nav{ overflow-x: auto; } .bdgen-white-presentation .main-title{ font-size: 40px; } }
-  @media (max-width: 768px){ .bdgen-white-presentation .main-title{ font-size: 34px; } }
+  .pk-section{ padding: 56px 0 64px; }
+  .pk-section + .pk-section{ border-top: 1px solid #eef0f3; padding-top: 72px; margin-top: 0; }
+  .pk-section-title{
+    font-size: clamp(26px, 3.2vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 12px;
+    color: #111;
+  }
+  .pk-section-lead{
+    font-size: 17px;
+    line-height: 1.75;
+    color: #666;
+    margin: 0 0 36px;
+    max-width: 720px;
+  }
+  /* Passkey란? — 2열 */
+  .pk-intro-grid{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+    gap: 48px;
+    align-items: center;
+  }
+  .pk-intro-copy .pk-section-title{ margin-bottom: 16px; }
+  .pk-intro-copy p{
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.85;
+    color: #555;
+  }
+  .pk-media-placeholder{
+    min-height: 280px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #eef2f7 0%, #e2e8f0 50%, #dde4ee 100%);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0,0,0,0.35);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  /* 특징 3카드 */
+  .pk-feat-head{ text-align: center; margin-bottom: 40px; }
+  .pk-feat-head .pk-section-title{ margin-bottom: 8px; }
+  .pk-feat-head .pk-section-lead{ margin: 0 auto; max-width: 640px; }
+  .pk-feat-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .pk-feat-card{
+    background: #fff;
+    border: 1px solid #e8ebef;
+    border-radius: 16px;
+    padding: 28px 24px 32px;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .pk-feat-card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  }
+  .pk-feat-icon{
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(36, 172, 255, 0.12);
+    color: #24ACFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+  .pk-feat-icon svg{ width: 26px; height: 26px; }
+  .pk-feat-card h3{
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+  }
+  .pk-feat-card p{
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #666;
+  }
+  /* Z-pattern 기술 역량 */
+  .pk-exp-head{ text-align: center; margin-bottom: 48px; }
+  .pk-exp-head .pk-section-title{ margin-bottom: 8px; }
+  .pk-alternating{ margin-top: 0; }
+  .pk-expertise .pk-row{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: calc(clamp(40px, 5vw, 72px) + 130px);
+    align-items: center;
+    margin-bottom: clamp(80px, 11vw, 128px);
+  }
+  .pk-expertise .pk-row:last-child{ margin-bottom: 0; }
+  .pk-expertise .pk-row--flip .pk-row-media{ order: -1; }
+  .pk-expertise .pk-row:not(.pk-row--flip) .pk-row-text{
+    justify-self: end;
+    max-width: 400px;
+    width: 100%;
+  }
+  .pk-expertise .pk-row:not(.pk-row--flip) .pk-row-media{ justify-self: start; }
+  .pk-expertise .pk-row--flip .pk-row-media{ justify-self: end; }
+  .pk-expertise .pk-row--flip .pk-row-text{
+    justify-self: start;
+    max-width: 400px;
+    width: 100%;
+  }
+  .pk-expertise .pk-row-text{ text-align: left; display: flex; flex-direction: column; justify-content: center; }
+  .pk-expertise .pk-row--flip .pk-row-text{ text-align: right; }
+  .pk-expertise .pk-row-text h3{
+    font-size: clamp(20px, 2.2vw, 26px);
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: #111;
+    letter-spacing: -0.02em;
+  }
+  .pk-expertise .pk-row-text p{
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #666;
+  }
+  .pk-tags{
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin-top: 18px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    max-width: 100%;
+    scrollbar-width: thin;
+  }
+  .pk-expertise .pk-row--flip .pk-tags{ justify-content: flex-end; }
+  .pk-tag{
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(36, 172, 255, 0.12);
+    color: #24ACFF;
+  }
+  .pk-expertise .pk-row-media{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pk-expertise .pk-photo-slot{
+    width: 400px;
+    height: 240px;
+    min-width: 400px;
+    min-height: 240px;
+    max-width: 400px;
+    max-height: 240px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    background: #e8edf3;
+    position: relative;
+  }
+  .pk-expertise .pk-photo-slot .pk-media-placeholder{
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-radius: 0;
+    font-size: 13px;
+  }
+  .pk-expertise .pk-alternating .pk-row{
+    border-radius: 16px;
+    transition:
+      opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.38s ease;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.04);
+  }
+  .pk-expertise .pk-alternating .pk-row .pk-photo-slot .pk-media-placeholder,
+  .pk-expertise .pk-alternating .pk-row .pk-photo-slot img{
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pk-expertise .pk-photo-slot img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  html.js-pk-aos .pk-expertise .pk-alternating .pk-row:not(.is-pk-aos-visible){
+    opacity: 0;
+    filter: blur(8px);
+    pointer-events: none;
+  }
+  html.js-pk-aos .pk-expertise .pk-alternating .pk-row:not(.is-pk-aos-visible):nth-child(odd){
+    transform: translate3d(-120px, 0, 0);
+  }
+  html.js-pk-aos .pk-expertise .pk-alternating .pk-row:not(.is-pk-aos-visible):nth-child(even){
+    transform: translate3d(120px, 0, 0);
+  }
+  html.js-pk-aos .pk-expertise .pk-alternating .pk-row.is-pk-aos-visible{
+    opacity: 1;
+    filter: blur(0);
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0);
+  }
+  html.js-pk-aos .pk-expertise .pk-alternating .pk-row.is-pk-aos-visible:hover{
+    transform: translate3d(0, -10px, 0);
+    box-shadow: 0 28px 56px rgba(0, 0, 0, 0.12);
+  }
+  html:not(.js-pk-aos) .pk-expertise .pk-alternating .pk-row:hover{
+    transform: translate3d(0, -10px, 0);
+    box-shadow: 0 28px 56px rgba(0, 0, 0, 0.12);
+  }
+  .pk-expertise .pk-alternating .pk-row:hover .pk-photo-slot .pk-media-placeholder,
+  .pk-expertise .pk-alternating .pk-row:hover .pk-photo-slot img{
+    transform: scale(1.06);
+  }
+  /* 풀블리드 배너 */
+  .pk-banner-full{
+    width: 100vw;
+    margin: 64px calc(50% - 50vw);
+    padding: 56px max(24px, calc(50vw - 600px));
+    background:
+      radial-gradient(ellipse 80% 120% at 20% 30%, rgba(36, 172, 255, 0.18), transparent 55%),
+      linear-gradient(145deg, #0a1628 0%, #132337 45%, #0d1829 100%);
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .pk-banner-full::before{
+    content:"";
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1'/%3E%3C/svg%3E");
+    opacity: 0.9;
+    pointer-events: none;
+  }
+  .pk-banner-inner{
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    line-height: 1.45;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.25);
+  }
+  /* 동작 원리 */
+  .pk-flow-board{
+    min-height: 320px;
+    border-radius: 16px;
+    border: 2px dashed #cfd6de;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0,0,0,0.38);
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  .pk-flow-board img{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+  .pk-flow-roles{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 20px;
+  }
+  .pk-flow-roles span{
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #f0f3f7;
+  }
+  /* 등록·인증 스텝 */
+  .pk-process-split{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .pk-process-col h3{
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 20px;
+    text-align: center;
+    color: #111;
+  }
+  .pk-phone-strip{
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .pk-phone-frame{
+    width: 120px;
+    flex: 0 0 auto;
+  }
+  .pk-phone-screen{
+    aspect-ratio: 9 / 18.5;
+    border-radius: 20px;
+    background: linear-gradient(160deg, #e8ebf0 0%, #dce2ea 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(0,0,0,0.08),
+      0 12px 28px rgba(0,0,0,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(0,0,0,0.3);
+    padding: 8px;
+    text-align: center;
+    line-height: 1.35;
+  }
+  .pk-step-caption{
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    text-align: center;
+    line-height: 1.4;
+  }
+  /* 기대효과 */
+  .pk-benefits{
+    display: grid;
+    grid-template-columns: minmax(280px, 440px) minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+  .pk-benefits-visual .pk-media-placeholder{ min-height: 360px; }
+  .pk-acc details{
+    border: 1px solid #e5e8ec;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow 0.25s ease;
+  }
+  .pk-acc details[open]{
+    box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+  }
+  .pk-acc summary{
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    color: #111;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .pk-acc summary::-webkit-details-marker{ display: none; }
+  .pk-acc summary::after{
+    content: "+";
+    font-weight: 400;
+    color: #24ACFF;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .pk-acc details[open] summary::after{ content: "−"; }
+  .pk-acc .pk-acc-body{
+    padding: 0 20px 18px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #666;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html.js-pk-aos .pk-expertise .pk-alternating .pk-row:not(.is-pk-aos-visible){
+      opacity: 1;
+      filter: none;
+      transform: none;
+      pointer-events: auto;
+    }
+    .pk-expertise .pk-alternating .pk-row:hover,
+    html.js-pk-aos .pk-expertise .pk-alternating .pk-row.is-pk-aos-visible:hover,
+    html:not(.js-pk-aos) .pk-expertise .pk-alternating .pk-row:hover{
+      transform: none;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+    }
+    .pk-expertise .pk-alternating .pk-row,
+    .pk-expertise .pk-alternating .pk-row .pk-photo-slot .pk-media-placeholder,
+    .pk-expertise .pk-alternating .pk-row .pk-photo-slot img{
+      transition: none;
+    }
+    .pk-expertise .pk-alternating .pk-row:hover .pk-photo-slot .pk-media-placeholder,
+    .pk-expertise .pk-alternating .pk-row:hover .pk-photo-slot img{
+      transform: none;
+    }
+    .pk-feat-card{ transition: none; }
+    .pk-feat-card:hover{ transform: none; }
+  }
+  @media (max-width: 1023px){
+    .hero-inner{ padding: 48px 24px 50px; }
+    .sub-nav{ overflow-x: auto; }
+    .pk-intro-grid{ grid-template-columns: 1fr; }
+    .pk-feat-grid{ grid-template-columns: 1fr; }
+    .pk-expertise .pk-photo-slot{
+      width: 100%;
+      min-width: 0;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .pk-benefits{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 900px){
+    html.js-pk-aos .pk-expertise .pk-alternating .pk-row:not(.is-pk-aos-visible):nth-child(odd),
+    html.js-pk-aos .pk-expertise .pk-alternating .pk-row:not(.is-pk-aos-visible):nth-child(even){
+      transform: translate3d(0, 36px, 0);
+    }
+    .pk-expertise .pk-row{
+      grid-template-columns: 1fr;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: clamp(64px, 12vw, 96px);
+    }
+    .pk-expertise .pk-row .pk-row-media{ order: -1; }
+    .pk-expertise .pk-row--flip .pk-row-media{ order: -1; }
+    .pk-expertise .pk-row:not(.pk-row--flip) .pk-row-text,
+    .pk-expertise .pk-row--flip .pk-row-text{
+      justify-self: stretch;
+      max-width: none;
+    }
+    .pk-expertise .pk-row-text,
+    .pk-expertise .pk-row--flip .pk-row-text{
+      text-align: left;
+      justify-content: flex-start;
+    }
+    .pk-expertise .pk-row--flip .pk-tags{ justify-content: flex-start; }
+    .pk-expertise .pk-photo-slot{ max-width: 100%; }
+    .pk-process-split{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px){
+    .page-hero .hero-title{ font-size: 34px; }
+  }
 </style>
 </head>
 <body class="bdgen-subpage">
@@ -137,10 +586,186 @@
   </div>
   <section class="bdgen-white-presentation">
     <div class="inner-container">
-      <header class="hero-section">
-        <h2 class="main-title" data-i18n="main-title">Passkey</h2>
-        <p class="hero-desc" data-i18n="main-desc">콘텐츠 준비 중입니다.</p>
-      </header>
+      <section class="pk-section pk-intro" aria-labelledby="pk-intro-title">
+        <div class="pk-intro-grid">
+          <div class="pk-intro-copy">
+            <h2 id="pk-intro-title" class="pk-section-title" data-i18n="pk-intro-title">Passkey란?</h2>
+            <p data-i18n="pk-intro-desc">Passkey는 복잡한 비밀번호 대신 생체 인식·디바이스 PIN 등으로 로그인하는 차세대 인증입니다. 표준 기반의 공개키 암호화로 피싱·자격 증명 유출 위험을 줄이고, 사용자에게는 한 번의 인증으로 빠르고 일관된 경험을 제공합니다.</p>
+          </div>
+          <div class="pk-media-placeholder" role="img" aria-label="일러스트 영역" data-i18n="pk-ph-visual">일러스트 영역</div>
+        </div>
+      </section>
+
+      <section class="pk-section pk-features" aria-labelledby="pk-feat-title">
+        <header class="pk-feat-head">
+          <h2 id="pk-feat-title" class="pk-section-title" data-i18n="pk-feat-title">Passkey 특징</h2>
+        </header>
+        <div class="pk-feat-grid">
+          <article class="pk-feat-card">
+            <div class="pk-feat-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 7a3 3 0 10-6 0v3a3 3 0 006 0V7z"/><path d="M5 11h14v10a2 2 0 01-2 2H7a2 2 0 01-2-2V11z"/></svg>
+            </div>
+            <h3 data-i18n="pk-feat-1-title">편의성</h3>
+            <p data-i18n="pk-feat-1-desc">외울 비밀번호 없이 생체·PIN만으로 간편하게 로그인할 수 있습니다.</p>
+          </article>
+          <article class="pk-feat-card">
+            <div class="pk-feat-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="16" height="12" rx="2"/><path d="M6 20h12M12 16v4"/></svg>
+            </div>
+            <h3 data-i18n="pk-feat-2-title">기술성</h3>
+            <p data-i18n="pk-feat-2-desc">W3C·FIDO2 등 표준을 따르며 브라우저·모바일·다양한 단말에서 호환됩니다.</p>
+          </article>
+          <article class="pk-feat-card">
+            <div class="pk-feat-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11z"/></svg>
+            </div>
+            <h3 data-i18n="pk-feat-3-title">보안성</h3>
+            <p data-i18n="pk-feat-3-desc">개인키가 단말 보안 영역에 저장되어 피싱·자격 증명 스터핑 등을 어렵게 합니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="pk-section pk-expertise" aria-labelledby="pk-exp-title">
+        <header class="pk-exp-head">
+          <h2 id="pk-exp-title" class="pk-section-title" data-i18n="pk-exp-title">기술 역량</h2>
+        </header>
+        <div class="pk-alternating">
+          <article class="pk-row" aria-labelledby="pk-exp-1-h">
+            <div class="pk-row-text">
+              <h3 id="pk-exp-1-h" data-i18n="pk-exp-1-title">국내외 표준 기술 규격 준수 및 인증</h3>
+              <p data-i18n="pk-exp-1-desc">FIDO2 및 WebAuthn에 맞춰 글로벌 상호운용성을 확보하고, 높은 수준의 보안 요구를 충족하는 인증 아키텍처를 설계합니다.</p>
+              <div class="pk-tags">
+                <span class="pk-tag" data-i18n="pk-exp-1-t1">#FIDO2</span>
+                <span class="pk-tag" data-i18n="pk-exp-1-t2">#WebAuthn</span>
+                <span class="pk-tag" data-i18n="pk-exp-1-t3">#표준준수</span>
+              </div>
+            </div>
+            <div class="pk-row-media">
+              <div class="pk-photo-slot" role="img" aria-label="인증서·규격 이미지 영역">
+                <div class="pk-media-placeholder" data-i18n="pk-ph-cert">인증서·규격 이미지</div>
+              </div>
+            </div>
+          </article>
+          <article class="pk-row pk-row--flip" aria-labelledby="pk-exp-2-h">
+            <div class="pk-row-text">
+              <h3 id="pk-exp-2-h" data-i18n="pk-exp-2-title">강력한 보안 아키텍처</h3>
+              <p data-i18n="pk-exp-2-desc">공개키 암호와 단말 보안 영역(Secure Enclave/TEE 등)을 활용해 비밀키 유출 가능성을 최소화하고, 서버는 공개키·도전값 검증 중심으로 운영합니다.</p>
+              <div class="pk-tags">
+                <span class="pk-tag" data-i18n="pk-exp-2-t1">#공개키</span>
+                <span class="pk-tag" data-i18n="pk-exp-2-t2">#SecureEnclave</span>
+                <span class="pk-tag" data-i18n="pk-exp-2-t3">#무패스워드</span>
+              </div>
+            </div>
+            <div class="pk-row-media">
+              <div class="pk-photo-slot" role="img" aria-label="보안 아키텍처 이미지 영역">
+                <div class="pk-media-placeholder" data-i18n="pk-ph-arch">보안·칩 도식</div>
+              </div>
+            </div>
+          </article>
+          <article class="pk-row" aria-labelledby="pk-exp-3-h">
+            <div class="pk-row-text">
+              <h3 id="pk-exp-3-h" data-i18n="pk-exp-3-title">신속한 구축 및 운영 편의성</h3>
+              <p data-i18n="pk-exp-3-desc">SDK·API로 기존 시스템에 빠르게 연동하고, 등록·인증·장치 관리 등 운영을 지원하는 콘솔로 일상적인 운영 부담을 줄입니다.</p>
+              <div class="pk-tags">
+                <span class="pk-tag" data-i18n="pk-exp-3-t1">#SDK</span>
+                <span class="pk-tag" data-i18n="pk-exp-3-t2">#API</span>
+                <span class="pk-tag" data-i18n="pk-exp-3-t3">#운영콘솔</span>
+              </div>
+            </div>
+            <div class="pk-row-media">
+              <div class="pk-photo-slot" role="img" aria-label="구축·대시보드 이미지 영역">
+                <div class="pk-media-placeholder" data-i18n="pk-ph-dash">구축·대시보드 이미지</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <div class="pk-banner-full" role="region" aria-label="Passkey 메시지">
+      <p class="pk-banner-inner" data-i18n="pk-banner-text" data-i18n-html="true">더 안전하고, 더 빠르게<br>Passkey는 비밀번호 없는 로그인</p>
+    </div>
+
+    <div class="inner-container">
+      <section class="pk-section pk-flow" aria-labelledby="pk-flow-title">
+        <h2 id="pk-flow-title" class="pk-section-title" data-i18n="pk-flow-title">Passkey 동작 원리</h2>
+        <p class="pk-section-lead" data-i18n="pk-flow-lead">사용자 단말의 인증장치가 개인키로 서명하고, 서버는 공개키와 도전·응답 절차로 검증합니다. 브라우저·앱은 표준 프로토콜을 통해 등록·인증 흐름을 연결합니다.</p>
+        <div class="pk-flow-board">
+          <img src="../assets/BLOCKCHAIN_flow.svg" alt="Passkey 동작 원리 다이어그램" loading="lazy">
+        </div>
+        <div class="pk-flow-roles" aria-label="동작 주체">
+          <span data-i18n="pk-role-user">사용자</span>
+          <span data-i18n="pk-role-client">브라우저·앱</span>
+          <span data-i18n="pk-role-server">서버</span>
+          <span data-i18n="pk-role-auth">인증장치</span>
+        </div>
+      </section>
+
+      <section class="pk-section pk-process" aria-label="등록 및 인증 절차">
+        <div class="pk-process-split">
+          <div class="pk-process-col">
+            <h3 data-i18n="pk-reg-title">Passkey 등록</h3>
+            <div class="pk-phone-strip">
+              <div class="pk-phone-frame">
+                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
+                <span class="pk-step-caption" data-i18n="pk-reg-s1">1. 시작</span>
+              </div>
+              <div class="pk-phone-frame">
+                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
+                <span class="pk-step-caption" data-i18n="pk-reg-s2">2. 생체 인증</span>
+              </div>
+              <div class="pk-phone-frame">
+                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
+                <span class="pk-step-caption" data-i18n="pk-reg-s3">3. 완료</span>
+              </div>
+              <div class="pk-phone-frame">
+                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
+                <span class="pk-step-caption" data-i18n="pk-reg-s4">4. 등록 마침</span>
+              </div>
+            </div>
+          </div>
+          <div class="pk-process-col">
+            <h3 data-i18n="pk-auth-title">Passkey 인증</h3>
+            <div class="pk-phone-strip">
+              <div class="pk-phone-frame">
+                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
+                <span class="pk-step-caption" data-i18n="pk-auth-s1">1. 로그인 요청</span>
+              </div>
+              <div class="pk-phone-frame">
+                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
+                <span class="pk-step-caption" data-i18n="pk-auth-s2">2. 생체 검증</span>
+              </div>
+              <div class="pk-phone-frame">
+                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
+                <span class="pk-step-caption" data-i18n="pk-auth-s3">3. 로그인 완료</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pk-section pk-benefits-wrap" aria-labelledby="pk-ben-title">
+        <h2 id="pk-ben-title" class="pk-section-title" data-i18n="pk-ben-title">Passkey 도입 기대효과</h2>
+        <div class="pk-benefits">
+          <div class="pk-benefits-visual">
+            <div class="pk-media-placeholder" role="img" aria-label="도입 효과 이미지 영역" data-i18n="pk-ph-benefit">도입 효과 이미지</div>
+          </div>
+          <div class="pk-acc">
+            <details open>
+              <summary data-i18n="pk-ben-1-h">보안 강화</summary>
+              <div class="pk-acc-body" data-i18n="pk-ben-1-p">비밀번호 재사용·유출·사회공학에 기반한 공격 표면을 줄입니다.</div>
+            </details>
+            <details>
+              <summary data-i18n="pk-ben-2-h">비용 절감</summary>
+              <div class="pk-acc-body" data-i18n="pk-ben-2-p">비밀번호 찾기·재설정 등 헬프데스크 처리와 관련 운영 비용을 절감할 수 있습니다.</div>
+            </details>
+            <details>
+              <summary data-i18n="pk-ben-3-h">사용자 경험 개선</summary>
+              <div class="pk-acc-body" data-i18n="pk-ben-3-p">로그인 단계가 줄어 전환율과 재방문 만족도를 높이는 데 기여합니다.</div>
+            </details>
+          </div>
+        </div>
+      </section>
     </div>
   </section>
 </main>
@@ -255,6 +880,26 @@
   if(!trigger||!list)return;
   trigger.addEventListener('click',function(e){e.stopPropagation(); var isOpen=wrap.classList.toggle('open'); trigger.setAttribute('aria-expanded',isOpen);});
   document.addEventListener('click',function(){wrap.classList.remove('open'); trigger.setAttribute('aria-expanded','false');});
+})();
+(function(){
+  'use strict';
+  var rows = document.querySelectorAll('.pk-expertise .pk-alternating .pk-row');
+  if (!rows.length) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) return;
+  document.documentElement.classList.add('js-pk-aos');
+  if (!window.IntersectionObserver) {
+    rows.forEach(function(r){ r.classList.add('is-pk-aos-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(ent){
+      if (!ent.isIntersecting) return;
+      ent.target.classList.add('is-pk-aos-visible');
+      io.unobserve(ent.target);
+    });
+  }, { root: null, rootMargin: '0px 0px -18% 0px', threshold: 0.15 });
+  rows.forEach(function(r){ io.observe(r); });
 })();
 </script>
 </body>

@@ -207,6 +207,7 @@
       ko: {
         'hero-title': '사업영역',
         'hero-desc': '블록체인·DID 기술로 산업별 인증·증명 솔루션을 제공합니다.',
+        'sub-nav-1': '사업영역',
         'breadcrumb-current': '사업영역',
         'platform-title': 'Blockchain Innovation',
         'platform-lead':
@@ -270,6 +271,7 @@
         'hero-title': 'Business',
         'hero-desc':
           'Providing authentication and attestation solutions across industries with blockchain and DID technology.',
+        'sub-nav-1': 'Business',
         'breadcrumb-current': 'Business',
         'platform-title': 'Blockchain Innovation',
         'platform-lead':

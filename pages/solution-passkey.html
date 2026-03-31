@@ -297,6 +297,92 @@
     display: block;
     border-radius: 12px;
   }
+  .pk-flow-board{
+    position: relative;
+    overflow: hidden;
+  }
+  .pk-flow-svg-wrap svg{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+  .pk-flow-entity-hotspots{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .pk-flow-hotspot{
+    position: absolute;
+    top: 10px;
+    height: 70px;
+    border: 0;
+    border-radius: 12px;
+    background: rgba(36, 172, 255, 0.08);
+    color: #0d5f93;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    transition: opacity .25s ease, background .25s ease;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .pk-flow-board:hover .pk-flow-hotspot{ opacity: 1; }
+  .pk-flow-hotspot:hover{ background: rgba(36, 172, 255, 0.22); }
+  .pk-flow-hotspot[data-entity="issuer"]{ left: 7%; width: 26%; }
+  .pk-flow-hotspot[data-entity="holder"]{ left: 37%; width: 26%; }
+  .pk-flow-hotspot[data-entity="verifier"]{ left: 67%; width: 26%; }
+  .pk-flow-focus{ transition: opacity .28s ease, filter .28s ease; }
+  .pk-flow-board.is-entity-active .pk-flow-focus{ opacity: .2; }
+  .pk-flow-board.is-entity-active .pk-flow-focus.is-active{
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(36, 172, 255, 0.45));
+  }
+  .pk-flow-step{
+    opacity: 0;
+    transform-origin: center;
+    animation: pk-flow-step-fade 560ms ease forwards;
+  }
+  @keyframes pk-flow-step-fade{
+    from{ opacity: 0; transform: translateY(4px) scale(0.96); }
+    to{ opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .pk-flow-arrow-trace{
+    stroke-dasharray: 3 12;
+    stroke-dashoffset: 0;
+    animation: pk-flow-data-stream 2.2s linear infinite;
+    filter: drop-shadow(0 0 3px rgba(111, 205, 255, 0.75));
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  @keyframes pk-flow-data-stream{
+    to{ stroke-dashoffset: -160; }
+  }
+  .pk-flow-fallback-track{
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(111,205,255,0.08), rgba(111,205,255,0.28), rgba(111,205,255,0.08));
+    overflow: hidden;
+    border-radius: 999px;
+    pointer-events: none;
+  }
+  .pk-flow-fallback-track::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -28px;
+    width: 26px;
+    height: 6px;
+    transform: translateY(-50%);
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(170,232,255,0.98) 0%, rgba(109,201,255,0.7) 55%, rgba(109,201,255,0) 100%);
+    animation: pk-flow-track-particle 2.1s linear infinite;
+    animation-delay: var(--track-delay, 0s);
+  }
+  @keyframes pk-flow-track-particle{
+    to{ left: calc(100% + 28px); }
+  }
   .pk-flow-roles{
     display: flex;
     flex-wrap: wrap;
@@ -690,8 +776,13 @@
       <section class="pk-section pk-flow" aria-labelledby="pk-flow-title">
         <h2 id="pk-flow-title" class="pk-section-title" data-i18n="pk-flow-title">Passkey 동작 원리</h2>
         <p class="pk-section-lead" data-i18n="pk-flow-lead">사용자 단말의 인증장치가 개인키로 서명하고, 서버는 공개키와 도전·응답 절차로 검증합니다. 브라우저·앱은 표준 프로토콜을 통해 등록·인증 흐름을 연결합니다.</p>
-        <div class="pk-flow-board">
-          <img src="../assets/BLOCKCHAIN_flow.svg" alt="Passkey 동작 원리 다이어그램" loading="lazy">
+        <div class="pk-flow-board" id="pkFlowBoard" data-svg-src="../assets/BLOCKCHAIN_flow.svg">
+          <div class="pk-flow-svg-wrap" id="pkFlowSvgMount" aria-hidden="true"></div>
+          <div class="pk-flow-entity-hotspots" aria-hidden="true">
+            <button type="button" class="pk-flow-hotspot" data-entity="issuer">ISSUER</button>
+            <button type="button" class="pk-flow-hotspot" data-entity="holder">HOLDER</button>
+            <button type="button" class="pk-flow-hotspot" data-entity="verifier">VERIFIER</button>
+          </div>
         </div>
         <div class="pk-flow-roles" aria-label="동작 주체">
           <span data-i18n="pk-role-user">사용자</span>
@@ -900,6 +991,127 @@
     });
   }, { root: null, rootMargin: '0px 0px -18% 0px', threshold: 0.15 });
   rows.forEach(function(r){ io.observe(r); });
+})();
+(function(){
+  'use strict';
+  var board = document.getElementById('pkFlowBoard');
+  var mount = document.getElementById('pkFlowSvgMount');
+  if (!board || !mount) return;
+  var src = board.getAttribute('data-svg-src');
+  if (!src) return;
+
+  function byCenterX(el, vbWidth){
+    var b = el.getBBox();
+    var cx = b.x + b.width / 2;
+    if (cx < vbWidth * 0.33) return 'issuer';
+    if (cx < vbWidth * 0.66) return 'holder';
+    return 'verifier';
+  }
+
+  function getStrokeValue(el){
+    var strokeAttr = el.getAttribute('stroke');
+    if (strokeAttr && strokeAttr !== 'none') return strokeAttr;
+    var comp = window.getComputedStyle(el);
+    return comp && comp.stroke ? comp.stroke : '';
+  }
+
+  function addFallbackTracks(boardEl){
+    var tracks = [
+      { left: 18, top: 28, width: 24, delay: 0 },
+      { left: 44, top: 30, width: 23, delay: .35 },
+      { left: 18, top: 44, width: 24, delay: .7 },
+      { left: 44, top: 46, width: 23, delay: 1.05 },
+      { left: 18, top: 60, width: 24, delay: 1.4 },
+      { left: 44, top: 62, width: 23, delay: 1.75 }
+    ];
+    tracks.forEach(function(t){
+      var line = document.createElement('span');
+      line.className = 'pk-flow-fallback-track';
+      line.style.left = t.left + '%';
+      line.style.top = t.top + '%';
+      line.style.width = t.width + '%';
+      line.style.setProperty('--track-delay', t.delay + 's');
+      line.style.pointerEvents = 'none';
+      boardEl.appendChild(line);
+    });
+    boardEl.classList.add('has-fallback-tracks');
+  }
+
+
+  fetch(src).then(function(res){ return res.text(); }).then(function(svgText){
+    mount.innerHTML = svgText;
+    var svg = mount.querySelector('svg');
+    if (!svg) return;
+
+    var viewBox = (svg.getAttribute('viewBox') || '0 0 1239 899').split(/\s+/).map(Number);
+    var vbWidth = viewBox[2] || 1239;
+    var vbHeight = viewBox[3] || 899;
+
+    var allPaths = Array.prototype.slice.call(svg.querySelectorAll('path'));
+    var stroked = Array.prototype.slice.call(svg.querySelectorAll('path,line,polyline,polygon'));
+    var arrows = stroked.filter(function(p){
+      var stroke = getStrokeValue(p);
+      if (!stroke || stroke === 'none') return false;
+      var b = p.getBBox();
+      if (b.width > vbWidth * 0.85 && b.height > vbHeight * 0.25) return false;
+      return (b.width > 20 || b.height > 20);
+    });
+    var dataBoxes = Array.prototype.slice.call(svg.querySelectorAll('rect')).filter(function(r){
+      var b = r.getBBox();
+      return b.width >= 120 && b.width <= 220 && b.height >= 28 && b.height <= 60;
+    });
+
+    arrows.forEach(function(el, idx){
+      el.classList.add('pk-flow-focus');
+      el.classList.add('pk-flow-arrow-trace');
+      el.dataset.entity = byCenterX(el, vbWidth);
+      el.style.animationDelay = (idx * 0.11) + 's';
+      el.style.animationDuration = (1.8 + (idx % 5) * 0.24) + 's';
+    });
+    dataBoxes.forEach(function(el){
+      el.classList.add('pk-flow-focus');
+      el.dataset.entity = byCenterX(el, vbWidth);
+    });
+
+    var stepCandidates = allPaths.filter(function(p){
+      var stroke = getStrokeValue(p);
+      if (stroke && stroke !== 'none') return false;
+      var b = p.getBBox();
+      return b.x > vbWidth * 0.58 && b.y > vbHeight * 0.62 && b.y < vbHeight * 0.9 && b.width < 36 && b.height < 24;
+    }).sort(function(a, b){
+      var ba = a.getBBox();
+      var bb = b.getBBox();
+      if (Math.abs(ba.y - bb.y) < 8) return ba.x - bb.x;
+      return ba.y - bb.y;
+    }).slice(0, 12);
+
+    stepCandidates.forEach(function(step, i){
+      step.classList.add('pk-flow-step');
+      step.style.animationDelay = (i * 180) + 'ms';
+    });
+    if (!arrows.length) addFallbackTracks(board);
+
+    var hotspots = board.querySelectorAll('.pk-flow-hotspot');
+    function clearActive(){
+      board.classList.remove('is-entity-active');
+      svg.querySelectorAll('.pk-flow-focus.is-active').forEach(function(el){ el.classList.remove('is-active'); });
+    }
+    hotspots.forEach(function(btn){
+      btn.addEventListener('mouseenter', function(){
+        var entity = btn.getAttribute('data-entity');
+        board.classList.add('is-entity-active');
+        svg.querySelectorAll('.pk-flow-focus').forEach(function(el){
+          el.classList.toggle('is-active', el.dataset.entity === entity);
+        });
+      });
+      btn.addEventListener('mouseleave', clearActive);
+      btn.addEventListener('focus', function(){ btn.dispatchEvent(new Event('mouseenter')); });
+      btn.addEventListener('blur', clearActive);
+    });
+    board.addEventListener('mouseleave', clearActive);
+  }).catch(function(){
+    mount.innerHTML = '<img src="' + src + '" alt="Passkey 동작 원리 다이어그램" loading="lazy">';
+  });
 })();
 </script>
 </body>

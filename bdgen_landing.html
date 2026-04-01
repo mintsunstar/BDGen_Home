@@ -777,17 +777,97 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   position: absolute; inset: 0; z-index: 0;
 }
 .service-card-inner { position: relative; width: 100%; height: 100%; border-radius: inherit; transition: transform 0.12s ease-out; will-change: transform; }
-.service-card-image img {
+/* 보안 렌즈: 바깥은 흐림, 원형 안은 선명 + 은은한 푸른 빛 */
+.service-card-lens {
+  --lens-x: 50%;
+  --lens-y: 42%;
+  --lens-r: clamp(86px, 20vmin, 148px);
+}
+.service-card-img-base {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.5s ease, filter 0.5s ease;
+  z-index: 0;
+  filter: blur(11px) saturate(0.9) brightness(0.9);
+  transform: scale(1.07);
+  transition: transform 0.5s ease, filter 0.45s ease;
 }
-.service-card:hover .service-card-image img { transform: scale(1.08); }
-.service-card[data-content-index="2"]:hover .service-card-image img { filter: blur(3px); }
+.service-card-lens-hole {
+  position: absolute; inset: 0;
+  z-index: 3;
+  clip-path: circle(var(--lens-r) at var(--lens-x) var(--lens-y));
+  -webkit-clip-path: circle(var(--lens-r) at var(--lens-x) var(--lens-y));
+  pointer-events: none;
+}
+.service-card-img-sharp {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  filter: none;
+  transform: scale(1);
+  transition: transform 0.5s ease;
+}
+.service-card-lens-sheen-axis {
+  position: absolute;
+  left: var(--lens-x);
+  top: var(--lens-y);
+  width: min(118%, 380px);
+  height: min(118%, 380px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
+.service-card-lens-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(0, 200, 255, 0) 55deg,
+    rgba(0, 200, 255, 0.22) 88deg,
+    rgba(120, 220, 255, 0.14) 120deg,
+    rgba(0, 200, 255, 0) 155deg,
+    transparent 360deg
+  );
+  mix-blend-mode: soft-light;
+  animation: serviceLensSheen 5.8s linear infinite;
+  opacity: 0.92;
+}
+@keyframes serviceLensSheen {
+  to { transform: rotate(360deg); }
+}
+.service-card:hover .service-card-img-sharp {
+  transform: scale(1.08);
+}
+.service-card:hover .service-card-img-base {
+  transform: scale(1.12);
+  filter: blur(13px) saturate(0.88) brightness(0.88);
+}
+.service-card[data-content-index="2"]:hover .service-card-img-base {
+  filter: blur(16px) saturate(0.82) brightness(0.86);
+}
 .service-card-image::after {
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(to top, rgba(5,11,32,0.9) 0%, rgba(5,11,32,0.3) 50%, transparent 100%);
-  z-index: 1;
+  z-index: 2;
+  pointer-events: none;
+}
+.service-card-lens { isolation: isolate; }
+@media (prefers-reduced-motion: reduce) {
+  .service-card-lens-sheen { animation: none !important; }
+  .service-card-lens-sheen-axis { display: none !important; }
+  .service-card-img-base {
+    display: none !important;
+  }
+  .service-card-lens-hole {
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+  }
+  .service-card-img-sharp {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
 }
 .service-card-body {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
@@ -2252,8 +2332,12 @@ footer {
     <div class="services-grid">
       <div class="service-card reveal" data-content-index="1">
         <div class="service-card-inner">
-          <div class="service-card-image">
-            <img src="assets/services_01.png" alt="블록체인 DID" loading="lazy">
+          <div class="service-card-image service-card-lens">
+            <img class="service-card-img-base" src="assets/services_01.png" alt="블록체인 DID" loading="lazy">
+            <div class="service-card-lens-hole">
+              <img class="service-card-img-sharp" src="assets/services_01.png" alt="" loading="lazy" aria-hidden="true">
+              <div class="service-card-lens-sheen-axis" aria-hidden="true"><div class="service-card-lens-sheen"></div></div>
+            </div>
           </div>
           <div class="service-card-overlay service-card-circuit" aria-hidden="true">
             <svg class="service-circuit-svg" viewBox="0 0 400 300"><defs><linearGradient id="svc1-pulse" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(0,200,255,0)"/><stop offset="50%" stop-color="rgba(0,200,255,0.9)"/><stop offset="100%" stop-color="rgba(0,200,255,0)"/></linearGradient></defs><path class="service-circuit-line" d="M0 80 Q80 60 160 80 T320 80 T480 80"/><path class="service-circuit-line" d="M40 140 L160 140 L220 200 L320 140 L440 140"/><path class="service-circuit-pulse" d="M0 80 Q80 60 160 80 T320 80 T480 80" stroke="url(#svc1-pulse)" stroke-width="2" fill="none" stroke-dasharray="8 200"/></svg>
@@ -2278,8 +2362,12 @@ footer {
       </div>
       <div class="service-card reveal reveal-delay-2" data-content-index="2">
         <div class="service-card-inner">
-          <div class="service-card-image">
-            <img src="assets/services_02.png" alt="모바일·서비스 개발" loading="lazy">
+          <div class="service-card-image service-card-lens">
+            <img class="service-card-img-base" src="assets/services_02.png" alt="모바일·서비스 개발" loading="lazy">
+            <div class="service-card-lens-hole">
+              <img class="service-card-img-sharp" src="assets/services_02.png" alt="" loading="lazy" aria-hidden="true">
+              <div class="service-card-lens-sheen-axis" aria-hidden="true"><div class="service-card-lens-sheen"></div></div>
+            </div>
           </div>
           <div class="service-card-overlay service-card-floatui" aria-hidden="true">
             <div class="float-ui float-ui-1"></div>
@@ -2305,8 +2393,12 @@ footer {
       </div>
       <div class="service-card reveal reveal-delay-4" data-content-index="3">
         <div class="service-card-inner">
-          <div class="service-card-image">
-            <img src="assets/services_03.png" alt="플랫폼 구축 및 운영 솔루션" loading="lazy">
+          <div class="service-card-image service-card-lens">
+            <img class="service-card-img-base" src="assets/services_03.png" alt="플랫폼 구축 및 운영 솔루션" loading="lazy">
+            <div class="service-card-lens-hole">
+              <img class="service-card-img-sharp" src="assets/services_03.png" alt="" loading="lazy" aria-hidden="true">
+              <div class="service-card-lens-sheen-axis" aria-hidden="true"><div class="service-card-lens-sheen"></div></div>
+            </div>
           </div>
           <div class="service-card-overlay service-card-stream" aria-hidden="true">
             <div class="stream-line stream-line-1"></div>
@@ -3172,6 +3264,34 @@ footer {
     if(newsSection) sectionObserver.observe(newsSection);
     if(whySection) sectionObserver.observe(whySection);
   }
+})();
+
+/* ---------- SERVICES 카드 — 보안 렌즈(커서 추적) ---------- */
+(function(){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) return;
+  document.querySelectorAll('.service-card-lens').forEach(function(lens){
+    var card = lens.closest('.service-card');
+    if (!card) return;
+    function setLens(clientX, clientY){
+      var r = lens.getBoundingClientRect();
+      if (r.width <= 0 || r.height <= 0) return;
+      var x = ((clientX - r.left) / r.width) * 100;
+      var y = ((clientY - r.top) / r.height) * 100;
+      lens.style.setProperty('--lens-x', Math.max(0, Math.min(100, x)) + '%');
+      lens.style.setProperty('--lens-y', Math.max(0, Math.min(100, y)) + '%');
+    }
+    function resetLens(){
+      lens.style.setProperty('--lens-x', '50%');
+      lens.style.setProperty('--lens-y', '42%');
+    }
+    card.addEventListener('mousemove', function(e){ setLens(e.clientX, e.clientY); }, { passive: true });
+    card.addEventListener('mouseleave', resetLens);
+    card.addEventListener('touchmove', function(e){
+      if (e.touches && e.touches[0]) setLens(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+    card.addEventListener('touchend', resetLens);
+  });
 })();
 
 /* ---------- 풀스크린 전체 메뉴 (데스크톱/모바일 공통) ---------- */

@@ -389,19 +389,32 @@
         'hero-title': 'Passkey',
         'hero-desc': '비밀번호 없는 차세대 인증 기술로 안전하고 편리한 로그인 경험을 제공합니다.',
         'sub-nav-1': 'GenID',
-        'sub-nav-2': 'Passkey',
-        'breadcrumb-current': 'Passkey',
-        'pk-intro-title': 'Passkey란?',
+        'sub-nav-2': '<span class="pk-word-passkey">Passkey</span>',
+        'breadcrumb-current': '<span class="pk-word-passkey">Passkey</span>',
+        'pk-intro-title': 'What is <span class="pk-word-passkey">Passkey</span>?',
+        'pk-intro-title-plain': 'What is Passkey?',
         'pk-intro-desc':
-          'Passkey는 복잡한 비밀번호 대신 생체 인식·디바이스 PIN 등으로 로그인하는 차세대 인증입니다. 표준 기반의 공개키 암호화로 피싱·자격 증명 유출 위험을 줄이고, 사용자에게는 한 번의 인증으로 빠르고 일관된 경험을 제공합니다.',
-        'pk-feat-title': 'Passkey 특징',
+          '<span class="pk-word-passkey">Passkey</span>는 복잡한 비밀번호 대신 생체 인식·디바이스 PIN 등으로\n로그인하는 차세대 인증입니다. 표준 기반의 공개키 암호화로 피싱·자격 증명 유출 위험을 줄이고,\n사용자에게는 한 번의 인증으로 빠르고 일관된 경험을 제공합니다.',
+        'pk-intro-glass-p1':
+          '<span class="pk-word-passkey">Passkey</span>는 복잡한 ',
+        'pk-intro-glass-old': '비밀번호',
+        'pk-intro-glass-new': '<span class="pk-word-passkey">Passkey</span>',
+        'pk-intro-glass-p2':
+          ' 대신 생체 인식·디바이스 PIN 등으로<br>로그인하는 차세대 인증입니다. 표준 기반의 공개키 암호화로 피싱·자격 증명 유출 위험을 줄이고,<br>사용자에게는 한 번의 인증으로 빠르고 일관된 경험을 제공합니다.',
+        'pk-feat-title': 'Benefits <span class="pk-word-passkey">Passkey</span>',
+        'pk-feat-lead':
+          '사용 편의성, 보안성, 확장성을 기반으로 다양한 디지털 서비스 환경에 최적화된 인증 경험을 제공합니다.',
         'pk-feat-1-title': '편의성',
-        'pk-feat-1-desc': '외울 비밀번호 없이 생체·PIN만으로 간편하게 로그인할 수 있습니다.',
+        'pk-feat-1-desc':
+          '기억할 필요 없이, 생체인식(PIN, 지문, 얼굴 등)으로\n간편하게 로그인',
         'pk-feat-2-title': '기술성',
-        'pk-feat-2-desc': 'W3C·FIDO2 등 표준을 따르며 브라우저·모바일·다양한 단말에서 호환됩니다.',
+        'pk-feat-2-desc':
+          'Apple, Google, Microsoft 등 주요 플랫폼에서\n모든 기기 간 동기화 가능',
         'pk-feat-3-title': '보안성',
-        'pk-feat-3-desc': '개인키가 단말 보안 영역에 저장되어 피싱·자격 증명 스터핑 등을 어렵게 합니다.',
-        'pk-exp-title': '기술 역량',
+        'pk-feat-3-desc': '피싱에 강하고 보안성이 뛰어난 암호화 기반 인증',
+        'pk-exp-title': 'Technology Foundation',
+        'pk-exp-lead':
+          '<span class="pk-word-passkey">Passkey</span> 구축에 필요한 핵심 기술과 인증 기반 역량을 바탕으로 안정적인 서비스를 제공합니다.',
         'pk-exp-1-title': '국내외 표준 기술 규격 준수 및 인증',
         'pk-exp-1-desc':
           'FIDO2 및 WebAuthn에 맞춰 글로벌 상호운용성을 확보하고, 높은 수준의 보안 요구를 충족하는 인증 아키텍처를 설계합니다.',
@@ -420,13 +433,14 @@
         'pk-exp-3-t1': '#SDK',
         'pk-exp-3-t2': '#API',
         'pk-exp-3-t3': '#운영콘솔',
-        'pk-banner-text': '더 안전하고, 더 빠르게\nPasskey는 비밀번호 없는 로그인',
-        'pk-flow-title': 'Passkey 동작 원리',
+        'pk-banner-text': '더 안전하고, 더 빠르게\n<span class="pk-word-passkey">Passkey</span>는 비밀번호 없는 로그인',
+        'pk-flow-title': '<span class="pk-word-passkey">Passkey</span> 동작 원리',
+        'pk-flow-title-plain': 'Passkey 동작 원리',
         'pk-flow-lead':
-          '사용자 단말의 인증장치가 개인키로 서명하고, 서버는 공개키와 도전·응답 절차로 검증합니다. 브라우저·앱은 표준 프로토콜을 통해 등록·인증 흐름을 연결합니다.',
+          '사용자 단말의 인증장치가 개인키로 서명하고, 서버는 공개키와 도전·응답 절차로 검증합니다.\n브라우저·앱은 표준 프로토콜을 통해 등록·인증 흐름을 연결합니다.',
         'pk-flow-ph': '도식·플로우 이미지 영역',
-        'pk-reg-title': 'Passkey 등록',
-        'pk-auth-title': 'Passkey 인증',
+        'pk-reg-title': '<span class="pk-word-passkey">Passkey</span> 등록',
+        'pk-auth-title': '<span class="pk-word-passkey">Passkey</span> 인증',
         'pk-reg-s1': '1. 시작',
         'pk-reg-s2': '2. 생체 인증',
         'pk-reg-s3': '3. 완료',
@@ -434,13 +448,18 @@
         'pk-auth-s1': '1. 로그인 요청',
         'pk-auth-s2': '2. 생체 검증',
         'pk-auth-s3': '3. 로그인 완료',
-        'pk-ben-title': 'Passkey 도입 기대효과',
-        'pk-ben-1-h': '보안 강화',
-        'pk-ben-1-p': '비밀번호 재사용·유출·사회공학에 기반한 공격 표면을 줄입니다.',
-        'pk-ben-2-h': '비용 절감',
-        'pk-ben-2-p': '비밀번호 찾기·재설정 등 헬프데스크 처리와 관련 운영 비용을 절감할 수 있습니다.',
-        'pk-ben-3-h': '사용자 경험 개선',
-        'pk-ben-3-p': '로그인 단계가 줄어 전환율과 재방문 만족도를 높이는 데 기여합니다.',
+        'pk-ben-title': 'Business Impact',
+        'pk-ben-lead':
+          '<span class="pk-word-passkey">Passkey</span> 도입을 통해 기대할 수 있는 보안성, 사용 편의성, 운영 효율 향상 효과를 확인해보세요.',
+        'pk-ben-1-h': '1. 운영 비용절감',
+        'pk-ben-1-p':
+          '<ul class="pk-ben-bullet-list"><li class="pk-ben-stat-line">도입 사례 기준 운영·인증 비용 평균 <span class="pk-count-up" data-count="35" data-suffix="%">0</span> 절감</li><li>비밀번호 관리를 위한 보안 투자 감소</li><li>사용자의 비밀번호 분실에 따른 VOC 및 추가 인증 관련 비용 절감</li><li>소셜 로그인 등 다양한 로그인 수단을 지원하기 위한 연동 비용 제거</li></ul>',
+        'pk-ben-2-h': '2. 보안 강화',
+        'pk-ben-2-p':
+          '<ul class="pk-ben-bullet-list"><li class="pk-ben-stat-line">네트워크상 비밀번호 평문 전송 <span class="pk-count-up" data-count="0">0</span>건</li><li>사용자 부주의, 서버 해킹 등에 의한 비밀번호 유출 위험 해소</li><li>네트워크를 통한 비밀번호 전송 배제</li><li>피싱 사이트를 통한 계정정보 탈취 차단</li></ul>',
+        'pk-ben-3-h': '3. 사용자 경험 혁신',
+        'pk-ben-3-p':
+          '<ul class="pk-ben-bullet-list"><li class="pk-ben-stat-line">단 <span class="pk-count-up" data-count="1">0</span>회 등록으로 모든 기기에서 연속 로그인</li><li>비밀번호를 일일이 입력하거나 기억해야 하는 번거로움 해소</li><li>스마트폰, PC, 태블릿 등 다양한 사용자 기기 중 한 곳에서만 등록하면, 다른 기기에서 연속성 있게 사용 가능</li></ul>',
         'pk-ph-visual': '일러스트 영역',
         'pk-ph-cert': '인증서·규격 이미지',
         'pk-ph-arch': '보안·칩 도식',
@@ -456,19 +475,32 @@
         'hero-title': 'Passkey',
         'hero-desc': 'Passwordless next-gen authentication for secure and convenient login experiences.',
         'sub-nav-1': 'GenID',
-        'sub-nav-2': 'Passkey',
-        'breadcrumb-current': 'Passkey',
-        'pk-intro-title': 'What is a Passkey?',
+        'sub-nav-2': '<span class="pk-word-passkey">Passkey</span>',
+        'breadcrumb-current': '<span class="pk-word-passkey">Passkey</span>',
+        'pk-intro-title': 'What is <span class="pk-word-passkey">Passkey</span>?',
+        'pk-intro-title-plain': 'What is Passkey?',
         'pk-intro-desc':
-          'Passkeys replace memorized passwords with biometrics or a device PIN, using standards-based public-key cryptography to reduce phishing and credential theft while keeping sign-in fast and consistent.',
-        'pk-feat-title': 'Passkey highlights',
+          '<span class="pk-word-passkey">Passkeys</span> replace memorized passwords with biometrics or a device PIN,\nusing standards-based public-key cryptography to reduce phishing and credential theft,\nwhile keeping sign-in fast and consistent.',
+        'pk-intro-glass-p1':
+          '<span class="pk-word-passkey">Passkeys</span> replace memorized ',
+        'pk-intro-glass-old': 'passwords',
+        'pk-intro-glass-new': '<span class="pk-word-passkey">Passkey</span>',
+        'pk-intro-glass-p2':
+          ' with biometrics or a device PIN,<br>using standards-based public-key cryptography to reduce phishing and credential theft,<br>while keeping sign-in fast and consistent.',
+        'pk-feat-title': 'Benefits <span class="pk-word-passkey">Passkey</span>',
+        'pk-feat-lead':
+          'Built on ease of use, security, and scalability, we deliver authentication experiences optimized for diverse digital service environments.',
         'pk-feat-1-title': 'Convenience',
-        'pk-feat-1-desc': 'Sign in with biometrics or a PIN—no long passwords to remember.',
+        'pk-feat-1-desc':
+          'Nothing to memorize—use biometrics (PIN, fingerprint, face, and more)\nto sign in with ease.',
         'pk-feat-2-title': 'Technology',
-        'pk-feat-2-desc': 'Built on W3C WebAuthn and FIDO2 for broad browser, mobile, and device support.',
+        'pk-feat-2-desc':
+          'On major platforms including Apple, Google, and Microsoft,\npasskeys can sync across all your devices.',
         'pk-feat-3-title': 'Security',
-        'pk-feat-3-desc': 'Private keys stay on-device in secure hardware, making phishing and stuffing far harder.',
-        'pk-exp-title': 'Technical expertise',
+        'pk-feat-3-desc': 'Cryptography-based authentication that resists phishing with strong security.',
+        'pk-exp-title': 'Technology Foundation',
+        'pk-exp-lead':
+          'We provide stable services grounded in core technologies and authentication capabilities essential for <span class="pk-word-passkey">Passkey</span> implementation.',
         'pk-exp-1-title': 'Standards compliance and certification',
         'pk-exp-1-desc':
           'Aligned with FIDO2 and WebAuthn for global interoperability and architectures that meet stringent security expectations.',
@@ -487,13 +519,14 @@
         'pk-exp-3-t1': '#SDK',
         'pk-exp-3-t2': '#API',
         'pk-exp-3-t3': '#Console',
-        'pk-banner-text': 'Safer and faster\nPasskey is passwordless login',
-        'pk-flow-title': 'How Passkey works',
+        'pk-banner-text': 'Safer and faster\n<span class="pk-word-passkey">Passkey</span> is passwordless login',
+        'pk-flow-title': 'How <span class="pk-word-passkey">Passkey</span> works',
+        'pk-flow-title-plain': 'How Passkey works',
         'pk-flow-lead':
-          'The authenticator on the user device signs with a private key; the server verifies using the registered public key and a challenge–response flow. Browsers and apps connect the ceremony via standard protocols.',
+          'The authenticator on the user device signs with a private key; the server verifies using the registered public key and a challenge–response flow.\nBrowsers and apps connect the ceremony via standard protocols.',
         'pk-flow-ph': 'Diagram / flow image area',
-        'pk-reg-title': 'Passkey registration',
-        'pk-auth-title': 'Passkey authentication',
+        'pk-reg-title': '<span class="pk-word-passkey">Passkey</span> registration',
+        'pk-auth-title': '<span class="pk-word-passkey">Passkey</span> authentication',
         'pk-reg-s1': '1. Start',
         'pk-reg-s2': '2. Biometric',
         'pk-reg-s3': '3. Success',
@@ -501,13 +534,18 @@
         'pk-auth-s1': '1. Login request',
         'pk-auth-s2': '2. Verification',
         'pk-auth-s3': '3. Signed in',
-        'pk-ben-title': 'Expected benefits',
-        'pk-ben-1-h': 'Stronger security',
-        'pk-ben-1-p': 'Shrinks attack surface from reused passwords, leaks, and social engineering.',
-        'pk-ben-2-h': 'Lower cost',
-        'pk-ben-2-p': 'Fewer password reset tickets and related helpdesk load.',
-        'pk-ben-3-h': 'Better UX',
-        'pk-ben-3-p': 'Fewer steps at login can lift conversion and satisfaction.',
+        'pk-ben-title': 'Business Impact',
+        'pk-ben-lead':
+          'See how adopting <span class="pk-word-passkey">Passkey</span> can improve security, ease of use, and operational efficiency.',
+        'pk-ben-1-h': '1. Lower operating costs',
+        'pk-ben-1-p':
+          '<ul class="pk-ben-bullet-list"><li class="pk-ben-stat-line">Up to <span class="pk-count-up" data-count="35" data-suffix="%">0</span> lower ops and auth costs (adoption benchmarks)</li><li>Less security spend dedicated to password management</li><li>Fewer VOC and extra authentication costs from lost passwords</li><li>No integration overhead for supporting many login methods (e.g. social login)</li></ul>',
+        'pk-ben-2-h': '2. Stronger security',
+        'pk-ben-2-p':
+          '<ul class="pk-ben-bullet-list"><li class="pk-ben-stat-line"><span class="pk-count-up" data-count="0">0</span> plaintext password transmissions on the network</li><li>Reduces password leak risk from user mistakes and server breaches</li><li>No password transmission over the network</li><li>Blocks credential theft via phishing sites</li></ul>',
+        'pk-ben-3-h': '3. User experience innovation',
+        'pk-ben-3-p':
+          '<ul class="pk-ben-bullet-list"><li class="pk-ben-stat-line"><span class="pk-count-up" data-count="1">0</span> registration for seamless login across devices</li><li>No need to type or remember passwords one by one</li><li>Register once on a phone, PC, or tablet—use seamlessly across devices</li></ul>',
         'pk-ph-visual': 'Illustration area',
         'pk-ph-cert': 'Certificate / standards visual',
         'pk-ph-arch': 'Security / hardware diagram',
@@ -558,13 +596,26 @@
     var subNavLinks = main.querySelectorAll('.sub-nav-links a');
     if (subNavLinks.length && T['sub-nav-1']) {
       subNavLinks[0].textContent = T['sub-nav-1'];
-      if (subNavLinks[1]) subNavLinks[1].textContent = T['sub-nav-2'];
+      if (subNavLinks[1]) {
+        var sn2 = subNavLinks[1];
+        if (sn2.getAttribute('data-i18n-html') === 'true' && T['sub-nav-2'] !== undefined) {
+          sn2.innerHTML = String(T['sub-nav-2']).replace(/\n/g, '');
+        } else if (T['sub-nav-2'] !== undefined) {
+          sn2.textContent = T['sub-nav-2'];
+        }
+      }
       if (subNavLinks[2]) subNavLinks[2].textContent = T['sub-nav-3'];
     }
 
     /* breadcrumb current */
     var bcCurrent = main.querySelector('.breadcrumb .current');
-    if (bcCurrent && T['breadcrumb-current']) bcCurrent.textContent = T['breadcrumb-current'];
+    if (bcCurrent && T['breadcrumb-current'] !== undefined) {
+      if (bcCurrent.getAttribute('data-i18n-html') === 'true') {
+        bcCurrent.innerHTML = String(T['breadcrumb-current']).replace(/\n/g, '');
+      } else {
+        bcCurrent.textContent = T['breadcrumb-current'];
+      }
+    }
 
     /* Typing elements: replace displayed text and data-text for re-init */
     var intro1 = document.getElementById('intro-typing-1');
@@ -630,6 +681,64 @@
       ciTitle.setAttribute('data-text', T['ci-concept-title']);
       if (!ciTitle.classList.contains('ci-typing-cursor')) {
         ciTitle.textContent = T['ci-concept-title'];
+      }
+    }
+
+    /* Passkey page — 히어로·Technology Foundation 타이핑용 data-text, 동작 원리 제목은 타이핑 후 HTML(span) 복원 */
+    if (pageKey === 'solution-passkey') {
+      var reducedPk =
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var heroTyping = document.getElementById('pk-hero-typing');
+      if (heroTyping && T['hero-title'] !== undefined) {
+        heroTyping.setAttribute('data-text', T['hero-title']);
+        if (!heroTyping.classList.contains('pk-typing-cursor')) {
+          heroTyping.textContent = T['hero-title'];
+        }
+      }
+      var introTitleEl = document.getElementById('pk-intro-title');
+      if (introTitleEl && T['pk-intro-title'] !== undefined) {
+        introTitleEl.setAttribute(
+          'data-after-typing-html',
+          String(T['pk-intro-title']).replace(/\n/g, '')
+        );
+        if (T['pk-intro-title-plain'] !== undefined) {
+          introTitleEl.setAttribute('data-text', T['pk-intro-title-plain']);
+        }
+        if (reducedPk) {
+          introTitleEl.innerHTML = String(T['pk-intro-title']).replace(/\n/g, '<br>');
+        } else if (!introTitleEl.classList.contains('pk-typing-cursor')) {
+          introTitleEl.textContent = '';
+        }
+      }
+      var expTitleEl = document.getElementById('pk-exp-title');
+      if (expTitleEl && T['pk-exp-title'] !== undefined) {
+        expTitleEl.setAttribute('data-text', T['pk-exp-title']);
+        if (!expTitleEl.classList.contains('pk-typing-cursor')) {
+          expTitleEl.textContent = T['pk-exp-title'];
+        }
+      }
+      var benTitleEl = document.getElementById('pk-ben-title');
+      if (benTitleEl && T['pk-ben-title'] !== undefined) {
+        benTitleEl.setAttribute('data-text', T['pk-ben-title']);
+        if (!benTitleEl.classList.contains('pk-typing-cursor')) {
+          benTitleEl.textContent = T['pk-ben-title'];
+        }
+      }
+      var flowTitleEl = document.getElementById('pk-flow-title');
+      if (flowTitleEl && T['pk-flow-title'] !== undefined) {
+        flowTitleEl.setAttribute(
+          'data-after-typing-html',
+          String(T['pk-flow-title']).replace(/\n/g, '')
+        );
+        if (T['pk-flow-title-plain'] !== undefined) {
+          flowTitleEl.setAttribute('data-text', T['pk-flow-title-plain']);
+        }
+        if (reducedPk) {
+          flowTitleEl.innerHTML = String(T['pk-flow-title']).replace(/\n/g, '<br>');
+        } else if (!flowTitleEl.classList.contains('pk-typing-cursor')) {
+          flowTitleEl.textContent = '';
+        }
       }
     }
 

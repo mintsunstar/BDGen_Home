@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --genid-blue: #0062ff;
+            --line-light: #e2e8f0;
+            --text-main: #1e293b;
+            --genid-scale: 1;
+        }
+
+        body {
+            margin: 0;
+            background-color: #ffffff;
+            font-family: 'Pretendard', system-ui, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body.genid-embed {
+            min-height: 0;
+            justify-content: center;
+            padding: 8px 0 0;
+        }
+
+        .genid-scale-wrap {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 360px;
+        }
+
+        .genid-scene {
+            position: relative;
+            width: 1000px;
+            height: 600px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+            transform: scale(var(--genid-scale));
+            transform-origin: center center;
+        }
+
+        body.genid-embed .genid-scale-wrap {
+            min-height: 0;
+        }
+
+        .mobile-id {
+            position: relative;
+            width: 220px;
+            height: 400px;
+            background: white;
+            border-radius: 38px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .mobile-id::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, var(--genid-blue), transparent 30%);
+            animation: rotate-border 4s linear infinite;
+            z-index: -1;
+        }
+        .mobile-id::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            background: white;
+            border-radius: 34px;
+            z-index: -1;
+        }
+
+        @keyframes rotate-border {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .orbit-container {
+            position: absolute;
+            width: 800px;
+            height: 400px;
+            transform-style: preserve-3d;
+            z-index: 1;
+            animation: orbit-rotate 15s linear infinite;
+        }
+
+        .service-icon {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: white;
+            border: 1px solid #f1f5f9;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            backface-visibility: visible;
+        }
+
+        #hosp { transform: rotateY(0deg) translateZ(350px); }
+        #auth { transform: rotateY(90deg) translateZ(350px); }
+        #offi { transform: rotateY(180deg) translateZ(350px); }
+        #fina { transform: rotateY(270deg) translateZ(350px); }
+
+        @keyframes orbit-rotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(-360deg); }
+        }
+
+        .service-icon div { animation: counter-rotate 15s linear infinite; }
+        @keyframes counter-rotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .id-content { text-align: center; width: 100%; }
+        .user-pic {
+            width: 90px;
+            height: 110px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            margin: 20px auto;
+            font-size: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qr { width: 60px; height: 60px; border: 1px solid #eee; margin: 30px auto; border-radius: 8px; }
+
+        .icon-emoji { font-size: 30px; margin-bottom: 5px; }
+        .icon-name { font-size: 13px; font-weight: 700; color: var(--text-main); }
+
+        .desc-text {
+            margin-top: 50px;
+            text-align: center;
+            color: #64748b;
+            line-height: 1.6;
+            padding: 0 16px 24px;
+        }
+
+        body.genid-embed .desc-text {
+            display: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .mobile-id::before,
+            .orbit-container,
+            .service-icon div {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="genid-scale-wrap">
+        <div class="genid-scene">
+            <div class="orbit-container">
+                <div class="service-icon" id="hosp"><div><span class="icon-emoji">🏥</span><span class="icon-name">병원</span></div></div>
+                <div class="service-icon" id="auth"><div><span class="icon-emoji">🧬</span><span class="icon-name">간편인증</span></div></div>
+                <div class="service-icon" id="offi"><div><span class="icon-emoji">🏛️</span><span class="icon-name">관공서</span></div></div>
+                <div class="service-icon" id="fina"><div><span class="icon-emoji">💰</span><span class="icon-name">금융</span></div></div>
+            </div>
+
+            <div class="mobile-id">
+                <div class="id-content">
+                    <div style="font-weight: 900; color: var(--genid-blue); letter-spacing: 2px; font-size: 12px; margin-top: 10px;">GenID</div>
+                    <div style="font-weight: 700; margin-top: 5px;">모바일 신분증</div>
+                    <div class="user-pic">👤</div>
+                    <div style="font-size: 22px; font-weight: 800;">김비디</div>
+                    <div style="font-size: 14px; color: #94a3b8;">190101-6262010</div>
+                    <div class="qr">QR</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="desc-text">
+        나의 신원정보를 안전한 <b>블록체인</b>에 저장하고 관리하는<br>
+        <b>"자기 주권적 신원"</b> 솔루션 GenID
+    </div>
+
+    <script>
+        (function () {
+            if (location.search.indexOf('embed=1') !== -1) {
+                document.body.classList.add('genid-embed');
+            }
+            function fitScale() {
+                var wrap = document.querySelector('.genid-scale-wrap');
+                if (!wrap) return;
+                var w = wrap.clientWidth || document.body.clientWidth;
+                var scale = Math.min(1, w / 1000);
+                document.documentElement.style.setProperty('--genid-scale', String(scale));
+                var h = 600 * scale;
+                wrap.style.height = Math.ceil(h) + 'px';
+            }
+            fitScale();
+            window.addEventListener('resize', fitScale);
+            if (window.ResizeObserver) {
+                var wrap = document.querySelector('.genid-scale-wrap');
+                if (wrap) new ResizeObserver(fitScale).observe(wrap);
+            }
+        })();
+    </script>
+</body>
+</html>

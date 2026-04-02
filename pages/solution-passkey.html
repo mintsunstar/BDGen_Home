@@ -15,6 +15,7 @@
   .page-hero::before{ content:""; position:absolute; inset:0; background: rgba(0,0,0,0.2); pointer-events:none; }
   .hero-inner{ max-width: 1200px; margin: 0 auto; padding: 64px 24px 50px; position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 360px; text-align: left; }
   .page-hero .hero-title{ font-size: 55px; line-height: 1.05; letter-spacing: -0.02em; margin-top: 0; color: #24ACFF; display: inline-block; min-height: 1.15em; }
+  .page-hero .hero-inner .hero-title{ color: #ffffff; }
   .pk-word-passkey{ color: #24ACFF; font-weight: inherit; }
   .pk-typing-cursor{
     border-right: 2px solid #24ACFF;
@@ -486,10 +487,12 @@
   .pk-banner-full{
     width: 100vw;
     margin: 64px calc(50% - 50vw);
-    padding: 56px max(24px, calc(50vw - 600px));
+    padding: 76px max(24px, calc(50vw - 600px));
     background:
       radial-gradient(ellipse 80% 120% at 20% 30%, rgba(36, 172, 255, 0.18), transparent 55%),
-      linear-gradient(145deg, #0a1628 0%, #132337 45%, #0d1829 100%);
+      linear-gradient(145deg, rgba(10, 22, 40, 0.82) 0%, rgba(19, 35, 55, 0.78) 45%, rgba(13, 24, 41, 0.82) 100%),
+      url("../assets/bg_01.png") center / cover no-repeat;
+    background-color: #0d1829;
     color: #fff;
     text-align: center;
     position: relative;
@@ -503,15 +506,130 @@
     opacity: 0.9;
     pointer-events: none;
   }
-  .pk-banner-inner{
+  .pk-banner-stack{
     position: relative;
     max-width: 800px;
     margin: 0 auto;
-    font-size: clamp(22px, 3vw, 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+  .pk-banner-inner{
+    position: relative;
+    margin: 0;
+    max-width: 100%;
+    font-size: 46px;
     font-weight: 700;
     line-height: 1.45;
     letter-spacing: -0.02em;
     text-shadow: 0 2px 24px rgba(0,0,0,0.25);
+  }
+  .pk-banner-cta{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 240px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0a1628;
+    background: #fff;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+    transition:
+      transform 0.22s ease,
+      box-shadow 0.28s ease,
+      background 0.32s ease,
+      color 0.32s ease;
+  }
+  .pk-banner-cta-label{
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .pk-banner-cta::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    background-image:
+      radial-gradient(circle at 14% 38%, rgba(255, 255, 255, 0.98) 0 1.2px, transparent 1.4px),
+      radial-gradient(circle at 88% 28%, rgba(186, 235, 255, 1) 0 1px, transparent 1.2px),
+      radial-gradient(circle at 48% 16%, rgba(255, 255, 255, 0.95) 0 1px, transparent 1.2px),
+      radial-gradient(circle at 72% 74%, rgba(255, 255, 255, 0.9) 0 1.2px, transparent 1.4px),
+      radial-gradient(circle at 22% 70%, rgba(36, 172, 255, 0.95) 0 1px, transparent 1.2px),
+      radial-gradient(circle at 94% 52%, rgba(255, 255, 255, 0.85) 0 1px, transparent 1.2px),
+      radial-gradient(circle at 6% 48%, rgba(255, 255, 255, 0.88) 0 1px, transparent 1.2px),
+      radial-gradient(circle at 52% 86%, rgba(210, 240, 255, 0.95) 0 1.2px, transparent 1.4px),
+      radial-gradient(circle at 38% 52%, rgba(255, 255, 255, 0.75) 0 0.8px, transparent 1px),
+      radial-gradient(circle at 66% 42%, rgba(36, 172, 255, 0.85) 0 0.9px, transparent 1.1px);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .pk-banner-cta:hover{
+    transform: translateY(-2px);
+    color: #fff;
+    background: linear-gradient(135deg, #24acff 0%, #1590e0 50%, #0d7bc9 100%);
+    box-shadow:
+      0 12px 36px rgba(36, 172, 255, 0.45),
+      0 4px 14px rgba(0, 0, 0, 0.18);
+  }
+  .pk-banner-cta:active{
+    transform: translateY(0) scale(0.98);
+    background: linear-gradient(135deg, #1a9eef 0%, #0f7fd4 55%, #0a6bb8 100%);
+    box-shadow:
+      0 6px 20px rgba(36, 172, 255, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  }
+  .pk-banner-cta:active::after{
+    animation: pk-banner-cta-starburst 0.78s ease-out forwards;
+  }
+  @keyframes pk-banner-cta-starburst{
+    0%{
+      opacity: 0;
+      transform: scale(0.65) rotate(-4deg);
+      filter: blur(1px);
+    }
+    12%{
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      filter: blur(0);
+    }
+    35%{
+      opacity: 0.92;
+      transform: scale(1.06);
+    }
+    58%{
+      opacity: 1;
+      transform: scale(1);
+    }
+    100%{
+      opacity: 0;
+      transform: scale(1.1);
+      filter: blur(0.5px);
+    }
+  }
+  .pk-banner-cta:focus-visible{
+    outline: 2px solid #24acff;
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .pk-banner-cta:active::after{
+      animation: none;
+      opacity: 0;
+    }
+    .pk-banner-cta:active{
+      transform: none;
+    }
   }
   /* 동작 원리 — 제목·리드 중앙 정렬, 리드~도식 간격 70px */
   .pk-flow .pk-section-title{
@@ -730,21 +848,11 @@
   @keyframes pk-flow-track-particle{
     to{ left: calc(100% + 28px); }
   }
-  .pk-flow-roles{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px 20px;
-  }
-  .pk-flow-roles span{
-    font-size: 13px;
-    font-weight: 600;
-    color: #666;
-    padding: 8px 14px;
-    border-radius: 999px;
-    background: #f0f3f7;
-  }
   /* 등록·인증 스텝 */
+  .pk-section.pk-process{
+    background: #ffffff;
+    border-radius: 0;
+  }
   .pk-process-split{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -752,47 +860,53 @@
     align-items: start;
   }
   .pk-process-col h3{
-    font-size: 20px;
+    font-size: 28px;
     font-weight: 700;
-    margin: 0 0 20px;
+    margin: 0 0 70px;
     text-align: center;
     color: #111;
   }
-  .pk-phone-strip{
+  .pk-phone-cycle{
     display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .pk-phone-frame{
-    width: 120px;
-    flex: 0 0 auto;
-  }
-  .pk-phone-screen{
-    aspect-ratio: 9 / 18.5;
-    border-radius: 20px;
-    background: linear-gradient(160deg, #e8ebf0 0%, #dce2ea 100%);
-    box-shadow:
-      inset 0 0 0 1px rgba(0,0,0,0.08),
-      0 12px 28px rgba(0,0,0,0.12);
-    display: flex;
+    flex-direction: column;
     align-items: center;
+    width: 100%;
+  }
+  /* 기준 대비 60% 축소 → 가로 약 40% (528×0.4 ≈ 211px) */
+  .pk-phone-cycle-screen{
+    width: min(211px, calc(92vw * 0.4));
+    max-width: 100%;
+    line-height: 0;
+  }
+  .pk-phone-cycle-screen img{
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .pk-phone-cycle-captions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
     justify-content: center;
-    font-size: 11px;
+    align-items: center;
+    margin-top: 18px;
+    max-width: 100%;
+  }
+  .pk-phone-cycle .pk-step-caption{
+    margin-top: 0;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #f0f3f7;
+    color: #888;
+    font-size: 18px;
     font-weight: 600;
-    color: rgba(0,0,0,0.3);
-    padding: 8px;
     text-align: center;
     line-height: 1.35;
+    transition: color 0.28s ease, background 0.28s ease;
   }
-  .pk-step-caption{
-    display: block;
-    margin-top: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #555;
-    text-align: center;
-    line-height: 1.4;
+  .pk-phone-cycle .pk-step-caption.is-active{
+    background: rgba(36, 172, 255, 0.16);
+    color: #0d5f93;
   }
   /* 기대효과 — 헤드·리드 중앙, 리드~본문 간격 130px */
   .pk-ben-head{
@@ -820,15 +934,15 @@
     min-height: 260px;
     max-height: min(420px, 52vh);
     border-radius: 14px;
-    background: #f5f7fa;
+    background: transparent;
   }
   .pk-ben-receipt-float{
-    animation: pk-ben-receipt-float 4.6s ease-in-out infinite;
+    animation: pk-ben-receipt-float 3.8s cubic-bezier(0.42, 0, 0.58, 1) infinite;
     will-change: transform;
   }
   @keyframes pk-ben-receipt-float{
     0%, 100%{ transform: translate3d(0, 0, 0); }
-    50%{ transform: translate3d(0, -7px, 0); }
+    50%{ transform: translate3d(0, -22px, 0); }
   }
   .pk-ben-impact-layer{
     position: absolute;
@@ -931,6 +1045,103 @@
   }
   .pk-ben-bullet-list li:last-child{
     margin-bottom: 0;
+  }
+  /* Passkey 문의 배너 (기대효과 하단) */
+  .pk-contact-banner{
+    margin: clamp(36px, 5vw, 64px) 0 clamp(48px, 8vw, 100px);
+    border-radius: 24px;
+    background: #1a54f4;
+    color: #fff;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(26, 84, 244, 0.3);
+  }
+  .pk-contact-banner-inner{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: clamp(12px, 3vw, 32px);
+    padding: clamp(28px, 4vw, 44px) clamp(22px, 4vw, 48px) 0 clamp(26px, 4vw, 52px);
+  }
+  .pk-contact-banner-copy{
+    flex: 1 1 280px;
+    min-width: 0;
+    align-self: center;
+    padding-bottom: clamp(28px, 4vw, 44px);
+  }
+  .pk-contact-banner-title{
+    margin: 0 0 clamp(16px, 2.5vw, 22px);
+    font-size: clamp(19px, 2.3vw, 28px);
+    font-weight: 800;
+    line-height: 1.38;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .pk-contact-passkey{
+    color: #ffd700;
+    font-weight: 800;
+  }
+  .pk-contact-banner-meta{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px clamp(18px, 3vw, 36px);
+    align-items: center;
+  }
+  .pk-contact-banner-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: clamp(14px, 1.45vw, 17px);
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.2s ease, color 0.2s ease;
+  }
+  .pk-contact-banner-link:hover{
+    opacity: 0.92;
+    text-decoration: underline;
+  }
+  .pk-contact-banner-link:focus-visible{
+    outline: 2px solid #ffd700;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .pk-contact-banner-link img{
+    flex-shrink: 0;
+    display: block;
+  }
+  .pk-contact-banner-art{
+    flex: 0 1 auto;
+    width: min(42vw, 340px);
+    max-width: 100%;
+    line-height: 0;
+    align-self: flex-end;
+  }
+  .pk-contact-banner-art img{
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    object-position: bottom center;
+  }
+  @media (max-width: 720px){
+    .pk-contact-banner-inner{
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-top: clamp(24px, 5vw, 36px);
+    }
+    .pk-contact-banner-copy{
+      align-self: stretch;
+      padding-bottom: clamp(12px, 3vw, 20px);
+    }
+    .pk-contact-banner-meta{
+      justify-content: center;
+    }
+    .pk-contact-banner-art{
+      width: min(92%, 300px);
+    }
   }
   @media (prefers-reduced-motion: reduce){
     html.js-pk-aos .pk-expertise .pk-alternating .pk-row:not(.is-pk-aos-visible){
@@ -1166,7 +1377,7 @@
 
       <section class="pk-section pk-features" aria-labelledby="pk-feat-title">
         <header class="pk-feat-head">
-          <h2 id="pk-feat-title" class="pk-section-title" data-i18n="pk-feat-title" data-i18n-html="true">Benefits <span class="pk-word-passkey">Passkey</span></h2>
+          <h2 id="pk-feat-title" class="pk-section-title" data-i18n="pk-feat-title" data-i18n-html="true" data-text="Benefits Passkey" data-after-typing-html='Benefits <span class="pk-word-passkey">Passkey</span>'>Benefits <span class="pk-word-passkey">Passkey</span></h2>
           <p class="pk-section-lead" data-i18n="pk-feat-lead">사용 편의성, 보안성, 확장성을 기반으로 다양한 디지털 서비스 환경에 최적화된 인증 경험을 제공합니다.</p>
         </header>
         <div class="pk-feat-grid">
@@ -1259,7 +1470,10 @@
     </div>
 
     <div class="pk-banner-full" role="region" aria-label="Passkey 메시지">
-      <p class="pk-banner-inner" data-i18n="pk-banner-text" data-i18n-html="true">더 안전하고, 더 빠르게<br>Passkey는 비밀번호 없는 로그인</p>
+      <div class="pk-banner-stack">
+        <p class="pk-banner-inner" data-i18n="pk-banner-text" data-i18n-html="true">더 안전하고, 더 빠르게 <span class="pk-word-passkey">Passkey</span>는 비밀번호 없는 로그인</p>
+        <a href="https://www.passkey-sktelecom.com/experience" class="pk-banner-cta" target="_blank" rel="noopener noreferrer"><span class="pk-banner-cta-label" data-i18n="pk-banner-cta">Passkey 체험하기</span></a>
+      </div>
     </div>
 
     <div class="inner-container">
@@ -1274,51 +1488,34 @@
             <button type="button" class="pk-flow-hotspot" data-entity="verifier">VERIFIER</button>
           </div>
         </div>
-        <div class="pk-flow-roles" aria-label="동작 주체">
-          <span data-i18n="pk-role-user">사용자</span>
-          <span data-i18n="pk-role-client">브라우저·앱</span>
-          <span data-i18n="pk-role-server">서버</span>
-          <span data-i18n="pk-role-auth">인증장치</span>
-        </div>
       </section>
 
       <section class="pk-section pk-process" aria-label="등록 및 인증 절차">
         <div class="pk-process-split">
           <div class="pk-process-col">
-            <h3 data-i18n="pk-reg-title" data-i18n-html="true"><span class="pk-word-passkey">Passkey</span> 등록</h3>
-            <div class="pk-phone-strip">
-              <div class="pk-phone-frame">
-                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
-                <span class="pk-step-caption" data-i18n="pk-reg-s1">1. 시작</span>
+            <h3 data-i18n="pk-reg-title" data-i18n-html="true">간편하게 이루어지는 <span class="pk-word-passkey">Passkey</span> 등록</h3>
+            <div class="pk-phone-cycle" id="pkRegCycle">
+              <div class="pk-phone-cycle-screen" aria-live="polite">
+                <img id="pkRegCycleImg" src="../assets/m_01.svg" alt="" width="444" height="854" decoding="async">
               </div>
-              <div class="pk-phone-frame">
-                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
-                <span class="pk-step-caption" data-i18n="pk-reg-s2">2. 생체 인증</span>
-              </div>
-              <div class="pk-phone-frame">
-                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
-                <span class="pk-step-caption" data-i18n="pk-reg-s3">3. 완료</span>
-              </div>
-              <div class="pk-phone-frame">
-                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
-                <span class="pk-step-caption" data-i18n="pk-reg-s4">4. 등록 마침</span>
+              <div class="pk-phone-cycle-captions" role="list" aria-label="등록 단계">
+                <span class="pk-step-caption is-active" role="listitem" data-step-index="0" data-i18n="pk-reg-s1">1. 시작</span>
+                <span class="pk-step-caption" role="listitem" data-step-index="1" data-i18n="pk-reg-s2">2. 생체 인증</span>
+                <span class="pk-step-caption" role="listitem" data-step-index="2" data-i18n="pk-reg-s3">3. 완료</span>
+                <span class="pk-step-caption" role="listitem" data-step-index="3" data-i18n="pk-reg-s4">4. 등록 마침</span>
               </div>
             </div>
           </div>
           <div class="pk-process-col">
-            <h3 data-i18n="pk-auth-title" data-i18n-html="true"><span class="pk-word-passkey">Passkey</span> 인증</h3>
-            <div class="pk-phone-strip">
-              <div class="pk-phone-frame">
-                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
-                <span class="pk-step-caption" data-i18n="pk-auth-s1">1. 로그인 요청</span>
+            <h3 data-i18n="pk-auth-title" data-i18n-html="true">비밀번호가 필요 없는 <span class="pk-word-passkey">Passkey</span> 인증</h3>
+            <div class="pk-phone-cycle" id="pkAuthCycle">
+              <div class="pk-phone-cycle-screen" aria-live="polite">
+                <img id="pkAuthCycleImg" src="../assets/m_01-01.svg" alt="" width="518" height="998" decoding="async">
               </div>
-              <div class="pk-phone-frame">
-                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
-                <span class="pk-step-caption" data-i18n="pk-auth-s2">2. 생체 검증</span>
-              </div>
-              <div class="pk-phone-frame">
-                <div class="pk-phone-screen" data-i18n="pk-ph-step">화면 캡처</div>
-                <span class="pk-step-caption" data-i18n="pk-auth-s3">3. 로그인 완료</span>
+              <div class="pk-phone-cycle-captions" role="list" aria-label="인증 단계">
+                <span class="pk-step-caption is-active" role="listitem" data-step-index="0" data-i18n="pk-auth-s1">1. 로그인 요청</span>
+                <span class="pk-step-caption" role="listitem" data-step-index="1" data-i18n="pk-auth-s2">2. 생체 검증</span>
+                <span class="pk-step-caption" role="listitem" data-step-index="2" data-i18n="pk-auth-s3">3. 로그인 완료</span>
               </div>
             </div>
           </div>
@@ -1380,6 +1577,27 @@
           </div>
         </div>
       </section>
+
+      <div class="pk-contact-banner" role="region" aria-labelledby="pk-contact-title">
+        <div class="pk-contact-banner-inner">
+          <div class="pk-contact-banner-copy">
+            <p class="pk-contact-banner-title" id="pk-contact-title" data-i18n="pk-contact-title" data-i18n-html="true"><span class="pk-contact-passkey">Passkey</span>에 대해 궁금하신 점이 있으실까요?</p>
+            <div class="pk-contact-banner-meta">
+              <a href="tel:02-6091-1533" class="pk-contact-banner-link">
+                <img src="../assets/Call.svg" alt="" width="24" height="24" decoding="async" aria-hidden="true">
+                <span data-i18n="pk-contact-phone">대표문의 02-6091-1533</span>
+              </a>
+              <a href="mailto:passkey@bdgen.co.kr" class="pk-contact-banner-link">
+                <img src="../assets/mail.svg" alt="" width="28" height="20" decoding="async" aria-hidden="true">
+                <span data-i18n="pk-contact-email">이메일문의 passkey@bdgen.co.kr</span>
+              </a>
+            </div>
+          </div>
+          <div class="pk-contact-banner-art" aria-hidden="true">
+            <img src="../assets/information.svg" alt="" width="666" height="334" decoding="async" loading="lazy">
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -1814,6 +2032,7 @@
 
     var pairs = [
       ['pk-intro', 'pk-intro-title'],
+      ['pk-features', 'pk-feat-title'],
       ['pk-expertise', 'pk-exp-title'],
       ['pk-flow', 'pk-flow-title'],
       ['pk-benefits-wrap', 'pk-ben-title']
@@ -2070,6 +2289,80 @@
   }).catch(function(){
     mount.innerHTML = '<img src="' + src + '" alt="Passkey 동작 원리 다이어그램" loading="lazy">';
   });
+})();
+(function(){
+  'use strict';
+  var STEP_MS = 2800;
+  var processSection = document.querySelector('.pk-section.pk-process');
+  if (!processSection) return;
+
+  function setupCycle(imgId, srcs){
+    var img = document.getElementById(imgId);
+    if (!img || !srcs.length) return;
+    var root = img.closest('.pk-phone-cycle');
+    var caps = root ? root.querySelectorAll('.pk-step-caption[data-step-index]') : [];
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var idx = 0;
+    var timer = null;
+
+    function apply(n){
+      idx = ((n % srcs.length) + srcs.length) % srcs.length;
+      img.src = srcs[idx];
+      caps.forEach(function(c){
+        c.classList.toggle('is-active', parseInt(c.getAttribute('data-step-index'), 10) === idx);
+      });
+    }
+
+    function next(){ apply(idx + 1); }
+
+    function start(){
+      if (reduced || timer) return;
+      timer = window.setInterval(next, STEP_MS);
+    }
+    function stop(){
+      if (timer){
+        window.clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    apply(0);
+    srcs.forEach(function(s){ var pre = new Image(); pre.src = s; });
+
+    if (reduced) return;
+
+    if (!window.IntersectionObserver){
+      start();
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) start();
+        else stop();
+      });
+    }, { root: null, rootMargin: '0px 0px -6% 0px', threshold: 0.12 });
+    io.observe(processSection);
+  }
+
+  function boot(){
+    setupCycle('pkRegCycleImg', [
+      '../assets/m_01.svg',
+      '../assets/m_02.svg',
+      '../assets/m_03.svg',
+      '../assets/m_04.svg'
+    ]);
+    setupCycle('pkAuthCycleImg', [
+      '../assets/m_01-01.svg',
+      '../assets/m_01-02.svg',
+      '../assets/m_01-03.svg'
+    ]);
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
 })();
 </script>
 </body>

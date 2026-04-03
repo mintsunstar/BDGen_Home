@@ -642,211 +642,164 @@
     margin-right: auto;
     margin-bottom: 70px;
   }
-  .pk-flow-board{
-    min-height: 320px;
-    border-radius: 16px;
-    border: 2px dashed #cfd6de;
-    background: #f8fafc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(0,0,0,0.38);
-    font-weight: 600;
-    font-size: 15px;
-    margin-bottom: 24px;
-  }
-  .pk-flow-board img{
+  /* 등록·인증 흐름도(gid-pf-canvas) — 본문 컬럼 전체 너비에 맞춤(950×600 기준 등비 스케일) */
+  .pk-sf-flow-root{
+    margin-top: 0;
     width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 12px;
+    container-type: inline-size;
+    container-name: pk-sf-flow;
+    overflow-x: clip;
   }
-  .pk-flow-board{
+  .pk-sf-flow-scale{
+    width: 100%;
+    aspect-ratio: 950 / 600;
     position: relative;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
   }
-  .pk-flow-svg-wrap svg{
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 12px;
+  .pk-sf-flow-root .gid-pf-canvas{
+    position: relative;
+    width: 950px;
+    height: 600px;
+    flex-shrink: 0;
+    transform-origin: top center;
+    transform: scale(calc(100cqw / 950px));
+    background: #f8fafc;
+    border-radius: 16px;
+    border: 2px dashed #cfd6de;
+    overflow: hidden;
+    box-shadow: none;
   }
-  .pk-flow-entity-hotspots{
+  @supports not (transform: scale(calc(100cqw / 950px))){
+    .pk-sf-flow-scale{ aspect-ratio: unset; height: auto; }
+    .pk-sf-flow-root .gid-pf-canvas{ transform: none; }
+    .pk-sf-flow-root{
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+  .pk-sf-flow-root .gid-pf-node{
     position: absolute;
-    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 140px;
+    z-index: 10;
+    transition: transform 0.3s ease-out;
+  }
+  .pk-sf-flow-root .gid-pf-node-img{
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    border: 1px solid #eef2f6;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    position: relative;
+    animation: pk-sf-gid-pf-float-node 6s infinite ease-in-out;
+  }
+  @keyframes pk-sf-gid-pf-float-node{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-8px); }
+  }
+  .pk-sf-flow-root .gid-pf-node--device .gid-pf-node-img{ animation-delay: 1s; }
+  .pk-sf-flow-root .gid-pf-node--service .gid-pf-node-img{ animation-delay: 2s; }
+  .pk-sf-flow-root .gid-pf-node--auth .gid-pf-node-img{ animation-delay: 3s; }
+  .pk-sf-flow-root .gid-pf-node-label{
+    font-weight: 800;
+    font-size: 16px;
+    color: #1e293b;
+  }
+  .pk-sf-flow-root .gid-pf-node--user{ left: 80px; top: 120px; }
+  .pk-sf-flow-root .gid-pf-node--device{ left: 405px; top: 120px; }
+  .pk-sf-flow-root .gid-pf-node--service{ left: 730px; top: 120px; }
+  .pk-sf-flow-root .gid-pf-node--auth{ left: 405px; top: 400px; }
+  .pk-sf-flow-root .gid-pf-flow-svg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
     pointer-events: none;
   }
-  .pk-flow-hotspot{
-    position: absolute;
-    top: 10px;
-    height: 70px;
-    border: 0;
-    border-radius: 12px;
-    background: rgba(36, 172, 255, 0.08);
-    color: #0d5f93;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    opacity: 0;
-    transition: opacity .25s ease, background .25s ease;
-    pointer-events: auto;
-    cursor: pointer;
-  }
-  .pk-flow-board:hover .pk-flow-hotspot{ opacity: 1; }
-  .pk-flow-hotspot:hover{ background: rgba(36, 172, 255, 0.22); }
-  .pk-flow-hotspot[data-entity="issuer"]{ left: 7%; width: 26%; }
-  .pk-flow-hotspot[data-entity="holder"]{ left: 37%; width: 26%; }
-  .pk-flow-hotspot[data-entity="verifier"]{ left: 67%; width: 26%; }
-  .pk-flow-focus{ transition: opacity .28s ease, filter .28s ease; }
-  .pk-flow-board.is-entity-active .pk-flow-focus{ opacity: .2; }
-  .pk-flow-board.is-entity-active .pk-flow-focus.is-active{
-    opacity: 1;
-    filter: drop-shadow(0 0 8px rgba(36, 172, 255, 0.45));
-  }
-  .pk-flow-step{
-    opacity: 0;
-    transform-origin: center;
-    animation: pk-flow-step-fade 560ms ease forwards;
-  }
-  @keyframes pk-flow-step-fade{
-    from{ opacity: 0; transform: translateY(4px) scale(0.96); }
-    to{ opacity: 1; transform: translateY(0) scale(1); }
-  }
-  .pk-flow-arrow-trace{
+  .pk-sf-flow-root .gid-pf-line{
     fill: none;
-    stroke: rgba(154, 225, 255, 0.96);
+    stroke: #e2e8f0;
+    stroke-width: 1.2;
+    marker-end: url(#pkSfArrow);
+  }
+  .pk-sf-flow-root .gid-pf-pulse-line{
+    fill: none;
+    stroke: #3b82f6;
     stroke-width: 2.2;
     stroke-linecap: round;
-    stroke-linejoin: round;
-    vector-effect: non-scaling-stroke;
-    stroke-dasharray: var(--flow-trace-dash, 7 22);
-    stroke-dashoffset: 0;
-    animation: pk-flow-data-stream 1.35s linear infinite;
-    filter:
-      drop-shadow(0 0 4px rgba(154, 225, 255, 0.9))
-      drop-shadow(0 0 10px rgba(111, 205, 255, 0.7));
-    opacity: 0;
-    transition: opacity .24s ease;
-    pointer-events: none;
+    stroke-dasharray: 10 120;
+    animation: pk-sf-gid-pf-flow-pulse 4s infinite linear;
+    opacity: 0.8;
   }
-  .pk-flow-board.is-flow-draw-start .pk-flow-arrow-trace{
-    opacity: .95;
-  }
-  .pk-flow-board:not(.is-flow-draw-start) .pk-flow-arrow-trace{
-    animation-play-state: paused;
-  }
-  .pk-flow-arrow-trace.is-flow-trace-delayed{
-    animation-delay: calc(var(--flow-line-delay, 0ms) + 300ms);
-  }
-  .pk-flow-arrow-trace.is-flow-trace-reverse{
-    animation-direction: reverse;
-    opacity: .72;
-  }
-  .pk-flow-draw-line{
-    fill: none;
-    stroke: #68cfff;
-    stroke-width: 2.4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    vector-effect: non-scaling-stroke;
-    filter: drop-shadow(0 0 5px rgba(104, 207, 255, 0.45));
-    stroke-dasharray: var(--flow-line-length, 1000);
-    transition:
-      stroke-dashoffset 0.72s cubic-bezier(0.25, 0.8, 0.25, 1),
-      opacity 0.22s ease;
-    transition-delay: var(--flow-line-delay, 0ms);
-    opacity: 0.92;
-  }
-  .pk-flow-board:not(.is-flow-draw-start) .pk-flow-draw-line{
-    stroke-dashoffset: var(--flow-line-length, 1000);
-    opacity: 0.82;
-  }
-  .pk-flow-board.is-flow-draw-start .pk-flow-draw-line{
-    stroke-dashoffset: 0;
-  }
-  .pk-flow-line-particle{
-    fill: none;
-    stroke: rgba(220, 247, 255, 0.98);
-    stroke-width: 4.2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    vector-effect: non-scaling-stroke;
-    filter:
-      drop-shadow(0 0 6px rgba(182, 236, 255, 0.98))
-      drop-shadow(0 0 14px rgba(111, 205, 255, 0.9));
-    stroke-dasharray: var(--flow-particle-dash, 12 1000);
-    stroke-dashoffset: var(--flow-line-length, 1000);
-    animation: pk-flow-line-particle-run 1.55s linear infinite;
-    animation-delay: calc(var(--flow-line-delay, 0ms) + 620ms);
-    opacity: 0;
-    transition: opacity .26s ease;
-    pointer-events: none;
-  }
-  .pk-flow-board.is-flow-draw-start .pk-flow-line-particle{
-    opacity: .95;
-  }
-  @keyframes pk-flow-line-particle-run{
-    from{ stroke-dashoffset: var(--flow-line-length, 1000); }
+  @keyframes pk-sf-gid-pf-flow-pulse{
+    from{ stroke-dashoffset: 240; }
     to{ stroke-dashoffset: 0; }
   }
-  .pk-flow-blockchain-wave{
+  .pk-sf-flow-root .gid-pf-step{
     position: absolute;
-    pointer-events: none;
-    border-radius: 14px;
-    overflow: hidden;
-    mix-blend-mode: screen;
-    opacity: 0.78;
-    background:
-      radial-gradient(circle at 50% 50%, rgba(121, 214, 255, 0.24) 0%, rgba(121, 214, 255, 0.05) 50%, rgba(121, 214, 255, 0) 100%);
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1e293b;
+    background: transparent;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    box-shadow: none;
+    white-space: nowrap;
+    opacity: 0.6;
+    transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    cursor: default;
   }
-  .pk-flow-blockchain-wave::before,
-  .pk-flow-blockchain-wave::after{
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 18%;
-    height: 18%;
+  .pk-sf-flow-root .gid-pf-step:hover{
+    opacity: 1;
+    transform: scale(1.05);
+    border-color: #3b82f6;
+    color: #3b82f6;
+  }
+  .pk-sf-flow-root .gid-pf-step-num{
+    background: #3b82f6;
+    color: #fff;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    border: 1px solid rgba(132, 220, 255, 0.72);
-    transform: translate(-50%, -50%) scale(0.25);
-    opacity: 0;
-    animation: pk-flow-blockchain-ripple 2.9s ease-out infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    margin-right: 6px;
+    flex-shrink: 0;
   }
-  .pk-flow-blockchain-wave::after{
-    animation-delay: 1.35s;
-  }
-  @keyframes pk-flow-blockchain-ripple{
-    0%{ transform: translate(-50%, -50%) scale(0.24); opacity: .65; }
-    72%{ opacity: .22; }
-    100%{ transform: translate(-50%, -50%) scale(5.3); opacity: 0; }
-  }
-  @keyframes pk-flow-data-stream{
-    to{ stroke-dashoffset: -120; }
-  }
-  .pk-flow-fallback-track{
+  .pk-sf-flow-root .gid-pf-key-badge{
     position: absolute;
-    height: 2px;
-    background: linear-gradient(90deg, rgba(111,205,255,0.08), rgba(111,205,255,0.28), rgba(111,205,255,0.08));
-    overflow: hidden;
-    border-radius: 999px;
-    pointer-events: none;
+    top: -10px;
+    right: -20px;
+    background: #fff1f2;
+    border: 1px solid #ffe4e6;
+    color: #e11d48;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
   }
-  .pk-flow-fallback-track::after{
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -28px;
-    width: 26px;
-    height: 6px;
-    transform: translateY(-50%);
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(170,232,255,0.98) 0%, rgba(109,201,255,0.7) 55%, rgba(109,201,255,0) 100%);
-    animation: pk-flow-track-particle 2.1s linear infinite;
-    animation-delay: var(--track-delay, 0s);
-  }
-  @keyframes pk-flow-track-particle{
-    to{ left: calc(100% + 28px); }
+  .pk-sf-flow-root .gid-pf-key-badge--pk{
+    background: #f0f9ff;
+    border-color: #e0f2fe;
+    color: #0284c7;
   }
   /* 등록·인증 스텝 */
   .pk-section.pk-process{
@@ -1191,19 +1144,8 @@
       opacity: 1 !important;
     }
     .pk-ben-impact-layer{ transition: none !important; }
-    .pk-flow-draw-line,
-    .pk-flow-line-particle,
-    .pk-flow-arrow-trace{
-      transition: none !important;
-      animation: none !important;
-      stroke-dashoffset: 0 !important;
-      opacity: 1 !important;
-    }
-    .pk-flow-blockchain-wave::before,
-    .pk-flow-blockchain-wave::after{
-      animation: none !important;
-      opacity: 0 !important;
-    }
+    .pk-sf-flow-root .gid-pf-node-img{ animation: none !important; }
+    .pk-sf-flow-root .gid-pf-pulse-line{ animation: none !important; }
   }
   @media (max-width: 1023px){
     .hero-inner{ padding: 48px 24px 50px; }
@@ -1480,12 +1422,47 @@
       <section class="pk-section pk-flow" aria-labelledby="pk-flow-title">
         <h2 id="pk-flow-title" class="pk-section-title" data-i18n="pk-flow-title" data-i18n-html="true"><span class="pk-word-passkey">Passkey</span> 동작 원리</h2>
         <p class="pk-section-lead" data-i18n="pk-flow-lead" data-i18n-html="true">사용자 단말의 인증장치가 개인키로 서명하고, 서버는 공개키와 도전·응답 절차로 검증합니다.<br>브라우저·앱은 표준 프로토콜을 통해 등록·인증 흐름을 연결합니다.</p>
-        <div class="pk-flow-board" id="pkFlowBoard" data-svg-src="../assets/BLOCKCHAIN_flow.svg">
-          <div class="pk-flow-svg-wrap" id="pkFlowSvgMount" aria-hidden="true"></div>
-          <div class="pk-flow-entity-hotspots" aria-hidden="true">
-            <button type="button" class="pk-flow-hotspot" data-entity="issuer">ISSUER</button>
-            <button type="button" class="pk-flow-hotspot" data-entity="holder">HOLDER</button>
-            <button type="button" class="pk-flow-hotspot" data-entity="verifier">VERIFIER</button>
+        <div class="pk-sf-flow-root">
+          <div class="pk-sf-flow-scale">
+          <div class="gid-pf-canvas" id="pkSfCanvas" role="img" aria-label="패스키 등록·인증 흐름도">
+            <svg class="gid-pf-flow-svg" aria-hidden="true">
+              <defs>
+                <marker id="pkSfArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1"/>
+                </marker>
+              </defs>
+              <path class="gid-pf-line" d="M 200 150 H 380"/><path class="gid-pf-pulse-line" d="M 200 150 H 380"/>
+              <path class="gid-pf-line" d="M 200 200 H 380"/><path class="gid-pf-pulse-line" d="M 380 200 H 200"/>
+              <path class="gid-pf-line" d="M 530 140 H 710"/><path class="gid-pf-pulse-line" d="M 530 140 H 710"/>
+              <path class="gid-pf-line" d="M 710 175 H 530"/><path class="gid-pf-pulse-line" d="M 710 175 H 530"/>
+              <path class="gid-pf-line" d="M 530 210 H 710"/><path class="gid-pf-pulse-line" d="M 530 210 H 710"/>
+              <path class="gid-pf-line" d="M 465 240 V 380"/><path class="gid-pf-pulse-line" d="M 465 240 V 380"/>
+              <path class="gid-pf-line" d="M 485 380 V 240"/><path class="gid-pf-pulse-line" d="M 485 380 V 240"/>
+            </svg>
+            <div class="gid-pf-node gid-pf-node--user" data-gid-pf-tilt>
+              <div class="gid-pf-node-img" aria-hidden="true">👤</div>
+              <div class="gid-pf-node-label" data-i18n="gid-pf-node-user">사용자</div>
+            </div>
+            <div class="gid-pf-node gid-pf-node--device" data-gid-pf-tilt>
+              <div class="gid-pf-node-img" aria-hidden="true">💻<span class="gid-pf-key-badge">🔑 <span data-i18n="gid-pf-badge-sk">개인키</span></span></div>
+              <div class="gid-pf-node-label" data-i18n="gid-pf-node-device">패스키 사용자</div>
+            </div>
+            <div class="gid-pf-node gid-pf-node--service" data-gid-pf-tilt>
+              <div class="gid-pf-node-img" aria-hidden="true">☁️<span class="gid-pf-key-badge gid-pf-key-badge--pk">🔑 <span data-i18n="gid-pf-badge-pk">공개키</span></span></div>
+              <div class="gid-pf-node-label" data-i18n="gid-pf-node-service">서비스 기관</div>
+            </div>
+            <div class="gid-pf-node gid-pf-node--auth" data-gid-pf-tilt>
+              <div class="gid-pf-node-img" aria-hidden="true">📱</div>
+              <div class="gid-pf-node-label" data-i18n="gid-pf-node-auth">Authenticator</div>
+            </div>
+            <div class="gid-pf-step" style="left:210px;top:121px"><span class="gid-pf-step-num">01</span><span data-i18n="gid-pf-s01">패스키 등록 &amp; 로그인 요청</span></div>
+            <div class="gid-pf-step" style="left:210px;top:215px"><span class="gid-pf-step-num">05</span><span data-i18n="gid-pf-s05">인증 (생체인증, PIN, 패턴)</span></div>
+            <div class="gid-pf-step" style="left:550px;top:110px"><span class="gid-pf-step-num">02</span><span data-i18n="gid-pf-s02">Challenge 요청</span></div>
+            <div class="gid-pf-step" style="left:550px;top:150px"><span class="gid-pf-step-num">03</span><span data-i18n="gid-pf-s03">Challenge 생성, 전달</span></div>
+            <div class="gid-pf-step" style="left:550px;top:225px"><span class="gid-pf-step-num">07</span><span data-i18n="gid-pf-s07">패스키 등록 &amp; 로그인 요청</span></div>
+            <div class="gid-pf-step" style="left:345px;top:300px"><span class="gid-pf-step-num">04</span><span data-i18n="gid-pf-s04">Challenge 전달</span></div>
+            <div class="gid-pf-step" style="left:495px;top:300px"><span class="gid-pf-step-num">06</span><span data-i18n="gid-pf-s06">Challenge 전자서명</span></div>
+          </div>
           </div>
         </div>
       </section>
@@ -2063,231 +2040,29 @@
   }
 })();
 (function(){
-  'use strict';
-  var board = document.getElementById('pkFlowBoard');
-  var mount = document.getElementById('pkFlowSvgMount');
-  if (!board || !mount) return;
-  var src = board.getAttribute('data-svg-src');
-  if (!src) return;
-
-  function byCenterX(el, vbWidth){
-    var b = el.getBBox();
-    var cx = b.x + b.width / 2;
-    if (cx < vbWidth * 0.33) return 'issuer';
-    if (cx < vbWidth * 0.66) return 'holder';
-    return 'verifier';
-  }
-
-  function getStrokeValue(el){
-    var strokeAttr = el.getAttribute('stroke');
-    if (strokeAttr && strokeAttr !== 'none') return strokeAttr;
-    var comp = window.getComputedStyle(el);
-    return comp && comp.stroke ? comp.stroke : '';
-  }
-
-  function addFallbackTracks(boardEl){
-    var tracks = [
-      { left: 18, top: 28, width: 24, delay: 0 },
-      { left: 44, top: 30, width: 23, delay: .35 },
-      { left: 18, top: 44, width: 24, delay: .7 },
-      { left: 44, top: 46, width: 23, delay: 1.05 },
-      { left: 18, top: 60, width: 24, delay: 1.4 },
-      { left: 44, top: 62, width: 23, delay: 1.75 }
-    ];
-    tracks.forEach(function(t){
-      var line = document.createElement('span');
-      line.className = 'pk-flow-fallback-track';
-      line.style.left = t.left + '%';
-      line.style.top = t.top + '%';
-      line.style.width = t.width + '%';
-      line.style.setProperty('--track-delay', t.delay + 's');
-      line.style.pointerEvents = 'none';
-      boardEl.appendChild(line);
+  var canvas = document.getElementById('pkSfCanvas');
+  if (!canvas) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) return;
+  var nodes = canvas.querySelectorAll('[data-gid-pf-tilt]');
+  if (!nodes.length) return;
+  canvas.addEventListener('mousemove', function(e){
+    var rect = canvas.getBoundingClientRect();
+    var mouseX = e.clientX - rect.left;
+    var mouseY = e.clientY - rect.top;
+    nodes.forEach(function(node){
+      var nodeRect = node.getBoundingClientRect();
+      var nodeX = nodeRect.left - rect.left + nodeRect.width / 2;
+      var nodeY = nodeRect.top - rect.top + nodeRect.height / 2;
+      var rotateX = (mouseY - nodeY) * -0.05;
+      var rotateY = (mouseX - nodeX) * 0.05;
+      node.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
     });
-    boardEl.classList.add('has-fallback-tracks');
-  }
-
-  function tryGetLength(el){
-    try {
-      if (typeof el.getTotalLength === 'function') return el.getTotalLength();
-    } catch (e) {}
-    var b = el.getBBox();
-    return Math.max(40, Math.sqrt((b.width * b.width) + (b.height * b.height)));
-  }
-
-  function addBlockchainWave(boardEl, svgEl, vbWidth, vbHeight){
-    var old = boardEl.querySelector('.pk-flow-blockchain-wave');
-    if (old) old.remove();
-    var labels = Array.prototype.slice.call(svgEl.querySelectorAll('text, tspan')).filter(function(t){
-      return /blockchain/i.test((t.textContent || '').trim());
+  });
+  canvas.addEventListener('mouseleave', function(){
+    nodes.forEach(function(node){
+      node.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
     });
-    var bx, by, bw, bh;
-    if (labels.length){
-      var b = labels[0].getBBox();
-      bx = b.x;
-      by = b.y;
-      bw = b.width;
-      bh = b.height;
-    } else {
-      /* BLOCKCHAIN_flow.svg: 라벨이 path 글리프라 text 매칭이 없음 — 중앙 열 상단 카드(612줄) 기준 */
-      bx = 522.5;
-      by = 612.5;
-      bw = 179;
-      bh = 38;
-    }
-    var w = Math.max(80, bw * 1.65);
-    var h = Math.max(30, bh * 1.85);
-    var left = ((bx + bw / 2) - (w / 2)) / vbWidth * 100;
-    var top = ((by + bh / 2) - (h / 2)) / vbHeight * 100;
-    var wave = document.createElement('span');
-    wave.className = 'pk-flow-blockchain-wave';
-    wave.style.left = left + '%';
-    wave.style.top = top + '%';
-    wave.style.width = (w / vbWidth * 100) + '%';
-    wave.style.height = (h / vbHeight * 100) + '%';
-    boardEl.appendChild(wave);
-  }
-
-
-  fetch(src).then(function(res){ return res.text(); }).then(function(svgText){
-    mount.innerHTML = svgText;
-    var svg = mount.querySelector('svg');
-    if (!svg) return;
-
-    var viewBox = (svg.getAttribute('viewBox') || '0 0 1239 899').split(/\s+/).map(Number);
-    var vbWidth = viewBox[2] || 1239;
-    var vbHeight = viewBox[3] || 899;
-
-    var allPaths = Array.prototype.slice.call(svg.querySelectorAll('path'));
-    var stroked = Array.prototype.slice.call(svg.querySelectorAll('path,line,polyline,polygon'));
-    var arrows = stroked.filter(function(p){
-      var stroke = getStrokeValue(p);
-      if (!stroke || stroke === 'none') return false;
-      var b = p.getBBox();
-      if (b.width > vbWidth * 0.85 && b.height > vbHeight * 0.25) return false;
-      var plen = tryGetLength(p);
-      return (b.width > 20 || b.height > 20 || plen > 36);
-    });
-    var dataBoxes = Array.prototype.slice.call(svg.querySelectorAll('rect')).filter(function(r){
-      var b = r.getBBox();
-      return b.width >= 120 && b.width <= 220 && b.height >= 28 && b.height <= 60;
-    });
-
-    arrows.forEach(function(el){
-      el.classList.add('pk-flow-focus');
-      el.dataset.entity = byCenterX(el, vbWidth);
-    });
-    dataBoxes.forEach(function(el){
-      el.classList.add('pk-flow-focus');
-      el.dataset.entity = byCenterX(el, vbWidth);
-    });
-
-    var stepCandidates = allPaths.filter(function(p){
-      var stroke = getStrokeValue(p);
-      if (stroke && stroke !== 'none') return false;
-      var b = p.getBBox();
-      return b.x > vbWidth * 0.58 && b.y > vbHeight * 0.62 && b.y < vbHeight * 0.9 && b.width < 36 && b.height < 24;
-    }).sort(function(a, b){
-      var ba = a.getBBox();
-      var bb = b.getBBox();
-      if (Math.abs(ba.y - bb.y) < 8) return ba.x - bb.x;
-      return ba.y - bb.y;
-    }).slice(0, 12);
-
-    stepCandidates.forEach(function(step, i){
-      step.classList.add('pk-flow-step');
-      step.style.animationDelay = (i * 180) + 'ms';
-    });
-
-    var drawLines = arrows.slice().sort(function(a, b){
-      var ba = a.getBBox();
-      var bb = b.getBBox();
-      if (Math.abs(ba.y - bb.y) < 10) return ba.x - bb.x;
-      return ba.y - bb.y;
-    }).slice(0, 12);
-    var flowOverlayLayer = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    flowOverlayLayer.setAttribute('data-flow-overlay', 'true');
-    svg.appendChild(flowOverlayLayer);
-    drawLines.forEach(function(el, idx){
-      var len = Math.max(60, tryGetLength(el));
-      var delay = (idx * 190) + 'ms';
-      el.classList.add('pk-flow-draw-line');
-      el.style.removeProperty('stroke-dasharray');
-      el.style.removeProperty('stroke-dashoffset');
-      el.style.setProperty('--flow-line-length', String(len));
-      el.style.setProperty('--flow-line-delay', delay);
-      el.setAttribute('data-flow-line', String(idx + 1));
-      var p = el.cloneNode(true);
-      p.classList.remove('pk-flow-draw-line');
-      p.classList.add('pk-flow-line-particle');
-      p.style.removeProperty('stroke-dasharray');
-      p.style.removeProperty('stroke-dashoffset');
-      p.style.setProperty('--flow-line-length', String(len));
-      var particleLen = Math.max(10, Math.min(26, len * 0.12));
-      p.style.setProperty('--flow-particle-dash', particleLen.toFixed(2) + ' ' + String(len));
-      p.style.setProperty('--flow-line-delay', delay);
-      p.setAttribute('aria-hidden', 'true');
-      flowOverlayLayer.appendChild(p);
-
-      var t = el.cloneNode(true);
-      t.classList.remove('pk-flow-draw-line');
-      t.classList.add('pk-flow-arrow-trace', 'is-flow-trace-delayed');
-      t.style.removeProperty('stroke-dasharray');
-      t.style.removeProperty('stroke-dashoffset');
-      t.style.setProperty('--flow-line-delay', delay);
-      var dash = Math.max(6, Math.min(14, len * 0.1));
-      t.style.setProperty('--flow-trace-dash', dash.toFixed(2) + ' ' + Math.max(14, dash * 2.3).toFixed(2));
-      t.setAttribute('aria-hidden', 'true');
-      flowOverlayLayer.appendChild(t);
-
-      var t2 = el.cloneNode(true);
-      t2.classList.remove('pk-flow-draw-line');
-      t2.classList.add('pk-flow-arrow-trace', 'is-flow-trace-delayed', 'is-flow-trace-reverse');
-      t2.style.removeProperty('stroke-dasharray');
-      t2.style.removeProperty('stroke-dashoffset');
-      t2.style.setProperty('--flow-line-delay', delay);
-      t2.style.setProperty('--flow-trace-dash', '3 28');
-      t2.setAttribute('aria-hidden', 'true');
-      flowOverlayLayer.appendChild(t2);
-    });
-    addBlockchainWave(board, svg, vbWidth, vbHeight);
-
-    if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      var drawIo = new IntersectionObserver(function(entries){
-        entries.forEach(function(ent){
-          if (!ent.isIntersecting) return;
-          board.classList.add('is-flow-draw-start');
-          drawIo.unobserve(ent.target);
-        });
-      }, { root: null, rootMargin: '0px 0px -12% 0px', threshold: 0.18 });
-      drawIo.observe(board);
-      var br = board.getBoundingClientRect();
-      if (br.top < window.innerHeight * 0.9 && br.bottom > 0) board.classList.add('is-flow-draw-start');
-    } else {
-      board.classList.add('is-flow-draw-start');
-    }
-    if (!arrows.length) addFallbackTracks(board);
-
-    var hotspots = board.querySelectorAll('.pk-flow-hotspot');
-    function clearActive(){
-      board.classList.remove('is-entity-active');
-      svg.querySelectorAll('.pk-flow-focus.is-active').forEach(function(el){ el.classList.remove('is-active'); });
-    }
-    hotspots.forEach(function(btn){
-      btn.addEventListener('mouseenter', function(){
-        var entity = btn.getAttribute('data-entity');
-        board.classList.add('is-entity-active');
-        svg.querySelectorAll('.pk-flow-focus').forEach(function(el){
-          el.classList.toggle('is-active', el.dataset.entity === entity);
-        });
-      });
-      btn.addEventListener('mouseleave', clearActive);
-      btn.addEventListener('focus', function(){ btn.dispatchEvent(new Event('mouseenter')); });
-      btn.addEventListener('blur', clearActive);
-    });
-    board.addEventListener('mouseleave', clearActive);
-  }).catch(function(){
-    mount.innerHTML = '<img src="' + src + '" alt="Passkey 동작 원리 다이어그램" loading="lazy">';
   });
 })();
 (function(){

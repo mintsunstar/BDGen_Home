@@ -142,6 +142,33 @@
   .gid-hero-lead p{
     margin: 0;
   }
+  .gid-hero-p1-wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3em;
+    margin: 0;
+    max-width: 100%;
+  }
+  .gid-hero-p1-line{
+    margin: 0;
+    max-width: 100%;
+  }
+  html.js-gid-hero-p1-io .gid-hero-p1-line{
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+    transition:
+      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--gid-hero-p1-idx) * 0.1s);
+  }
+  html.js-gid-hero-p1-io .gid-hero-p1-line:nth-child(1){ --gid-hero-p1-idx: 0; }
+  html.js-gid-hero-p1-io .gid-hero-p1-line:nth-child(2){ --gid-hero-p1-idx: 1; }
+  html.js-gid-hero-p1-io .gid-hero-p1-line:nth-child(3){ --gid-hero-p1-idx: 2; }
+  html.js-gid-hero-p1-io .gid-hero-p1-line.is-gid-hero-p1-visible{
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
   .gid-hero-lead strong{
     color: #1e293b;
     font-weight: 800;
@@ -150,6 +177,13 @@
   .gid-brand-blue{
     color: #24ACFF;
     font-weight: 800;
+  }
+
+  /* 모바일 신분증 테두리: 링 고정 + conic 각도만 변해 빛이 흐르는 느낌 */
+  @property --gid-id-flow-angle{
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
   }
 
   /* GENID_01 이미지 시안 (hero 헤드 아래 배치) */
@@ -232,18 +266,56 @@
 
   .gid-genid01-mobile-id{
     position: relative;
+    isolation: isolate;
     width: 220px;
     height: 400px;
     background: #ffffff;
-    border: 8px solid #f1f5f9;
+    border: none;
     border-radius: 35px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    box-shadow:
+      0 20px 50px rgba(0,0,0,0.1),
+      inset 0 0 0 6px #f1f5f9;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
     z-index: 10;
     transition: transform 0.3s ease;
+  }
+  /* 테두리 링 고정 — transform 없음, 밝은 호만 conic 시작각 애니로 이동 */
+  .gid-genid01-mobile-id::before{
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 38px;
+    z-index: -1;
+    padding: 3px;
+    box-sizing: border-box;
+    pointer-events: none;
+    transform: none;
+    background: conic-gradient(
+      from var(--gid-id-flow-angle),
+      rgba(36, 172, 255, 0.2) 0deg,
+      rgba(36, 172, 255, 0.2) 288deg,
+      rgba(125, 211, 252, 0.95) 302deg,
+      rgba(255, 255, 255, 0.95) 314deg,
+      rgba(36, 172, 255, 1) 324deg,
+      rgba(56, 189, 248, 0.9) 336deg,
+      rgba(36, 172, 255, 0.22) 348deg,
+      rgba(36, 172, 255, 0.2) 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    animation: gid-genid01-mobile-id-flow-light 2.8s linear infinite;
+  }
+  @keyframes gid-genid01-mobile-id-flow-light{
+    to{ --gid-id-flow-angle: 360deg; }
   }
   .gid-genid01-mobile-id:hover{ transform: scale(1.02); }
   .gid-genid01-id-title{
@@ -303,6 +375,19 @@
     .gid-genid01-data-stream{ animation: none !important; opacity: 0; }
     .gid-genid01-mobile-id:hover{ transform: none !important; }
     .gid-genid01-service-node:hover{ transform: none !important; }
+    .gid-genid01-mobile-id::before{
+      animation: none !important;
+      --gid-id-flow-angle: 320deg;
+      background: conic-gradient(
+        from var(--gid-id-flow-angle),
+        rgba(36, 172, 255, 0.22) 0deg,
+        rgba(36, 172, 255, 0.22) 288deg,
+        rgba(125, 211, 252, 0.75) 302deg,
+        rgba(36, 172, 255, 0.85) 324deg,
+        rgba(36, 172, 255, 0.22) 348deg,
+        rgba(36, 172, 255, 0.22) 360deg
+      );
+    }
   }
 
   /* 헤드타이틀 타이핑 인터랙션 */
@@ -346,27 +431,68 @@
     border: 1px solid #e2e8f0;
     background: #fff;
   }
-  .gid-ph--circle.gid-ph--with-img{
-    border-radius: 50%;
+  /* Why GenID: 원형 클립 없이 160px 고정 · 보더 없음 · 빛 스윕(뷰포트 진입 1회) */
+  .gid-ph--feat{
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 14px;
+    border-radius: 14px;
     overflow: hidden;
+    border: none;
   }
-  .gid-ph--circle > img{
-    width: 100%;
-    height: 100%;
+  .gid-ph--feat > img{
+    position: relative;
+    z-index: 0;
+    width: 160px;
+    height: 160px;
     max-width: none;
     max-height: none;
-    object-fit: cover;
+    object-fit: contain;
   }
-  .gid-ph--card.gid-ph--with-img{
-    border-bottom: 1px solid #e8ecf2;
-    background: #f8fafc;
+  html.js-gid-feat-io{
+    --gid-feat-sweep-stagger: 0.2s;
+    --gid-feat-sweep-base-delay: 0.45s;
   }
-  .gid-ph--card > img{
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
-    object-fit: cover;
+  html.js-gid-feat-io .gid-feature-grid li:nth-child(1){ --gid-feat-idx: 0; }
+  html.js-gid-feat-io .gid-feature-grid li:nth-child(2){ --gid-feat-idx: 1; }
+  html.js-gid-feat-io .gid-feature-grid li:nth-child(3){ --gid-feat-idx: 2; }
+  html.js-gid-feat-io .gid-feature-grid li:nth-child(4){ --gid-feat-idx: 3; }
+  .gid-ph--feat::after{
+    content: "";
+    position: absolute;
+    top: -15%;
+    left: 0;
+    width: 55%;
+    height: 130%;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      100deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(255, 255, 255, 0.55) 50%,
+      rgba(255, 255, 255, 0) 65%,
+      transparent 100%
+    );
+    transform: translate3d(-140%, 0, 0) rotate(12deg);
+    opacity: 0;
+  }
+  html.js-gid-feat-io .gid-feature-grid li.is-gid-feat-visible .gid-ph--feat::after{
+    animation: gid-feat-icon-sweep 0.75s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+    animation-delay: calc(var(--gid-feat-sweep-base-delay) + var(--gid-feat-idx) * var(--gid-feat-sweep-stagger));
+    animation-iteration-count: 1;
+  }
+  @keyframes gid-feat-icon-sweep{
+    0%{
+      transform: translate3d(-140%, 0, 0) rotate(12deg);
+      opacity: 0;
+    }
+    12%{ opacity: 1; }
+    100%{
+      transform: translate3d(220%, 0, 0) rotate(12deg);
+      opacity: 0;
+    }
   }
   .gid-ph--icon.gid-ph--with-img > img,
   .gid-ph--phone.gid-ph--with-img > img{
@@ -400,12 +526,6 @@
   .gid-feature-grid li{
     text-align: center;
   }
-  .gid-ph--circle{
-    width: clamp(100px, 14vw, 132px);
-    height: clamp(100px, 14vw, 132px);
-    border-radius: 50%;
-    margin: 0 auto 14px;
-  }
   .gid-feature-grid span{
     display: block;
     font-size: 15px;
@@ -413,200 +533,246 @@
     color: #222;
     line-height: 1.45;
   }
-  /* 적용분야 3×2 */
+  /* 적용분야 3×2 — 흰 카드, 아이콘+제목+본문 좌측 정렬 */
   .gid-app-grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
   .gid-app-card{
-    border-radius: 16px;
+    border-radius: 14px;
     border: 1px solid #e8ecf2;
-    background: #fafbfc;
-    overflow: hidden;
-    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    background: #fff;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    transition:
+      border-color 0.3s ease-out,
+      box-shadow 0.3s ease-out,
+      transform 0.3s ease-out;
+    outline: none;
   }
-  .gid-app-card.is-active{
-    border-color: #24acff;
-    background: linear-gradient(180deg, rgba(36, 172, 255, 0.08) 0%, #fff 55%);
-    box-shadow: 0 12px 32px rgba(36, 172, 255, 0.15);
+  .gid-app-card:focus-visible{
+    outline: 2px solid rgba(36, 172, 255, 0.55);
+    outline-offset: 3px;
   }
-  .gid-ph--card{
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    min-height: 140px;
-    border: none;
-    border-bottom: 2px dashed rgba(13, 110, 253, 0.25);
-    border-radius: 0;
-    background: rgba(245, 249, 255, 0.9);
+  html:not(.js-gid-app-io) .gid-app-card:hover,
+  html:not(.js-gid-app-io) .gid-app-card:focus-within{
+    border-color: #cfe8fc;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transform: scale(1.03);
+  }
+  html.js-gid-app-io .gid-app-grid .gid-app-card.is-gid-app-visible:hover,
+  html.js-gid-app-io .gid-app-grid .gid-app-card.is-gid-app-visible:focus-within{
+    border-color: #cfe8fc;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transform: translate3d(0, 0, 0) scale(1.03);
+  }
+  .gid-app-card:hover h3,
+  .gid-app-card:focus-within h3{
+    color: #24ACFF;
+  }
+  .gid-app-card:hover .gid-app-card__desc,
+  .gid-app-card:focus-within .gid-app-card__desc{
+    color: #0369a1;
+  }
+  .gid-app-card h3,
+  .gid-app-card .gid-app-card__desc{
+    transition: color 0.3s ease-out;
+  }
+  .gid-app-card__icon{
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 22px 22px 8px;
+    background: #fff;
+    width: 80px;
+    height: 80px;
+    box-sizing: content-box;
+  }
+  .gid-app-card__icon img{
+    display: block;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    transition: transform 0.3s ease-out;
+  }
+  .gid-app-card__body{
+    padding: 4px 22px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   .gid-app-card h3{
-    margin: 0;
-    padding: 18px 16px 20px;
-    font-size: 16px;
+    margin: 0 0 10px;
+    padding: 0;
+    font-size: 17px;
     font-weight: 700;
-    line-height: 1.45;
-    color: #1a1f27;
+    line-height: 1.4;
+    color: #111;
+    letter-spacing: -0.02em;
   }
-  /* 서비스 플로우 — 패스키 흐름도 (GENID_03_02 기반) */
+  .gid-app-card__desc{
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #64748b;
+  }
+  /* 도메인별 아이콘 마이크로 애니메이션 (호버·포커스 동시) */
+  .gid-app-card--student .gid-app-card__icon::after{
+    content: "✓";
+    position: absolute;
+    font-size: 19px;
+    font-weight: 900;
+    color: #16a34a;
+    right: 2px;
+    top: 14px;
+    line-height: 1;
+    opacity: 0;
+    transform: scale(0.35) rotate(-18deg);
+    pointer-events: none;
+    transition: opacity 0.32s ease-out, transform 0.32s ease-out;
+  }
+  .gid-app-card--student:hover .gid-app-card__icon::after,
+  .gid-app-card--student:focus-within .gid-app-card__icon::after{
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  .gid-app-card--gov .gid-app-card__icon::before{
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 78px;
+    height: 78px;
+    margin: -39px 0 0 -39px;
+    border-radius: 50%;
+    border: 2px solid #e2e8f0;
+    border-top-color: #24ACFF;
+    border-right-color: #7dd3fc;
+    opacity: 0;
+    pointer-events: none;
+    box-sizing: border-box;
+  }
+  .gid-app-card--gov:hover .gid-app-card__icon::before,
+  .gid-app-card--gov:focus-within .gid-app-card__icon::before{
+    opacity: 1;
+    animation: gid-app-gov-ring 1.05s ease-out forwards;
+  }
+  @keyframes gid-app-gov-ring{
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(360deg); }
+  }
+  .gid-app-card--finance .gid-app-card__icon::after{
+    content: "";
+    position: absolute;
+    left: 16px;
+    width: 48px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, rgba(36, 172, 255, 0.15), rgba(36, 172, 255, 0.95), rgba(36, 172, 255, 0.15), transparent);
+    top: 28px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .gid-app-card--finance:hover .gid-app-card__icon::after,
+  .gid-app-card--finance:focus-within .gid-app-card__icon::after{
+    animation: gid-app-finance-scan 0.9s ease-in-out forwards;
+  }
+  @keyframes gid-app-finance-scan{
+    0%{ transform: translateY(0); opacity: 0; }
+    8%{ opacity: 1; }
+    92%{ opacity: 1; }
+    100%{ transform: translateY(52px); opacity: 0; }
+  }
+  .gid-app-card--contract .gid-app-card__icon::after{
+    content: "";
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: #0065FA;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #fff;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .gid-app-card--contract:hover .gid-app-card__icon::after,
+  .gid-app-card--contract:focus-within .gid-app-card__icon::after{
+    animation: gid-app-pen-sign 0.78s ease-out forwards;
+  }
+  @keyframes gid-app-pen-sign{
+    0%{ transform: translate(24px, 38px); opacity: 0; }
+    12%{ opacity: 1; }
+    38%{ transform: translate(40px, 48px); }
+    62%{ transform: translate(50px, 42px); }
+    100%{ transform: translate(56px, 52px); opacity: 0.9; }
+  }
+  .gid-app-card--certs:hover .gid-app-card__icon img,
+  .gid-app-card--certs:focus-within .gid-app-card__icon img{
+    animation: gid-app-handshake 0.55s ease-in-out;
+  }
+  @keyframes gid-app-handshake{
+    0%, 100%{ transform: translate(0, 0) scale(1); }
+    35%{ transform: translate(1px, 0) scale(0.94); }
+    55%{ transform: translate(-2px, 0) scale(1.05); }
+    75%{ transform: translate(0, 0) scale(0.98); }
+  }
+  .gid-app-card--health:hover .gid-app-card__icon img,
+  .gid-app-card--health:focus-within .gid-app-card__icon img{
+    animation: gid-app-heart-pulse 0.38s ease-in-out 2;
+  }
+  @keyframes gid-app-heart-pulse{
+    0%, 100%{ transform: scale(1); }
+    40%{ transform: scale(1.09); }
+    70%{ transform: scale(1); }
+  }
+  /* Built for Every Domain — 왼쪽 위→오른쪽 아래 순 0.1s 스태거, 아래에서 스르륵 */
+  html.js-gid-app-io{
+    --gid-app-enter-dur: 0.6s;
+    --gid-app-stagger: 0.1s;
+  }
+  html.js-gid-app-io .gid-app-grid .gid-app-card:nth-child(1){ --gid-app-idx: 0; }
+  html.js-gid-app-io .gid-app-grid .gid-app-card:nth-child(2){ --gid-app-idx: 1; }
+  html.js-gid-app-io .gid-app-grid .gid-app-card:nth-child(3){ --gid-app-idx: 2; }
+  html.js-gid-app-io .gid-app-grid .gid-app-card:nth-child(4){ --gid-app-idx: 3; }
+  html.js-gid-app-io .gid-app-grid .gid-app-card:nth-child(5){ --gid-app-idx: 4; }
+  html.js-gid-app-io .gid-app-grid .gid-app-card:nth-child(6){ --gid-app-idx: 5; }
+  html.js-gid-app-io .gid-app-grid .gid-app-card{
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    transition-property: opacity, transform, border-color, box-shadow;
+    transition-duration: var(--gid-app-enter-dur), 0.5s, 0.3s, 0.3s;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease-out, ease-out, ease-out;
+    /* 스태거는 opacity에만 — 호버 시 transform 지연 방지 */
+    transition-delay: calc(var(--gid-app-idx) * var(--gid-app-stagger)), 0s, 0s, 0s;
+  }
+  html.js-gid-app-io .gid-app-grid .gid-app-card.is-gid-app-visible{
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  /* 서비스 플로우 — pk-flow-embed + BLOCKCHAIN_flow.svg(1239×899 비율) */
   .gid-pf-root{
     margin-top: 0;
-    display: flex;
-    justify-content: center;
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    flex-direction: column;
-    align-items: center;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
-  .gid-pf-canvas{
-    position: relative;
-    width: 950px;
-    height: 600px;
-    flex-shrink: 0;
-    background: #fff;
-    border-radius: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
-    overflow: hidden;
-    border: 1px solid #f1f5f9;
-  }
-
-  /* Passkey 동작 원리 SVG(애니메이션) 추가 영역 */
   .gid-pf-passkey-flow-embed{
     width: 100%;
-    max-width: 950px;
-    margin-top: 22px;
+    position: relative;
+    aspect-ratio: 1239 / 899;
   }
   .gid-pf-passkey-flow-embed iframe{
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 700px;
+    height: 100%;
     border: 0;
     display: block;
     overflow: hidden;
-    border-radius: 18px;
-  }
-  .gid-pf-node{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 140px;
-    z-index: 10;
-    transition: transform 0.3s ease-out;
-  }
-  .gid-pf-node-img{
-    width: 80px;
-    height: 80px;
-    background: #fff;
-    border: 1px solid #eef2f6;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 32px;
-    margin-bottom: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    position: relative;
-    animation: gid-pf-float-node 6s infinite ease-in-out;
-  }
-  @keyframes gid-pf-float-node{
-    0%, 100%{ transform: translateY(0); }
-    50%{ transform: translateY(-8px); }
-  }
-  .gid-pf-node--device .gid-pf-node-img{ animation-delay: 1s; }
-  .gid-pf-node--service .gid-pf-node-img{ animation-delay: 2s; }
-  .gid-pf-node--auth .gid-pf-node-img{ animation-delay: 3s; }
-  .gid-pf-node-label{
-    font-weight: 800;
-    font-size: 16px;
-    color: #1e293b;
-  }
-  .gid-pf-node--user{ left: 80px; top: 120px; }
-  .gid-pf-node--device{ left: 405px; top: 120px; }
-  .gid-pf-node--service{ left: 730px; top: 120px; }
-  .gid-pf-node--auth{ left: 405px; top: 400px; }
-  .gid-pf-flow-svg{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-  }
-  .gid-pf-line{
-    fill: none;
-    stroke: #e2e8f0;
-    stroke-width: 1.2;
-    marker-end: url(#gidPfArrow);
-  }
-  .gid-pf-pulse-line{
-    fill: none;
-    stroke: #3b82f6;
-    stroke-width: 2.2;
-    stroke-linecap: round;
-    stroke-dasharray: 10 120;
-    animation: gid-pf-flow-pulse 4s infinite linear;
-    opacity: 0.8;
-  }
-  @keyframes gid-pf-flow-pulse{
-    from{ stroke-dashoffset: 240; }
-    to{ stroke-dashoffset: 0; }
-  }
-  .gid-pf-step{
-    position: absolute;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    font-weight: 600;
-    color: #1e293b;
-    background: #fff;
-    padding: 4px 12px;
-    border-radius: 20px;
-    border: 1px solid #f1f5f9;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-    white-space: nowrap;
-    opacity: 0.6;
-    transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-    cursor: default;
-  }
-  .gid-pf-step:hover{
-    opacity: 1;
-    transform: scale(1.05);
-    border-color: #3b82f6;
-    color: #3b82f6;
-  }
-  .gid-pf-step-num{
-    background: #3b82f6;
-    color: #fff;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 10px;
-    margin-right: 6px;
-    flex-shrink: 0;
-  }
-  .gid-pf-key-badge{
-    position: absolute;
-    top: -10px;
-    right: -20px;
-    background: #fff1f2;
-    border: 1px solid #ffe4e6;
-    color: #e11d48;
-    padding: 2px 8px;
-    border-radius: 6px;
-    font-size: 10px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-  .gid-pf-key-badge--pk{
-    background: #f0f9ff;
-    border-color: #e0f2fe;
-    color: #0284c7;
+    border-radius: 16px;
   }
   @media (max-width: 1023px){
     .gid-feature-grid{ grid-template-columns: repeat(2, 1fr); }
@@ -634,8 +800,54 @@
   }
   @media (prefers-reduced-motion: reduce){
     .gid-float{ animation: none !important; }
-    .gid-pf-node-img{ animation: none !important; }
-    .gid-pf-pulse-line{ animation: none !important; }
+    .gid-ph--feat::after{
+      display: none !important;
+      animation: none !important;
+    }
+    html.js-gid-app-io .gid-app-grid .gid-app-card,
+    html.js-gid-app-io .gid-app-grid .gid-app-card.is-gid-app-visible{
+      opacity: 1 !important;
+      transform: none !important;
+      transition-delay: 0s !important;
+    }
+    .gid-app-card:hover,
+    .gid-app-card:focus-within{
+      transform: none !important;
+    }
+    html.js-gid-app-io .gid-app-grid .gid-app-card.is-gid-app-visible:hover,
+    html.js-gid-app-io .gid-app-grid .gid-app-card.is-gid-app-visible:focus-within{
+      transform: none !important;
+    }
+    .gid-app-card--gov .gid-app-card__icon::before,
+    .gid-app-card--finance .gid-app-card__icon::after,
+    .gid-app-card--contract .gid-app-card__icon::after{
+      animation: none !important;
+    }
+    .gid-app-card--gov .gid-app-card__icon::before{
+      transform: none !important;
+      opacity: 0 !important;
+    }
+    .gid-app-card--finance .gid-app-card__icon::after,
+    .gid-app-card--contract .gid-app-card__icon::after{
+      opacity: 0 !important;
+    }
+    .gid-app-card--certs:hover .gid-app-card__icon img,
+    .gid-app-card--certs:focus-within .gid-app-card__icon img,
+    .gid-app-card--health:hover .gid-app-card__icon img,
+    .gid-app-card--health:focus-within .gid-app-card__icon img{
+      animation: none !important;
+    }
+    .gid-app-card--student:hover .gid-app-card__icon::after,
+    .gid-app-card--student:focus-within .gid-app-card__icon::after{
+      opacity: 0 !important;
+      transform: scale(0.35) rotate(-18deg) !important;
+    }
+    html.js-gid-hero-p1-io .gid-hero-p1-line,
+    html.js-gid-hero-p1-io .gid-hero-p1-line.is-gid-hero-p1-visible{
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
   }
 </style>
 </head>
@@ -788,37 +1000,41 @@
               </div>
             </div>
           </div>
-          <p data-i18n="gid-hero-p1" data-i18n-html="true">GenID는 나의 신원정보를 안전한 <strong>블록체인</strong>에 저장하고 관리하는<br><strong>자기 주권적 신원</strong>과 <strong>W3C DID Standard</strong>가 충실히 구현된 <strong>BDGen</strong>만의 DID 솔루션 입니다.<br>강력한 보안성과 처리 성능을 제공하며 다양한 서비스에 유연하게 적용되어 안정적으로 동작합니다.</p>
+          <div class="gid-hero-p1-wrap" id="gid-hero-p1-wrap" aria-label="GenID 소개 본문">
+            <p class="gid-hero-p1-line" data-i18n="gid-hero-p1-l1" data-i18n-html="true"><span class="gid-brand-blue">GenID</span>는 나의 신원정보를 안전한 <strong>블록체인</strong>에 저장하고 관리하는</p>
+            <p class="gid-hero-p1-line" data-i18n="gid-hero-p1-l2" data-i18n-html="true"><strong>자기 주권적 신원</strong>과 <strong>W3C DID Standard</strong>가 충실히 구현된 <strong>BDGen</strong>만의 DID 솔루션 입니다.</p>
+            <p class="gid-hero-p1-line" data-i18n="gid-hero-p1-l3" data-i18n-html="true">강력한 보안성과 처리 성능을 제공하며 다양한 서비스에 유연하게 적용되어 안정적으로 동작합니다.</p>
+          </div>
         </div>
       </section>
 
       <section class="gid-section gid-features" aria-labelledby="gid-features-title">
         <header class="gid-section-head">
           <h2 id="gid-features-title" class="gid-section-title" data-i18n="gid-features-title" data-i18n-html="true">Why <span class="gid-brand-blue">GenID</span></h2>
-          <p class="gid-section-lead" data-i18n="gid-features-lead" data-i18n-html="true">Hyperledger Fabric 기반으로 <strong>SDK</strong>, <strong>클라우드 Admin</strong>, <strong>글로벌 표준</strong>을 지원합니다.</p>
+          <p class="gid-section-lead" data-i18n="gid-features-lead" data-i18n-html="true">하이퍼레저 패브릭 기반의 강력한 보안성, 편리한 <strong>SDK</strong>와 클라우드 기반의 <strong>통합 Admin</strong>, <strong>글로벌 표준</strong> 준수에 따른 호환성 등 장점이 많은 DID 솔루션, <span class="gid-brand-blue">GenID</span> 입니다.</p>
         </header>
         <ul class="gid-feature-grid">
           <li>
-            <div class="gid-ph gid-ph--with-img gid-ph--circle gid-float">
-              <img src="../assets/genid/placeholder-icon.svg" alt="" width="132" height="132" loading="lazy" decoding="async" data-genid-src="../assets/genid/feat-1.png">
+            <div class="gid-ph gid-ph--with-img gid-ph--feat gid-float">
+              <img src="../assets/genid/placeholder-icon.svg" alt="" width="160" height="160" loading="lazy" decoding="async" data-genid-src="../assets/w3c.png">
             </div>
             <span data-i18n="gid-feat-1">W3C 분산 식별 표준 준수</span>
           </li>
           <li>
-            <div class="gid-ph gid-ph--with-img gid-ph--circle gid-float gid-float--d1">
-              <img src="../assets/genid/placeholder-icon.svg" alt="" width="132" height="132" loading="lazy" decoding="async" data-genid-src="../assets/genid/feat-2.png">
+            <div class="gid-ph gid-ph--with-img gid-ph--feat gid-float gid-float--d1">
+              <img src="../assets/genid/placeholder-icon.svg" alt="" width="160" height="160" loading="lazy" decoding="async" data-genid-src="../assets/Admin.png">
             </div>
             <span data-i18n="gid-feat-2">VC 모니터링 및 통합 Admin 제공</span>
           </li>
           <li>
-            <div class="gid-ph gid-ph--with-img gid-ph--circle gid-float gid-float--d2">
-              <img src="../assets/genid/placeholder-icon.svg" alt="" width="132" height="132" loading="lazy" decoding="async" data-genid-src="../assets/genid/feat-3.png">
+            <div class="gid-ph gid-ph--with-img gid-ph--feat gid-float gid-float--d2">
+              <img src="../assets/genid/placeholder-icon.svg" alt="" width="160" height="160" loading="lazy" decoding="async" data-genid-src="../assets/SDK.png">
             </div>
             <span data-i18n="gid-feat-3">다양한 SDK로 유연한 적용</span>
           </li>
           <li>
-            <div class="gid-ph gid-ph--with-img gid-ph--circle gid-float gid-float--d3">
-              <img src="../assets/genid/placeholder-icon.svg" alt="" width="132" height="132" loading="lazy" decoding="async" data-genid-src="../assets/genid/feat-4.png">
+            <div class="gid-ph gid-ph--with-img gid-ph--feat gid-float gid-float--d3">
+              <img src="../assets/genid/placeholder-icon.svg" alt="" width="160" height="160" loading="lazy" decoding="async" data-genid-src="../assets/TLS.png">
             </div>
             <span data-i18n="gid-feat-4">강력한 통신 보안(TLS)과 위변조 방지</span>
           </li>
@@ -831,41 +1047,59 @@
           <p class="gid-section-lead" data-i18n="gid-apps-lead">공공·교육·금융·의료·전자계약 등 다양한 분야에 적용할 수 있습니다.</p>
         </header>
         <div class="gid-app-grid">
-          <article class="gid-app-card is-active">
-            <div class="gid-ph gid-ph--with-img gid-ph--card">
-              <img src="../assets/genid/placeholder-card.svg" alt="" width="400" height="250" loading="lazy" decoding="async" data-genid-src="../assets/genid/app-1.png">
+          <article class="gid-app-card gid-app-card--student" tabindex="0">
+            <div class="gid-app-card__icon" aria-hidden="true">
+              <img src="../assets/GEN_01.svg" alt="" width="80" height="80" loading="lazy" decoding="async">
             </div>
-            <h3 data-i18n="gid-app-1">스마트폰 학생증 및 출입인증 시스템</h3>
+            <div class="gid-app-card__body">
+              <h3 data-i18n="gid-app-1">스마트폰 학생증 및 출입인증 시스템</h3>
+              <p class="gid-app-card__desc" data-i18n="gid-app-1-desc">스마트폰에 저장된 GenID 기반 학생증 하나로 온라인 학사 행정시스템 로그인, 출입, 할인, 증명서 발급 및 관리 등 학교생활에 필요한 모든 증명이 가능합니다.</p>
+            </div>
           </article>
-          <article class="gid-app-card">
-            <div class="gid-ph gid-ph--with-img gid-ph--card">
-              <img src="../assets/genid/placeholder-card.svg" alt="" width="400" height="250" loading="lazy" decoding="async" data-genid-src="../assets/genid/app-2.png">
+          <article class="gid-app-card gid-app-card--gov" tabindex="0">
+            <div class="gid-app-card__icon" aria-hidden="true">
+              <img src="../assets/GEN_02.svg" alt="" width="80" height="80" loading="lazy" decoding="async">
             </div>
-            <h3 data-i18n="gid-app-2">정부24 전자증명서 발급 시스템</h3>
+            <div class="gid-app-card__body">
+              <h3 data-i18n="gid-app-2">정부24 전자증명서 발급 시스템</h3>
+              <p class="gid-app-card__desc" data-i18n="gid-app-2-desc">정부24와의 연동을 통해 주민등록등본, 납세증명, 건강보험 자격증명 등의 제증명을 발급받을 수 있는 DID 기반 전자문서지갑으로 활용 가능합니다.</p>
+            </div>
           </article>
-          <article class="gid-app-card">
-            <div class="gid-ph gid-ph--with-img gid-ph--card">
-              <img src="../assets/genid/placeholder-card.svg" alt="" width="400" height="250" loading="lazy" decoding="async" data-genid-src="../assets/genid/app-3.png">
+          <article class="gid-app-card gid-app-card--finance" tabindex="0">
+            <div class="gid-app-card__icon" aria-hidden="true">
+              <img src="../assets/GEN_03.svg" alt="" width="80" height="80" loading="lazy" decoding="async">
             </div>
-            <h3 data-i18n="gid-app-3">금융기관 앱 본인 인증</h3>
+            <div class="gid-app-card__body">
+              <h3 data-i18n="gid-app-3">금융기관 어플 본인 인증</h3>
+              <p class="gid-app-card__desc" data-i18n="gid-app-3-desc">자체 인증서를 확보하고자 하는 금융기관이 점점 늘어나고 있습니다. 블록체인 기반의 GenID를 이용해서 보다 사용자 친화적인 본인인증, 앱 로그인, 계좌 증명 등의 프로세스를 구현할 수 있습니다.</p>
+            </div>
           </article>
-          <article class="gid-app-card">
-            <div class="gid-ph gid-ph--with-img gid-ph--card">
-              <img src="../assets/genid/placeholder-card.svg" alt="" width="400" height="250" loading="lazy" decoding="async" data-genid-src="../assets/genid/app-4.png">
+          <article class="gid-app-card gid-app-card--contract" tabindex="0">
+            <div class="gid-app-card__icon" aria-hidden="true">
+              <img src="../assets/GEN_04.svg" alt="" width="80" height="80" loading="lazy" decoding="async">
             </div>
-            <h3 data-i18n="gid-app-4">전자계약 시스템</h3>
+            <div class="gid-app-card__body">
+              <h3 data-i18n="gid-app-4">전자계약 시스템</h3>
+              <p class="gid-app-card__desc" data-i18n="gid-app-4-desc">전자 서명의 신뢰성, 전자 계약 이력 관리, 전자 계약 문서의 위변조 방지가 가능함으로써 전자계약 시스템의 신뢰성, 보안성, 무결성이 한층 높아집니다.</p>
+            </div>
           </article>
-          <article class="gid-app-card">
-            <div class="gid-ph gid-ph--with-img gid-ph--card">
-              <img src="../assets/genid/placeholder-card.svg" alt="" width="400" height="250" loading="lazy" decoding="async" data-genid-src="../assets/genid/app-5.png">
+          <article class="gid-app-card gid-app-card--certs" tabindex="0">
+            <div class="gid-app-card__icon" aria-hidden="true">
+              <img src="../assets/GEN_05.svg" alt="" width="80" height="80" loading="lazy" decoding="async">
             </div>
-            <h3 data-i18n="gid-app-5">졸업증명서, TOEIC 성적증명서 발급</h3>
+            <div class="gid-app-card__body">
+              <h3 data-i18n="gid-app-5">졸업증명서, TOEIC 성적증명서 발급</h3>
+              <p class="gid-app-card__desc" data-i18n="gid-app-5-desc">대학 졸업증명서, TOEIC 등의 각종 어학증명서, 교육 수료증, 자격증 등을 발급하고 이를 제출 및 검증할 수 있는 DID 기반 전자문서 지갑입니다.</p>
+            </div>
           </article>
-          <article class="gid-app-card">
-            <div class="gid-ph gid-ph--with-img gid-ph--card">
-              <img src="../assets/genid/placeholder-card.svg" alt="" width="400" height="250" loading="lazy" decoding="async" data-genid-src="../assets/genid/app-6.png">
+          <article class="gid-app-card gid-app-card--health" tabindex="0">
+            <div class="gid-app-card__icon" aria-hidden="true">
+              <img src="../assets/GEN_06.svg" alt="" width="80" height="80" loading="lazy" decoding="async">
             </div>
-            <h3 data-i18n="gid-app-6">예방접종증명서 발급 시스템</h3>
+            <div class="gid-app-card__body">
+              <h3 data-i18n="gid-app-6">예방접종증명서 발급 시스템</h3>
+              <p class="gid-app-card__desc" data-i18n="gid-app-6-desc">예방접종 등의 민감한 개인 의료정보 증명서 발급에도 간편하게 사용될 수 있습니다.</p>
+            </div>
           </article>
         </div>
       </section>
@@ -877,54 +1111,11 @@
         </header>
 
         <div class="gid-pf-root">
-          <div class="gid-pf-canvas" id="gidPfCanvas" role="img" aria-label="패스키 등록·인증 흐름도">
-            <svg class="gid-pf-flow-svg" aria-hidden="true">
-              <defs>
-                <marker id="gidPfArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1"/>
-                </marker>
-              </defs>
-              <path class="gid-pf-line" d="M 200 150 H 380"/><path class="gid-pf-pulse-line" d="M 200 150 H 380"/>
-              <path class="gid-pf-line" d="M 200 200 H 380"/><path class="gid-pf-pulse-line" d="M 380 200 H 200"/>
-              <path class="gid-pf-line" d="M 530 140 H 710"/><path class="gid-pf-pulse-line" d="M 530 140 H 710"/>
-              <path class="gid-pf-line" d="M 710 175 H 530"/><path class="gid-pf-pulse-line" d="M 710 175 H 530"/>
-              <path class="gid-pf-line" d="M 530 210 H 710"/><path class="gid-pf-pulse-line" d="M 530 210 H 710"/>
-              <path class="gid-pf-line" d="M 465 240 V 380"/><path class="gid-pf-pulse-line" d="M 465 240 V 380"/>
-              <path class="gid-pf-line" d="M 485 380 V 240"/><path class="gid-pf-pulse-line" d="M 485 380 V 240"/>
-            </svg>
-
-            <div class="gid-pf-node gid-pf-node--user" data-gid-pf-tilt>
-              <div class="gid-pf-node-img" aria-hidden="true">👤</div>
-              <div class="gid-pf-node-label" data-i18n="gid-pf-node-user">사용자</div>
-            </div>
-            <div class="gid-pf-node gid-pf-node--device" data-gid-pf-tilt>
-              <div class="gid-pf-node-img" aria-hidden="true">💻<span class="gid-pf-key-badge">🔑 <span data-i18n="gid-pf-badge-sk">개인키</span></span></div>
-              <div class="gid-pf-node-label" data-i18n="gid-pf-node-device">패스키 사용자</div>
-            </div>
-            <div class="gid-pf-node gid-pf-node--service" data-gid-pf-tilt>
-              <div class="gid-pf-node-img" aria-hidden="true">☁️<span class="gid-pf-key-badge gid-pf-key-badge--pk">🔑 <span data-i18n="gid-pf-badge-pk">공개키</span></span></div>
-              <div class="gid-pf-node-label" data-i18n="gid-pf-node-service">서비스 기관</div>
-            </div>
-            <div class="gid-pf-node gid-pf-node--auth" data-gid-pf-tilt>
-              <div class="gid-pf-node-img" aria-hidden="true">📱</div>
-              <div class="gid-pf-node-label">Authenticator</div>
-            </div>
-
-            <div class="gid-pf-step" style="left:210px;top:125px"><span class="gid-pf-step-num">01</span><span data-i18n="gid-pf-s01">패스키 등록 &amp; 로그인 요청</span></div>
-            <div class="gid-pf-step" style="left:210px;top:215px"><span class="gid-pf-step-num">05</span><span data-i18n="gid-pf-s05">인증 (생체인증, PIN, 패턴)</span></div>
-            <div class="gid-pf-step" style="left:550px;top:115px"><span class="gid-pf-step-num">02</span><span data-i18n="gid-pf-s02">Challenge 요청</span></div>
-            <div class="gid-pf-step" style="left:550px;top:155px"><span class="gid-pf-step-num">03</span><span data-i18n="gid-pf-s03">Challenge 생성, 전달</span></div>
-            <div class="gid-pf-step" style="left:550px;top:225px"><span class="gid-pf-step-num">07</span><span data-i18n="gid-pf-s07">패스키 등록 &amp; 로그인 요청</span></div>
-            <div class="gid-pf-step" style="left:345px;top:300px"><span class="gid-pf-step-num">04</span><span data-i18n="gid-pf-s04">Challenge 전달</span></div>
-            <div class="gid-pf-step" style="left:495px;top:300px"><span class="gid-pf-step-num">06</span><span data-i18n="gid-pf-s06">Challenge 전자서명</span></div>
-          </div>
-
-          <!-- Passkey 동작 원리의 SVG(애니메이션 포함)를 Service Flow 아래에 추가 -->
-          <div class="gid-pf-passkey-flow-embed" aria-label="Passkey 동작 원리 다이어그램">
+          <div class="gid-pf-passkey-flow-embed" aria-label="GenID 서비스 흐름 다이어그램">
             <iframe
               id="gidPkFlowIframe"
-              src="pk-flow-embed.html?svg=../assets/BLOCKCHAIN_flow.svg"
-              title="Passkey 동작 원리 다이어그램(애니메이션 포함)"
+              src="pk-flow-embed.html?svg=../assets/BLOCKCHAIN_flow.svg&amp;v=11"
+              title="GenID Service Flow"
               loading="lazy"
             ></iframe>
           </div>
@@ -1062,31 +1253,119 @@
     swapGenidPngIfPresent();
   }
 })();
+
 (function(){
-  var canvas = document.getElementById('gidPfCanvas');
-  if (!canvas) return;
+  'use strict';
+  function initGidHeroP1Scroll(){
+    var wrap = document.getElementById('gid-hero-p1-wrap');
+    if (!wrap) return;
+    var lines = wrap.querySelectorAll('.gid-hero-p1-line');
+    if (!lines.length) return;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function revealAll(){
+      lines.forEach(function(el){ el.classList.add('is-gid-hero-p1-visible'); });
+    }
+    if (reduced) return;
+    document.documentElement.classList.add('js-gid-hero-p1-io');
+    if (!window.IntersectionObserver){
+      revealAll();
+      return;
+    }
+    var done = false;
+    var io;
+    function finish(){
+      if (done) return;
+      done = true;
+      if (io){
+        try { io.disconnect(); } catch (e) {}
+      }
+      revealAll();
+    }
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(ent){
+        if (ent.isIntersecting) finish();
+      });
+    }, { root: null, rootMargin: '0px 0px -5% 0px', threshold: 0.06 });
+    io.observe(wrap);
+    /* i18n 적용·레이아웃 후 보정: 이미 보이는데 초기 IO가 늦거나 빠지는 경우 */
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        if (done) return;
+        var r = wrap.getBoundingClientRect();
+        var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+        if (vh > 0 && r.top < vh * 0.98 && r.bottom > vh * 0.02) finish();
+      });
+    });
+  }
+  /* bdgen-subpage-i18n DOMContentLoaded 이후에 실행 (같은 턴에서 등록 순서보다 setTimeout 0이 안전) */
+  function schedule(){
+    if (document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', function(){
+        window.setTimeout(initGidHeroP1Scroll, 0);
+      });
+    } else {
+      window.setTimeout(initGidHeroP1Scroll, 0);
+    }
+  }
+  schedule();
+})();
+
+(function(){
+  'use strict';
+  var section = document.querySelector('.gid-section.gid-features');
+  var grid = section && section.querySelector('.gid-feature-grid');
+  if (!grid) return;
+  var items = grid.querySelectorAll('li');
+  if (!items.length) return;
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function revealAll(){
+    items.forEach(function(li){ li.classList.add('is-gid-feat-visible'); });
+  }
   if (reduced) return;
-  var nodes = canvas.querySelectorAll('[data-gid-pf-tilt]');
-  if (!nodes.length) return;
-  canvas.addEventListener('mousemove', function(e){
-    var rect = canvas.getBoundingClientRect();
-    var mouseX = e.clientX - rect.left;
-    var mouseY = e.clientY - rect.top;
-    nodes.forEach(function(node){
-      var nodeRect = node.getBoundingClientRect();
-      var nodeX = nodeRect.left - rect.left + nodeRect.width / 2;
-      var nodeY = nodeRect.top - rect.top + nodeRect.height / 2;
-      var rotateX = (mouseY - nodeY) * -0.05;
-      var rotateY = (mouseX - nodeX) * 0.05;
-      node.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
+  document.documentElement.classList.add('js-gid-feat-io');
+  if (!window.IntersectionObserver){
+    revealAll();
+    return;
+  }
+  var done = false;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(ent){
+      if (!ent.isIntersecting || done) return;
+      done = true;
+      io.disconnect();
+      revealAll();
     });
-  });
-  canvas.addEventListener('mouseleave', function(){
-    nodes.forEach(function(node){
-      node.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+  }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+  io.observe(grid);
+})();
+
+(function(){
+  'use strict';
+  var section = document.querySelector('.gid-section.gid-apps');
+  var grid = section && section.querySelector('.gid-app-grid');
+  if (!grid) return;
+  var cards = grid.querySelectorAll('.gid-app-card');
+  if (!cards.length) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function revealAll(){
+    cards.forEach(function(c){ c.classList.add('is-gid-app-visible'); });
+  }
+  if (reduced) return;
+  document.documentElement.classList.add('js-gid-app-io');
+  if (!window.IntersectionObserver){
+    revealAll();
+    return;
+  }
+  var done = false;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(ent){
+      if (!ent.isIntersecting || done) return;
+      done = true;
+      io.disconnect();
+      revealAll();
     });
-  });
+  }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+  io.observe(grid);
 })();
 
 (function(){

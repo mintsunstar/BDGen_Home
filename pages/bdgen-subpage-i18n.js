@@ -375,11 +375,15 @@
         'main-desc': '콘텐츠 준비 중입니다.',
         'gid-hero-head':
           '나의 신원, 내가 관리한다 — <span class="gid-brand-blue">GenID</span>',
-        'gid-hero-p1':
-          '<span class="gid-brand-blue">GenID</span>는 나의 신원정보를 안전한 <strong>블록체인</strong>에 저장하고 관리하는\n<strong>자기 주권적 신원</strong>과 <strong>W3C DID Standard</strong>가 충실히 구현된 <strong>BDGen</strong>만의 DID 솔루션 입니다.\n강력한 보안성과 처리 성능을 제공하며 다양한 서비스에 유연하게 적용되어 안정적으로 동작합니다.',
+        'gid-hero-p1-l1':
+          '<span class="gid-brand-blue">GenID</span>는 나의 신원정보를 안전한 <strong>블록체인</strong>에 저장하고 관리하는',
+        'gid-hero-p1-l2':
+          '<strong>자기 주권적 신원</strong>과 <strong>W3C DID Standard</strong>가 충실히 구현된 <strong>BDGen</strong>만의 DID 솔루션 입니다.',
+        'gid-hero-p1-l3':
+          '강력한 보안성과 처리 성능을 제공하며 다양한 서비스에 유연하게 적용되어 안정적으로 동작합니다.',
         'gid-features-title': 'Why <span class="gid-brand-blue">GenID</span>',
         'gid-features-lead':
-          'Hyperledger Fabric 기반으로 <strong>SDK</strong>, <strong>클라우드 Admin</strong>, <strong>글로벌 표준</strong>을 지원합니다.',
+          '하이퍼레저 패브릭 기반의 강력한 보안성, 편리한 <strong>SDK</strong>와 클라우드 기반의 <strong>통합 Admin</strong>, <strong>글로벌 표준</strong> 준수에 따른 호환성 등 장점이 많은 DID 솔루션, <span class="gid-brand-blue">GenID</span> 입니다.',
         'gid-feat-1': 'W3C 분산 식별 표준 준수',
         'gid-feat-2': 'VC 모니터링 및 통합 Admin 제공',
         'gid-feat-3': '다양한 SDK로 유연한 적용',
@@ -387,11 +391,23 @@
         'gid-apps-title': 'Built for Every Domain',
         'gid-apps-lead': '공공·교육·금융·의료·전자계약 등 다양한 분야에 적용할 수 있습니다.',
         'gid-app-1': '스마트폰 학생증 및 출입인증 시스템',
+        'gid-app-1-desc':
+          '스마트폰에 저장된 GenID 기반 학생증 하나로 온라인 학사 행정시스템 로그인, 출입, 할인, 증명서 발급 및 관리 등 학교생활에 필요한 모든 증명이 가능합니다.',
         'gid-app-2': '정부24 전자증명서 발급 시스템',
-        'gid-app-3': '금융기관 앱 본인 인증',
+        'gid-app-2-desc':
+          '정부24와의 연동을 통해 주민등록등본, 납세증명, 건강보험 자격증명 등의 제증명을 발급받을 수 있는 DID 기반 전자문서지갑으로 활용 가능합니다.',
+        'gid-app-3': '금융기관 어플 본인 인증',
+        'gid-app-3-desc':
+          '자체 인증서를 확보하고자 하는 금융기관이 점점 늘어나고 있습니다. 블록체인 기반의 GenID를 이용해서 보다 사용자 친화적인 본인인증, 앱 로그인, 계좌 증명 등의 프로세스를 구현할 수 있습니다.',
         'gid-app-4': '전자계약 시스템',
+        'gid-app-4-desc':
+          '전자 서명의 신뢰성, 전자 계약 이력 관리, 전자 계약 문서의 위변조 방지가 가능함으로써 전자계약 시스템의 신뢰성, 보안성, 무결성이 한층 높아집니다.',
         'gid-app-5': '졸업증명서, TOEIC 성적증명서 발급',
+        'gid-app-5-desc':
+          '대학 졸업증명서, TOEIC 등의 각종 어학증명서, 교육 수료증, 자격증 등을 발급하고 이를 제출 및 검증할 수 있는 DID 기반 전자문서 지갑입니다.',
         'gid-app-6': '예방접종증명서 발급 시스템',
+        'gid-app-6-desc':
+          '예방접종 등의 민감한 개인 의료정보 증명서 발급에도 간편하게 사용될 수 있습니다.',
         'gid-flow-title': 'Service Flow',
         'gid-flow-lead':
           '사용자·패스키·서비스 기관·Authenticator 간 등록 및 인증 흐름을 나타냅니다.',
@@ -418,11 +434,15 @@
         'main-desc': 'Content coming soon.',
         'gid-hero-head':
           'My identity, under my control — <span class="gid-brand-blue">GenID</span>',
-        'gid-hero-p1':
-          '<span class="gid-brand-blue">GenID</span> is BDGen\'s DID solution that stores and manages your identity on a secure <strong>blockchain</strong>,\nwith <strong>self-sovereign identity</strong> and the <strong>W3C DID standard</strong> faithfully implemented.\nIt delivers strong security and performance, flexibly fits many services, and runs reliably in production.',
+        'gid-hero-p1-l1':
+          '<span class="gid-brand-blue">GenID</span> is BDGen\'s DID solution that stores and manages your identity on a secure <strong>blockchain</strong>,',
+        'gid-hero-p1-l2':
+          'with <strong>self-sovereign identity</strong> and the <strong>W3C DID standard</strong> faithfully implemented.',
+        'gid-hero-p1-l3':
+          'It delivers strong security and performance, flexibly fits many services, and runs reliably in production.',
         'gid-features-title': 'Why <span class="gid-brand-blue">GenID</span>',
         'gid-features-lead':
-          'Built on Hyperledger Fabric with <strong>SDKs</strong>, a <strong>cloud Admin console</strong>, and <strong>global standards</strong> support.',
+          'Built on Hyperledger Fabric for strong security, convenient <strong>SDKs</strong>, cloud-based unified <strong>Admin</strong>, and interoperability through <strong>global standards</strong>—a capable DID solution: <span class="gid-brand-blue">GenID</span>.',
         'gid-feat-1': 'W3C decentralized identifier standards',
         'gid-feat-2': 'VC monitoring and unified Admin',
         'gid-feat-3': 'Flexible integration via multiple SDKs',
@@ -430,11 +450,23 @@
         'gid-apps-title': 'Built for Every Domain',
         'gid-apps-lead': 'Applicable across public sector, education, finance, healthcare, e-contracts, and more.',
         'gid-app-1': 'Smartphone student ID and access control',
+        'gid-app-1-desc':
+          'With one GenID-based student ID on a smartphone, students can log in to academic systems, manage access and discounts, issue and manage certificates, and handle every attestation needed for school life.',
         'gid-app-2': 'Gov24 electronic certificate issuance',
+        'gid-app-2-desc':
+          'Integrated with Gov24, it can serve as a DID-based electronic document wallet for certificates such as resident registration extracts, tax certificates, and National Health Insurance eligibility proofs.',
         'gid-app-3': 'Financial app identity verification',
+        'gid-app-3-desc':
+          'More financial institutions want their own credentials. Blockchain-based GenID enables user-friendly identity verification, app sign-in, account attestation, and related flows.',
         'gid-app-4': 'Electronic contract systems',
+        'gid-app-4-desc':
+          'Stronger e-signature trust, contract history management, and tamper resistance for contract documents improve reliability, security, and integrity for e-contract platforms.',
         'gid-app-5': 'Graduation and TOEIC score certificates',
+        'gid-app-5-desc':
+          'A DID-based electronic document wallet to issue university diplomas, TOEIC and other language certificates, completion and qualification credentials, and to submit and verify them.',
         'gid-app-6': 'Vaccination certificate issuance',
+        'gid-app-6-desc':
+          'Also suited to issuing certificates for sensitive health information such as vaccination records, in a simple and practical way.',
         'gid-flow-title': 'Service Flow',
         'gid-flow-lead':
           'Registration and authentication flow among the user, passkey, service provider, and Authenticator.',
@@ -508,6 +540,20 @@
         'pk-flow-title-plain': 'Passkey 동작 원리',
         'pk-flow-lead':
           '사용자 단말의 인증장치가 개인키로 서명하고, 서버는 공개키와 도전·응답 절차로 검증합니다.\n브라우저·앱은 표준 프로토콜을 통해 등록·인증 흐름을 연결합니다.',
+        'pk-sf-flow-aria': '패스키 등록·인증 흐름도',
+        'gid-pf-node-user': '사용자',
+        'gid-pf-node-device': '패스키 사용자',
+        'gid-pf-node-service': '서비스 기관',
+        'gid-pf-node-auth': 'Authenticator',
+        'gid-pf-badge-sk': '개인키',
+        'gid-pf-badge-pk': '공개키',
+        'gid-pf-s01': '패스키 등록 & 로그인 요청',
+        'gid-pf-s02': 'Challenge 요청',
+        'gid-pf-s03': 'Challenge 생성, 전달',
+        'gid-pf-s04': 'Challenge 전달',
+        'gid-pf-s05': '인증 (생체인증, PIN, 패턴)',
+        'gid-pf-s06': 'Challenge 전자서명',
+        'gid-pf-s07': '패스키 등록 & 로그인 요청',
         'pk-flow-ph': '도식·플로우 이미지 영역',
         'pk-reg-title': '간편하게 이루어지는 <span class="pk-word-passkey">Passkey</span> 등록',
         'pk-auth-title': '비밀번호가 필요 없는 <span class="pk-word-passkey">Passkey</span> 인증',
@@ -600,6 +646,20 @@
         'pk-flow-title-plain': 'How Passkey works',
         'pk-flow-lead':
           'The authenticator on the user device signs with a private key; the server verifies using the registered public key and a challenge–response flow.\nBrowsers and apps connect the ceremony via standard protocols.',
+        'pk-sf-flow-aria': 'Passkey registration and authentication flow',
+        'gid-pf-node-user': 'User',
+        'gid-pf-node-device': 'Passkey user',
+        'gid-pf-node-service': 'Service provider',
+        'gid-pf-node-auth': 'Authenticator',
+        'gid-pf-badge-sk': 'Private key',
+        'gid-pf-badge-pk': 'Public key',
+        'gid-pf-s01': 'Passkey registration & login request',
+        'gid-pf-s02': 'Challenge request',
+        'gid-pf-s03': 'Challenge generation & delivery',
+        'gid-pf-s04': 'Challenge delivery',
+        'gid-pf-s05': 'Authentication (biometrics, PIN, pattern)',
+        'gid-pf-s06': 'Challenge signing',
+        'gid-pf-s07': 'Passkey registration & login request',
         'pk-flow-ph': 'Diagram / flow image area',
         'pk-reg-title': 'Streamlined <span class="pk-word-passkey">Passkey</span> registration',
         'pk-auth-title': 'Password-free <span class="pk-word-passkey">Passkey</span> authentication',
@@ -818,6 +878,10 @@
         } else if (!flowTitleEl.classList.contains('pk-typing-cursor')) {
           flowTitleEl.textContent = '';
         }
+      }
+      var pkSfCanvas = document.getElementById('pkSfCanvas');
+      if (pkSfCanvas && T['pk-sf-flow-aria'] !== undefined) {
+        pkSfCanvas.setAttribute('aria-label', T['pk-sf-flow-aria']);
       }
     }
 

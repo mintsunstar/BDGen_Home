@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     html, body{
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
       background: transparent;
       font-family: 'Pretendard', system-ui, sans-serif;
       overflow: hidden;
@@ -15,6 +16,7 @@
     }
 
     .pk-flow-board{
+      box-sizing: border-box;
       width: 100%;
       height: 100%;
       min-height: 320px;
@@ -26,9 +28,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(0,0,0,0.38);
-      font-weight: 600;
-      font-size: 15px;
       margin: 0;
     }
 
@@ -47,7 +46,6 @@
       border-radius: 12px;
     }
 
-    /* #pkFlowSvgMount에 inline SVG가 직접 주입되기 때문에 이 규칙도 필요 */
     #pkFlowSvgMount{
       width: 100%;
       height: auto;
@@ -59,368 +57,114 @@
       display: block;
       border-radius: 12px;
     }
-
-    .pk-flow-step{
-      opacity: 0;
-      transform-origin: center;
-      animation: pk-flow-step-fade 560ms ease forwards;
-    }
-    @keyframes pk-flow-step-fade{
-      from{ opacity: 0; transform: translateY(4px) scale(0.96); }
-      to{ opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .pk-flow-arrow-trace{
-      fill: none;
-      stroke: rgba(154, 225, 255, 0.96);
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      vector-effect: non-scaling-stroke;
-      stroke-dasharray: var(--flow-trace-dash, 7 22);
-      stroke-dashoffset: 0;
-      animation: pk-flow-data-stream 1.35s linear infinite;
-      filter:
-        drop-shadow(0 0 4px rgba(154, 225, 255, 0.9))
-        drop-shadow(0 0 10px rgba(111, 205, 255, 0.7));
-      opacity: 0;
-      transition: opacity .24s ease;
-      pointer-events: none;
-    }
-    .pk-flow-board.is-flow-draw-start .pk-flow-arrow-trace{ opacity: .95; }
-    .pk-flow-board:not(.is-flow-draw-start) .pk-flow-arrow-trace{ animation-play-state: paused; }
-    .pk-flow-arrow-trace.is-flow-trace-delayed{ animation-delay: calc(var(--flow-line-delay, 0ms) + 300ms); }
-    .pk-flow-arrow-trace.is-flow-trace-reverse{
-      animation-direction: reverse;
-      opacity: .72;
-    }
-
-    .pk-flow-draw-line{
-      fill: none;
-      stroke: #68cfff;
-      stroke-width: 2.4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      vector-effect: non-scaling-stroke;
-      filter: drop-shadow(0 0 5px rgba(104, 207, 255, 0.45));
-      stroke-dasharray: var(--flow-line-length, 1000);
-      transition:
-        stroke-dashoffset 0.72s cubic-bezier(0.25, 0.8, 0.25, 1),
-        opacity 0.22s ease;
-      transition-delay: var(--flow-line-delay, 0ms);
-      opacity: 0.92;
-      pointer-events: none;
-    }
-    .pk-flow-board:not(.is-flow-draw-start) .pk-flow-draw-line{
-      stroke-dashoffset: var(--flow-line-length, 1000);
-      opacity: 0.82;
-    }
-    .pk-flow-board.is-flow-draw-start .pk-flow-draw-line{ stroke-dashoffset: 0; }
-
-    .pk-flow-line-particle{
-      fill: none;
-      stroke: rgba(220, 247, 255, 0.98);
-      stroke-width: 4.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      vector-effect: non-scaling-stroke;
-      filter:
-        drop-shadow(0 0 6px rgba(182, 236, 255, 0.98))
-        drop-shadow(0 0 14px rgba(111, 205, 255, 0.9));
-      stroke-dasharray: var(--flow-particle-dash, 12 1000);
-      stroke-dashoffset: var(--flow-line-length, 1000);
-      animation: pk-flow-line-particle-run 1.55s linear infinite;
-      animation-delay: calc(var(--flow-line-delay, 0ms) + 620ms);
-      opacity: 0;
-      transition: opacity .26s ease;
-      pointer-events: none;
-    }
-    .pk-flow-board.is-flow-draw-start .pk-flow-line-particle{ opacity: .95; }
-    @keyframes pk-flow-line-particle-run{
-      from{ stroke-dashoffset: var(--flow-line-length, 1000); }
-      to{ stroke-dashoffset: 0; }
-    }
-
-    .pk-flow-blockchain-wave{
-      position: absolute;
-      pointer-events: none;
-      border-radius: 14px;
-      overflow: hidden;
-      mix-blend-mode: screen;
-      opacity: 0.78;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(121, 214, 255, 0.24) 0%, rgba(121, 214, 255, 0.05) 50%, rgba(121, 214, 255, 0) 100%);
-    }
-    .pk-flow-blockchain-wave::before,
-    .pk-flow-blockchain-wave::after{
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 18%;
-      height: 18%;
-      border-radius: 50%;
-      border: 1px solid rgba(132, 220, 255, 0.72);
-      transform: translate(-50%, -50%) scale(0.25);
-      opacity: 0;
-      animation: pk-flow-blockchain-ripple 2.9s ease-out infinite;
-    }
-    .pk-flow-blockchain-wave::after{ animation-delay: 1.35s; }
-    @keyframes pk-flow-blockchain-ripple{
-      0%{ transform: translate(-50%, -50%) scale(0.24); opacity: .65; }
-      72%{ opacity: .22; }
-      100%{ transform: translate(-50%, -50%) scale(5.3); opacity: 0; }
-    }
-
-    @keyframes pk-flow-data-stream{
-      to{ stroke-dashoffset: -120; }
-    }
-
-    .pk-flow-fallback-track{
-      position: absolute;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(111,205,255,0.08), rgba(111,205,255,0.28), rgba(111,205,255,0.08));
-      overflow: hidden;
-      border-radius: 999px;
-      pointer-events: none;
-    }
-    .pk-flow-fallback-track::after{
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: -28px;
-      width: 26px;
-      height: 6px;
-      transform: translateY(-50%);
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(170,232,255,0.98) 0%, rgba(109,201,255,0.7) 55%, rgba(109,201,255,0) 100%);
-      animation: pk-flow-track-particle 2.1s linear infinite;
-      animation-delay: var(--track-delay, 0s);
-    }
-    @keyframes pk-flow-track-particle{ to{ left: calc(100% + 28px); } }
   </style>
 </head>
 <body>
-  <div class="pk-flow-board" id="pkFlowBoard" role="img" aria-label="Passkey 동작 원리 다이어그램">
+  <div class="pk-flow-board" id="pkFlowBoard" role="img" aria-label="서비스 흐름 다이어그램">
     <div class="pk-flow-svg-wrap" id="pkFlowSvgMount" aria-hidden="true"></div>
   </div>
 
   <script>
     (function(){
-      var board = document.getElementById('pkFlowBoard');
       var mount = document.getElementById('pkFlowSvgMount');
-      if (!board || !mount) return;
+      var board = document.getElementById('pkFlowBoard');
+      if (!mount || !board) return;
 
       var params = new URLSearchParams(window.location.search);
       var src = params.get('svg') || '../assets/BLOCKCHAIN_flow.svg';
       board.setAttribute('data-svg-src', src);
 
-      function byCenterX(el, vbWidth){
-        var b = el.getBBox();
-        var cx = b.x + b.width / 2;
-        if (cx < vbWidth * 0.33) return 'issuer';
-        if (cx < vbWidth * 0.66) return 'holder';
-        return 'verifier';
+      var NS = 'http://www.w3.org/2000/svg';
+
+      function injectIconParticleStyles(svg){
+        if (svg.querySelector('style[data-pk-icon-particles]')) return;
+        var st = document.createElementNS(NS, 'style');
+        st.setAttribute('type', 'text/css');
+        st.setAttribute('data-pk-icon-particles', 'true');
+        st.textContent = [
+          '[data-pk-flow-particles]{pointer-events:none}',
+          '.pk-icon-particle{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;opacity:0.98;pointer-events:none;}',
+          '.pk-icon-particle--issuer{stroke:#ecfeff;filter:drop-shadow(0 0 3px rgba(56,189,248,1))drop-shadow(0 0 10px rgba(59,130,246,0.75));}',
+          '.pk-icon-particle--verifier{stroke:#f0fff9;filter:drop-shadow(0 0 4px rgba(167,243,208,0.98))drop-shadow(0 0 12px rgba(110,231,183,0.85))drop-shadow(0 0 18px rgba(52,211,153,0.45));}',
+          '.pk-icon-particle{stroke-dashoffset:0;animation:pkIconPartFlow var(--pk-part-dur,2.4s) linear infinite;animation-delay:var(--pk-part-delay,0s);}',
+          '@keyframes pkIconPartFlow{to{stroke-dashoffset:var(--pk-part-len)}}',
+          '@media (prefers-reduced-motion:reduce){.pk-icon-particle{animation:none!important;opacity:0!important}}'
+        ].join('');
+        svg.insertBefore(st, svg.firstChild);
       }
 
-      function getStrokeValue(el){
-        var strokeAttr = el.getAttribute('stroke');
-        if (strokeAttr && strokeAttr !== 'none') return strokeAttr;
-        var comp = window.getComputedStyle(el);
-        return comp && comp.stroke ? comp.stroke : '';
+      /* 발급: 삼각 캡만 · 검증: 증명서 카드 바깥선 path만 */
+      function isIssuerParticleTargetPath(d){
+        return !!d && /218\.6 193\.151/.test(d);
       }
 
-      function addFallbackTracks(boardEl){
-        var tracks = [
-          { left: 18, top: 28, width: 24, delay: 0 },
-          { left: 44, top: 30, width: 23, delay: .35 },
-          { left: 18, top: 44, width: 24, delay: .7 },
-          { left: 44, top: 46, width: 23, delay: 1.05 },
-          { left: 18, top: 60, width: 24, delay: 1.4 },
-          { left: 44, top: 62, width: 23, delay: 1.75 }
-        ];
-        tracks.forEach(function(t){
-          var line = document.createElement('span');
-          line.className = 'pk-flow-fallback-track';
-          line.style.left = t.left + '%';
-          line.style.top = t.top + '%';
-          line.style.width = t.width + '%';
-          line.style.setProperty('--track-delay', t.delay + 's');
-          line.style.pointerEvents = 'none';
-          boardEl.appendChild(line);
-        });
-        boardEl.classList.add('has-fallback-tracks');
+      function isVerifierOuterFramePath(d){
+        return !!d && /994\.75 183\.648/.test(d);
       }
 
-      function tryGetLength(el){
-        try {
-          if (typeof el.getTotalLength === 'function') return el.getTotalLength();
-        } catch (e) {}
-        var b = el.getBBox();
-        return Math.max(40, Math.sqrt((b.width * b.width) + (b.height * b.height)));
-      }
-
-      function addBlockchainWave(boardEl, svgEl, vbWidth, vbHeight){
-        var old = boardEl.querySelector('.pk-flow-blockchain-wave');
-        if (old) old.remove();
-
-        var labels = Array.prototype.slice.call(svgEl.querySelectorAll('text, tspan')).filter(function(t){
-          return /blockchain/i.test((t.textContent || '').trim());
-        });
-
-        var bx, by, bw, bh;
-        if (labels.length){
-          var b = labels[0].getBBox();
-          bx = b.x; by = b.y; bw = b.width; bh = b.height;
-        } else {
-          bx = 522.5; by = 612.5; bw = 179; bh = 38;
+      function getIconParticleKind(p){
+        var d = p.getAttribute('d') || '';
+        var stroke = (p.getAttribute('stroke') || '').trim();
+        if (/^#2F6FFF$/i.test(stroke)){
+          return isIssuerParticleTargetPath(d) ? 'issuer' : null;
         }
+        if (/^#7B7FFF$/i.test(stroke)){
+          return isVerifierOuterFramePath(d) ? 'verifier' : null;
+        }
+        return null;
+      }
 
-        var w = Math.max(80, bw * 1.65);
-        var h = Math.max(30, bh * 1.85);
-        var left = ((bx + bw / 2) - (w / 2)) / vbWidth * 100;
-        var top = ((by + bh / 2) - (h / 2)) / vbHeight * 100;
+      function addIconParticleTrails(svg){
+        var paths = Array.prototype.slice.call(svg.querySelectorAll('path'));
+        var layer = document.createElementNS(NS, 'g');
+        layer.setAttribute('data-pk-flow-particles', 'true');
+        layer.setAttribute('aria-hidden', 'true');
+        svg.appendChild(layer);
 
-        var wave = document.createElement('span');
-        wave.className = 'pk-flow-blockchain-wave';
-        wave.style.left = left + '%';
-        wave.style.top = top + '%';
-        wave.style.width = (w / vbWidth * 100) + '%';
-        wave.style.height = (h / vbHeight * 100) + '%';
-        boardEl.appendChild(wave);
+        paths.forEach(function(p){
+          var kind = getIconParticleKind(p);
+          if (!kind) return;
+          var L;
+          try { L = p.getTotalLength(); } catch (e) { L = 0; }
+          if (!L || L < 6) return;
+
+          var seg = Math.min(16, Math.max(5, L * 0.18));
+          var gap = Math.max(L - seg, 1);
+          var dur = 2.15 + (L % 5) * 0.12;
+
+          function pushClone(delaySec){
+            var c = p.cloneNode(true);
+            c.removeAttribute('id');
+            c.removeAttribute('marker-end');
+            c.removeAttribute('marker-start');
+            c.removeAttribute('marker-mid');
+            c.removeAttribute('stroke');
+            c.removeAttribute('fill');
+            c.removeAttribute('fill-opacity');
+            c.setAttribute('fill', 'none');
+            c.setAttribute('class', 'pk-icon-particle pk-icon-particle--' + kind);
+            c.style.strokeDasharray = seg + ' ' + gap;
+            c.style.setProperty('--pk-part-len', String(L));
+            c.style.setProperty('--pk-part-dur', dur + 's');
+            c.style.setProperty('--pk-part-delay', (delaySec || 0) + 's');
+            layer.appendChild(c);
+          }
+
+          pushClone(0);
+          pushClone(dur * 0.48);
+        });
       }
 
       fetch(src).then(function(res){ return res.text(); }).then(function(svgText){
         mount.innerHTML = svgText;
         var svg = mount.querySelector('svg');
         if (!svg) return;
-
-        var viewBox = (svg.getAttribute('viewBox') || '0 0 1239 899').split(/\s+/).map(Number);
-        var vbWidth = viewBox[2] || 1239;
-        var vbHeight = viewBox[3] || 899;
-
-        var allPaths = Array.prototype.slice.call(svg.querySelectorAll('path'));
-        var stroked = Array.prototype.slice.call(svg.querySelectorAll('path,line,polyline,polygon'));
-        var arrows = stroked.filter(function(p){
-          var stroke = getStrokeValue(p);
-          if (!stroke || stroke === 'none') return false;
-          var b = p.getBBox();
-          if (b.width > vbWidth * 0.85 && b.height > vbHeight * 0.25) return false;
-          var plen = tryGetLength(p);
-          return (b.width > 20 || b.height > 20 || plen > 36);
-        });
-
-        var dataBoxes = Array.prototype.slice.call(svg.querySelectorAll('rect')).filter(function(r){
-          var b = r.getBBox();
-          return b.width >= 120 && b.width <= 220 && b.height >= 28 && b.height <= 60;
-        });
-
-        arrows.forEach(function(el){
-          el.classList.add('pk-flow-focus');
-          el.dataset.entity = byCenterX(el, vbWidth);
-        });
-        dataBoxes.forEach(function(el){
-          el.classList.add('pk-flow-focus');
-          el.dataset.entity = byCenterX(el, vbWidth);
-        });
-
-        var stepCandidates = allPaths.filter(function(p){
-          var stroke = getStrokeValue(p);
-          if (stroke && stroke !== 'none') return false;
-          var b = p.getBBox();
-          return b.x > vbWidth * 0.58 && b.y > vbHeight * 0.62 && b.y < vbHeight * 0.9 && b.width < 36 && b.height < 24;
-        }).sort(function(a, b){
-          var ba = a.getBBox();
-          var bb = b.getBBox();
-          if (Math.abs(ba.y - bb.y) < 8) return ba.x - bb.x;
-          return ba.y - bb.y;
-        }).slice(0, 12);
-
-        stepCandidates.forEach(function(step, i){
-          step.classList.add('pk-flow-step');
-          step.style.animationDelay = (i * 180) + 'ms';
-        });
-
-        var drawLines = arrows.slice().sort(function(a, b){
-          var ba = a.getBBox();
-          var bb = b.getBBox();
-          if (Math.abs(ba.y - bb.y) < 10) return ba.x - bb.x;
-          return ba.y - bb.y;
-        }).slice(0, 12);
-
-        var flowOverlayLayer = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        flowOverlayLayer.setAttribute('data-flow-overlay', 'true');
-        svg.appendChild(flowOverlayLayer);
-
-        drawLines.forEach(function(el, idx){
-          var len = Math.max(60, tryGetLength(el));
-          var delay = (idx * 190) + 'ms';
-
-          el.classList.add('pk-flow-draw-line');
-          el.style.removeProperty('stroke-dasharray');
-          el.style.removeProperty('stroke-dashoffset');
-          el.style.setProperty('--flow-line-length', String(len));
-          el.style.setProperty('--flow-line-delay', delay);
-          el.setAttribute('data-flow-line', String(idx + 1));
-
-          var p = el.cloneNode(true);
-          p.classList.remove('pk-flow-draw-line');
-          p.classList.add('pk-flow-line-particle');
-          p.style.removeProperty('stroke-dasharray');
-          p.style.removeProperty('stroke-dashoffset');
-          p.style.setProperty('--flow-line-length', String(len));
-          var particleLen = Math.max(10, Math.min(26, len * 0.12));
-          p.style.setProperty('--flow-particle-dash', particleLen.toFixed(2) + ' ' + String(len));
-          p.style.setProperty('--flow-line-delay', delay);
-          p.setAttribute('aria-hidden', 'true');
-          flowOverlayLayer.appendChild(p);
-
-          var t = el.cloneNode(true);
-          t.classList.remove('pk-flow-draw-line');
-          t.classList.add('pk-flow-arrow-trace', 'is-flow-trace-delayed');
-          t.style.removeProperty('stroke-dasharray');
-          t.style.removeProperty('stroke-dashoffset');
-          t.style.setProperty('--flow-line-delay', delay);
-          var dash = Math.max(6, Math.min(14, len * 0.1));
-          t.style.setProperty('--flow-trace-dash', dash.toFixed(2) + ' ' + Math.max(14, dash * 2.3).toFixed(2));
-          t.setAttribute('aria-hidden', 'true');
-          flowOverlayLayer.appendChild(t);
-
-          var t2 = el.cloneNode(true);
-          t2.classList.remove('pk-flow-draw-line');
-          t2.classList.add('pk-flow-arrow-trace', 'is-flow-trace-delayed', 'is-flow-trace-reverse');
-          t2.style.removeProperty('stroke-dasharray');
-          t2.style.removeProperty('stroke-dashoffset');
-          t2.style.setProperty('--flow-line-delay', delay);
-          t2.style.setProperty('--flow-trace-dash', '3 28');
-          t2.setAttribute('aria-hidden', 'true');
-          flowOverlayLayer.appendChild(t2);
-        });
-
-        addBlockchainWave(board, svg, vbWidth, vbHeight);
-
-        if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          var drawIo = new IntersectionObserver(function(entries){
-            entries.forEach(function(ent){
-              if (!ent.isIntersecting) return;
-              board.classList.add('is-flow-draw-start');
-              drawIo.unobserve(ent.target);
-            });
-          }, { root: null, rootMargin: '0px 0px -12% 0px', threshold: 0.18 });
-          drawIo.observe(board);
-          var br = board.getBoundingClientRect();
-          if (br.top < window.innerHeight * 0.9 && br.bottom > 0) board.classList.add('is-flow-draw-start');
-        } else {
-          board.classList.add('is-flow-draw-start');
-        }
-
-        if (!arrows.length) addFallbackTracks(board);
-
+        injectIconParticleStyles(svg);
+        addIconParticleTrails(svg);
       }).catch(function(){
-        mount.innerHTML = '<img src=\"' + src + '\" alt=\"Passkey flow\" loading=\"lazy\" style=\"width:100%;height:auto;display:block;\">';
+        mount.innerHTML = '<img src="' + src + '" alt="" loading="lazy" style="width:100%;height:auto;display:block;">';
       });
     })();
   </script>
 </body>
 </html>
-

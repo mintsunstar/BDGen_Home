@@ -1350,11 +1350,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .news-hero-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 24px;
   margin-bottom: 40px;
   position: relative;
-  padding-right: 60px;
 }
 .news-hero-title {
   font-size: 66px;
@@ -1365,29 +1364,6 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   flex: 1;
   min-width: 0;
 }
-.news-hero-arrows {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-}
-.news-arrow-btn {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: opacity 0.2s;
-}
-.news-arrow-btn:hover { opacity: 0.85; }
-.news-arrow-btn:active { opacity: 0.95; }
-.news-arrow-btn img { display: block; width: 36px; height: 36px; vertical-align: middle; }
 .news-hero-title span { color: var(--primary); background: linear-gradient(135deg, #00c8ff, #1e63d6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .news-hero-title .news-hero-typing-line2 {
   color: #111 !important;
@@ -2592,10 +2568,6 @@ footer {
       <div class="news-hero-text">
         <div class="news-hero-header">
           <h2 id="news-title" class="news-hero-title reveal reveal-delay-1"><span id="news-hero-typing-1" class="news-hero-typing" data-text="비디젠의 새로운 소식을" aria-hidden="false"></span><br><span id="news-hero-typing-2" class="news-hero-typing news-hero-typing-line2" data-text="전해드립니다." aria-hidden="false"></span></h2>
-          <div class="news-hero-arrows reveal reveal-delay-1">
-            <button type="button" class="news-arrow-btn news-arrow-prev" aria-label="이전 소식"><img src="assets/arrow-left.svg" width="36" height="36" alt=""></button>
-            <button type="button" class="news-arrow-btn news-arrow-next" aria-label="다음 소식"><img src="assets/arrow-right.svg" width="36" height="36" alt=""></button>
-          </div>
         </div>
         <div class="news-grid" data-content-source="news">
           <a href="https://www.pointdaily.co.kr/news/articleView.html?idxno=221889" class="news-card reveal reveal-delay-1" target="_blank" rel="noopener noreferrer" title="포인트데일리 기사 보기 (2번)">
@@ -2641,7 +2613,7 @@ footer {
       </div>
     </div>
     <div class="ref-more-wrap reveal">
-      <a href="#news" class="btn btn-outline" data-i18n="newsMore" title="TODO: 뉴스 목록 페이지 있으면 URL 연결">모든 소식 보기</a>
+      <a href="pages/about-news.html" class="btn btn-outline" data-i18n="newsMore" title="비디젠 뉴스 전체 보기">모든 소식 보기</a>
     </div>
   </div>
 </section>
@@ -2826,7 +2798,7 @@ footer {
 
   [권장]
   8. 뉴스 상세 페이지 있으면 "자세히 보기" href 연결
-  9. 뉴스 목록 페이지 있으면 "모든 소식 보기" href 연결
+  9. "모든 소식 보기" → pages/about-news.html
   10. 문의 폼 페이지 있으면 CTA를 폼 링크로 교체
   11. © 2024 연도 — 매년 갱신
   12. 회사소개서 PDF 경로 유효성 확인

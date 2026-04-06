@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>비디젠 뉴스 — BDGen</title>
+<link rel="icon" type="image/svg+xml" href="../assets/logo.svg"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<link rel="stylesheet" href="bdgen-common.css"/>
+<style>
+  body { background: #ffffff; color: #111; }
+  .page-main { padding: 0; background: #ffffff; }
+
+  .page-hero{
+    padding-top: 100px;
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a url(../assets/hero-inner_01.jpg) no-repeat center top;
+    background-size: cover;
+  }
+  .page-hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background: rgba(0,0,0,0.2);
+    pointer-events:none;
+  }
+  .hero-inner{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 24px 50px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 360px;
+    text-align: left;
+  }
+  .page-hero .hero-title{
+    font-size: 55px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-top: 0;
+    color: #ffffff;
+  }
+  .page-hero .hero-desc{ margin-top: 14px; color: rgba(255,255,255,0.85); max-width: 760px; line-height: 1.85; }
+
+  .page-hero .sub-nav.section-inner{
+    width: 100vw;
+    max-width: none;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 63px;
+    margin-bottom: 0;
+    background: #ffffff;
+    padding: 12px max(24px, calc(50vw - 600px)) 0;
+    box-shadow: 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.06);
+  }
+  .sub-nav{ display:flex; gap:0; border-top: none; position: relative; }
+  .sub-nav a{
+    padding: 16px 22px;
+    font-size: 18px;
+    color: rgba(0,0,0,0.62);
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    white-space: nowrap;
+  }
+  .sub-nav a:hover{ color:#111; }
+  .sub-nav a.active{ color:#24ACFF; border-bottom-color:#24ACFF; font-weight:400; }
+
+  .bdgen-white-presentation{
+    background: #ffffff;
+    color: #1a1f27;
+    line-height: 1.6;
+    padding: 150px 0 120px;
+  }
+  .bdgen-white-presentation .inner-container{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .bdgen-white-presentation .highlight{ color: #0065FA; font-weight: 700; }
+
+  /* CI소개 #ci-top과 동일 타이포 */
+  #news-top{
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  #news-top .main-title{
+    font-size: 77px;
+    font-weight: 800;
+    line-height: 100px;
+    margin-top: 0;
+    margin-bottom: 0;
+    letter-spacing: -1.5px;
+    color: #1a1f27;
+  }
+
+  .news-toolbar{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px 24px;
+    padding: 20px 0 24px;
+    border-top: 1px solid #e8eaed;
+    border-bottom: 1px solid #e8eaed;
+    margin-bottom: 40px;
+  }
+  .news-total{
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #8b95a1;
+  }
+  .news-total strong{
+    font-weight: 700;
+    color: #1a1f27;
+  }
+  .news-search{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  .news-search select,
+  .news-search input[type="search"]{
+    font-family: inherit;
+    font-size: 15px;
+    color: #1a1f27;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #fff;
+    padding: 10px 14px;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+  .news-search select{
+    min-width: 100px;
+    cursor: pointer;
+  }
+  .news-search input[type="search"]{
+    width: min(280px, 52vw);
+  }
+  .news-search input[type="search"]::placeholder{
+    color: #adb5bd;
+  }
+  .news-search-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #fff;
+    color: #1a1f27;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .news-search-btn:hover{
+    border-color: #24ACFF;
+    color: #24ACFF;
+  }
+
+  .news-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 28px;
+    margin-bottom: 56px;
+  }
+  .news-card-link{
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+  .news-card-thumb{
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: #f1f3f5;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  .news-card-thumb img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    vertical-align: top;
+  }
+  .news-card-title{
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.45;
+    color: #1a1f27;
+    margin: 0 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .news-card-date{
+    font-size: 15px;
+    font-weight: 500;
+    color: #8b95a1;
+    margin: 0;
+  }
+
+  .news-pagination{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 4px;
+    padding-top: 8px;
+  }
+  .news-pagination a,
+  .news-pagination span{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1a1f27;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    box-sizing: border-box;
+  }
+  .news-pagination a:hover{
+    color: #24ACFF;
+  }
+  .news-pagination .is-current{
+    color: #24ACFF;
+    border-bottom-color: #24ACFF;
+    font-weight: 600;
+  }
+  .news-pagination button.news-page-btn{
+    font: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .news-pagination button.news-page-btn.is-current{
+    pointer-events: none;
+  }
+  .news-card.is-hidden{ display: none !important; }
+  .news-pagination .news-page-ellipsis{
+    border: none;
+    min-width: 28px;
+    color: #8b95a1;
+  }
+
+  .visually-hidden{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 1023px){
+    .hero-inner{ padding: 48px 24px 50px; }
+    .sub-nav{ overflow-x: auto; }
+    #news-top .main-title{ font-size: 40px; line-height: 1.15; }
+    .news-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px){
+    #news-top .main-title{ font-size: 34px; }
+    .news-grid{ grid-template-columns: 1fr; gap: 28px; }
+    .news-toolbar{ flex-direction: column; align-items: stretch; }
+    .news-search{ width: 100%; }
+    .news-search input[type="search"]{ flex: 1; width: auto; min-width: 0; }
+  }
+</style>
+</head>
+<body class="bdgen-subpage">
+<header class="gnb" id="gnb" role="banner">
+  <div class="gnb-inner container">
+    <a href="../bdgen_landing.html" class="gnb-logo" aria-label="BDGen 홈">
+      <img src="../assets/logo_w.svg" alt="BDGen" class="gnb-logo-img gnb-logo-default">
+      <img src="../assets/logo_b.svg" alt="" class="gnb-logo-img gnb-logo-hover" aria-hidden="true">
+    </a>
+    <nav class="gnb-nav" aria-label="주요 메뉴">
+      <div class="gnb-dropdown">
+        <a href="about-intro.html" class="gnb-trigger">회사소개</a>
+        <div class="gnb-submenu">
+          <div class="gnb-submenu-inner">
+            <a href="about-intro.html">회사소개</a>
+            <a href="about-history.html">연혁·인증</a>
+            <a href="about-ci.html">CI소개</a>
+            <a href="about-news.html">비디젠 뉴스</a>
+          </div>
+        </div>
+      </div>
+      <a href="business.html">사업영역</a>
+      <div class="gnb-dropdown">
+        <a href="solution-genid.html" class="gnb-trigger">솔루션</a>
+        <div class="gnb-submenu">
+          <div class="gnb-submenu-inner">
+            <a href="solution-genid.html">GenID</a>
+            <a href="solution-passkey.html">Passkey</a>
+          </div>
+        </div>
+      </div>
+      <a href="reference.html">레퍼런스</a>
+      <a href="careers.html">채용</a>
+    </nav>
+    <div class="gnb-right">
+      <div class="lang-switcher" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-label="언어 선택">
+        <button type="button" class="lang-switcher-trigger" aria-label="언어 선택" title="언어 선택">
+          <svg class="lang-globe" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </button>
+        <div class="lang-dropdown" role="listbox" hidden>
+          <button type="button" role="option" data-lang="ko" class="lang-option" aria-selected="true">한글</button>
+          <button type="button" role="option" data-lang="en" class="lang-option" aria-selected="false">EN</button>
+        </div>
+      </div>
+      <button type="button" class="gnb-menu-btn" id="gnbMenuBtn" aria-label="전체 메뉴 열기" aria-expanded="false" aria-controls="fullMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="gnb-fullmenu" id="fullMenu" role="dialog" aria-label="전체 메뉴" aria-modal="true" aria-hidden="true" hidden>
+  <div class="gnb-fullmenu-inner">
+    <header class="gnb-fullmenu-header">
+      <a href="../bdgen_landing.html" class="gnb-fullmenu-logo">
+        <img src="../assets/logo_b.svg" alt="BDGen" width="120" height="32">
+      </a>
+      <button type="button" class="gnb-fullmenu-close" id="fullMenuClose" aria-label="메뉴 닫기">✕</button>
+    </header>
+    <div class="gnb-fullmenu-watermark" aria-hidden="true">BDGen</div>
+    <nav class="gnb-fullmenu-nav">
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">회사소개</span>
+        <a href="about-intro.html">회사소개</a>
+        <a href="about-history.html">연혁·인증</a>
+        <a href="about-ci.html">CI소개</a>
+        <a href="about-news.html">비디젠 뉴스</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">사업영역</span>
+        <a href="business.html">사업 소개</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">솔루션</span>
+        <a href="solution-genid.html">GenID</a>
+        <a href="solution-passkey.html">Passkey</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">레퍼런스</span>
+        <a href="reference.html">레퍼런스</a>
+      </div>
+      <div class="gnb-fullmenu-col">
+        <span class="gnb-fullmenu-col-title">채용</span>
+        <a href="careers.html">채용</a>
+      </div>
+    </nav>
+  </div>
+</div>
+<main class="page-main">
+  <div class="page-hero">
+    <div class="hero-inner">
+      <h1 class="hero-title" data-i18n="hero-title">비디젠 뉴스</h1>
+      <p class="hero-desc" data-i18n="hero-desc">비디젠의 공지·보도 및 주요 소식을 안내합니다.</p>
+    </div>
+    <div class="sub-nav section-inner" aria-label="회사소개 서브 메뉴">
+      <div class="sub-nav-links">
+        <a href="about-intro.html" data-i18n="sub-nav-1">회사소개</a>
+        <a href="about-history.html" data-i18n="sub-nav-2">연혁·인증</a>
+        <a href="about-ci.html" data-i18n="sub-nav-3">CI소개</a>
+        <a href="about-news.html" class="active" aria-current="page" data-i18n="sub-nav-4">비디젠 뉴스</a>
+      </div>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../bdgen_landing.html"><svg class="home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> HOME</a>
+        <span class="sep">&gt;</span>
+        <a href="about-intro.html">COMPANY</a>
+        <span class="sep">&gt;</span>
+        <span class="current" data-i18n="breadcrumb-current">비디젠 뉴스</span>
+      </nav>
+    </div>
+  </div>
+
+  <section class="bdgen-white-presentation">
+    <div class="inner-container">
+      <header id="news-top">
+        <h2 class="main-title" data-i18n="news-list-title">비디젠 뉴스</h2>
+      </header>
+
+      <div class="news-toolbar">
+        <p class="news-total" data-i18n="news-total-line" data-i18n-html="true">총 <strong>21</strong>건</p>
+        <form class="news-search" role="search" action="#" method="get" onsubmit="return false;">
+          <label class="visually-hidden" for="newsSearchField" data-i18n="news-search-label">검색</label>
+          <select id="newsSearchType" name="type" aria-label="검색 구분">
+            <option value="title" data-i18n="news-opt-title">제목</option>
+            <option value="content" data-i18n="news-opt-content">내용</option>
+          </select>
+          <input type="search" id="newsSearchField" name="q" data-i18n-placeholder="news-search-placeholder" placeholder="검색어를 입력하세요" autocomplete="off"/>
+          <button type="submit" class="news-search-btn" data-i18n-title="news-search-submit-title" title="검색" aria-label="검색">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="news-grid" id="newsGrid">
+        <!-- 최신순 정렬 · 썸네일·날짜는 각 원문 기사 메타·본문 기준 -->
+        <article class="news-card" data-news-page="1">
+          <a href="https://www.hansbiz.co.kr/news/articleView.html?idxno=729523" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://cdn.hansbiz.co.kr/news/thumbnail/202501/729523_715873_429_v150.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">STO·조각투자 &apos;제도권 진입&apos;...은행권 시장 경쟁 격화되나</h3>
+            <p class="news-card-date"><time datetime="2025-01-12">2025-01-12</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://www.pointdaily.co.kr/news/articleView.html?idxno=221889" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://cdn.pointdaily.co.kr/news/thumbnail/202410/221889_213140_934_v150.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">367조 시장&apos; 군침...STO 사업 확장하는 은행, 준비 상황은</h3>
+            <p class="news-card-date"><time datetime="2024-10-16">2024-10-16</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://www.munhwa.com/article/11439059" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://wimg.munhwa.com/news/legacy/gen_news/202407/2024070301031805054002_b.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">내 손안의 &apos;올인원 은행&apos;… 딥러닝 활용 절세부터 투자까지 척척[문화금융리포트 2024]</h3>
+            <p class="news-card-date"><time datetime="2024-07-03">2024-07-03</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://biz.newdaily.co.kr/site/data/html/2024/07/02/2024070200204.html" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://image.newdaily.co.kr/site/data/img/2024/07/02/2024070200204_0.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">달아오르는 은행 &apos;조각투자&apos; 경쟁… 꾸물대는 법 개정</h3>
+            <p class="news-card-date"><time datetime="2024-07-02">2024-07-02</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://www.mt.co.kr/finance/2024/07/01/2024063017043485102" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://thumb.mt.co.kr/cdn-cgi/image/w=1200,h=709,fit=cover,bg=whilte,f=auto,quality=high,sharpen=2,g=face/21/2024/06/2024063017043485102_1.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">한우도 조각투자…STO 선점 나선 은행권</h3>
+            <p class="news-card-date"><time datetime="2024-07-01">2024-07-01</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://it.donga.com/105540/" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://it.donga.com/media/__sized__/images/2024/6/27/fb512141911141bc-thumbnail-960x540-70.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">2024 블록체인 지원 사업 14개 추진 &quot;블록체인 혁신 서비스 발굴·지원&quot;</h3>
+            <p class="news-card-date"><time datetime="2024-06-27">2024-06-27</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://www.gokorea.kr/news/articleView.html?idxno=755946" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://cdn.gokorea.kr/news/thumbnail/202406/755946_72796_4219_v150.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">금융 앱에서도 공공서비스 가능… 은행권, 고객 디지털 편의 강화</h3>
+            <p class="news-card-date"><time datetime="2024-06-24">2024-06-24</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://www.dailypop.kr/news/articleView.html?idxno=78892" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://www.dailypop.kr/news/thumbnail/202406/78892_140480_2240_v150.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">[금융 단신] IBK기업은행, 육군 수도군단과 1사 1병영 자매결연 체결 外</h3>
+            <p class="news-card-date"><time datetime="2024-06-18">2024-06-18</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://www.betanews.net/article/view/beta202406170090" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://www.betanews.net/imagedb/thumb/2024/0617/9bf848f5.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">[오늘의 금융가소식] iM뱅크 外</h3>
+            <p class="news-card-date"><time datetime="2024-06-17">2024-06-17</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://www.fnnews.com/news/202406171819175083" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://static.fnnews.com/resources/w/img/no_img_fnnews_570.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">농협은행, 토큰증권 플랫폼 구축·발행 지원한다</h3>
+            <p class="news-card-date"><time datetime="2024-06-17">2024-06-17</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://www.asiatime.co.kr/article/20240617500424" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://csossihettpx2597658.cdn.gov-ntruss.com/data2/content/image/2024/06/17/.cache/512/20240617500423.png" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">[은행가소식] 카카오뱅크, &apos;26주 적금 with 현대백화점&apos; 출시</h3>
+            <p class="news-card-date"><time datetime="2024-06-17">2024-06-17</time></p>
+          </a>
+        </article>
+        <article class="news-card" data-news-page="1">
+          <a href="https://www.ebn.co.kr/news/articleView.html?idxno=1626457" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://cdn.ebn.co.kr/news/thumbnail/202406/1626457_636403_0521_v150.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">[은행 &amp; NOW] 신한은행, 무보와 중소·중견기업 해외시장 진출 활성화 맞손 등</h3>
+            <p class="news-card-date"><time datetime="2024-06-17">2024-06-17</time></p>
+          </a>
+        </article>
+        <article class="news-card is-hidden" data-news-page="2">
+          <a href="https://www.socialvalue.kr/news/view/1065571458614578" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://www.socialvalue.kr/news/data/20231209/p1065571458614578_787_thum.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">&apos;SW개발_L5&apos; 합격률 톱 동서울대, 피텍 PBL기반 캡스톤디자인 전시회 개최</h3>
+            <p class="news-card-date"><time datetime="2023-12-08">2023-12-08</time></p>
+          </a>
+        </article>
+        <article class="news-card is-hidden" data-news-page="2">
+          <a href="https://www.boannews.com/media/view.asp?idx=121970&amp;kind=" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://www.boannews.com/media/upFiles2/2023/09/270064371_1279.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">한국정보보호학회 차세대인증연구회, &apos;2023 차세대 인증 연구회 워크샵&apos; 개최</h3>
+            <p class="news-card-date"><time datetime="2023-09-14">2023-09-14</time></p>
+          </a>
+        </article>
+        <article class="news-card is-hidden" data-news-page="2">
+          <a href="https://www.newspim.com/news/view/20230112001059" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://img.newspim.com/news/2023/01/12/2301122142308910_t1.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">B캐피탈리스트 10기, 웹3·NFT·DAO·메타버스 교육생 모집</h3>
+            <p class="news-card-date"><time datetime="2023-01-13">2023-01-13</time></p>
+          </a>
+        </article>
+        <article class="news-card is-hidden" data-news-page="2">
+          <a href="https://www.techm.kr/news/articleView.html?idxno=105221" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://www.techm.kr/news/thumbnail/202212/105221_125898_597_v150.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">[기고] 블록체인을 활용한 공공일자리 플랫폼</h3>
+            <p class="news-card-date"><time datetime="2022-12-28">2022-12-28</time></p>
+          </a>
+        </article>
+        <article class="news-card is-hidden" data-news-page="2">
+          <a href="https://www.dt.co.kr/article/11484790" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://wimg.dt.co.kr/news/legacy/contents/images/202212/2022122002109931081009.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">KISA, 블록체인 수요·공급자 협의체 `ABLE` 발대식 개최</h3>
+            <p class="news-card-date"><time datetime="2022-12-20">2022-12-20</time></p>
+          </a>
+        </article>
+        <article class="news-card is-hidden" data-news-page="2">
+          <a href="http://www.obdia.org/news/member/?pageid=2&amp;mod=document&amp;uid=2064" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://www.obdia.org/wp-content/uploads/kboard_thumbnails/2/202301/63b3dc768bc446648592.png" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">비디젠-소금광산, 블록체인 기술 R&amp;D 및 서비스 개발 업무 협약 체결[22.12.16.]</h3>
+            <p class="news-card-date"><time datetime="2022-12-16">2022-12-16</time></p>
+          </a>
+        </article>
+        <article class="news-card is-hidden" data-news-page="2">
+          <a href="https://www.tokenpost.kr/news/people/114978" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://f1.tokenpost.kr/2022/12/0qs3rlm0na.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">[토큰포스트 칼럼] 생활 속으로 스며드는 블록체인 기술, 전자근로계약서</h3>
+            <p class="news-card-date"><time datetime="2022-12-07">2022-12-07</time></p>
+          </a>
+        </article>
+        <article class="news-card is-hidden" data-news-page="2">
+          <a href="https://www.newswire.co.kr/newsRead.php?no=925553" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://file.newswire.co.kr/data/datafile2/thumb_480/2021/06/2948880548_20210618091532_2287158413.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">오퍼스엠, 서울특별시 보라매병원과 블록체인 기반 의료용 마약류 관리 플랫폼 구축</h3>
+            <p class="news-card-date"><time datetime="2021-06-18">2021-06-18</time></p>
+          </a>
+        </article>
+        <article class="news-card is-hidden" data-news-page="2">
+          <a href="https://www.bloter.net/news/articleView.html?idxno=40135" class="news-card-link" target="_blank" rel="noopener noreferrer">
+            <div class="news-card-thumb"><img src="https://cdn.bloter.net/news/thumbnail/202106/40135_1_v150.jpg" alt="" width="400" height="250" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"/></div>
+            <h3 class="news-card-title">[블록먼데이]가상자산은 &apos;규제&apos;, 블록체인은 &apos;진흥&apos;</h3>
+            <p class="news-card-date"><time datetime="2021-06-07">2021-06-07</time></p>
+          </a>
+        </article>
+      </div>
+
+      <nav class="news-pagination" id="newsPagination" aria-label="페이지 이동">
+        <button type="button" class="news-page-btn is-current" data-news-page-btn="1" aria-current="page">1</button>
+        <button type="button" class="news-page-btn" data-news-page-btn="2">2</button>
+        <button type="button" class="news-page-btn" id="newsPageNext" data-i18n-title="news-page-next" title="다음 페이지" aria-label="다음 페이지">&gt;</button>
+        <button type="button" class="news-page-btn" id="newsPageLast" data-i18n-title="news-page-last" title="마지막 페이지" aria-label="마지막 페이지">&gt;&gt;</button>
+      </nav>
+    </div>
+  </section>
+</main>
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="../bdgen_landing.html" class="footer-logo" aria-label="비디젠 홈">
+          <img src="../assets/logo_w.svg" alt="비디젠" class="footer-logo-img" width="170" height="34">
+        </a>
+        <p class="footer-desc">블록체인·DID 전문기업. 통신·금융·공공·의료 등 산업의 인증·증명 솔루션을 제공합니다.</p>
+        <div class="footer-info">
+          <span>㈜비디젠</span><br>
+          대표이사 : 유성종<br>
+          사업자등록번호 : 113-86-78453<br>
+          주소 : 서울 구로구 디지털로26길 43, R동 304호<br>
+          전화 : <a href="tel:02-6091-1533">02-6091-1533</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">서비스</div>
+        <ul>
+          <li><a href="../bdgen_landing.html#services">블록체인 서비스 개발</a></li>
+          <li><a href="../bdgen_landing.html#services">모바일 앱 개발</a></li>
+          <li><a href="../bdgen_landing.html#services">플랫폼 운영 솔루션</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">회사</div>
+        <ul>
+          <li><a href="../bdgen_landing.html#about-bdgen">회사소개</a></li>
+          <li><a href="../bdgen_landing.html#why">핵심역량</a></li>
+          <li><a href="../bdgen_landing.html#reference">레퍼런스</a></li>
+          <li><a href="../bdgen_landing.html#news">소식</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">문의</div>
+        <ul>
+          <li><a href="tel:02-6091-1533">02-6091-1533</a></li>
+          <li><a href="../bdgen_landing.html#cta">프로젝트 문의</a></li>
+          <li><a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" rel="noopener" class="bdgen-force-download" download="Intro_BDGen.pdf">회사소개서</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 ㈜비디젠. All rights reserved.</span>
+      <div class="footer-bottom-right">
+        <div class="footer-family-site" id="footerFamilySite">
+          <button type="button" class="footer-family-site-trigger" aria-expanded="false" aria-haspopup="true" aria-label="패밀리 사이트 선택">
+            Family Site
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 9l-6 6-6-6"/></svg>
+          </button>
+          <ul class="footer-family-site-list" role="menu">
+            <li role="none"><a href="https://www.bluedigm.com/" role="menuitem" target="_blank" rel="noopener">BD Convergence</a></li>
+            <li role="none"><a href="https://www.bluedigm.co.kr/" role="menuitem" target="_blank" rel="noopener">Bluedigm</a></li>
+            <li role="none"><a href="https://www.beyondigital.co.kr/" role="menuitem" target="_blank" rel="noopener">BD</a></li>
+            <li role="none"><a href="https://dtinc.co.kr/" role="menuitem" target="_blank" rel="noopener">DT</a></li>
+          </ul>
+        </div>
+        <div class="footer-bottom-links">
+          <a href="#" title="개인정보처리방침 페이지 URL 확정 후 연결">개인정보처리방침</a>
+          <a href="#" title="이용약관 페이지 URL 확정 후 연결">이용약관</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<a href="https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf" class="floating-brochure bdgen-force-download" rel="noopener" download="Intro_BDGen.pdf" aria-label="회사소개서 다운받기" title="회사소개서 다운받기">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15l3 3 3-3"/></svg>
+</a>
+<button type="button" class="back-top" id="backTop" aria-label="맨 위로 이동">↑</button>
+<script src="bdgen-subpage-i18n.js"></script>
+<script src="bdgen-hero-desc.js"></script>
+<script src="bdgen-interactions.js"></script>
+<script>
+(function(){
+  var gnb=document.getElementById('gnb'), backTop=document.getElementById('backTop');
+  var lastY=0;
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    if(gnb){
+      gnb.classList.toggle('scrolled',y>50);
+      if(y>100&&y>lastY) gnb.classList.add('gnb-hidden');
+      else if(y<50||y<lastY) gnb.classList.remove('gnb-hidden');
+    }
+    lastY=y;
+    if(backTop) backTop.classList.toggle('visible',y>400);
+  },{passive:true});
+  if(backTop)backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+(function(){
+  var sw=document.querySelector('.lang-switcher'), trigger=document.querySelector('.lang-switcher-trigger'), dropdown=document.querySelector('.lang-dropdown');
+  if(sw&&trigger&&dropdown){
+    trigger.addEventListener('click',function(e){ e.stopPropagation(); var open=dropdown.hidden; dropdown.hidden=!open; sw.setAttribute('aria-expanded',open); });
+    document.addEventListener('click',function(){ dropdown.hidden=true; if(sw) sw.setAttribute('aria-expanded','false'); });
+    dropdown.addEventListener('click',function(e){ if(e.target.closest('.lang-option')){ dropdown.hidden=true; if(sw) sw.setAttribute('aria-expanded','false'); } });
+  }
+})();
+(function(){
+  var menuBtn=document.getElementById('gnbMenuBtn'), fullMenu=document.getElementById('fullMenu'), closeBtn=document.getElementById('fullMenuClose');
+  function openFullMenu(){if(!fullMenu)return; fullMenu.removeAttribute('hidden'); fullMenu.setAttribute('aria-hidden','false'); if(menuBtn){menuBtn.setAttribute('aria-expanded','true');menuBtn.classList.add('is-open');} document.body.style.overflow='hidden';}
+  function closeFullMenu(){if(!fullMenu)return; fullMenu.setAttribute('hidden',''); fullMenu.setAttribute('aria-hidden','true'); if(menuBtn){menuBtn.setAttribute('aria-expanded','false');menuBtn.classList.remove('is-open');} document.body.style.overflow='';}
+  if(menuBtn)menuBtn.addEventListener('click',openFullMenu);
+  if(closeBtn)closeBtn.addEventListener('click',closeFullMenu);
+  if(fullMenu)fullMenu.addEventListener('click',function(e){if(e.target.tagName==='A')closeFullMenu();});
+})();
+(function(){
+  var wrap=document.getElementById('footerFamilySite');
+  if(!wrap)return;
+  var trigger=wrap.querySelector('.footer-family-site-trigger'), list=wrap.querySelector('.footer-family-site-list');
+  if(!trigger||!list)return;
+  trigger.addEventListener('click',function(e){e.stopPropagation(); var isOpen=wrap.classList.toggle('open'); trigger.setAttribute('aria-expanded',isOpen);});
+  document.addEventListener('click',function(){wrap.classList.remove('open'); trigger.setAttribute('aria-expanded','false');});
+})();
+(function(){
+  var grid = document.getElementById('newsGrid');
+  var pag = document.getElementById('newsPagination');
+  if(!grid || !pag) return;
+  var cards = grid.querySelectorAll('.news-card');
+  var btns = pag.querySelectorAll('[data-news-page-btn]');
+  var nextBtn = document.getElementById('newsPageNext');
+  var lastBtn = document.getElementById('newsPageLast');
+  var totalPages = 2;
+  function showPage(n){
+    var p = Math.max(1, Math.min(totalPages, n));
+    cards.forEach(function(c){
+      var cp = c.getAttribute('data-news-page');
+      c.classList.toggle('is-hidden', cp !== String(p));
+    });
+    btns.forEach(function(b){
+      var on = b.getAttribute('data-news-page-btn') === String(p);
+      b.classList.toggle('is-current', on);
+      b.setAttribute('aria-current', on ? 'page' : 'false');
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){ showPage(parseInt(b.getAttribute('data-news-page-btn'), 10)); });
+  });
+  if(nextBtn) nextBtn.addEventListener('click', function(){
+    var cur = grid.querySelector('.news-card:not(.is-hidden)');
+    var p = cur ? parseInt(cur.getAttribute('data-news-page'), 10) || 1 : 1;
+    showPage(p + 1);
+  });
+  if(lastBtn) lastBtn.addEventListener('click', function(){ showPage(totalPages); });
+  showPage(1);
+})();
+</script>
+</body>
+</html>

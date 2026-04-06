@@ -16,6 +16,7 @@
         'sub-nav-1': '회사소개',
         'sub-nav-2': '연혁·인증',
         'sub-nav-3': 'CI소개',
+        'sub-nav-4': '비디젠 뉴스',
         'breadcrumb-current': '회사소개',
         'intro-typing-1': '고객의 가치를 창출하며 성장하는',
         'intro-typing-2': 'SW 개발 전문 기업',
@@ -54,6 +55,7 @@
         'sub-nav-1': 'Company',
         'sub-nav-2': 'History',
         'sub-nav-3': 'CI',
+        'sub-nav-4': 'News',
         'breadcrumb-current': 'Company',
         'intro-typing-1': 'Growing while creating value for customers,',
         'intro-typing-2': 'A specialized SW development company',
@@ -94,6 +96,7 @@
         'sub-nav-1': '회사소개',
         'sub-nav-2': '연혁·인증',
         'sub-nav-3': 'CI소개',
+        'sub-nav-4': '비디젠 뉴스',
         'breadcrumb-current': '연혁·인증',
         'history-typing-1': '기술로 빚은 신뢰,',
         'history-typing-2': '데이터로 증명한 혁신',
@@ -126,6 +129,7 @@
         'sub-nav-1': 'Company',
         'sub-nav-2': 'History',
         'sub-nav-3': 'CI',
+        'sub-nav-4': 'News',
         'breadcrumb-current': 'History',
         'history-typing-1': 'Trust Built with Technology,',
         'history-typing-2': 'Innovation Proven by Data',
@@ -160,6 +164,7 @@
         'sub-nav-1': '회사소개',
         'sub-nav-2': '연혁·인증',
         'sub-nav-3': 'CI소개',
+        'sub-nav-4': '비디젠 뉴스',
         'breadcrumb-current': 'CI소개',
         'ci-concept-lead': '비디젠 CI는 신뢰와 협력을 바탕으로 사람과 기술이 상호작용하는 강력한 접근성을 제공한다는 의미를 담아 제작하였습니다.',
         'ci-symbol-title': '심볼의 의미 ',
@@ -184,6 +189,7 @@
         'sub-nav-1': 'Company',
         'sub-nav-2': 'History',
         'sub-nav-3': 'CI',
+        'sub-nav-4': 'News',
         'breadcrumb-current': 'CI',
         'ci-concept-lead': 'BDGen CI was created to represent powerful accessibility where people and technology interact based on trust and collaboration.',
         'ci-symbol-title': 'Symbol Meaning ',
@@ -201,6 +207,44 @@
         'ci-usage-1': 'We recommend 80%–90% grayscale for body text to reduce eye strain.',
         'ci-usage-2': 'Use 10%–20% light gray for backgrounds and auxiliary lines to express information hierarchy.',
         'ci-concept-title': 'CI CONCEPT'
+      }
+    },
+    'about-news': {
+      ko: {
+        'hero-title': '비디젠 뉴스',
+        'hero-desc': '비디젠의 공지·보도 및 주요 소식을 안내합니다.',
+        'sub-nav-1': '회사소개',
+        'sub-nav-2': '연혁·인증',
+        'sub-nav-3': 'CI소개',
+        'sub-nav-4': '비디젠 뉴스',
+        'breadcrumb-current': '비디젠 뉴스',
+        'news-list-title': '비디젠 뉴스',
+        'news-total-line': '총 <strong>21</strong>건',
+        'news-search-label': '검색',
+        'news-opt-title': '제목',
+        'news-opt-content': '내용',
+        'news-search-placeholder': '검색어를 입력하세요',
+        'news-search-submit-title': '검색',
+        'news-page-next': '다음 페이지',
+        'news-page-last': '마지막 페이지'
+      },
+      en: {
+        'hero-title': 'BDGen News',
+        'hero-desc': 'Announcements, press, and highlights from BDGen.',
+        'sub-nav-1': 'Company',
+        'sub-nav-2': 'History',
+        'sub-nav-3': 'CI',
+        'sub-nav-4': 'News',
+        'breadcrumb-current': 'News',
+        'news-list-title': 'BDGen News',
+        'news-total-line': 'Total <strong>21</strong> items',
+        'news-search-label': 'Search',
+        'news-opt-title': 'Title',
+        'news-opt-content': 'Content',
+        'news-search-placeholder': 'Enter a keyword',
+        'news-search-submit-title': 'Search',
+        'news-page-next': 'Next page',
+        'news-page-last': 'Last page'
       }
     },
     'business': {
@@ -731,6 +775,19 @@
       }
     });
 
+    main.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-placeholder');
+      if (T[key] !== undefined) el.setAttribute('placeholder', T[key]);
+    });
+
+    main.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-title');
+      if (T[key] !== undefined) {
+        el.setAttribute('title', T[key]);
+        if (el.hasAttribute('aria-label')) el.setAttribute('aria-label', T[key]);
+      }
+    });
+
     /* sub-nav links (page-specific) */
     var subNavLinks = main.querySelectorAll('.sub-nav-links a');
     if (subNavLinks.length && T['sub-nav-1']) {
@@ -743,7 +800,12 @@
           sn2.textContent = T['sub-nav-2'];
         }
       }
-      if (subNavLinks[2]) subNavLinks[2].textContent = T['sub-nav-3'];
+      if (subNavLinks[2] && T['sub-nav-3'] !== undefined) {
+        subNavLinks[2].textContent = T['sub-nav-3'];
+      }
+      if (subNavLinks[3] && T['sub-nav-4'] !== undefined) {
+        subNavLinks[3].textContent = T['sub-nav-4'];
+      }
     }
 
     /* breadcrumb current */

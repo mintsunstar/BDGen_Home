@@ -14,6 +14,7 @@ import { ReferenceSection } from '@/components/sections/ReferenceSection';
 import { NewsSection } from '@/components/sections/NewsSection';
 import { CTASection } from '@/components/sections/CTASection';
 import { BackToTop } from '@/components/shared/BackToTop';
+import { FloatingBrochure } from '@/components/shared/FloatingBrochure';
 import { navItems } from '@/data/nav';
 import { trustItems } from '@/data/trust';
 import { services } from '@/data/services';
@@ -43,6 +44,7 @@ export default function LandingPage() {
         <CTASection contact={contactConfig} />
       </main>
       <Footer company={company} linkGroups={linkGroups} bottomLinks={footerBottomLinks} />
+      <FloatingBrochure />
       <BackToTop />
     </>
   );

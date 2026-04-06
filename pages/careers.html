@@ -8,25 +8,1324 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
 <link rel="stylesheet" href="bdgen-common.css"/>
 <style>
-  /* about-intro과 동일 레이아웃 */
+  :root {
+    --careers-blue: #0065FA;
+    --careers-blue-soft: #E8F1FF;
+    --careers-blue-banner: linear-gradient(135deg, #0065FA 0%, #0050CC 48%, #003d99 100%);
+    --careers-text: #1a1f27;
+    --careers-muted: #6b7684;
+    /* 안내문구(리드) ~ 본문: 기존 50px + 80px */
+    --careers-lead-body-gap: 130px;
+    --welfare-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --careers-tab-ease: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --careers-tab-dur: 0.4s;
+  }
   body { background: #ffffff; color: #111; }
   .page-main { padding: 0; background: #ffffff; }
-  .page-hero{ padding-top: 100px; position: relative; overflow: hidden; background: #1a1a1a url(../assets/hero-inner_01.jpg) no-repeat center top; background-size: cover; }
-  .page-hero::before{ content:""; position:absolute; inset:0; background: rgba(0,0,0,0.2); pointer-events:none; }
+  /* 밝은 히어로: bdgen-common의 page-hero 전용 흰색 GNB를 덮어 어두운 글자·로고 사용 */
+  body.bdgen-subpage:has(.page-hero.page-hero--light) .gnb-nav a{ color: #111 !important; }
+  body.bdgen-subpage:has(.page-hero.page-hero--light) .gnb-logo-default{ opacity: 0 !important; }
+  body.bdgen-subpage:has(.page-hero.page-hero--light) .gnb-logo-hover{ opacity: 1 !important; }
+  body.bdgen-subpage:has(.page-hero.page-hero--light) .gnb-menu-btn span{ background: #111 !important; }
+  body.bdgen-subpage:has(.page-hero.page-hero--light) .lang-switcher-trigger{ color: #111 !important; }
+  .page-hero{
+    padding-top: 100px;
+    position: relative;
+    overflow: hidden;
+    background-color: #ffffff;
+    background-image: url(../assets/employment_b.png);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+  }
+  .page-hero::before{ display: none; }
   .hero-inner{ max-width: 1200px; margin: 0 auto; padding: 64px 24px 50px; position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 360px; text-align: left; }
-  .page-hero .hero-title{ font-size: 55px; line-height: 1.05; letter-spacing: -0.02em; margin-top: 0; color: #ffffff; }
-  .page-hero .hero-desc{ margin-top: 14px; color: rgba(255,255,255,0.85); max-width: 760px; line-height: 1.85; }
+  .page-hero .hero-title{ font-size: 55px; line-height: 1.05; letter-spacing: -0.02em; margin-top: 0; color: #111; }
+  .page-hero .hero-desc{ margin-top: 14px; color: var(--careers-muted); max-width: 760px; line-height: 1.85; }
   .page-hero .sub-nav.section-inner{ width: 100vw; max-width: none; margin-left: 50%; transform: translateX(-50%); margin-top: 63px; margin-bottom: 0; background: #ffffff; padding: 12px max(24px, calc(50vw - 600px)) 0; box-shadow: 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.06); }
   .sub-nav{ display:flex; gap:0; border-top: none; position: relative; }
   .sub-nav a{ padding: 16px 22px; font-size: 18px; color: rgba(0,0,0,0.62); border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; white-space: nowrap; }
   .sub-nav a:hover{ color:#111; }
   .sub-nav a.active{ color:#24ACFF; border-bottom-color:#24ACFF; font-weight:400; }
-  .bdgen-white-presentation{ background: #ffffff; color: #1a1f27; line-height: 1.6; padding: 150px 0 120px; }
+  .bdgen-white-presentation{ background: #ffffff; color: var(--careers-text); line-height: 1.65; padding: 100px 0 120px; }
   .bdgen-white-presentation .inner-container{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-  .bdgen-white-presentation .main-title{ font-size: 77px; font-weight: 800; line-height: 100px; margin-top: 0; margin-bottom: 0; letter-spacing: -1.5px; }
-  .bdgen-white-presentation .hero-desc{ font-size: 20px; color: #4e5968; margin-top: 30px; font-weight: 400; }
-  @media (max-width: 1023px){ .hero-inner{ padding: 48px 24px 50px; } .sub-nav{ overflow-x: auto; } .bdgen-white-presentation .main-title{ font-size: 40px; } }
-  @media (max-width: 768px){ .bdgen-white-presentation .main-title{ font-size: 34px; } }
+  /* 사업영역 .biz-section 과 동일한 섹션 간 세로 리듬 */
+  .careers-sec{
+    padding: 56px 0 80px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .careers-sec + .careers-sec,
+  .careers-talent-banner-full + .careers-sec,
+  .careers-sec + .careers-cta{
+    margin-top: 8px;
+    border-top: 1px solid #eef0f3;
+    padding-top: 88px;
+    box-sizing: border-box;
+  }
+  /* Hiring Process 다음 Open Positions — 섹션 간 시각 여유 */
+  #careers-process.careers-sec{
+    padding-bottom: 100px;
+  }
+  #careers-process + #careers-roles.careers-sec{
+    padding-top: 140px;
+  }
+  /* 배너: 사업영역과 동일 (margin 8 + 구분선 + 88px 공백), 블루는 inner만 */
+  .careers-sec + .careers-talent-banner-full{
+    margin-top: 8px;
+    border-top: 1px solid #eef0f3;
+    padding-top: 88px;
+    box-sizing: border-box;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    background: #ffffff;
+    box-shadow: none;
+    overflow: hidden;
+  }
+  .careers-sec + .careers-talent-banner-full .careers-talent-banner-inner{
+    height: var(--careers-talent-banner-h);
+    min-height: var(--careers-talent-banner-h);
+    background: transparent;
+    box-shadow: 0 20px 48px rgba(0, 101, 250, 0.18);
+    overflow: visible;
+  }
+  .careers-sec-head{
+    text-align: center;
+    margin: 0;
+    padding-bottom: var(--careers-lead-body-gap);
+  }
+  /* 사업영역 .biz-section-lead 와 동일 타이포 */
+  .careers-sec-lead{
+    margin: 0 auto;
+    max-width: min(720px, 100%);
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--careers-muted);
+    text-align: center;
+    font-weight: 500;
+  }
+  .careers-sec-en{
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--careers-blue);
+    margin: 0 0 10px;
+  }
+  .careers-sec-title{
+    font-size: clamp(32px, 6vw, 77px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-align: center;
+    margin: 0 0 20px;
+    color: #111;
+    line-height: 1.12;
+  }
+  /* Hiring Process 이하: 스크롤 의도 + 진입 시 타이틀 → 리드 → 본문 순 공개 (속도는 휠 크기로 가변) */
+  .careers-scroll-sec{
+    --careers-scroll-dur: 0.52s;
+    --careers-scroll-stagger: 0.14s;
+    --careers-scroll-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .careers-scroll-stage{
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity var(--careers-scroll-dur) var(--careers-scroll-ease),
+      transform var(--careers-scroll-dur) var(--careers-scroll-ease);
+    transition-delay: 0s;
+  }
+  .careers-scroll-sec:not(.careers-scroll-sec--revealed) .careers-scroll-stage{
+    opacity: 0;
+    transform: translateY(32px);
+    pointer-events: none;
+  }
+  .careers-scroll-sec--revealed .careers-scroll-stage--lead{
+    transition-delay: var(--careers-scroll-stagger);
+  }
+  .careers-scroll-sec--revealed .careers-scroll-stage--body{
+    transition-delay: calc(var(--careers-scroll-stagger) * 2);
+  }
+  .careers-req.careers-req--scroll{
+    display: grid;
+    grid-template-columns: minmax(240px, 320px) 1fr;
+    gap: 48px 56px;
+    align-items: start;
+  }
+  .careers-req.careers-req--scroll > .careers-scroll-stage--title{
+    grid-column: 1 / -1;
+  }
+  .careers-req.careers-req--scroll > .careers-scroll-stage--lead{
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .careers-req.careers-req--scroll > .careers-scroll-stage--body{
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .careers-typewriter.careers-typewriter--caret::after{
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 0.72em;
+    margin-left: 3px;
+    background: #111;
+    vertical-align: -0.06em;
+    animation: careers-caret-blink 0.85s step-end infinite;
+  }
+  @keyframes careers-caret-blink{
+    0%, 100%{ opacity: 1; }
+    50%{ opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .careers-typewriter.careers-typewriter--caret::after{ animation: none; opacity: 1; }
+    .careers-step.is-process-active .careers-step-num{ animation: none; }
+    .careers-process-line--fill,
+    .careers-process-mobile-fill{ transition: none; }
+  }
+  /* 복리후생 그리드 — 아이콘 영역 비움 */
+  .careers-welfare-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 32px;
+  }
+  .careers-welfare-item{
+    text-align: center;
+    padding: 0;
+  }
+  .careers-welfare-card-inner{
+    padding: 16px 12px 14px;
+    border-radius: 20px;
+    transition:
+      transform 0.4s var(--welfare-bounce),
+      box-shadow 0.4s var(--welfare-bounce);
+  }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:hover .careers-welfare-card-inner,
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:focus-within .careers-welfare-card-inner{
+    transform: translateY(-10px);
+    box-shadow:
+      0 20px 44px rgba(0, 101, 250, 0.11),
+      0 10px 28px rgba(15, 40, 80, 0.08);
+  }
+  .careers-welfare-icon{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 18px;
+    border-radius: 0;
+    background: none;
+    border: none;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+  }
+  .careers-welfare-icon img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: all 0.4s var(--welfare-bounce);
+  }
+  /* 1 달력: 흔들림 + 날짜 영역 페이드 */
+  @keyframes welfare-cal-shake{
+    0%{ transform: rotate(0deg); }
+    25%{ transform: rotate(14deg); }
+    45%{ transform: rotate(-6deg); }
+    70%{ transform: rotate(8deg); }
+    100%{ transform: rotate(0deg); }
+  }
+  @keyframes welfare-cal-dates{
+    from{ opacity: 0; transform: translateY(6px) scale(0.96); }
+    to{ opacity: 1; transform: translateY(0) scale(1); }
+  }
+  [data-welfare="1"] .careers-welfare-icon img{
+    position: relative;
+    z-index: 0;
+  }
+  [data-welfare="1"] .careers-welfare-icon::before{
+    content: '';
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    top: 32%;
+    bottom: 36%;
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(0, 101, 250, 0.12), rgba(0, 101, 250, 0.28)),
+      repeating-linear-gradient(90deg, transparent 0, transparent 7px, rgba(0, 101, 250, 0.14) 7px, rgba(0, 101, 250, 0.14) 9px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="1"]:hover .careers-welfare-icon img,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="1"]:focus-within .careers-welfare-icon img{
+    animation: welfare-cal-shake 0.58s ease-out forwards;
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="1"]:hover .careers-welfare-icon::before,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="1"]:focus-within .careers-welfare-icon::before{
+    animation: welfare-cal-dates 0.45s ease-out 0.18s forwards;
+  }
+  /* 2 커피: 연기 SVG */
+  .careers-welfare-steam{
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    width: 44px;
+    height: 52px;
+    margin-left: -22px;
+    pointer-events: none;
+    overflow: visible;
+    opacity: 0;
+  }
+  .careers-welfare-steam path{
+    fill: none;
+    stroke: rgba(120, 130, 145, 0.45);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+  }
+  @keyframes welfare-steam-rise{
+    0%{ opacity: 0; transform: translateY(8px) scale(0.85); }
+    15%{ opacity: 0.95; }
+    100%{ opacity: 0; transform: translateY(-32px) scale(1.05); }
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="2"]:hover .careers-welfare-steam path:nth-child(1),
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="2"]:focus-within .careers-welfare-steam path:nth-child(1){
+    animation: welfare-steam-rise 1.35s ease-out infinite;
+    animation-delay: 0s;
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="2"]:hover .careers-welfare-steam path:nth-child(2),
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="2"]:focus-within .careers-welfare-steam path:nth-child(2){
+    animation: welfare-steam-rise 1.35s ease-out infinite;
+    animation-delay: 0.2s;
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="2"]:hover .careers-welfare-steam path:nth-child(3),
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="2"]:focus-within .careers-welfare-steam path:nth-child(3){
+    animation: welfare-steam-rise 1.35s ease-out infinite;
+    animation-delay: 0.4s;
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="2"]:hover .careers-welfare-steam,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="2"]:focus-within .careers-welfare-steam{
+    opacity: 1;
+  }
+  /* 3 케이크: 촛불 느낌 펄스 */
+  @keyframes welfare-cake-glow{
+    0%, 100%{
+      filter: drop-shadow(0 -3px 8px rgba(255, 190, 70, 0.65)) brightness(1.05);
+      transform: scale(1);
+    }
+    50%{
+      filter: drop-shadow(0 -6px 16px rgba(255, 220, 90, 0.95)) brightness(1.18);
+      transform: scale(1.07);
+    }
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="3"]:hover .careers-welfare-icon img,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="3"]:focus-within .careers-welfare-icon img{
+    animation: welfare-cake-glow 0.85s ease-in-out infinite;
+  }
+  /* 4 탁구: 빠른 이동 후 복귀 */
+  @keyframes welfare-paddle-hit{
+    0%{ transform: translateX(0); }
+    18%{ transform: translateX(11px); }
+    100%{ transform: translateX(0); }
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="4"]:hover .careers-welfare-icon img,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="4"]:focus-within .careers-welfare-icon img{
+    animation: welfare-paddle-hit 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  /* 5 선물: 위로 살짝 들림 */
+  @keyframes welfare-gift-lid{
+    0%{ transform: translateY(0) scale(1); }
+    45%{ transform: translateY(-7px) scale(1.02); }
+    100%{ transform: translateY(-5px) scale(1); }
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="5"]:hover .careers-welfare-icon img,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="5"]:focus-within .careers-welfare-icon img{
+    transform-origin: 50% 88%;
+    animation: welfare-gift-lid 0.5s var(--welfare-bounce) forwards;
+  }
+  /* 6 따봉: 두 번 까딱 */
+  @keyframes welfare-thumb-nod{
+    0%, 100%{ transform: rotate(0deg); }
+    15%{ transform: rotate(-14deg); }
+    30%{ transform: rotate(10deg); }
+    45%{ transform: rotate(-10deg); }
+    60%{ transform: rotate(8deg); }
+    75%{ transform: rotate(-4deg); }
+    90%{ transform: rotate(2deg); }
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="6"]:hover .careers-welfare-icon img,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="6"]:focus-within .careers-welfare-icon img{
+    transform-origin: 55% 100%;
+    animation: welfare-thumb-nod 0.65s ease-out forwards;
+  }
+  /* 7 도구: 교차 회전 */
+  @keyframes welfare-tools-cross{
+    0%, 100%{ transform: rotate(0deg); }
+    33%{ transform: rotate(-6deg); }
+    66%{ transform: rotate(6deg); }
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="7"]:hover .careers-welfare-icon img,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="7"]:focus-within .careers-welfare-icon img{
+    animation: welfare-tools-cross 0.55s ease-in-out infinite;
+  }
+  /* 8 캐리어: 좌우 기우뚱 */
+  @keyframes welfare-wiggle{
+    0%, 100%{ transform: rotate(0deg); }
+    20%{ transform: rotate(-4.5deg); }
+    40%{ transform: rotate(4.5deg); }
+    60%{ transform: rotate(-3deg); }
+    80%{ transform: rotate(3deg); }
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="8"]:hover .careers-welfare-icon img,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="8"]:focus-within .careers-welfare-icon img{
+    transform-origin: 50% 85%;
+    animation: welfare-wiggle 0.5s ease-in-out infinite;
+  }
+  /* 9 컵: 채워지는 레이어 */
+  [data-welfare="9"] .careers-welfare-icon::after{
+    content: '';
+    position: absolute;
+    left: 22%;
+    right: 22%;
+    bottom: 24%;
+    height: 0;
+    max-height: 42%;
+    border-radius: 0 0 14px 14px;
+    background: linear-gradient(180deg, rgba(0, 101, 250, 0.12), rgba(0, 101, 250, 0.35));
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    transform-origin: bottom center;
+  }
+  @keyframes welfare-cup-fill{
+    from{ height: 0; opacity: 0; transform: scaleY(0.3); }
+    40%{ opacity: 1; }
+    to{ height: 38%; opacity: 1; transform: scaleY(1); }
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="9"]:hover .careers-welfare-icon::after,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="9"]:focus-within .careers-welfare-icon::after{
+    animation: welfare-cup-fill 0.65s ease-out forwards;
+  }
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="9"]:hover .careers-welfare-icon img,
+  .careers-welfare-sec.careers-welfare--revealed [data-welfare="9"]:focus-within .careers-welfare-icon img{
+    position: relative;
+    z-index: 1;
+  }
+  .careers-welfare-item p{
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--careers-text);
+    line-height: 1.5;
+    min-height: 3em;
+    text-align: center;
+  }
+  /* Perks & Benefits: 첫 스크롤 + 섹션 진입 시 타이틀 스케일·페이드, 카드 팝 스태거 */
+  .careers-welfare-sec{
+    --welfare-title-dur: 0.72s;
+    --welfare-title-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .careers-welfare-title-stage{
+    transform-origin: 50% 40%;
+    will-change: transform, opacity;
+    transition:
+      transform var(--welfare-title-dur) var(--welfare-title-ease),
+      opacity calc(var(--welfare-title-dur) * 0.85) var(--welfare-title-ease);
+  }
+  .careers-welfare-lead-stage{
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.14s,
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.14s;
+  }
+  .careers-welfare-sec:not(.careers-welfare--revealed) .careers-welfare-title-stage{
+    opacity: 0;
+    transform: scale(1.2) translateY(36px);
+  }
+  .careers-welfare-sec:not(.careers-welfare--revealed) .careers-welfare-lead-stage{
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .careers-welfare-sec:not(.careers-welfare--revealed) .careers-welfare-item{
+    opacity: 0;
+    transform: scale(0.52) translateY(28px);
+    pointer-events: none;
+  }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item{
+    pointer-events: auto;
+    animation: careers-welfare-card-pop 0.58s cubic-bezier(0.34, 1.55, 0.52, 1) both;
+  }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:nth-child(1){ animation-delay: 0.06s; }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:nth-child(2){ animation-delay: 0.13s; }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:nth-child(3){ animation-delay: 0.2s; }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:nth-child(4){ animation-delay: 0.27s; }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:nth-child(5){ animation-delay: 0.34s; }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:nth-child(6){ animation-delay: 0.41s; }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:nth-child(7){ animation-delay: 0.48s; }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:nth-child(8){ animation-delay: 0.55s; }
+  .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:nth-child(9){ animation-delay: 0.62s; }
+  @keyframes careers-welfare-card-pop{
+    0%{ opacity: 0; transform: scale(0.52) translateY(28px); }
+    58%{ opacity: 1; transform: scale(1.09) translateY(-5px); }
+    100%{ opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .careers-welfare-sec .careers-welfare-title-stage,
+    .careers-welfare-sec .careers-welfare-lead-stage{
+      transition: none;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .careers-welfare-sec:not(.careers-welfare--revealed) .careers-welfare-item,
+    .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item{
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+      pointer-events: auto;
+    }
+    .careers-welfare-card-inner{
+      transition: none !important;
+    }
+    .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:hover .careers-welfare-card-inner,
+    .careers-welfare-sec.careers-welfare--revealed .careers-welfare-item:focus-within .careers-welfare-card-inner{
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    .careers-welfare-icon img{
+      transition: none !important;
+      animation: none !important;
+    }
+    .careers-welfare-steam path,
+    [data-welfare="1"] .careers-welfare-icon::before,
+    [data-welfare="9"] .careers-welfare-icon::after{
+      animation: none !important;
+    }
+    .careers-scroll-stage{
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      pointer-events: auto !important;
+    }
+  }
+  /* 인재상 풀폭 배너 (에셋: banner, baner_s01~03) */
+  .careers-visually-hidden{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .careers-talent-banner-full{
+    /* 전체 슬롯 높이(하단 위치 유지) — 파란 배경만 위에서 80px 덜 깔림 */
+    --careers-talent-banner-h: 300px;
+    --careers-talent-banner-bg-h: 220px;
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    box-sizing: border-box;
+    background: transparent;
+    color: #fff;
+    padding: 0;
+    height: var(--careers-talent-banner-h);
+    min-height: var(--careers-talent-banner-h);
+    max-height: var(--careers-talent-banner-h);
+    margin-bottom: 0;
+    box-shadow: 0 20px 48px rgba(0, 101, 250, 0.18);
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+  .careers-talent-banner-full::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    height: var(--careers-talent-banner-bg-h);
+    z-index: 0;
+    background: linear-gradient(
+      125deg,
+      #0065FA 0%,
+      #1a7cff 18%,
+      #0050CC 38%,
+      #0a4aa8 55%,
+      #24ACFF 72%,
+      #003d99 88%,
+      #0065FA 100%
+    );
+    background-size: 320% 320%;
+    animation: careers-talent-bg-flow 28s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes careers-talent-bg-flow{
+    0%, 100%{ background-position: 0% 40%; }
+    50%{ background-position: 100% 60%; }
+  }
+  .careers-talent-banner-inner{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+    padding: 0 clamp(16px, 4vw, 48px);
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: clamp(16px, 3vw, 40px);
+    align-items: end;
+  }
+  .careers-talent-banner-illus{
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-width: 0;
+  }
+  .careers-talent-banner-illus-float{
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    max-height: none;
+    animation: careers-talent-float 4.8s ease-in-out infinite;
+    will-change: transform;
+  }
+  @keyframes careers-talent-float{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-12px); }
+  }
+  .careers-talent-banner-bulb-glow{
+    position: absolute;
+    left: 50%;
+    top: 6%;
+    width: min(38%, 140px);
+    height: min(26%, 100px);
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse 100% 100% at 50% 45%,
+      rgba(255, 252, 220, 0.75) 0%,
+      rgba(255, 235, 150, 0.35) 35%,
+      rgba(255, 220, 120, 0.12) 55%,
+      transparent 72%
+    );
+    pointer-events: none;
+    z-index: 1;
+    animation: careers-talent-bulb-pulse 3.2s ease-in-out infinite;
+    mix-blend-mode: screen;
+  }
+  @keyframes careers-talent-bulb-pulse{
+    0%, 100%{ opacity: 0.45; transform: translateX(-50%) scale(1); filter: blur(0px); }
+    50%{ opacity: 0.95; transform: translateX(-50%) scale(1.08); filter: blur(0.5px); }
+  }
+  .careers-talent-banner-illus-float img{
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: 340px;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+  .careers-talent-banner-traits{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    align-self: center;
+    gap: clamp(10px, 2.5vw, 28px);
+    min-width: 0;
+    height: auto;
+    box-sizing: border-box;
+    padding: 0 4px 0 0;
+    margin-top: 15px;
+  }
+  .careers-talent-trait{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(10px, 1.5vw, 16px);
+    min-width: 0;
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  .careers-talent-banner--inview .careers-talent-trait{
+    animation: careers-talent-trait-in 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .careers-talent-banner--inview .careers-talent-trait:nth-child(1){ animation-delay: 0s; }
+  .careers-talent-banner--inview .careers-talent-trait:nth-child(2){ animation-delay: 0.2s; }
+  .careers-talent-banner--inview .careers-talent-trait:nth-child(3){ animation-delay: 0.4s; }
+  @keyframes careers-talent-trait-in{
+    from{
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to{
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .careers-talent-trait-icon{
+    width: clamp(72px, 10vw, 104px);
+    height: clamp(72px, 10vw, 104px);
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(168, 220, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    transform-origin: center center;
+    transition: box-shadow 0.35s ease;
+  }
+  .careers-talent-trait:hover .careers-talent-trait-icon{
+    animation: careers-talent-icon-hover-shake 0.42s ease-in-out infinite;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35), 0 12px 28px rgba(0, 40, 120, 0.35);
+  }
+  @keyframes careers-talent-icon-hover-shake{
+    0%, 100%{ transform: scale(1.2) rotate(0deg); }
+    20%{ transform: scale(1.2) rotate(-5deg); }
+    40%{ transform: scale(1.2) rotate(4deg); }
+    60%{ transform: scale(1.2) rotate(-3deg); }
+    80%{ transform: scale(1.2) rotate(2deg); }
+  }
+  .careers-talent-trait-icon img{
+    display: block;
+    width: 78%;
+    height: 78%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+  .careers-talent-trait-copy{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    color: #fff;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    text-align: left;
+    transition: color 0.35s ease, text-shadow 0.35s ease, filter 0.35s ease;
+  }
+  .careers-talent-trait:hover .careers-talent-trait-copy{
+    color: #f8fcff;
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 0.95),
+      0 0 40px rgba(180, 230, 255, 0.65),
+      0 0 64px rgba(120, 200, 255, 0.45);
+    filter: brightness(1.12);
+  }
+  .careers-talent-trait-line{
+    display: block;
+    white-space: nowrap;
+  }
+  @media (max-width: 1180px){
+    .careers-talent-trait-line{ white-space: normal; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .careers-talent-banner-full::before{
+      animation: none;
+      background: var(--careers-blue-banner);
+      background-size: 100% 100%;
+    }
+    .careers-talent-banner-illus-float{ animation: none !important; }
+    .careers-talent-banner-bulb-glow{ animation: none !important; opacity: 0.42; }
+    .careers-talent-trait{
+      opacity: 1;
+      transform: none;
+      animation: none !important;
+    }
+    .careers-talent-trait:hover .careers-talent-trait-icon{
+      animation: none !important;
+      transform: none;
+      box-shadow: none;
+    }
+    .careers-talent-trait:hover .careers-talent-trait-copy{
+      color: #fff;
+      text-shadow: none;
+      filter: none;
+    }
+  }
+  /* 채용절차 — 상단 여백은 .careers-sec-head padding-bottom 과 동일 */
+  .careers-process-wrap{
+    max-width: 920px;
+    margin: 0 auto;
+    --process-fill: 0;
+  }
+  .careers-process-mobile-rail{
+    display: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #e2e8f0;
+    margin: 0 0 26px;
+    overflow: hidden;
+  }
+  .careers-process-mobile-fill{
+    height: 100%;
+    width: 100%;
+    transform-origin: left center;
+    transform: scaleX(var(--process-fill));
+    background: linear-gradient(90deg, #0065FA, #24ACFF);
+    border-radius: inherit;
+    transition: transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .careers-process-outer{
+    position: relative;
+  }
+  .careers-process{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    padding: 12px 0 32px;
+    margin: 0;
+    padding-inline-start: 0;
+    list-style: none;
+  }
+  .careers-process-track{
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 42px;
+    height: 6px;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .careers-process-line--rail{
+    position: absolute;
+    inset: 0;
+    background: #d1d9e6;
+    border-radius: inherit;
+  }
+  .careers-process-line--fill{
+    position: absolute;
+    inset: 0;
+    transform-origin: left center;
+    transform: scaleX(var(--process-fill));
+    background: linear-gradient(90deg, #0065FA 0%, #24ACFF 100%);
+    border-radius: inherit;
+    box-shadow: 0 0 14px rgba(0, 101, 250, 0.4);
+    transition: transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .careers-step{
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    text-align: center;
+    max-width: 22%;
+    list-style: none;
+    transition: color 0.25s ease, filter 0.25s ease;
+  }
+  .careers-step-num{
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 21px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    border: 3px solid #c5ced9;
+    background: #fff;
+    color: var(--careers-text);
+    box-sizing: border-box;
+    transform-origin: center center;
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .careers-step.is-process-complete .careers-step-num,
+  .careers-step.is-process-active .careers-step-num{
+    background: var(--careers-blue);
+    border-color: var(--careers-blue);
+    color: #fff;
+    box-shadow: 0 9px 33px rgba(0, 101, 250, 0.32);
+  }
+  .careers-step.is-process-active .careers-step-num{
+    animation: careers-process-pulse 1.85s ease-in-out infinite;
+  }
+  .careers-step.is-process-active .careers-step-label{
+    color: var(--careers-blue);
+    font-weight: 800;
+    text-shadow: 0 0 36px rgba(0, 101, 250, 0.22);
+  }
+  @keyframes careers-process-pulse{
+    0%, 100%{
+      transform: scale(1);
+      box-shadow: 0 9px 33px rgba(0, 101, 250, 0.35);
+    }
+    50%{
+      transform: scale(1.09);
+      box-shadow: 0 18px 54px rgba(0, 101, 250, 0.55);
+    }
+  }
+  .careers-step-label{
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--careers-text);
+    line-height: 1.45;
+    transition: color 0.25s ease, font-weight 0.2s ease, text-shadow 0.25s ease;
+  }
+  .careers-process-note{
+    font-size: 13px;
+    color: var(--careers-muted);
+    line-height: 1.65;
+    margin: 28px 0 0;
+    text-align: center;
+  }
+  /* 모집요건 */
+  .careers-req{
+    display: grid;
+    grid-template-columns: minmax(240px, 320px) 1fr;
+    gap: 48px 56px;
+    align-items: start;
+  }
+  .careers-req-illus{
+    min-height: 280px;
+    border-radius: 16px;
+    background: #f4f6f9;
+    border: 1px solid #e8eaed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .careers-req-illus img{
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 320px;
+    object-fit: contain;
+    object-position: center bottom;
+    transform-origin: center bottom;
+  }
+  .careers-req-subtitle{
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--careers-blue);
+    margin: 0 0 28px;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+  }
+  .careers-req-block{ margin-bottom: 28px; }
+  .careers-req-block:last-child{ margin-bottom: 0; }
+  .careers-req-block h4{
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--careers-blue);
+    margin: 0 0 10px;
+  }
+  .careers-req-block p, .careers-req-block ul{
+    margin: 0;
+    font-size: 15px;
+    color: #4e5968;
+    line-height: 1.75;
+  }
+  .careers-req-block ul{ padding-left: 1.2em; }
+  .careers-req-block li{ margin-bottom: 6px; }
+  /* 모집분야 */
+  .careers-roles-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px 24px;
+    align-items: start;
+    justify-items: center;
+  }
+  .careers-role{
+    text-align: center;
+    margin: 0;
+    padding: 8px 6px 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    border-radius: 16px;
+    transition:
+      background var(--careers-tab-dur) var(--careers-tab-ease),
+      box-shadow var(--careers-tab-dur) var(--careers-tab-ease),
+      opacity var(--careers-tab-dur) var(--careers-tab-ease),
+      transform var(--careers-tab-dur) var(--careers-tab-ease);
+    width: 100%;
+    max-width: 160px;
+    justify-self: center;
+  }
+  .careers-roles-grid:has(.careers-role.is-selected) .careers-role:not(.is-selected){
+    opacity: 0.4;
+  }
+  .careers-role:focus-visible{
+    outline: 2px solid var(--careers-blue);
+    outline-offset: 3px;
+  }
+  .careers-role:hover{
+    background: rgba(0, 101, 250, 0.04);
+    transform: translateY(-5px);
+  }
+  .careers-role.is-selected:hover{
+    transform: translateY(-5px);
+  }
+  .careers-role.is-selected{
+    background: rgba(0, 101, 250, 0.08);
+  }
+  .careers-role-avatar{
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: #eef2f7;
+    border: 3px solid transparent;
+    box-sizing: border-box;
+    overflow: visible;
+    transition:
+      border-color var(--careers-tab-dur) var(--careers-tab-ease),
+      box-shadow var(--careers-tab-dur) var(--careers-tab-ease),
+      transform var(--careers-tab-dur) var(--careers-tab-ease);
+  }
+  .careers-role.is-selected .careers-role-avatar{
+    border-color: var(--careers-blue);
+    box-shadow: 0 8px 24px rgba(0, 101, 250, 0.22);
+    transform: scale(1.1);
+  }
+  .careers-role.is-selected:hover .careers-role-avatar{
+    transform: scale(1.1);
+  }
+  .careers-role-avatar img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform var(--careers-tab-dur) var(--careers-tab-ease);
+  }
+  /* 모집요건 패널 전환 (퇴장·입장 모두 keyframes — AnimatePresence 유사 교체, 중간 깜빡임 방지) */
+  .careers-req-panel{
+    will-change: opacity, transform;
+  }
+  @keyframes careers-req-panel-out{
+    from{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to{
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+  .careers-req-panel.careers-req-panel--out{
+    animation: careers-req-panel-out var(--careers-tab-dur) var(--careers-tab-ease) forwards;
+    pointer-events: none;
+  }
+  @keyframes careers-req-panel-in{
+    from{
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to{
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .careers-req-panel.careers-req-panel--in{
+    animation: careers-req-panel-in var(--careers-tab-dur) var(--careers-tab-ease) forwards;
+  }
+  /* 퇴장 직후·입장 직전: 깜빡임 없이 opacity 유지 */
+  .careers-req-panel.careers-req-panel--swap{
+    opacity: 0;
+    transform: translateY(18px);
+    animation: none;
+    pointer-events: none;
+  }
+  @keyframes careers-req-illus-bounce{
+    0%{ transform: translateY(0) scale(1) rotate(0deg); }
+    30%{ transform: translateY(-4px) scale(1.03) rotate(-2.2deg); }
+    55%{ transform: translateY(2px) scale(0.99) rotate(1.5deg); }
+    80%{ transform: translateY(-2px) scale(1.01) rotate(-0.6deg); }
+    100%{ transform: translateY(0) scale(1) rotate(0deg); }
+  }
+  .careers-req-illus img.careers-req-illus--bounce{
+    animation: careers-req-illus-bounce calc(var(--careers-tab-dur) + 0.08s) var(--careers-tab-ease) forwards;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .careers-role,
+    .careers-role-avatar,
+    .careers-role-avatar img{
+      transition-duration: 0.01ms !important;
+    }
+    .careers-role:hover,
+    .careers-role.is-selected:hover{
+      transform: none;
+    }
+    .careers-role.is-selected .careers-role-avatar{
+      transform: none;
+    }
+    .careers-req-panel.careers-req-panel--out,
+    .careers-req-panel.careers-req-panel--in{
+      animation: none !important;
+    }
+    .careers-req-panel.careers-req-panel--swap{
+      opacity: 1;
+      transform: none;
+    }
+    .careers-req-illus img.careers-req-illus--bounce{
+      animation: none !important;
+    }
+  }
+  .careers-role .careers-role-label{
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--careers-text);
+  }
+  /* CTA — 상단 구분선·여백은 .careers-sec + .careers-cta 에서 사업영역과 동일하게 처리 */
+  .careers-cta{
+    text-align: center;
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  /* 랜딩(bdgen_landing.html) .btn + .btn-outline 과 동일 규격·물결 채움 인터랙션 */
+  .careers-cta .careers-cta-btn.btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 300px;
+    height: 58px;
+    min-width: 300px;
+    min-height: 58px;
+    padding: 0 24px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: color 0.35s ease, border-color 0.35s ease, transform 0.3s ease;
+  }
+  .careers-cta .careers-cta-btn.btn.btn-outline{
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    border: 1.5px solid #0065FA;
+    color: #0065FA;
+    background: transparent;
+  }
+  .careers-cta .careers-cta-btn.btn.btn-outline::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    background: #0065FA;
+    border-radius: inherit;
+    z-index: -1;
+    transform: scaleY(0);
+    transform-origin: bottom center;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .careers-cta .careers-cta-btn.btn.btn-outline:hover{
+    color: #fff;
+    border-color: #0065FA;
+    transform: translateY(-2px);
+  }
+  .careers-cta .careers-cta-btn.btn.btn-outline:hover::before{
+    transform: scaleY(1);
+  }
+  .careers-cta .careers-cta-btn.btn.btn-outline > *{
+    position: relative;
+    z-index: 1;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .careers-cta .careers-cta-btn.btn.btn-outline,
+    .careers-cta .careers-cta-btn.btn.btn-outline::before{
+      transition-duration: 0.01ms;
+    }
+    .careers-cta .careers-cta-btn.btn.btn-outline:hover{
+      transform: none;
+      color: #fff;
+    }
+    .careers-cta .careers-cta-btn.btn.btn-outline:hover::before{
+      transform: scaleY(1);
+    }
+  }
+  .careers-cta-arrow{
+    font-weight: 400;
+    letter-spacing: 0;
+    opacity: 0.95;
+  }
+  .careers-cta-external{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 48px 64px;
+    margin-top: 56px;
+  }
+  .careers-cta-external a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 140px;
+    text-decoration: none;
+    color: var(--careers-text);
+    transition: opacity 0.2s ease;
+  }
+  .careers-cta-external a:hover{ opacity: 0.82; }
+  .careers-cta-external-icon{
+    width: 88px;
+    height: 88px;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid #e5e8ec;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  }
+  .careers-cta-external-icon img{
+    display: block;
+    width: 72%;
+    height: 72%;
+    object-fit: contain;
+  }
+  .careers-cta-external-label{
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.45;
+    color: #111;
+  }
+  .careers-cta-notice{
+    margin-top: 48px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 8px;
+    font-size: 16px;
+    color: var(--careers-muted);
+    line-height: 1.8;
+    text-align: center;
+  }
+  .careers-cta-notice-contact{
+    color: var(--careers-blue);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .careers-cta-notice-contact:hover{
+    border-bottom-color: var(--careers-blue);
+  }
+  @media (max-width: 1023px){
+    .hero-inner{ padding: 48px 24px 50px; }
+    .sub-nav{ overflow-x: auto; }
+    .careers-welfare-grid{ grid-template-columns: repeat(2, 1fr); }
+    .careers-talent-banner-full{
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      padding: 20px 0;
+    }
+    .careers-talent-banner-full::before{
+      inset: 0;
+      top: 0;
+      bottom: 0;
+      height: auto;
+      min-height: 100%;
+    }
+    .careers-sec + .careers-talent-banner-full{
+      padding-top: clamp(48px, 10vw, 88px);
+    }
+    .careers-sec + .careers-talent-banner-full .careers-talent-banner-inner{
+      height: auto;
+      min-height: 0;
+    }
+    .careers-talent-banner-inner{
+      grid-template-columns: 1fr;
+      gap: 16px;
+      height: auto;
+      min-height: 0;
+      align-items: center;
+    }
+    .careers-talent-banner-illus{
+      height: auto;
+      max-height: 200px;
+      align-items: center;
+    }
+    .careers-talent-banner-illus img{ max-height: 200px; }
+    .careers-talent-banner-traits{
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      height: auto;
+      max-height: none;
+      padding: 0;
+      gap: 18px;
+    }
+    .careers-talent-trait{ gap: 16px; }
+    .careers-talent-trait-icon{
+      width: clamp(72px, 18vw, 96px);
+      height: clamp(72px, 18vw, 96px);
+    }
+    .careers-talent-trait-copy{
+      font-size: 26px;
+      line-height: 1.3;
+    }
+    .careers-talent-trait-line{ white-space: normal; }
+    .careers-process{ flex-wrap: wrap; gap: 36px 24px; justify-content: center; }
+    .careers-process-track{ display: none; }
+    .careers-process-mobile-rail{ display: block; }
+    .careers-step{ max-width: 45%; flex: 0 0 42%; }
+    .careers-req{ grid-template-columns: 1fr; }
+    .careers-req.careers-req--scroll > .careers-scroll-stage--title{ grid-column: 1; }
+    .careers-req.careers-req--scroll > .careers-scroll-stage--lead{
+      grid-column: 1;
+      grid-row: auto;
+    }
+    .careers-req.careers-req--scroll > .careers-scroll-stage--body{
+      grid-column: 1;
+      grid-row: auto;
+    }
+    .careers-req-illus{ min-height: 200px; max-width: 280px; margin: 0 auto; }
+    .careers-roles-grid{ grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 720px){
+    .careers-roles-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px){
+    .careers-welfare-grid{ grid-template-columns: 1fr; }
+    .careers-step{ flex: 0 0 100%; max-width: 100%; }
+    .careers-roles-grid{ grid-template-columns: 1fr; }
+    .careers-cta .careers-cta-btn.btn{
+      width: 100%;
+      min-width: 0;
+      height: 58px;
+      min-height: 58px;
+      padding: 12px 20px;
+      font-size: 0.9rem;
+    }
+  }
 </style>
 </head>
 <body class="bdgen-subpage">
@@ -118,12 +1417,15 @@
   </div>
 </div>
 <main class="page-main">
-  <div class="page-hero">
+  <div class="page-hero page-hero--light">
     <div class="hero-inner">
       <h1 class="hero-title" data-i18n="hero-title">채용</h1>
       <p class="hero-desc" data-i18n="hero-desc">함께 성장할 인재를 찾습니다.</p>
     </div>
     <div class="sub-nav section-inner" aria-label="채용 서브 메뉴">
+      <div class="sub-nav-links">
+        <a href="careers.html" class="active" aria-current="page" data-i18n="sub-nav-1">채용</a>
+      </div>
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../bdgen_landing.html"><svg class="home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> HOME</a>
         <span class="sep">&gt;</span>
@@ -135,10 +1437,233 @@
   </div>
   <section class="bdgen-white-presentation">
     <div class="inner-container">
-      <header class="hero-section">
-        <h2 class="main-title" data-i18n="main-title">채용</h2>
-        <p class="hero-desc" data-i18n="main-desc">콘텐츠 준비 중입니다.</p>
-      </header>
+      <section class="careers-sec careers-welfare-sec" id="careers-welfare" aria-labelledby="careers-welfare-title">
+        <header class="careers-sec-head">
+          <div class="careers-welfare-title-stage">
+            <h2 id="careers-welfare-title" class="careers-sec-title"><span data-i18n="careers-welfare-title">Perks &amp; Benefits</span></h2>
+          </div>
+          <p class="careers-sec-lead careers-welfare-lead-stage" data-i18n="careers-welfare-lead">일하기 좋은 환경, 비디젠이 만들어 갑니다</p>
+        </header>
+        <div class="careers-welfare-grid">
+          <div class="careers-welfare-item" data-welfare="1">
+            <div class="careers-welfare-card-inner">
+              <div class="careers-welfare-icon" aria-hidden="true"><img src="../assets/benef_01.png" alt="" width="100" height="100" loading="lazy" decoding="async"/></div>
+              <p data-i18n="careers-w1" data-i18n-html="true">탄력근무제 및<br>자유로운 연차</p>
+            </div>
+          </div>
+          <div class="careers-welfare-item" data-welfare="2">
+            <div class="careers-welfare-card-inner">
+              <div class="careers-welfare-icon" aria-hidden="true">
+                <img src="../assets/benef_02.png" alt="" width="100" height="100" loading="lazy" decoding="async"/>
+                <svg class="careers-welfare-steam" viewBox="0 0 44 52" width="44" height="52" aria-hidden="true" focusable="false">
+                  <path d="M12 50 Q8 38 11 24"/>
+                  <path d="M22 50 Q18 35 22 22"/>
+                  <path d="M32 50 Q28 38 31 24"/>
+                </svg>
+              </div>
+              <p data-i18n="careers-w2" data-i18n-html="true">음료 지원 및<br>커피머신 보유</p>
+            </div>
+          </div>
+          <div class="careers-welfare-item" data-welfare="3">
+            <div class="careers-welfare-card-inner">
+              <div class="careers-welfare-icon" aria-hidden="true"><img src="../assets/benef_03.png" alt="" width="100" height="100" loading="lazy" decoding="async"/></div>
+              <p data-i18n="careers-w3" data-i18n-html="true">생일자<br>기프티콘 지원</p>
+            </div>
+          </div>
+          <div class="careers-welfare-item" data-welfare="4">
+            <div class="careers-welfare-card-inner">
+              <div class="careers-welfare-icon" aria-hidden="true"><img src="../assets/benef_04.png" alt="" width="100" height="100" loading="lazy" decoding="async"/></div>
+              <p data-i18n="careers-w4" data-i18n-html="true">사내 동호회<br>지원</p>
+            </div>
+          </div>
+          <div class="careers-welfare-item" data-welfare="5">
+            <div class="careers-welfare-card-inner">
+              <div class="careers-welfare-icon" aria-hidden="true"><img src="../assets/benef_05.png" alt="" width="100" height="100" loading="lazy" decoding="async"/></div>
+              <p data-i18n="careers-w5" data-i18n-html="true">복지포인트<br>지원</p>
+            </div>
+          </div>
+          <div class="careers-welfare-item" data-welfare="6">
+            <div class="careers-welfare-card-inner">
+              <div class="careers-welfare-icon" aria-hidden="true"><img src="../assets/benef_06.png" alt="" width="100" height="100" loading="lazy" decoding="async"/></div>
+              <p data-i18n="careers-w6" data-i18n-html="true">인재 추천<br>포상금 운영</p>
+            </div>
+          </div>
+          <div class="careers-welfare-item" data-welfare="7">
+            <div class="careers-welfare-card-inner">
+              <div class="careers-welfare-icon" aria-hidden="true"><img src="../assets/benef_07.png" alt="" width="100" height="100" loading="lazy" decoding="async"/></div>
+              <p data-i18n="careers-w7" data-i18n-html="true">업무 능력 개발<br>비용 지원</p>
+            </div>
+          </div>
+          <div class="careers-welfare-item" data-welfare="8">
+            <div class="careers-welfare-card-inner">
+              <div class="careers-welfare-icon" aria-hidden="true"><img src="../assets/benef_08.png" alt="" width="100" height="100" loading="lazy" decoding="async"/></div>
+              <p data-i18n="careers-w8" data-i18n-html="true">근로자 휴가지원<br>사업 참여</p>
+            </div>
+          </div>
+          <div class="careers-welfare-item" data-welfare="9">
+            <div class="careers-welfare-card-inner">
+              <div class="careers-welfare-icon" aria-hidden="true"><img src="../assets/benef_09.png" alt="" width="100" height="100" loading="lazy" decoding="async"/></div>
+              <p data-i18n="careers-w9" data-i18n-html="true">청년내일채움공제<br>(대상자에 한함)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="careers-talent-banner-full" aria-labelledby="careers-talent-banner-heading">
+        <h2 id="careers-talent-banner-heading" class="careers-visually-hidden" data-i18n="careers-msg-title">새로운 세상을 상상하고 함께 도전할 당신을 기다립니다.</h2>
+        <p class="careers-visually-hidden" data-i18n="careers-msg-sub">BDGen은 새로운 기술과 서비스에 끊임없이 호기심을 가지고 도전하는 사람들의 모임입니다.</p>
+        <div class="careers-talent-banner-inner">
+          <div class="careers-talent-banner-illus">
+            <div class="careers-talent-banner-illus-float">
+              <span class="careers-talent-banner-bulb-glow" aria-hidden="true"></span>
+              <img src="../assets/banner.png" alt="" width="600" height="292" loading="lazy" decoding="async"/>
+            </div>
+          </div>
+          <div class="careers-talent-banner-traits" role="list">
+            <div class="careers-talent-trait" role="listitem">
+              <div class="careers-talent-trait-icon" aria-hidden="true">
+                <img src="../assets/baner_s01.png" alt="" width="80" height="80" loading="lazy" decoding="async"/>
+              </div>
+              <div class="careers-talent-trait-copy">
+                <span class="careers-talent-trait-line" data-i18n="careers-banner-t1-l1">능동적이고</span>
+                <span class="careers-talent-trait-line" data-i18n="careers-banner-t1-l2">열정적인 분</span>
+              </div>
+            </div>
+            <div class="careers-talent-trait" role="listitem">
+              <div class="careers-talent-trait-icon" aria-hidden="true">
+                <img src="../assets/baner_s02.png" alt="" width="80" height="80" loading="lazy" decoding="async"/>
+              </div>
+              <div class="careers-talent-trait-copy">
+                <span class="careers-talent-trait-line" data-i18n="careers-banner-t2-l1">긍정적이고</span>
+                <span class="careers-talent-trait-line" data-i18n="careers-banner-t2-l2">협조적인 분</span>
+              </div>
+            </div>
+            <div class="careers-talent-trait" role="listitem">
+              <div class="careers-talent-trait-icon" aria-hidden="true">
+                <img src="../assets/baner_s03.png" alt="" width="80" height="80" loading="lazy" decoding="async"/>
+              </div>
+              <div class="careers-talent-trait-copy">
+                <span class="careers-talent-trait-line" data-i18n="careers-banner-t3-l1">자기주도적이고</span>
+                <span class="careers-talent-trait-line" data-i18n="careers-banner-t3-l2">배려있는 분</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="careers-sec careers-scroll-sec" id="careers-process" aria-labelledby="careers-process-title">
+        <header class="careers-sec-head">
+          <div class="careers-scroll-stage careers-scroll-stage--title">
+            <h2 id="careers-process-title" class="careers-sec-title"><span class="careers-typewriter" data-i18n="careers-process-title">Hiring Process</span></h2>
+          </div>
+          <div class="careers-scroll-stage careers-scroll-stage--lead">
+            <p class="careers-sec-lead" data-i18n="careers-process-lead">지원부터 최종합격까지 4단계로 진행됩니다</p>
+          </div>
+        </header>
+        <div class="careers-scroll-stage careers-scroll-stage--body">
+          <div class="careers-process-wrap">
+            <div class="careers-process-mobile-rail" aria-hidden="true"><div class="careers-process-mobile-fill"></div></div>
+            <div class="careers-process-outer">
+              <div class="careers-process-track" aria-hidden="true">
+                <div class="careers-process-line--rail"></div>
+                <div class="careers-process-line--fill"></div>
+              </div>
+              <ol class="careers-process" aria-label="채용 단계">
+                <li class="careers-step" data-careers-step="1">
+                  <div class="careers-step-num">01</div>
+                  <div class="careers-step-label" data-i18n="careers-step1">서류전형</div>
+                </li>
+                <li class="careers-step" data-careers-step="2">
+                  <div class="careers-step-num">02</div>
+                  <div class="careers-step-label" data-i18n="careers-step2">실무면접</div>
+                </li>
+                <li class="careers-step" data-careers-step="3">
+                  <div class="careers-step-num">03</div>
+                  <div class="careers-step-label" data-i18n="careers-step3">합격통보</div>
+                </li>
+                <li class="careers-step" data-careers-step="4">
+                  <div class="careers-step-num">04</div>
+                  <div class="careers-step-label" data-i18n="careers-step4">처우협의 및 입사</div>
+                </li>
+              </ol>
+            </div>
+            <p class="careers-process-note" data-i18n="careers-process-note">채용 절차 및 일정은 포지션에 따라 상이할 수 있으며, 인턴십 기간이 포함될 수 있습니다. 자세한 사항은 개별 안내를 참고해 주세요.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="careers-sec careers-scroll-sec" id="careers-roles" aria-labelledby="careers-roles-title">
+        <header class="careers-sec-head">
+          <div class="careers-scroll-stage careers-scroll-stage--title">
+            <h2 id="careers-roles-title" class="careers-sec-title"><span class="careers-typewriter" data-i18n="careers-roles-title">Open Positions</span></h2>
+          </div>
+          <div class="careers-scroll-stage careers-scroll-stage--lead">
+            <p class="careers-sec-lead" data-i18n="careers-roles-lead">아래 분야에 지원하실 수 있습니다</p>
+          </div>
+        </header>
+        <div class="careers-scroll-stage careers-scroll-stage--body">
+        <div class="careers-roles-grid" role="group" aria-label="모집 분야 선택">
+          <button type="button" class="careers-role" data-careers-role="fe" aria-pressed="false" id="careersRoleFe">
+            <span class="careers-role-avatar" aria-hidden="true"><img src="../assets/front.png" alt="" width="120" height="120" loading="lazy" decoding="async"/></span>
+            <span class="careers-role-label" data-i18n="careers-role-fe">프론트엔드 개발자</span>
+          </button>
+          <button type="button" class="careers-role" data-careers-role="be" aria-pressed="false" id="careersRoleBe">
+            <span class="careers-role-avatar" aria-hidden="true"><img src="../assets/back.png" alt="" width="120" height="120" loading="lazy" decoding="async"/></span>
+            <span class="careers-role-label" data-i18n="careers-role-be">백엔드 개발자</span>
+          </button>
+          <button type="button" class="careers-role" data-careers-role="and" aria-pressed="false" id="careersRoleAnd">
+            <span class="careers-role-avatar" aria-hidden="true"><img src="../assets/andro.png" alt="" width="120" height="120" loading="lazy" decoding="async"/></span>
+            <span class="careers-role-label" data-i18n="careers-role-and">안드로이드 개발자</span>
+          </button>
+          <button type="button" class="careers-role" data-careers-role="ios" aria-pressed="false" id="careersRoleIos">
+            <span class="careers-role-avatar" aria-hidden="true"><img src="../assets/ios.png" alt="" width="120" height="120" loading="lazy" decoding="async"/></span>
+            <span class="careers-role-label" data-i18n="careers-role-ios">iOS 개발자</span>
+          </button>
+        </div>
+        </div>
+      </section>
+
+      <section class="careers-sec careers-scroll-sec" id="careers-requirements" aria-labelledby="careersReqSubtitle">
+        <div class="careers-req careers-req--scroll">
+          <p id="careersReqSubtitle" class="careers-req-subtitle careers-scroll-stage careers-scroll-stage--title" data-i18n="careers-role-common">공통 분야</p>
+          <div class="careers-req-illus careers-scroll-stage careers-scroll-stage--lead">
+            <img id="careersReqIllus" src="../assets/all_ai.png" alt="" width="400" height="320" loading="lazy" decoding="async"/>
+          </div>
+          <div class="careers-req-body careers-scroll-stage careers-scroll-stage--body">
+            <div class="careers-req-panel" id="careersReqPanel">
+              <div class="careers-req-block">
+                <h4 id="careersReqMustH" data-i18n="careers-req-common-must-h">1. 공통 자격요건</h4>
+                <ul id="careersReqMustList" class="careers-req-list"></ul>
+              </div>
+              <div class="careers-req-block">
+                <h4 id="careersReqPrefH" data-i18n="careers-req-common-pref-h">2. 우대 사항</h4>
+                <ul id="careersReqPrefList" class="careers-req-list"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="careers-cta careers-scroll-sec">
+        <div class="careers-scroll-stage careers-scroll-stage--title">
+          <a href="#" class="btn btn-outline careers-cta-btn"><span data-i18n="careers-cta-text">지원서 작성하러 가기</span><span class="careers-cta-arrow" aria-hidden="true">→</span></a>
+        </div>
+        <div class="careers-scroll-stage careers-scroll-stage--lead">
+          <div class="careers-cta-external">
+            <a href="#" data-i18n-title="careers-link-saramin-title" title="사람인 기업 채용 페이지 URL 연결 예정">
+              <span class="careers-cta-external-icon" aria-hidden="true"><img src="../assets/saram.png" alt="" width="64" height="64" loading="lazy" decoding="async"/></span>
+              <span class="careers-cta-external-label" data-i18n="careers-link-saramin">사람인 지원하기</span>
+            </a>
+            <a href="#" data-i18n-title="careers-link-jobkorea-title" title="잡코리아 기업 채용 페이지 URL 연결 예정">
+              <span class="careers-cta-external-icon" aria-hidden="true"><img src="../assets/jab.png" alt="" width="64" height="64" loading="lazy" decoding="async"/></span>
+              <span class="careers-cta-external-label" data-i18n="careers-link-jobkorea">잡코리아 지원하기</span>
+            </a>
+          </div>
+        </div>
+        <div class="careers-scroll-stage careers-scroll-stage--body">
+          <div class="careers-cta-notice" data-i18n="careers-cta-notice" data-i18n-html="true"></div>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -216,7 +1741,7 @@
 <script src="bdgen-interactions.js"></script>
 <script>
 (function(){
-  var gnb=document.getElementById('gnb'), backTop=document.getElementById('backTop');
+  var gnb=document.getElementById('gnb');
   var lastY=0;
   window.addEventListener('scroll',function(){
     var y=window.scrollY;
@@ -226,9 +1751,7 @@
       else if(y<50||y<lastY) gnb.classList.remove('gnb-hidden');
     }
     lastY=y;
-    if(backTop) backTop.classList.toggle('visible',y>400);
   },{passive:true});
-  if(backTop)backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
 })();
 (function(){
   var sw=document.querySelector('.lang-switcher'), trigger=document.querySelector('.lang-switcher-trigger'), dropdown=document.querySelector('.lang-dropdown');
@@ -253,6 +1776,449 @@
   if(!trigger||!list)return;
   trigger.addEventListener('click',function(e){e.stopPropagation(); var isOpen=wrap.classList.toggle('open'); trigger.setAttribute('aria-expanded',isOpen);});
   document.addEventListener('click',function(){wrap.classList.remove('open'); trigger.setAttribute('aria-expanded','false');});
+})();
+(function(){
+  /* 모집요건 좌측 대형 일러스트만 illusLarge (all_ai, *_01). 모집분야 원형은 별도 파일 front/back/andro/ios.png */
+  var ROLE_CFG={
+    common:{ illusLarge:'../assets/all_ai.png', titleKey:'careers-role-common', must:['careers-req-cm-m1','careers-req-cm-m2'], pref:['careers-req-cm-p1','careers-req-cm-p2'] },
+    fe:{ illusLarge:'../assets/front_01.png', titleKey:'careers-role-fe', must:['careers-req-fe-m1','careers-req-fe-m2','careers-req-fe-m3'], pref:['careers-req-fe-p1','careers-req-fe-p2'] },
+    be:{ illusLarge:'../assets/back_01.png', titleKey:'careers-role-be', must:['careers-req-be-m1','careers-req-be-m2','careers-req-be-m3','careers-req-be-m4','careers-req-be-m5','careers-req-be-m6'], pref:['careers-req-be-p1','careers-req-be-p2','careers-req-be-p3','careers-req-be-p4'] },
+    and:{ illusLarge:'../assets/andro_01.png', titleKey:'careers-role-and', must:['careers-req-and-m1','careers-req-and-m2','careers-req-and-m3','careers-req-and-m4'], pref:['careers-req-and-p1','careers-req-and-p2'] },
+    ios:{ illusLarge:'../assets/ios_01.png', titleKey:'careers-role-ios', must:['careers-req-ios-m1','careers-req-ios-m2','careers-req-ios-m3'], pref:['careers-req-ios-p1'] }
+  };
+  var mustEl=document.getElementById('careersReqMustList');
+  var prefEl=document.getElementById('careersReqPrefList');
+  var illus=document.getElementById('careersReqIllus');
+  var subtitle=document.getElementById('careersReqSubtitle');
+  var mustH=document.getElementById('careersReqMustH');
+  var prefH=document.getElementById('careersReqPrefH');
+  var panel=document.getElementById('careersReqPanel');
+  var buttons=document.querySelectorAll('[data-careers-role]');
+  if(!mustEl||!prefEl||!illus||!subtitle||!mustH||!prefH||!buttons.length)return;
+
+  var reducedMotion=typeof window.matchMedia==='function'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var switchToken=0;
+  var lastRoleId='';
+
+  function fillList(ul, keys){
+    ul.innerHTML='';
+    keys.forEach(function(k){
+      var li=document.createElement('li');
+      li.setAttribute('data-i18n',k);
+      ul.appendChild(li);
+    });
+  }
+
+  function updateTabSelection(roleId){
+    buttons.forEach(function(btn){
+      var on=roleId!=='common'&&btn.getAttribute('data-careers-role')===roleId;
+      btn.classList.toggle('is-selected',on);
+      btn.setAttribute('aria-pressed',on?'true':'false');
+    });
+  }
+
+  function applyRoleContent(roleId){
+    var cfg=ROLE_CFG[roleId];
+    if(!cfg)return;
+    illus.src=cfg.illusLarge;
+    illus.alt='';
+    subtitle.setAttribute('data-i18n',cfg.titleKey);
+    if(roleId==='common'){
+      mustH.setAttribute('data-i18n','careers-req-common-must-h');
+      prefH.setAttribute('data-i18n','careers-req-common-pref-h');
+    }else{
+      mustH.setAttribute('data-i18n','careers-req-must-h');
+      prefH.setAttribute('data-i18n','careers-req-pref-h');
+    }
+    fillList(mustEl,cfg.must);
+    fillList(prefEl,cfg.pref);
+    if(typeof window.applySubpageContent==='function'){
+      window.applySubpageContent(localStorage.getItem('bdgen-lang')||'ko');
+    }
+    var activeBtn=document.querySelector('[data-careers-role="'+roleId+'"] .careers-role-label');
+    if(activeBtn&&activeBtn.textContent) illus.alt=activeBtn.textContent.trim();
+    else if(subtitle&&subtitle.textContent) illus.alt=subtitle.textContent.trim();
+  }
+
+  function triggerIllusBounce(){
+    illus.classList.remove('careers-req-illus--bounce');
+    if(reducedMotion)return;
+    void illus.offsetWidth;
+    illus.classList.add('careers-req-illus--bounce');
+  }
+
+  function onIllusLoadOnce(fn){
+    if(reducedMotion){ fn(); return; }
+    var done=false;
+    function finish(){
+      if(done)return;
+      done=true;
+      illus.removeEventListener('load', finish);
+      illus.removeEventListener('error', finish);
+      fn();
+    }
+    illus.addEventListener('load', finish);
+    illus.addEventListener('error', finish);
+    if(illus.complete) window.requestAnimationFrame(finish);
+  }
+
+  function setRole(roleId, opts){
+    opts=opts||{};
+    var cfg=ROLE_CFG[roleId];
+    if(!cfg)return;
+    var animate=!!opts.animate&&!reducedMotion&&panel&&roleId!=='common';
+    if(roleId===lastRoleId&&opts.animate)return;
+    updateTabSelection(roleId);
+    if(!animate){
+      switchToken++;
+      lastRoleId=roleId;
+      applyRoleContent(roleId);
+      illus.classList.remove('careers-req-illus--bounce');
+      if(panel){
+        panel.classList.remove('careers-req-panel--out','careers-req-panel--in','careers-req-panel--swap');
+      }
+      return;
+    }
+    lastRoleId=roleId;
+    var myToken=++switchToken;
+    panel.classList.remove('careers-req-panel--in');
+    panel.classList.add('careers-req-panel--out');
+
+    function afterOut(){
+      if(myToken!==switchToken)return;
+      applyRoleContent(roleId);
+      panel.classList.remove('careers-req-panel--out');
+      panel.classList.add('careers-req-panel--swap');
+      window.requestAnimationFrame(function(){
+        if(myToken!==switchToken)return;
+        panel.classList.remove('careers-req-panel--swap');
+        panel.classList.add('careers-req-panel--in');
+      });
+      function afterIn(e){
+        if(e.target!==panel||e.animationName!=='careers-req-panel-in')return;
+        panel.removeEventListener('animationend', afterIn);
+        panel.classList.remove('careers-req-panel--in');
+      }
+      panel.addEventListener('animationend', afterIn);
+      onIllusLoadOnce(triggerIllusBounce);
+    }
+
+    var outEnded=false;
+    function onAnimEnd(e){
+      if(e.target!==panel||e.animationName!=='careers-req-panel-out')return;
+      if(outEnded)return;
+      outEnded=true;
+      panel.removeEventListener('animationend', onAnimEnd);
+      afterOut();
+    }
+    panel.addEventListener('animationend', onAnimEnd);
+    window.setTimeout(function(){
+      if(myToken!==switchToken||outEnded)return;
+      outEnded=true;
+      panel.removeEventListener('animationend', onAnimEnd);
+      afterOut();
+    }, 550);
+  }
+
+  buttons.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      setRole(btn.getAttribute('data-careers-role'), { animate: true });
+    });
+  });
+
+  document.addEventListener('bdgen:subpage-language-applied',function(){
+    var sel=document.querySelector('.careers-role.is-selected');
+    if(sel) illus.alt=(sel.querySelector('.careers-role-label')||{}).textContent||'';
+    else if(subtitle) illus.alt=(subtitle.textContent||'').trim();
+  });
+
+  setRole('common', { animate: false });
+})();
+(function initCareersWelfareScrollReveal(){
+  var sec = document.getElementById('careers-welfare');
+  if (!sec || !sec.classList.contains('careers-welfare-sec')) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) {
+    sec.classList.add('careers-welfare--revealed');
+    return;
+  }
+  var done = false;
+  var userStartedScrollDown = false;
+  var inView = false;
+  var lastWheelMag = 72;
+  var lastScrollY = window.scrollY || 0;
+
+  function applyWheelToDuration(){
+    var d = Math.max(40, Math.min(lastWheelMag, 240));
+    var dur = 0.5 + d / 900;
+    sec.style.setProperty('--welfare-title-dur', dur.toFixed(3) + 's');
+  }
+
+  function reveal(){
+    if (done) return;
+    done = true;
+    applyWheelToDuration();
+    sec.classList.add('careers-welfare--revealed');
+  }
+
+  function tryReveal(){
+    if (done) return;
+    if (userStartedScrollDown && inView) reveal();
+  }
+
+  window.addEventListener('wheel', function(e){
+    if (done) return;
+    if (e.deltaY > 1) {
+      userStartedScrollDown = true;
+      lastWheelMag = Math.min(240, Math.abs(e.deltaY));
+      tryReveal();
+    }
+  }, { passive: true });
+
+  window.addEventListener('scroll', function(){
+    if (done) return;
+    var y = window.scrollY;
+    if (y > lastScrollY + 3) {
+      userStartedScrollDown = true;
+      tryReveal();
+    }
+    lastScrollY = y;
+  }, { passive: true });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      inView = entry.isIntersecting && entry.intersectionRatio > 0.05;
+      tryReveal();
+    });
+  }, { threshold: [0, 0.05, 0.1, 0.2], rootMargin: '0px 0px 10% 0px' });
+  io.observe(sec);
+})();
+(function initCareersProcessPulse(){
+  var sec = document.getElementById('careers-process');
+  var wrap = sec ? sec.querySelector('.careers-process-wrap') : null;
+  if (!sec || !wrap) return;
+  var steps = sec.querySelectorAll('.careers-step');
+  if (!steps.length) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function applyState(p, idx){
+    wrap.style.setProperty('--process-fill', String(Math.max(0, Math.min(1, p))));
+    steps.forEach(function(step, i){
+      var n = i + 1;
+      step.classList.toggle('is-process-complete', n < idx);
+      step.classList.toggle('is-process-active', n === idx);
+      if (n === idx) step.setAttribute('aria-current', 'step');
+      else step.removeAttribute('aria-current');
+    });
+  }
+
+  if (reduced) {
+    applyState(1, 4);
+    return;
+  }
+
+  var ticking = false;
+  function compute(){
+    /* 타임라인만 기준(제목·리드 제외). wrap 상단이 화면 아래→위로 지나갈 때 천천히 0→1 */
+    var rect = wrap.getBoundingClientRect();
+    var vh = window.innerHeight || 800;
+    var zoneTop = vh * 0.78;
+    var zoneBottom = vh * 0.2;
+    var span = Math.max(280, zoneTop - zoneBottom);
+    var t = (zoneTop - rect.top) / span;
+    var p = Math.max(0, Math.min(1, t));
+    var idx = Math.min(4, Math.floor(p * 4) + 1);
+    applyState(p, idx);
+    ticking = false;
+  }
+  function onScroll(){
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(compute);
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  compute();
+})();
+(function initCareersTalentBannerMotion(){
+  var banner = document.querySelector('.careers-talent-banner-full');
+  if (!banner) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) {
+    banner.classList.add('careers-talent-banner--inview');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting || entry.intersectionRatio < 0.07) return;
+      banner.classList.add('careers-talent-banner--inview');
+      io.disconnect();
+    });
+  }, { threshold: [0, 0.07, 0.14, 0.22], rootMargin: '0px 0px -6% 0px' });
+  io.observe(banner);
+})();
+(function initCareersScrollAfterBanner(){
+  var secs = document.querySelectorAll('.careers-scroll-sec');
+  if (!secs.length) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lastWheelMag = 72;
+  var lastScrollY = window.scrollY || 0;
+  var userStartedScrollDown = false;
+
+  function applyTiming(sec){
+    var d = Math.max(40, Math.min(lastWheelMag, 220));
+    var dur = 0.36 + d / 650;
+    var st = dur * 0.28;
+    sec.style.setProperty('--careers-scroll-dur', dur.toFixed(3) + 's');
+    sec.style.setProperty('--careers-scroll-stagger', st.toFixed(3) + 's');
+  }
+
+  function revealSec(sec){
+    if (sec.classList.contains('careers-scroll-sec--revealed')) return;
+    applyTiming(sec);
+    sec.classList.add('careers-scroll-sec--revealed');
+    try {
+      document.dispatchEvent(new CustomEvent('careers:scroll-sec-revealed', { detail: { section: sec } }));
+    } catch (e) {}
+  }
+
+  if (reduced) {
+    secs.forEach(function(s){ s.classList.add('careers-scroll-sec--revealed'); });
+    return;
+  }
+
+  window.addEventListener('wheel', function(e){
+    if (e.deltaY > 1) {
+      userStartedScrollDown = true;
+      lastWheelMag = Math.min(220, Math.abs(e.deltaY));
+    }
+  }, { passive: true });
+
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    if (y > lastScrollY + 3) userStartedScrollDown = true;
+    lastScrollY = y;
+  }, { passive: true });
+
+  secs.forEach(function(sec){
+    var done = false;
+    var inView = false;
+    function tryReveal(){
+      if (done) return;
+      if (userStartedScrollDown && inView) {
+        done = true;
+        revealSec(sec);
+      }
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        inView = entry.isIntersecting && entry.intersectionRatio > 0.06;
+        tryReveal();
+      });
+    }, { threshold: [0, 0.06, 0.12, 0.2], rootMargin: '0px 0px 8% 0px' });
+    io.observe(sec);
+  });
+})();
+(function initCareersHeadTyping(){
+  if (!document.querySelector('.careers-typewriter')) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var observers = [];
+  var timers = [];
+  var charMs = 38;
+
+  function disconnectAll(){
+    observers.forEach(function(o){ try { o.disconnect(); } catch (e) {} });
+    observers = [];
+    timers.forEach(function(t){ clearInterval(t); });
+    timers = [];
+    document.querySelectorAll('.careers-typewriter').forEach(function(el){
+      if (el._careersScrollRevealHandler) {
+        document.removeEventListener('careers:scroll-sec-revealed', el._careersScrollRevealHandler);
+        el._careersScrollRevealHandler = null;
+      }
+    });
+  }
+
+  function typeInto(el, full){
+    el.classList.add('careers-typewriter--caret');
+    var i = 0;
+    el.textContent = '';
+    var id = setInterval(function(){
+      i += 1;
+      el.textContent = full.slice(0, i);
+      if (i >= full.length) {
+        clearInterval(id);
+        timers = timers.filter(function(x){ return x !== id; });
+        el.classList.remove('careers-typewriter--caret');
+      }
+    }, charMs);
+    timers.push(id);
+  }
+
+  function boot(){
+    disconnectAll();
+    document.querySelectorAll('.careers-typewriter').forEach(function(el){
+      var full = (el.textContent || '').trim();
+      el.classList.remove('careers-typewriter--caret');
+      el.removeAttribute('data-careers-typed');
+      if (!full) return;
+      if (reduced) {
+        el.textContent = full;
+        return;
+      }
+      var scrollSec = el.closest('.careers-scroll-sec');
+      if (scrollSec) {
+        el.textContent = '';
+        if (el._careersScrollRevealHandler) {
+          document.removeEventListener('careers:scroll-sec-revealed', el._careersScrollRevealHandler);
+          el._careersScrollRevealHandler = null;
+        }
+        function startType(){
+          if (el.getAttribute('data-careers-typed') === '1') return;
+          el.setAttribute('data-careers-typed', '1');
+          typeInto(el, full);
+        }
+        if (scrollSec.classList.contains('careers-scroll-sec--revealed')) {
+          requestAnimationFrame(function(){ requestAnimationFrame(startType); });
+          return;
+        }
+        function onScrollSecRevealed(ev){
+          if (!ev.detail || ev.detail.section !== scrollSec) return;
+          document.removeEventListener('careers:scroll-sec-revealed', onScrollSecRevealed);
+          el._careersScrollRevealHandler = null;
+          requestAnimationFrame(function(){ requestAnimationFrame(startType); });
+        }
+        el._careersScrollRevealHandler = onScrollSecRevealed;
+        document.addEventListener('careers:scroll-sec-revealed', onScrollSecRevealed);
+        return;
+      }
+      var section = el.closest('.careers-sec') || el.closest('section');
+      if (!section) section = el.parentElement;
+      el.textContent = '';
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (!entry.isIntersecting) return;
+          if (el.getAttribute('data-careers-typed') === '1') return;
+          el.setAttribute('data-careers-typed', '1');
+          obs.disconnect();
+          observers = observers.filter(function(x){ return x !== obs; });
+          typeInto(el, full);
+        });
+      }, { threshold: 0.2, rootMargin: '0px 0px -12% 0px' });
+      obs.observe(section);
+      observers.push(obs);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    requestAnimationFrame(function(){ requestAnimationFrame(boot); });
+  });
+  document.addEventListener('bdgen:subpage-language-applied', function(e){
+    if (e.detail && e.detail.pageKey === 'careers') {
+      requestAnimationFrame(function(){ requestAnimationFrame(boot); });
+    }
+  });
 })();
 </script>
 </body>

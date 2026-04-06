@@ -5,7 +5,7 @@
   --text:#FFFFFF;--text-secondary:#8FA3C0;--text-muted:#5A7090;
   --gradient-primary:linear-gradient(135deg,#00C8FF 0%,#6C3FFF 100%);
   --transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
-  --z-gnb:1000;--z-mobile-nav:999;--z-back-top:900;
+  --z-gnb:1000;--z-mobile-nav:999;--z-back-top:1100;
   --container-padding-x:clamp(1rem,4vw,1.5rem);--font-family:'Pretendard',-apple-system,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -190,9 +190,10 @@ footer{background:#030812;border-top:1px solid rgba(255,255,255,0.06);padding:48
   .footer-family-site-list a::after{transition-duration:0.15s;}
 }
 .floating-brochure{display:none!important;}
-.back-top{position:fixed;bottom:32px;right:32px;z-index:var(--z-back-top);width:44px;height:44px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition);font-size:1.1rem;color:#fff;}
+.back-top{position:fixed;bottom:32px;right:32px;z-index:var(--z-back-top);width:44px;height:44px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,200,255,0.4);opacity:0;pointer-events:none;transition:var(--transition);font-size:1.1rem;color:#fff;}
 .back-top.visible{opacity:1;pointer-events:all;}
 .back-top:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,200,255,0.5);}
+@media(max-width:767px){.back-top{bottom:20px;right:20px;width:48px;height:48px;}}
 /* 서브페이지 공통: page-hero 있는 페이지(회사소개, 연혁 등) - GNB 흰색 기본, 호버 시 검정 */
 body.bdgen-subpage:has(.page-hero) .gnb-nav a{color:#fff!important;}
 body.bdgen-subpage:has(.page-hero) .gnb-logo-default{opacity:1!important;}

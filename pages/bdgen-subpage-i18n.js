@@ -397,15 +397,181 @@
         'hero-title': '채용',
         'hero-desc': '함께 성장할 인재를 찾습니다.',
         'breadcrumb-current': '채용',
-        'main-title': '채용',
-        'main-desc': '콘텐츠 준비 중입니다.'
+        'sub-nav-1': '채용',
+        'careers-welfare-title': 'Perks & Benefits',
+        'careers-welfare-lead': '일하기 좋은 환경, 비디젠이 만들어 갑니다',
+        'careers-w1': '탄력근무제 및<br>자유로운 연차',
+        'careers-w2': '음료 지원 및<br>커피머신 보유',
+        'careers-w3': '생일자<br>기프티콘 지원',
+        'careers-w4': '사내 동호회<br>지원',
+        'careers-w5': '복지포인트<br>지원',
+        'careers-w6': '인재 추천<br>포상금 운영',
+        'careers-w7': '업무 능력 개발<br>비용 지원',
+        'careers-w8': '근로자 휴가지원<br>사업 참여',
+        'careers-w9': '청년내일채움공제<br>(대상자에 한함)',
+        'careers-msg-title': '새로운 세상을 상상하고 함께 도전할 당신을 기다립니다.',
+        'careers-msg-sub':
+          'BDGen은 새로운 기술과 서비스에 끊임없이 호기심을 가지고 도전하는 사람들의 모임입니다.',
+        'careers-trait1': '능동적이고 열정적인 분',
+        'careers-trait2': '긍정적이고 협조적인 분',
+        'careers-trait3': '자기주도적이고 배려 있는 분',
+        'careers-banner-t1-l1': '능동적이고',
+        'careers-banner-t1-l2': '열정적인 분',
+        'careers-banner-t2-l1': '긍정적이고',
+        'careers-banner-t2-l2': '협조적인 분',
+        'careers-banner-t3-l1': '자기주도적이고',
+        'careers-banner-t3-l2': '배려있는 분',
+        'careers-process-title': 'Hiring Process',
+        'careers-process-lead': '지원부터 최종합격까지 4단계로 진행됩니다',
+        'careers-step1': '서류전형',
+        'careers-step2': '실무면접',
+        'careers-step3': '합격통보',
+        'careers-step4': '처우협의 및 입사',
+        'careers-process-note':
+          '채용 절차 및 일정은 포지션에 따라 상이할 수 있으며, 인턴십 기간이 포함될 수 있습니다. 자세한 사항은 개별 안내를 참고해 주세요.',
+        'careers-role-common': '공통 분야',
+        'careers-req-common-must-h': '1. 공통 자격요건',
+        'careers-req-common-pref-h': '2. 우대 사항',
+        'careers-req-cm-m1': '학력 : 초대졸 이상',
+        'careers-req-cm-m2': '경력 : 5년 이상',
+        'careers-req-cm-p1': '자격증 소지자 : 정보처리기사',
+        'careers-req-cm-p2':
+          '전공자 : 응용소프트웨어공학, 전산학, 컴퓨터공학, 정보통신공학',
+        'careers-req-must-h': '자격요건',
+        'careers-req-pref-h': '우대 사항',
+        'careers-req-fe-m1': 'JAVA & Spring 기반 웹 서비스 개발 경험',
+        'careers-req-fe-m2': 'jQuery, HTML5, JavaScript, Vue.js, React 중 1개 이상 개발 경험',
+        'careers-req-fe-m3': 'RESTful API에 대한 이해와 개발 경험',
+        'careers-req-fe-p1': '크로스 브라우징에 대한 지식과 경험',
+        'careers-req-fe-p2': '버전관리(Git or SVN) 사용',
+        'careers-req-be-m1': 'Spring framework(Spring Boot)를 활용한 개발 경험',
+        'careers-req-be-m2': 'Spring Security 사용 경험',
+        'careers-req-be-m3': 'Oracle, MySQL, Maria DB 등 RDBMS 사용 경험',
+        'careers-req-be-m4': '버전관리(Git or SVN) 사용 경험',
+        'careers-req-be-m5': '빌드 / 테스트 / 배포 자동화에 대한 이해와 경험',
+        'careers-req-be-m6': 'AWS 등 인프라에 대한 이해 및 사용 경험',
+        'careers-req-be-p1': '오픈소스 사용 / 커스터마이징 경험',
+        'careers-req-be-p2': 'Linux / Unix 기본 명령어 사용 능력',
+        'careers-req-be-p3': '클라이언트 / 서버에 대한 이해',
+        'careers-req-be-p4': 'API 개발 및 운영',
+        'careers-req-and-m1':
+          'JAVA, Kotlin 언어를 활용한 개발 경험 (Android 가이드라인을 준수한 개발 및 플랫폼 사용 경험)',
+        'careers-req-and-m2': '협업 및 협업 툴 (Git, Zeplin, Trello, Jira 등) 사용 경험',
+        'careers-req-and-m3': 'RESTful API에 대한 이해와 개발 경험',
+        'careers-req-and-m4': 'RESTful API 기반 앱 개발 경험',
+        'careers-req-and-p1': '애자일 기반의 프로젝트 진행 경험',
+        'careers-req-and-p2': 'Native App 과 Web 통신에 대한 이해',
+        'careers-req-ios-m1':
+          'Swift, Objective-C 언어를 활용한 개발 경험 (iOS 가이드 라인을 준수한 개발 및 플랫폼 사용 경험)',
+        'careers-req-ios-m2': '협업 및 협업 툴 (Git, Zeplin, Trello, Jira 등) 사용 경험',
+        'careers-req-ios-m3': 'RESTful API 기반 앱 개발 경험',
+        'careers-req-ios-p1': '애자일 기반의 프로젝트 진행 경험',
+        'careers-roles-title': 'Open Positions',
+        'careers-roles-lead': '아래 분야에 지원하실 수 있습니다',
+        'careers-role-fe': '프론트엔드 개발자',
+        'careers-role-be': '백엔드 개발자',
+        'careers-role-and': '안드로이드 개발자',
+        'careers-role-ios': 'iOS 개발자',
+        'careers-cta-text': '지원서 작성하러 가기',
+        'careers-link-saramin': '사람인 지원하기',
+        'careers-link-jobkorea': '잡코리아 지원하기',
+        'careers-link-saramin-title': '사람인 기업 채용 페이지 (URL 연결 예정)',
+        'careers-link-jobkorea-title': '잡코리아 기업 채용 페이지 (URL 연결 예정)',
+        'careers-cta-notice':
+          '자유 입사 지원 양식을 통한 지원자 상시 모집 중입니다.<br><br>본 공고는 채용 완료 시, 조기 종료될 수 있습니다.<br><br>서류 심사는 접수 이후 한 달 이내로 완료됩니다. (미통과 시, 별도 안내 X)<br><br>서류 심사 통과자에 한해 개별적으로 면접 일정을 알려 드립니다.<br><br>기타 문의 사항은 <a href="../bdgen_landing.html#cta" class="careers-cta-notice-contact">Contact Us</a>를 통해 문의 부탁드립니다.'
       },
       en: {
         'hero-title': 'Careers',
         'hero-desc': 'We are looking for talent to grow with us.',
         'breadcrumb-current': 'Careers',
-        'main-title': 'Careers',
-        'main-desc': 'Content coming soon.'
+        'sub-nav-1': 'Careers',
+        'careers-welfare-title': 'Perks & Benefits',
+        'careers-welfare-lead':
+          'BDGen is building a great environment to work in.',
+        'careers-w1': 'Flexible hours and<br>annual leave',
+        'careers-w2': 'Beverages and<br>coffee machine',
+        'careers-w3': 'Birthday<br>gifticons',
+        'careers-w4': 'In-house club<br>support',
+        'careers-w5': 'Welfare<br>points',
+        'careers-w6': 'Employee referral<br>rewards',
+        'careers-w7': 'Professional development<br>support',
+        'careers-w8': 'Worker vacation support<br>program',
+        'careers-w9': 'Youth Tomorrow Chaeum<br>(eligible employees only)',
+        'careers-msg-title':
+          'We look forward to meeting you—imagining a new world and taking on challenges together.',
+        'careers-msg-sub':
+          'BDGen is a team of people who stay curious and keep challenging themselves with new technology and services.',
+        'careers-trait1': 'Proactive and passionate',
+        'careers-trait2': 'Positive and collaborative',
+        'careers-trait3': 'Self-driven and considerate',
+        'careers-banner-t1-l1': 'Proactive and',
+        'careers-banner-t1-l2': 'passionate people',
+        'careers-banner-t2-l1': 'Positive and',
+        'careers-banner-t2-l2': 'collaborative people',
+        'careers-banner-t3-l1': 'Self-driven and',
+        'careers-banner-t3-l2': 'considerate people',
+        'careers-process-title': 'Hiring Process',
+        'careers-process-lead':
+          'From application to final acceptance—the process has four stages.',
+        'careers-step1': 'Application review',
+        'careers-step2': 'Interview',
+        'careers-step3': 'Offer',
+        'careers-step4': 'Terms & onboarding',
+        'careers-process-note':
+          'Steps and schedules may vary by role and may include an internship. Details will be shared individually.',
+        'careers-role-common': 'Common requirements',
+        'careers-req-common-must-h': '1. Common qualifications',
+        'careers-req-common-pref-h': '2. Preferred qualifications',
+        'careers-req-cm-m1': 'Education: Associate degree (junior college) or higher',
+        'careers-req-cm-m2': 'Experience: 5 years or more',
+        'careers-req-cm-p1': 'Certifications: Engineer Information Processing',
+        'careers-req-cm-p2':
+          'Preferred majors: Applied Software Engineering, Computer Science, Computer Engineering, Information & Communications Engineering',
+        'careers-req-must-h': 'Requirements',
+        'careers-req-pref-h': 'Preferred qualifications',
+        'careers-req-fe-m1': 'Experience building web services with Java & Spring',
+        'careers-req-fe-m2':
+          'Hands-on development with at least one of jQuery, HTML5, JavaScript, Vue.js, or React',
+        'careers-req-fe-m3': 'Understanding and development experience with RESTful APIs',
+        'careers-req-fe-p1': 'Knowledge and experience with cross-browser compatibility',
+        'careers-req-fe-p2': 'Version control (Git or SVN)',
+        'careers-req-be-m1': 'Development experience with Spring Framework (Spring Boot)',
+        'careers-req-be-m2': 'Experience using Spring Security',
+        'careers-req-be-m3': 'Experience with RDBMS such as Oracle, MySQL, or MariaDB',
+        'careers-req-be-m4': 'Version control (Git or SVN)',
+        'careers-req-be-m5': 'Understanding and experience with build, test, and deployment automation',
+        'careers-req-be-m6': 'Understanding and hands-on experience with infrastructure such as AWS',
+        'careers-req-be-p1': 'Experience using and customizing open source software',
+        'careers-req-be-p2': 'Basic Linux / Unix command-line skills',
+        'careers-req-be-p3': 'Understanding of client and server architecture',
+        'careers-req-be-p4': 'API development and operations',
+        'careers-req-and-m1':
+          'Development experience with Java and Kotlin (development following Android guidelines and platform practices)',
+        'careers-req-and-m2':
+          'Experience with collaboration tools (Git, Zeplin, Trello, Jira, etc.)',
+        'careers-req-and-m3': 'Understanding and development experience with RESTful APIs',
+        'careers-req-and-m4': 'App development experience based on RESTful APIs',
+        'careers-req-and-p1': 'Project experience following Agile practices',
+        'careers-req-and-p2': 'Understanding of communication between native apps and web',
+        'careers-req-ios-m1':
+          'Development experience with Swift and Objective-C (development following iOS guidelines and platform practices)',
+        'careers-req-ios-m2':
+          'Experience with collaboration tools (Git, Zeplin, Trello, Jira, etc.)',
+        'careers-req-ios-m3': 'App development experience based on RESTful APIs',
+        'careers-req-ios-p1': 'Project experience following Agile practices',
+        'careers-roles-title': 'Open Positions',
+        'careers-roles-lead': 'You can apply for the positions below.',
+        'careers-role-fe': 'Frontend developer',
+        'careers-role-be': 'Backend developer',
+        'careers-role-and': 'Android developer',
+        'careers-role-ios': 'iOS developer',
+        'careers-cta-text': 'Go to application form',
+        'careers-link-saramin': 'Apply on Saramin',
+        'careers-link-jobkorea': 'Apply on JobKorea',
+        'careers-link-saramin-title': 'Saramin company jobs (URL to be connected)',
+        'careers-link-jobkorea-title': 'JobKorea company jobs (URL to be connected)',
+        'careers-cta-notice':
+          'We are continuously accepting applications through our open application form.<br><br>This posting may end early when the position is filled.<br><br>Application screening is completed within one month of submission. (No separate notice if you are not selected.)<br><br>Only applicants who pass screening will be contacted individually with interview details.<br><br>For other questions, please contact us via <a href="../bdgen_landing.html#cta" class="careers-cta-notice-contact">Contact Us</a>.'
       }
     },
     'solution-genid': {
@@ -882,6 +1048,15 @@
       ciTitle.setAttribute('data-text', T['ci-concept-title']);
       if (!ciTitle.classList.contains('ci-typing-cursor')) {
         ciTitle.textContent = T['ci-concept-title'];
+      }
+    }
+
+    /* 비디젠 뉴스 컨테이너 타이틀 (타이핑용 data-text) */
+    var newsListTitle = document.getElementById('newsListTitle');
+    if (newsListTitle && T['news-list-title'] !== undefined) {
+      newsListTitle.setAttribute('data-text', T['news-list-title']);
+      if (!newsListTitle.classList.contains('news-typing-cursor')) {
+        newsListTitle.textContent = T['news-list-title'];
       }
     }
 

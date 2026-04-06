@@ -77,12 +77,22 @@
   .bdgen-white-presentation .inner-container{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
   .bdgen-white-presentation .highlight{ color: #0065FA; font-weight: 700; }
 
+  /* 뉴스 카드 인터랙션 (브랜드 블루: #0065FA / #24ACFF) */
+  :root {
+    --news-brand: #0065FA;
+    --news-brand-soft: #2488ff;
+    --news-shadow-rest: 0 2px 12px rgba(15, 40, 80, 0.05), 0 10px 36px rgba(15, 40, 80, 0.06);
+    --news-shadow-hover: 0 16px 48px rgba(0, 101, 250, 0.11), 0 28px 64px rgba(0, 0, 0, 0.09);
+  }
+
   /* CI소개 #ci-top과 동일 타이포 */
   #news-top{
     text-align: center;
     margin-bottom: 48px;
   }
   #news-top .main-title{
+    display: inline-block;
+    min-height: 1.15em;
     font-size: 77px;
     font-weight: 800;
     line-height: 100px;
@@ -90,6 +100,14 @@
     margin-bottom: 0;
     letter-spacing: -1.5px;
     color: #1a1f27;
+  }
+  .news-typing-cursor{
+    border-right: 2px solid #0065FA;
+    padding-right: 4px;
+    animation: news-typing-blink 0.7s step-end infinite;
+  }
+  @keyframes news-typing-blink{
+    50%{ border-color: transparent; }
   }
 
   .news-toolbar{
@@ -163,23 +181,47 @@
   .news-grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 32px 28px;
+    gap: 36px 30px;
     margin-bottom: 56px;
+  }
+  /* .news-card === 가이드의 .card */
+  .news-card{
+    margin: 0;
+    padding: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(26, 31, 39, 0.065);
+    box-shadow: var(--news-shadow-rest);
+    transition:
+      transform 0.3s ease-out,
+      box-shadow 0.3s ease-out,
+      border-color 0.3s ease-out;
+  }
+  .news-card:hover{
+    transform: translateY(-8px);
+    box-shadow: var(--news-shadow-hover);
+    border-color: rgba(0, 101, 250, 0.14);
   }
   .news-card-link{
     display: block;
     text-decoration: none;
     color: inherit;
     height: 100%;
+    outline: none;
+  }
+  .news-card-link:focus-visible{
+    outline: 2px solid var(--news-brand);
+    outline-offset: 3px;
   }
   .news-card-thumb{
     width: 100%;
     aspect-ratio: 16 / 10;
-    background: #f1f3f5;
-    border-radius: 4px;
-    margin-bottom: 16px;
+    background: #eef1f4;
+    margin-bottom: 0;
     overflow: hidden;
     position: relative;
+    border-radius: 0;
   }
   .news-card-thumb img{
     width: 100%;
@@ -187,23 +229,67 @@
     object-fit: cover;
     display: block;
     vertical-align: top;
+    transform: scale(1);
+    transition: transform 0.3s ease-out;
+  }
+  .news-card:hover .news-card-thumb img{
+    transform: scale(1.05);
   }
   .news-card-title{
     font-size: 18px;
     font-weight: 700;
     line-height: 1.45;
     color: #1a1f27;
-    margin: 0 0 10px;
+    margin: 18px 22px 10px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    transition: color 0.3s ease-out;
+  }
+  .news-card:hover .news-card-title{
+    color: var(--news-brand);
   }
   .news-card-date{
     font-size: 15px;
     font-weight: 500;
     color: #8b95a1;
-    margin: 0;
+    margin: 0 22px 22px;
+    transition: color 0.3s ease-out;
+  }
+  .news-card:hover .news-card-date{
+    color: #6b7684;
+  }
+
+  /* 스크롤·로드 리빌 (순차 delay: --news-stagger, 0.1s 간격) */
+  @keyframes news-card-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+      box-shadow: none;
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      box-shadow: var(--news-shadow-rest);
+    }
+  }
+  .news-card.news-reveal-pending{
+    opacity: 0;
+    transform: translateY(28px);
+    pointer-events: none;
+    box-shadow: none;
+    border-color: rgba(26, 31, 39, 0.04);
+  }
+  .news-card.news-reveal-pending:hover{
+    transform: translateY(28px);
+    box-shadow: none;
+    border-color: rgba(26, 31, 39, 0.04);
+  }
+  .news-card.news-reveal-run{
+    pointer-events: auto;
+    animation: news-card-reveal 0.68s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--news-stagger, 0s);
   }
 
   .news-pagination{
@@ -264,6 +350,33 @@
     clip: rect(0,0,0,0);
     white-space: nowrap;
     border: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .news-card{
+      transition: none;
+    }
+    .news-card:hover{
+      transform: none;
+      box-shadow: var(--news-shadow-rest);
+    }
+    .news-card:hover .news-card-thumb img{
+      transform: none;
+    }
+    .news-card.news-reveal-pending{
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      box-shadow: var(--news-shadow-rest);
+      border-color: rgba(26, 31, 39, 0.065);
+    }
+    .news-card.news-reveal-run{
+      animation: none;
+      opacity: 1;
+      transform: none;
+      box-shadow: var(--news-shadow-rest);
+      border-color: rgba(26, 31, 39, 0.065);
+    }
   }
 
   @media (max-width: 1023px){
@@ -395,7 +508,7 @@
   <section class="bdgen-white-presentation">
     <div class="inner-container">
       <header id="news-top">
-        <h2 class="main-title" data-i18n="news-list-title">비디젠 뉴스</h2>
+        <h2 class="main-title" id="newsListTitle" data-text="비디젠 뉴스" data-i18n="news-list-title">비디젠 뉴스</h2>
       </header>
 
       <div class="news-toolbar">
@@ -647,7 +760,46 @@
 <script src="bdgen-interactions.js"></script>
 <script>
 (function(){
-  var gnb=document.getElementById('gnb'), backTop=document.getElementById('backTop');
+  var speed = 72;
+  var gen = 0;
+  function runNewsListTitleTyping(){
+    var el = document.getElementById('newsListTitle');
+    if (!el) return;
+    gen++;
+    var myGen = gen;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = el.getAttribute('data-text') || '';
+      el.classList.remove('news-typing-cursor');
+      return;
+    }
+    var text = (el.getAttribute('data-text') || '').trim();
+    var token = String(Date.now() + Math.random());
+    el.setAttribute('data-typing-token', token);
+    el.textContent = '';
+    el.classList.add('news-typing-cursor');
+    var i = 0;
+    function step(){
+      if (myGen !== gen) return;
+      if (el.getAttribute('data-typing-token') !== token) return;
+      if (i < text.length) {
+        el.textContent = text.slice(0, i + 1);
+        i++;
+        setTimeout(step, speed);
+      } else {
+        el.classList.remove('news-typing-cursor');
+      }
+    }
+    step();
+  }
+  function scheduleNewsTyping(){
+    window.setTimeout(runNewsListTitleTyping, 0);
+  }
+  window.addEventListener('bdgen:subpage-language-applied', function (e){
+    if (e.detail && e.detail.pageKey === 'about-news') scheduleNewsTyping();
+  });
+})();
+(function(){
+  var gnb=document.getElementById('gnb');
   var lastY=0;
   window.addEventListener('scroll',function(){
     var y=window.scrollY;
@@ -657,9 +809,7 @@
       else if(y<50||y<lastY) gnb.classList.remove('gnb-hidden');
     }
     lastY=y;
-    if(backTop) backTop.classList.toggle('visible',y>400);
   },{passive:true});
-  if(backTop)backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
 })();
 (function(){
   var sw=document.querySelector('.lang-switcher'), trigger=document.querySelector('.lang-switcher-trigger'), dropdown=document.querySelector('.lang-dropdown');
@@ -694,6 +844,37 @@
   var nextBtn = document.getElementById('newsPageNext');
   var lastBtn = document.getElementById('newsPageLast');
   var totalPages = 2;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var newsRevealIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      var el = entry.target;
+      newsRevealIo.unobserve(el);
+      el.classList.remove('news-reveal-pending');
+      el.classList.add('news-reveal-run');
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+
+  function setupNewsReveal(){
+    cards.forEach(function(c){
+      newsRevealIo.unobserve(c);
+      c.classList.remove('news-reveal-run');
+      c.classList.remove('news-reveal-pending');
+      if(c.classList.contains('is-hidden')) return;
+      c.classList.add('news-reveal-pending');
+    });
+    var visible = grid.querySelectorAll('.news-card:not(.is-hidden)');
+    visible.forEach(function(c, i){
+      c.style.setProperty('--news-stagger', (i * 0.1) + 's');
+      if(reduceMotion){
+        c.classList.remove('news-reveal-pending');
+        c.classList.add('news-reveal-run');
+        return;
+      }
+      newsRevealIo.observe(c);
+    });
+  }
+
   function showPage(n){
     var p = Math.max(1, Math.min(totalPages, n));
     cards.forEach(function(c){
@@ -705,14 +886,15 @@
       b.classList.toggle('is-current', on);
       b.setAttribute('aria-current', on ? 'page' : 'false');
     });
+    setupNewsReveal();
   }
   btns.forEach(function(b){
     b.addEventListener('click', function(){ showPage(parseInt(b.getAttribute('data-news-page-btn'), 10)); });
   });
   if(nextBtn) nextBtn.addEventListener('click', function(){
     var cur = grid.querySelector('.news-card:not(.is-hidden)');
-    var p = cur ? parseInt(cur.getAttribute('data-news-page'), 10) || 1 : 1;
-    showPage(p + 1);
+    var pg = cur ? parseInt(cur.getAttribute('data-news-page'), 10) || 1 : 1;
+    showPage(pg + 1);
   });
   if(lastBtn) lastBtn.addEventListener('click', function(){ showPage(totalPages); });
   showPage(1);

@@ -195,4 +195,19 @@
       });
     });
   })();
+
+  (function initGlobalBackToTop() {
+    var backTop = document.getElementById('backTop');
+    if (!backTop || backTop.getAttribute('data-bdgen-backtop-bound') === '1') return;
+    backTop.setAttribute('data-bdgen-backtop-bound', '1');
+    function syncVisibility() {
+      var y = window.scrollY || window.pageYOffset;
+      backTop.classList.toggle('visible', y > 400);
+    }
+    window.addEventListener('scroll', syncVisibility, { passive: true });
+    syncVisibility();
+    backTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
 })();

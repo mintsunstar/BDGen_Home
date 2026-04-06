@@ -41,7 +41,7 @@
   /* Z-index 계층 */
   --z-gnb: 1000;
   --z-mobile-nav: 999;
-  --z-back-top: 900;
+  --z-back-top: 1100;
   --z-hero-content: 2;
   --z-hero-bg: 0;
   /* Typography (반응???�장?? */
@@ -687,6 +687,37 @@ footer {
 .back-top.visible { opacity: 1; pointer-events: all; }
 .back-top:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,200,255,0.5); }
 
+/* 회사소개서 플로팅 (정적 랜딩 supreme FAB와 동일 리소스, 맨 위로 버튼 위쪽) */
+.floating-brochure-fab {
+  position: fixed;
+  bottom: 96px;
+  right: 32px;
+  z-index: var(--z-back-top);
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 242, 255, 0.45);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.35), inset 0 0 16px rgba(0, 242, 255, 0.06);
+  color: #fff;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.floating-brochure-fab svg {
+  width: 24px;
+  height: 24px;
+}
+.floating-brochure-fab:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 242, 255, 0.75);
+  box-shadow: 0 0 28px rgba(0, 242, 255, 0.45);
+}
+
 /* ========================
    RESPONSIVE - Desktop 1280+ | Laptop 1024~1279 | Tablet 768~1023 | Mobile ~767 | Small ~480
 ======================== */
@@ -858,6 +889,7 @@ footer {
   .footer-bottom { flex-direction: column; align-items: center; text-align: center; padding-top: 24px; gap: 12px; }
   .footer-bottom-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
   .back-top { bottom: 20px; right: 20px; width: 48px; height: 48px; }
+  .floating-brochure-fab { bottom: 84px; right: 20px; width: 52px; height: 52px; }
 }
 
 /* Small mobile (~480) */

@@ -1655,7 +1655,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/lib/vanilla-tilt.min.js" crossorigin="anonymous"></script>
 <script>
 (function(){
-  var gnb=document.getElementById('gnb'), backTop=document.getElementById('backTop');
+  var gnb=document.getElementById('gnb');
   var lastY=0;
   window.addEventListener('scroll',function(){
     var y=window.scrollY;
@@ -1665,9 +1665,7 @@
       else if(y<50||y<lastY) gnb.classList.remove('gnb-hidden');
     }
     lastY=y;
-    if(backTop) backTop.classList.toggle('visible',y>400);
   },{passive:true});
-  if(backTop)backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
 })();
 (function(){
   var sw=document.querySelector('.lang-switcher'), trigger=document.querySelector('.lang-switcher-trigger'), dropdown=document.querySelector('.lang-dropdown');

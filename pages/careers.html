@@ -1094,6 +1094,8 @@
   }
   /* CTA — 상단 구분선·여백은 .careers-sec + .careers-cta 에서 사업영역과 동일하게 처리 */
   .careers-cta{
+    --cta-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --cta-ease-heavy: cubic-bezier(0.25, 0.08, 0.25, 1);
     text-align: center;
     margin-top: 0;
     border-top: none;
@@ -1179,7 +1181,9 @@
     gap: 48px 64px;
     margin-top: 56px;
   }
-  .careers-cta-external a{
+  .careers-cta-external a.careers-cta-platform{
+    --mag-x: 0px;
+    --mag-y: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1187,9 +1191,13 @@
     width: 140px;
     text-decoration: none;
     color: var(--careers-text);
-    transition: opacity 0.2s ease;
+    transform: translate(var(--mag-x), var(--mag-y));
+    transition: transform 0.55s var(--cta-ease-heavy);
+    will-change: transform;
   }
-  .careers-cta-external a:hover{ opacity: 0.82; }
+  .careers-cta-external a.careers-cta-platform:hover{
+    transform: translate(var(--mag-x), var(--mag-y)) scale(1.05);
+  }
   .careers-cta-external-icon{
     width: 88px;
     height: 88px;
@@ -1201,13 +1209,34 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 14px rgba(15, 35, 70, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition:
+      box-shadow 0.5s var(--cta-ease-heavy),
+      transform 0.5s var(--cta-ease-heavy),
+      border-color 0.4s var(--cta-ease-heavy);
+  }
+  .careers-cta-platform:hover .careers-cta-external-icon{
+    box-shadow:
+      0 22px 52px rgba(15, 35, 70, 0.2),
+      0 12px 28px rgba(0, 101, 250, 0.12),
+      0 4px 12px rgba(0, 0, 0, 0.06);
+    transform: translateY(-8px);
+    border-color: #d0dae6;
   }
   .careers-cta-external-icon img{
     display: block;
     width: 72%;
     height: 72%;
     object-fit: contain;
+    transition: transform 0.35s var(--cta-ease);
+  }
+  @keyframes careers-cta-logo-bounce{
+    0%, 100%{ transform: translateY(0); }
+    45%{ transform: translateY(-7px); }
+    70%{ transform: translateY(-2px); }
+  }
+  .careers-cta-platform:hover .careers-cta-external-icon img{
+    animation: careers-cta-logo-bounce 0.65s var(--cta-ease) infinite;
   }
   .careers-cta-external-label{
     font-size: 14px;
@@ -1215,6 +1244,7 @@
     text-align: center;
     line-height: 1.45;
     color: #111;
+    transition: color 0.35s var(--cta-ease);
   }
   .careers-cta-notice{
     margin-top: 48px;
@@ -1227,15 +1257,90 @@
     line-height: 1.8;
     text-align: center;
   }
+  .careers-cta-notice-line{
+    display: block;
+    margin-bottom: 1em;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .careers-cta-notice-line:last-child{
+    margin-bottom: 0;
+  }
+  .careers-cta--notice-inview .careers-cta-notice-line{
+    animation: careers-cta-notice-line-in 0.72s var(--cta-ease-heavy) forwards;
+  }
+  .careers-cta--notice-inview .careers-cta-notice-line:nth-child(1){ animation-delay: 0.05s; }
+  .careers-cta--notice-inview .careers-cta-notice-line:nth-child(2){ animation-delay: 0.17s; }
+  .careers-cta--notice-inview .careers-cta-notice-line:nth-child(3){ animation-delay: 0.29s; }
+  .careers-cta--notice-inview .careers-cta-notice-line:nth-child(4){ animation-delay: 0.41s; }
+  .careers-cta--notice-inview .careers-cta-notice-line:nth-child(5){ animation-delay: 0.53s; }
+  .careers-cta--notice-inview .careers-cta-notice-line:nth-child(6){ animation-delay: 0.65s; }
+  .careers-cta--notice-inview .careers-cta-notice-line:nth-child(7){ animation-delay: 0.77s; }
+  .careers-cta--notice-inview .careers-cta-notice-line:nth-child(8){ animation-delay: 0.89s; }
+  @keyframes careers-cta-notice-line-in{
+    from{
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to{
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
   .careers-cta-notice-contact{
+    position: relative;
+    display: inline;
     color: var(--careers-blue);
     font-weight: 600;
     text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
+    border-bottom: none;
+    padding-bottom: 2px;
+    background: none;
   }
-  .careers-cta-notice-contact:hover{
-    border-bottom-color: var(--careers-blue);
+  .careers-cta-notice-contact::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    background: currentColor;
+    border-radius: 1px;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s var(--cta-ease-heavy);
+    pointer-events: none;
+  }
+  .careers-cta-notice-contact:hover::after,
+  .careers-cta-notice-contact:focus-visible::after{
+    transform: scaleX(1);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .careers-cta-external a.careers-cta-platform{
+      transform: none !important;
+      transition: none;
+    }
+    .careers-cta-external a.careers-cta-platform:hover{
+      transform: none;
+    }
+    .careers-cta-platform:hover .careers-cta-external-icon{
+      transform: none;
+      box-shadow: 0 4px 14px rgba(15, 35, 70, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+    .careers-cta-platform:hover .careers-cta-external-icon img{
+      animation: none !important;
+    }
+    .careers-cta-notice-line{
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+    .careers-cta-notice-contact::after{
+      transition: none;
+    }
   }
   @media (max-width: 1023px){
     .hero-inner{ padding: 48px 24px 50px; }
@@ -1650,11 +1755,11 @@
         </div>
         <div class="careers-scroll-stage careers-scroll-stage--lead">
           <div class="careers-cta-external">
-            <a href="#" data-i18n-title="careers-link-saramin-title" title="사람인 기업 채용 페이지 URL 연결 예정">
+            <a href="#" class="careers-cta-platform" data-i18n-title="careers-link-saramin-title" title="사람인 기업 채용 페이지 URL 연결 예정">
               <span class="careers-cta-external-icon" aria-hidden="true"><img src="../assets/saram.png" alt="" width="64" height="64" loading="lazy" decoding="async"/></span>
               <span class="careers-cta-external-label" data-i18n="careers-link-saramin">사람인 지원하기</span>
             </a>
-            <a href="#" data-i18n-title="careers-link-jobkorea-title" title="잡코리아 기업 채용 페이지 URL 연결 예정">
+            <a href="#" class="careers-cta-platform" data-i18n-title="careers-link-jobkorea-title" title="잡코리아 기업 채용 페이지 URL 연결 예정">
               <span class="careers-cta-external-icon" aria-hidden="true"><img src="../assets/jab.png" alt="" width="64" height="64" loading="lazy" decoding="async"/></span>
               <span class="careers-cta-external-label" data-i18n="careers-link-jobkorea">잡코리아 지원하기</span>
             </a>
@@ -2057,6 +2162,105 @@
     });
   }, { threshold: [0, 0.07, 0.14, 0.22], rootMargin: '0px 0px -6% 0px' });
   io.observe(banner);
+})();
+(function initCareersCtaEnhancements(){
+  var ctaRoot = document.querySelector('.careers-cta');
+  var notice = document.querySelector('.careers-cta-notice');
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function wrapNoticeLines(){
+    if (!notice) return;
+    if (notice.querySelector('.careers-cta-notice-line')) return;
+    var html = notice.innerHTML.trim();
+    if (!html) return;
+    var parts = html.split(/(?:<br\s*\/?>\s*){2,}/gi);
+    if (parts.length === 1 && parts[0].indexOf('<br') !== -1) {
+      parts = html.split(/<br\s*\/?>/gi);
+    }
+    var blocks = parts.map(function(p){ return p.trim(); }).filter(Boolean);
+    if (!blocks.length) return;
+    notice.innerHTML = blocks.map(function(t){
+      return '<div class="careers-cta-notice-line">' + t + '</div>';
+    }).join('');
+  }
+
+  function bindMagnetic(){
+    if (reduced) return;
+    document.querySelectorAll('a.careers-cta-platform').forEach(function(link){
+      if (link.getAttribute('data-magnetic-bound') === '1') return;
+      link.setAttribute('data-magnetic-bound', '1');
+      var strength = 0.22;
+      var maxO = 11;
+      function setMag(x, y){
+        link.style.setProperty('--mag-x', x + 'px');
+        link.style.setProperty('--mag-y', y + 'px');
+      }
+      link.addEventListener('mousemove', function(e){
+        var r = link.getBoundingClientRect();
+        var cx = r.left + r.width * 0.5;
+        var cy = r.top + r.height * 0.5;
+        var dx = (e.clientX - cx) * strength;
+        var dy = (e.clientY - cy) * strength;
+        dx = Math.max(-maxO, Math.min(maxO, dx));
+        dy = Math.max(-maxO, Math.min(maxO, dy));
+        setMag(dx, dy);
+      });
+      link.addEventListener('mouseleave', function(){ setMag(0, 0); });
+    });
+  }
+
+  function observeNoticeInview(){
+    if (!notice || !ctaRoot) return;
+    if (reduced) {
+      ctaRoot.classList.add('careers-cta--notice-inview');
+      return;
+    }
+    if (!notice.querySelector('.careers-cta-notice-line')) return;
+    if (ctaRoot.classList.contains('careers-cta--notice-inview')) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.1) return;
+        ctaRoot.classList.add('careers-cta--notice-inview');
+        io.disconnect();
+      });
+    }, { threshold: [0, 0.1, 0.18, 0.28], rootMargin: '0px 0px -6% 0px' });
+    io.observe(notice);
+  }
+
+  function boot(){
+    wrapNoticeLines();
+    observeNoticeInview();
+    bindMagnetic();
+  }
+
+  function bootAfterLang(){
+    if (!ctaRoot || !notice) return;
+    ctaRoot.classList.remove('careers-cta--notice-inview');
+    wrapNoticeLines();
+    if (reduced) {
+      ctaRoot.classList.add('careers-cta--notice-inview');
+      return;
+    }
+    void notice.offsetWidth;
+    ctaRoot.classList.add('careers-cta--notice-inview');
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        boot();
+        if (!notice || !notice.querySelector('.careers-cta-notice-line')) {
+          window.setTimeout(function(){ boot(); }, 120);
+        }
+      });
+    });
+  });
+  document.addEventListener('bdgen:subpage-language-applied', function(e){
+    if (!e.detail || e.detail.pageKey !== 'careers') return;
+    requestAnimationFrame(function(){
+      requestAnimationFrame(bootAfterLang);
+    });
+  });
 })();
 (function initCareersScrollAfterBanner(){
   var secs = document.querySelectorAll('.careers-scroll-sec');

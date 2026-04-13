@@ -1431,6 +1431,265 @@
       font-size: 0.9rem;
     }
   }
+  /* 지원서 작성 모달 */
+  .careers-apply-modal{
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: max(16px, 3vh) max(16px, 4vw);
+    box-sizing: border-box;
+  }
+  .careers-apply-modal[hidden]{
+    display: none !important;
+  }
+  .careers-apply-modal__backdrop{
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  .careers-apply-modal__panel{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: min(96vw, 820px);
+    max-height: min(94vh, 960px);
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 28px 80px rgba(15, 35, 70, 0.22);
+    padding: clamp(28px, 4vw, 44px) clamp(28px, 5vw, 56px) clamp(32px, 4.5vw, 48px);
+    box-sizing: border-box;
+    color: var(--careers-text);
+  }
+  .careers-apply-modal__head{
+    position: relative;
+    text-align: center;
+    padding-bottom: 20px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e8eaed;
+  }
+  .careers-apply-modal__title{
+    margin: 0;
+    font-size: clamp(1.45rem, 2.8vw, 1.85rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #111;
+  }
+  .careers-apply-modal__close{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: #6b7684;
+    font-size: 1.5rem;
+    line-height: 1;
+    transition: background 0.2s, color 0.2s;
+  }
+  .careers-apply-modal__close:hover{
+    background: #f4f6f9;
+    color: #111;
+  }
+  .careers-apply-form{
+    padding-top: 12px;
+  }
+  .careers-apply-field{
+    display: grid;
+    grid-template-columns: minmax(128px, 168px) 1fr;
+    gap: 14px 28px;
+    align-items: start;
+    margin-bottom: 26px;
+  }
+  .careers-apply-field--stack{
+    align-items: stretch;
+  }
+  .careers-apply-label{
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+    padding-top: 12px;
+    line-height: 1.45;
+  }
+  .careers-apply-label .careers-apply-req{
+    color: #e53935;
+    font-weight: 800;
+    margin-right: 2px;
+  }
+  .careers-apply-input{
+    width: 100%;
+    padding: 13px 16px;
+    font-size: 16px;
+    font-family: inherit;
+    border: 1px solid #d8dee6;
+    border-radius: 8px;
+    background: #fff;
+    color: #111;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+  .careers-apply-input::placeholder{
+    color: #9aa5b1;
+  }
+  .careers-apply-input:focus{
+    outline: none;
+    border-color: var(--careers-blue);
+    box-shadow: 0 0 0 3px rgba(0, 101, 250, 0.12);
+  }
+  .careers-apply-radios{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 10px;
+  }
+  .careers-apply-radio{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--careers-text);
+  }
+  .careers-apply-radio input{
+    width: 20px;
+    height: 20px;
+    accent-color: var(--careers-blue);
+    flex-shrink: 0;
+  }
+  .careers-apply-file-row{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .careers-apply-file-input{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .careers-apply-file-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--careers-blue);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    border: none;
+    font-family: inherit;
+  }
+  .careers-apply-file-btn:hover{
+    background: #0050cc;
+  }
+  .careers-apply-file-btn .careers-apply-file-plus{
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1;
+  }
+  .careers-apply-file-name{
+    font-size: 14px;
+    color: var(--careers-muted);
+    word-break: break-all;
+    max-width: 100%;
+  }
+  .careers-apply-file-hints{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+    color: var(--careers-muted);
+    line-height: 1.65;
+  }
+  .careers-apply-divider{
+    border: none;
+    border-top: 1px solid #e8eaed;
+    margin: 12px 0 24px;
+  }
+  .careers-apply-privacy{
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 28px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #111;
+  }
+  .careers-apply-privacy input{
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    accent-color: var(--careers-blue);
+    flex-shrink: 0;
+  }
+  .careers-apply-privacy-text{
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .careers-apply-privacy .careers-apply-req{
+    color: #e53935;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .careers-apply-submit-wrap{
+    text-align: center;
+  }
+  .careers-apply-submit{
+    width: 100%;
+    max-width: min(100%, 420px);
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    color: #111;
+    background: #fff;
+    border: 1px solid #c5ced9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .careers-apply-submit:hover{
+    border-color: #9aa5b1;
+    background: #fafbfc;
+  }
+  .careers-apply-msg{
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--careers-blue);
+    min-height: 1.2em;
+  }
+  @media (max-width: 560px){
+    .careers-apply-field{
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .careers-apply-label{
+      padding-top: 0;
+    }
+  }
 </style>
 </head>
 <body class="bdgen-subpage">
@@ -1751,7 +2010,7 @@
 
       <div class="careers-cta careers-scroll-sec">
         <div class="careers-scroll-stage careers-scroll-stage--title">
-          <a href="#" class="btn btn-outline careers-cta-btn"><span data-i18n="careers-cta-text">지원서 작성하러 가기</span><span class="careers-cta-arrow" aria-hidden="true">→</span></a>
+          <button type="button" class="btn btn-outline careers-cta-btn" id="careersApplyOpen" aria-haspopup="dialog" aria-controls="careersApplyModal" aria-expanded="false"><span data-i18n="careers-cta-text">지원서 작성하기</span><span class="careers-cta-arrow" aria-hidden="true">→</span></button>
         </div>
         <div class="careers-scroll-stage careers-scroll-stage--lead">
           <div class="careers-cta-external">
@@ -1771,6 +2030,77 @@
       </div>
     </div>
   </section>
+<div id="careersApplyModal" class="careers-apply-modal" hidden role="dialog" aria-modal="true" aria-labelledby="careersApplyModalTitle">
+  <button type="button" class="careers-apply-modal__backdrop" id="careersApplyBackdrop" data-i18n-title="careers-apply-close" title="닫기" aria-label="닫기" tabindex="-1"></button>
+  <div class="careers-apply-modal__panel" role="document">
+    <div class="careers-apply-modal__head">
+      <h2 id="careersApplyModalTitle" class="careers-apply-modal__title" data-i18n="careers-apply-title">지원서 작성</h2>
+      <button type="button" class="careers-apply-modal__close" id="careersApplyClose" data-i18n-title="careers-apply-close" title="닫기" aria-label="닫기">&times;</button>
+    </div>
+    <form class="careers-apply-form" id="careersApplyForm" novalidate>
+      <div class="careers-apply-field">
+        <label class="careers-apply-label" for="careersApplyName"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-name">이름</span></label>
+        <input type="text" id="careersApplyName" name="name" class="careers-apply-input" autocomplete="name" required placeholder="성함을 입력해주세요." data-i18n-placeholder="careers-apply-name-ph"/>
+      </div>
+      <div class="careers-apply-field">
+        <label class="careers-apply-label" for="careersApplyEmail"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-email">E-mail</span></label>
+        <input type="email" id="careersApplyEmail" name="email" class="careers-apply-input" autocomplete="email" required placeholder="이메일을 입력해주세요." data-i18n-placeholder="careers-apply-email-ph"/>
+      </div>
+      <div class="careers-apply-field">
+        <label class="careers-apply-label" for="careersApplyPhone"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-phone">연락처</span></label>
+        <input type="tel" id="careersApplyPhone" name="phone" class="careers-apply-input" autocomplete="tel" required placeholder="연락처를 입력해주세요." data-i18n-placeholder="careers-apply-phone-ph"/>
+      </div>
+      <div class="careers-apply-field careers-apply-field--stack">
+        <div class="careers-apply-label"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-position">지원 포지션</span></div>
+        <div class="careers-apply-radios" role="radiogroup" aria-labelledby="careersApplyPositionLegend">
+          <span id="careersApplyPositionLegend" class="careers-visually-hidden" data-i18n="careers-apply-position">지원 포지션</span>
+          <label class="careers-apply-radio"><input type="radio" name="position" value="fe" checked required/><span data-i18n="careers-role-fe">프론트엔드 개발자</span></label>
+          <label class="careers-apply-radio"><input type="radio" name="position" value="be"/><span data-i18n="careers-role-be">백엔드 개발자</span></label>
+          <label class="careers-apply-radio"><input type="radio" name="position" value="and"/><span data-i18n="careers-role-and">안드로이드 개발자</span></label>
+          <label class="careers-apply-radio"><input type="radio" name="position" value="ios"/><span data-i18n="careers-role-ios">iOS 개발자</span></label>
+        </div>
+      </div>
+      <div class="careers-apply-field careers-apply-field--stack">
+        <div class="careers-apply-label"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-resume">이력서</span></div>
+        <div class="careers-apply-file-row">
+          <input type="file" id="careersApplyResume" name="resume" class="careers-apply-file-input" accept=".pdf,application/pdf" required/>
+          <label for="careersApplyResume" class="careers-apply-file-btn"><span class="careers-apply-file-plus" aria-hidden="true">+</span><span data-i18n="careers-apply-file-btn">파일선택</span></label>
+          <span class="careers-apply-file-name" id="careersApplyResumeName" aria-live="polite"></span>
+          <ul class="careers-apply-file-hints">
+            <li data-i18n="careers-apply-file-hint1">※ PDF 형식만 업로드 가능합니다.</li>
+            <li data-i18n="careers-apply-file-hint2">※ 파일 업로드 최대 용량 10mb</li>
+          </ul>
+        </div>
+      </div>
+      <div class="careers-apply-field careers-apply-field--stack">
+        <div class="careers-apply-label"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-portfolio">포트폴리오</span></div>
+        <div class="careers-apply-file-row">
+          <input type="file" id="careersApplyPortfolio" name="portfolio" class="careers-apply-file-input" accept=".pdf,application/pdf" required/>
+          <label for="careersApplyPortfolio" class="careers-apply-file-btn"><span class="careers-apply-file-plus" aria-hidden="true">+</span><span data-i18n="careers-apply-file-btn">파일선택</span></label>
+          <span class="careers-apply-file-name" id="careersApplyPortfolioName" aria-live="polite"></span>
+          <ul class="careers-apply-file-hints">
+            <li data-i18n="careers-apply-file-hint1">※ PDF 형식만 업로드 가능합니다.</li>
+            <li data-i18n="careers-apply-file-hint2">※ 파일 업로드 최대 용량 10mb</li>
+          </ul>
+        </div>
+      </div>
+      <hr class="careers-apply-divider"/>
+      <label class="careers-apply-privacy">
+        <input type="checkbox" id="careersApplyPrivacy" name="privacy" required/>
+        <span><span class="careers-apply-req">*</span> <span class="careers-apply-privacy-text" data-i18n="careers-apply-privacy">개인정보 수집에 동의합니다.</span></span>
+      </label>
+      <div class="careers-apply-submit-wrap">
+        <button type="submit" class="careers-apply-submit" data-i18n="careers-apply-submit">지원서 접수하기</button>
+        <p class="careers-apply-msg" id="careersApplyMsg" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="careers-visually-hidden" aria-hidden="true">
+  <span id="careersApplyErrTplType" data-i18n="careers-apply-file-err-type"></span>
+  <span id="careersApplyErrTplSize" data-i18n="careers-apply-file-err-size"></span>
+  <span id="careersApplySubmitTpl" data-i18n="careers-apply-submit-msg"></span>
+</div>
 </main>
 <footer role="contentinfo">
   <div class="container">
@@ -2422,6 +2752,128 @@
     if (e.detail && e.detail.pageKey === 'careers') {
       requestAnimationFrame(function(){ requestAnimationFrame(boot); });
     }
+  });
+})();
+(function initCareersApplyModal(){
+  var modal = document.getElementById('careersApplyModal');
+  var openBtn = document.getElementById('careersApplyOpen');
+  var closeBtn = document.getElementById('careersApplyClose');
+  var backdrop = document.getElementById('careersApplyBackdrop');
+  var form = document.getElementById('careersApplyForm');
+  var msgEl = document.getElementById('careersApplyMsg');
+  if (!modal || !openBtn || !form) return;
+
+  var resumeInput = document.getElementById('careersApplyResume');
+  var portfolioInput = document.getElementById('careersApplyPortfolio');
+  var resumeNameEl = document.getElementById('careersApplyResumeName');
+  var portfolioNameEl = document.getElementById('careersApplyPortfolioName');
+  var lastFocus = null;
+  var PDF_MAX = 10 * 1024 * 1024;
+
+  function errTypeText(){
+    var el = document.getElementById('careersApplyErrTplType');
+    return (el && el.textContent) ? el.textContent.trim() : 'PDF만 업로드할 수 있습니다.';
+  }
+  function errSizeText(){
+    var el = document.getElementById('careersApplyErrTplSize');
+    return (el && el.textContent) ? el.textContent.trim() : '10MB 이하여야 합니다.';
+  }
+  function submitMsgText(){
+    var el = document.getElementById('careersApplySubmitTpl');
+    return (el && el.textContent) ? el.textContent.trim() : '';
+  }
+
+  function isPdfFile(file){
+    if (!file) return false;
+    var name = (file.name || '').toLowerCase();
+    return file.type === 'application/pdf' || name.endsWith('.pdf');
+  }
+
+  function validateFileInput(input, nameEl){
+    var f = input.files && input.files[0];
+    if (!f){
+      nameEl.textContent = '';
+      return true;
+    }
+    if (!isPdfFile(f)){
+      input.value = '';
+      nameEl.textContent = '';
+      window.alert(errTypeText());
+      return false;
+    }
+    if (f.size > PDF_MAX){
+      input.value = '';
+      nameEl.textContent = '';
+      window.alert(errSizeText());
+      return false;
+    }
+    nameEl.textContent = f.name;
+    return true;
+  }
+
+  if (resumeInput && resumeNameEl){
+    resumeInput.addEventListener('change', function(){ validateFileInput(resumeInput, resumeNameEl); });
+  }
+  if (portfolioInput && portfolioNameEl){
+    portfolioInput.addEventListener('change', function(){ validateFileInput(portfolioInput, portfolioNameEl); });
+  }
+
+  function syncPositionFromPage(){
+    var sel = document.querySelector('.careers-role.is-selected');
+    var val = sel ? sel.getAttribute('data-careers-role') : 'fe';
+    var allowed = { fe:1, be:1, and:1, ios:1 };
+    if (!allowed[val]) val = 'fe';
+    var radio = form.querySelector('input[name="position"][value="' + val + '"]');
+    if (radio){
+      radio.checked = true;
+    }
+  }
+
+  function openModal(){
+    lastFocus = document.activeElement;
+    syncPositionFromPage();
+    if (msgEl) msgEl.textContent = '';
+    modal.removeAttribute('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+    openBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    window.setTimeout(function(){
+      var name = document.getElementById('careersApplyName');
+      if (name) name.focus();
+    }, 0);
+  }
+
+  function closeModal(){
+    modal.setAttribute('hidden', '');
+    modal.setAttribute('aria-hidden', 'true');
+    openBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+  }
+
+  openBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    openModal();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (backdrop) backdrop.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    if (modal.hasAttribute('hidden')) return;
+    closeModal();
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (msgEl) msgEl.textContent = '';
+    if (resumeInput && resumeNameEl && !validateFileInput(resumeInput, resumeNameEl)) return;
+    if (portfolioInput && portfolioNameEl && !validateFileInput(portfolioInput, portfolioNameEl)) return;
+    if (!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+    if (msgEl) msgEl.textContent = submitMsgText();
   });
 })();
 </script>

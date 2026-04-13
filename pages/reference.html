@@ -11,6 +11,17 @@
   /* about-intro과 동일 레이아웃 */
   body { background: #ffffff; color: #111; }
   .page-main { padding: 0; background: #ffffff; }
+  .visually-hidden{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
   .page-hero{ padding-top: 100px; position: relative; overflow: hidden; background: #1a1a1a url(../assets/hero-inner_01.jpg) no-repeat center top; background-size: cover; }
   .page-hero::before{ content:""; position:absolute; inset:0; background: rgba(0,0,0,0.2); pointer-events:none; }
   .hero-inner{ max-width: 1200px; margin: 0 auto; padding: 64px 24px 50px; position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 360px; text-align: left; }
@@ -21,12 +32,356 @@
   .sub-nav a{ padding: 16px 22px; font-size: 18px; color: rgba(0,0,0,0.62); border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; white-space: nowrap; }
   .sub-nav a:hover{ color:#111; }
   .sub-nav a.active{ color:#24ACFF; border-bottom-color:#24ACFF; font-weight:400; }
-  .bdgen-white-presentation{ background: #ffffff; color: #1a1f27; line-height: 1.6; padding: 150px 0 120px; }
+  .bdgen-white-presentation{ background: #ffffff; color: #1a1f27; line-height: 1.6; padding: 100px 0 120px; }
   .bdgen-white-presentation .inner-container{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
   .bdgen-white-presentation .main-title{ font-size: 77px; font-weight: 800; line-height: 100px; margin-top: 0; margin-bottom: 0; letter-spacing: -1.5px; }
   .bdgen-white-presentation .hero-desc{ font-size: 20px; color: #4e5968; margin-top: 30px; font-weight: 400; }
-  @media (max-width: 1023px){ .hero-inner{ padding: 48px 24px 50px; } .sub-nav{ overflow-x: auto; } .bdgen-white-presentation .main-title{ font-size: 40px; } }
-  @media (max-width: 768px){ .bdgen-white-presentation .main-title{ font-size: 34px; } }
+  /* 레퍼런스 본문 — 카드 그리드(첨부 시안) */
+  .ref-page-main-title{
+    font-size: 77px;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin: 0 auto 28px;
+    text-align: center;
+    color: #111;
+  }
+  .ref-page-main-title .ref-page-typing-line{
+    display: inline-block;
+    min-height: 1.05em;
+  }
+  .ref-page-main-title .ref-page-typing-cursor{
+    border-right: 2px solid #0064ff;
+    animation: ref-page-typing-blink 0.7s step-end infinite;
+    padding-right: 2px;
+  }
+  @keyframes ref-page-typing-blink{ 50%{ border-color: transparent; } }
+  .ref-page-lead{
+    text-align: center;
+    max-width: 920px;
+    margin: 0 auto 56px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #666666;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .ref-page-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 80px;
+    column-gap: 32px;
+    align-items: stretch;
+  }
+  .ref-page-card{
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    transition: box-shadow 0.28s ease, border-color 0.28s ease;
+  }
+  .ref-page-card:hover{
+    border-color: rgba(0, 101, 250, 0.38);
+    box-shadow: 0 14px 44px rgba(15, 40, 90, 0.09);
+  }
+  .ref-page-card-logo{
+    flex-shrink: 0;
+    height: 300px;
+    min-height: 300px;
+    background: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 24px;
+    box-sizing: border-box;
+  }
+  /* 동일한 표시 영역(가로·세로 고정) 안에 맞춤 — 로고 비율·여백이 달라도 시각적 크기 통일 */
+  .ref-page-card-logo img{
+    display: block;
+    margin-inline: auto;
+    box-sizing: border-box;
+    width: min(240px, 88%);
+    height: 88px;
+    object-fit: contain;
+    object-position: center;
+  }
+  /* 마약류 의약품 관리 플랫폼 카드 — logo_RC만 표시 영역 15% 확대 */
+  .ref-page-card-logo--logo-scale-115 img{
+    width: min(calc(240px * 1.15), 88%);
+    height: calc(88px * 1.15);
+  }
+  /* 호버 시 iframe 콘텐츠 — Service Flow(pk-flow) / 디지털배지 HTML 등 */
+  .ref-page-card-logo--flow-hover,
+  .ref-page-card-logo--embed-hover{
+    position: relative;
+    /* block + 자식 height:100% 는 퍼센트 높이 미해결 시 영역이 0이 될 수 있음 → flex로 로고만 중앙 정렬 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ref-page-card-logo--flow-hover{
+    cursor: pointer;
+  }
+  .ref-page-card-logo--embed-hover{
+    cursor: default;
+  }
+  .ref-page-card-logo-default{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.28s ease;
+  }
+  .ref-page-card-logo-flow{
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    grid-template: 1fr / 1fr;
+    /* place-items:center 는 자식을 내용 크기로 줄임. iframe은 absolute라 부모 높이에 안 잡혀 0×0 → 다이어그램 안 보임 */
+    place-items: stretch;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    background: #f8fafc;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.28s ease, visibility 0s linear 0.28s;
+    min-height: 0;
+  }
+  .ref-page-card-flow-embed{
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  .ref-page-card-flow-embed iframe{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    /* 클릭이 iframe 문서로 가면 부모로 전달되지 않음 → 모달 열림용 클릭은 영역에서 처리 */
+    pointer-events: none;
+  }
+  /* Service Flow 확대 모달 */
+  .ref-flow-modal{
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+    box-sizing: border-box;
+  }
+  .ref-flow-modal[hidden]{
+    display: none !important;
+  }
+  .ref-flow-modal__backdrop{
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(15, 23, 42, 0.72);
+    cursor: pointer;
+  }
+  .ref-flow-modal__panel{
+    position: relative;
+    z-index: 1;
+    width: min(1120px, 96vw);
+    max-height: min(92vh, 920px);
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+  }
+  .ref-flow-modal__toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e8ecf1;
+    flex-shrink: 0;
+  }
+  .ref-flow-modal__heading{
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.02em;
+  }
+  .ref-flow-modal__close{
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ref-flow-modal__close:hover{
+    background: #e2e8f0;
+  }
+  .ref-flow-modal__frame{
+    position: relative;
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: min(360px, 50vh);
+    aspect-ratio: 1239 / 899;
+    max-height: min(calc(92vh - 64px), calc(96vw * 899 / 1239));
+    background: #f8fafc;
+  }
+  .ref-flow-modal__frame iframe{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .ref-flow-modal__frame--logo{
+    aspect-ratio: auto;
+    min-height: 220px;
+    max-height: min(78vh, 720px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+  .ref-modal__img-only{
+    display: none;
+    max-width: 100%;
+    max-height: min(65vh, 560px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  .ref-flow-modal--mode-logo .ref-flow-modal__frame iframe{
+    display: none !important;
+  }
+  .ref-flow-modal--mode-logo .ref-modal__img-only{
+    display: block;
+    position: relative;
+  }
+  .ref-page-card-logo--modal-thumb{
+    cursor: pointer;
+  }
+  .ref-page-card:hover .ref-page-card-logo-flow{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.28s ease, visibility 0s;
+  }
+  .ref-page-card:hover .ref-page-card-logo-default{
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ref-page-card-logo-default,
+    .ref-page-card-logo-flow{
+      transition-duration: 0.01ms;
+    }
+    .ref-page-card-logo-flow{
+      transition-delay: 0s;
+    }
+  }
+  .ref-page-card-logo--text span{
+    display: block;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    font-weight: 800;
+    color: #111;
+    text-align: center;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+  }
+  .ref-page-card-body{
+    padding: 22px 22px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .ref-page-card-title{
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.6;
+    margin: 0 0 20px;
+    letter-spacing: -0.02em;
+  }
+  .ref-page-card-footer{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px 16px;
+    margin-top: auto;
+  }
+  .ref-page-card-period{
+    font-size: 0.8125rem;
+    color: #888;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .ref-page-card-tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+    flex: 1;
+    min-width: 0;
+  }
+  .ref-page-card-tags .ref-page-tag{
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    background: #8eb8f5;
+    color: #fff;
+    border: none;
+    line-height: 1.2;
+  }
+  @media (max-width: 1023px){
+    .hero-inner{ padding: 48px 24px 50px; }
+    .sub-nav{ overflow-x: auto; }
+    .bdgen-white-presentation .main-title{ font-size: 40px; }
+    .ref-page-main-title{ font-size: 40px; letter-spacing: -0.02em; }
+    .ref-page-grid{ row-gap: 80px; column-gap: 22px; }
+  }
+  @media (max-width: 768px){
+    .bdgen-white-presentation .main-title{ font-size: 34px; }
+    .ref-page-main-title{ font-size: 34px; }
+    .ref-page-grid{ grid-template-columns: 1fr; }
+    .ref-page-lead{ margin-bottom: 40px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ref-page-main-title .ref-page-typing-cursor{ animation: none; border-right-color: transparent; }
+  }
 </style>
 </head>
 <body class="bdgen-subpage">
@@ -133,14 +488,187 @@
       </nav>
     </div>
   </div>
-  <section class="bdgen-white-presentation">
+  <section class="bdgen-white-presentation" aria-labelledby="ref-page-heading">
     <div class="inner-container">
-      <header class="hero-section">
-        <h2 class="main-title" data-i18n="main-title">레퍼런스</h2>
-        <p class="hero-desc" data-i18n="main-desc">콘텐츠 준비 중입니다.</p>
-      </header>
+      <h2 id="ref-page-heading" class="ref-page-main-title">
+        <span id="ref-page-typing-1" class="ref-page-typing-line ref-page-typing-cursor" data-i18n="ref-page-display-title" data-text="Reference">Reference</span>
+      </h2>
+      <p class="ref-page-lead" data-i18n="ref-page-lead">비디젠은 고객의 요구를 반영하여 IT 환경에 최적화된 통합 시스템 서비스를 제공합니다.</p>
+      <div class="ref-page-grid" role="list">
+        <article class="ref-page-card" role="listitem">
+          <div
+            class="ref-page-card-logo ref-page-card-logo--flow-hover ref-page-card-logo--modal-thumb"
+            role="button"
+            tabindex="0"
+            data-ref-modal-type="iframe"
+            data-ref-modal-src="pk-flow-embed.html?svg=../assets/BLOCKCHAIN_flow.svg&amp;v=14"
+            data-i18n-title="ref-page-flow-thumb-open-label"
+            title="Service Flow 다이어그램을 크게 봅니다"
+          >
+            <div class="ref-page-card-logo-default">
+              <img src="../assets/rogo_sk.png" alt="SK텔레콤" loading="lazy" decoding="async"/>
+            </div>
+            <div class="ref-page-card-logo-flow" aria-hidden="true">
+              <div class="ref-page-card-flow-embed">
+                <iframe
+                  src="pk-flow-embed.html?svg=../assets/BLOCKCHAIN_flow.svg&amp;v=13"
+                  title="GenID Service Flow"
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="ref-page-card-body">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-1-title">S통신 DID 서비스 및 PASS 모바일 지갑 서비스 운영/고도화</h3>
+            <div class="ref-page-card-footer">
+              <span class="ref-page-card-period" data-i18n="ref-page-card-1-period">22. 01 ~ 현재진행</span>
+              <div class="ref-page-card-tags" data-i18n="ref-page-card-1-tags" data-i18n-html="true"></div>
+            </div>
+          </div>
+        </article>
+        <article class="ref-page-card" role="listitem">
+          <div
+            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--modal-thumb"
+            role="button"
+            tabindex="0"
+            data-ref-modal-type="iframe"
+            data-ref-modal-src="../assets/디지털배지.html"
+            data-i18n-title="ref-page-modal-thumb-open-digibadge"
+            title="디지털배지 다이어그램 크게 보기"
+          >
+            <div class="ref-page-card-logo-default">
+              <img src="../assets/LOGO_KE.png" alt="한국고용정보원" data-i18n-alt="ref-page-logo-text-keis" loading="lazy" decoding="async"/>
+            </div>
+            <div class="ref-page-card-logo-flow" aria-hidden="true">
+              <div class="ref-page-card-flow-embed">
+                <iframe
+                  src="../assets/ref-digibadge-thumb.html?v=1"
+                  title="디지털배지 취업지원 서비스"
+                  loading="eager"
+                  scrolling="no"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="ref-page-card-body">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-2-title">디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정</h3>
+            <div class="ref-page-card-footer">
+              <span class="ref-page-card-period" data-i18n="ref-page-card-2-period">24. 08 ~ 24. 12</span>
+              <div class="ref-page-card-tags" data-i18n="ref-page-card-2-tags" data-i18n-html="true"></div>
+            </div>
+          </div>
+        </article>
+        <article class="ref-page-card" role="listitem">
+          <div
+            class="ref-page-card-logo ref-page-card-logo--modal-thumb"
+            role="button"
+            tabindex="0"
+            data-ref-modal-type="logo"
+            data-ref-modal-src="../assets/LOGO_NH.png"
+            data-i18n-title="ref-page-modal-thumb-open-logo"
+            title="로고 크게 보기"
+          >
+            <img src="../assets/LOGO_NH.png" alt="NH농협은행" data-i18n-alt="ref-page-logo-text-nh" loading="lazy" decoding="async"/>
+          </div>
+          <div class="ref-page-card-body">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-3-title">조각투자사업자를 위한 공익적 토큰증권 플랫폼(STO)구축 사업 참여기관 선정</h3>
+            <div class="ref-page-card-footer">
+              <span class="ref-page-card-period" data-i18n="ref-page-card-3-period">24. 06 ~ 24. 12</span>
+              <div class="ref-page-card-tags" data-i18n="ref-page-card-3-tags" data-i18n-html="true"></div>
+            </div>
+          </div>
+        </article>
+        <article class="ref-page-card" role="listitem">
+          <div
+            class="ref-page-card-logo ref-page-card-logo--modal-thumb"
+            role="button"
+            tabindex="0"
+            data-ref-modal-type="logo"
+            data-ref-modal-src="../assets/LOGO_SEOUL.png"
+            data-i18n-title="ref-page-modal-thumb-open-logo"
+            title="로고 크게 보기"
+          >
+            <img src="../assets/LOGO_SEOUL.png" alt="서울특별시" data-i18n-alt="ref-page-logo-text-seoul" loading="lazy" decoding="async"/>
+          </div>
+          <div class="ref-page-card-body">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-4-title">서울시 블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축</h3>
+            <div class="ref-page-card-footer">
+              <span class="ref-page-card-period" data-i18n="ref-page-card-4-period">22. 07 ~ 22. 12</span>
+              <div class="ref-page-card-tags" data-i18n="ref-page-card-4-tags" data-i18n-html="true"></div>
+            </div>
+          </div>
+        </article>
+        <article class="ref-page-card" role="listitem">
+          <div
+            class="ref-page-card-logo ref-page-card-logo--modal-thumb"
+            role="button"
+            tabindex="0"
+            data-ref-modal-type="logo"
+            data-ref-modal-src="../assets/rogo_nipa.png"
+            data-i18n-title="ref-page-modal-thumb-open-logo"
+            title="로고 크게 보기"
+          >
+            <img src="../assets/rogo_nipa.png" alt="NIPA" data-i18n-alt="ref-page-logo-alt-nipa" loading="lazy" decoding="async"/>
+          </div>
+          <div class="ref-page-card-body">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-5-title">디지털배지 기반 통합 취업지원서비스 구축 — 블록체인 자격증명 시스템</h3>
+            <div class="ref-page-card-footer">
+              <span class="ref-page-card-period" data-i18n="ref-page-card-5-period">2024. 06 ~ 2024. 12</span>
+              <div class="ref-page-card-tags" data-i18n="ref-page-card-5-tags" data-i18n-html="true"></div>
+            </div>
+          </div>
+        </article>
+        <article class="ref-page-card" role="listitem">
+          <div
+            class="ref-page-card-logo ref-page-card-logo--logo-scale-115 ref-page-card-logo--modal-thumb"
+            role="button"
+            tabindex="0"
+            data-ref-modal-type="logo"
+            data-ref-modal-src="../assets/logo_RC.png"
+            data-i18n-title="ref-page-modal-thumb-open-logo"
+            title="로고 크게 보기"
+          >
+            <img src="../assets/logo_RC.png" alt="보건의료기관" data-i18n-alt="ref-page-logo-text-health" loading="lazy" decoding="async"/>
+          </div>
+          <div class="ref-page-card-body">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-6-title">블록체인 기반 마약류 의약품 관리 플랫폼 개발</h3>
+            <div class="ref-page-card-footer">
+              <span class="ref-page-card-period" data-i18n="ref-page-card-6-period">2021. 05 ~ 2021. 12</span>
+              <div class="ref-page-card-tags" data-i18n="ref-page-card-6-tags" data-i18n-html="true"></div>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
+  <div
+    id="refFlowModal"
+    class="ref-flow-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="refFlowModalTitle"
+    aria-hidden="true"
+    hidden
+    data-i18n-title="ref-page-flow-modal-dialog-aria"
+    title="Service Flow 다이어그램 확대 보기"
+  >
+    <button type="button" class="ref-flow-modal__backdrop" data-ref-flow-modal-dismiss data-i18n-title="ref-page-flow-modal-dismiss-scrim" title="닫기" aria-label="닫기"></button>
+    <div class="ref-flow-modal__panel">
+      <div class="ref-flow-modal__toolbar">
+        <h2 id="refFlowModalTitle" class="ref-flow-modal__heading" data-i18n="ref-page-flow-modal-heading">Service Flow</h2>
+        <button type="button" class="ref-flow-modal__close" data-ref-flow-modal-dismiss data-i18n-title="ref-page-flow-modal-close" title="닫기" aria-label="닫기">&times;</button>
+      </div>
+      <div class="ref-flow-modal__frame" id="refModalFrame">
+        <iframe
+          id="refFlowModalIframe"
+          data-i18n-title="ref-page-flow-modal-iframe-title"
+          title=""
+          loading="lazy"
+        ></iframe>
+        <img id="refModalImgOnly" class="ref-modal__img-only" alt="" hidden decoding="async"/>
+      </div>
+    </div>
+  </div>
 </main>
 <footer role="contentinfo">
   <div class="container">
@@ -251,6 +779,120 @@
   if(!trigger||!list)return;
   trigger.addEventListener('click',function(e){e.stopPropagation(); var isOpen=wrap.classList.toggle('open'); trigger.setAttribute('aria-expanded',isOpen);});
   document.addEventListener('click',function(){wrap.classList.remove('open'); trigger.setAttribute('aria-expanded','false');});
+})();
+(function(){
+  var el=document.getElementById('ref-page-typing-1');
+  if(!el) return;
+  var reducedMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var speed=reducedMotion?0:70;
+  var pendingTimer=null;
+  var typingGen=0;
+  function runTyping(){
+    typingGen++;
+    var gen=typingGen;
+    if(pendingTimer){ clearTimeout(pendingTimer); pendingTimer=null; }
+    var text=(el.getAttribute('data-text')||'').trim()||el.textContent.trim()||'Reference';
+    if(reducedMotion){
+      el.textContent=text;
+      el.classList.remove('ref-page-typing-cursor');
+      return;
+    }
+    el.textContent='';
+    el.classList.add('ref-page-typing-cursor');
+    var i=0;
+    function type(){
+      if(gen!==typingGen) return;
+      if(i<text.length){
+        el.textContent+=text.charAt(i);
+        i++;
+        pendingTimer=setTimeout(type,speed);
+      }else{
+        if(gen===typingGen) el.classList.remove('ref-page-typing-cursor');
+        pendingTimer=null;
+      }
+    }
+    pendingTimer=setTimeout(function(){ if(gen===typingGen) type(); },400);
+  }
+  function scheduleRun(){ setTimeout(runTyping,500); }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',scheduleRun);
+  }else scheduleRun();
+  window.addEventListener('bdgen:subpage-language-applied',function(){ scheduleRun(); });
+})();
+(function(){
+  var modal = document.getElementById('refFlowModal');
+  var iframe = document.getElementById('refFlowModalIframe');
+  var imgOnly = document.getElementById('refModalImgOnly');
+  var modalTitle = document.getElementById('refFlowModalTitle');
+  var frame = document.getElementById('refModalFrame');
+  var thumbs = document.querySelectorAll('.ref-page-card-logo--modal-thumb');
+  if (!modal || !iframe || !imgOnly || !frame || !thumbs.length) return;
+  var dismissers = modal.querySelectorAll('[data-ref-flow-modal-dismiss]');
+  var prevFocus = null;
+
+  function openModalFromThumb(thumb, e){
+    if (e && e.type === 'keydown') e.preventDefault();
+    var type = (thumb.getAttribute('data-ref-modal-type') || 'iframe').trim();
+    var src = (thumb.getAttribute('data-ref-modal-src') || '').trim();
+    var article = thumb.closest('.ref-page-card');
+    var titleEl = article && article.querySelector('.ref-page-card-title');
+    var heading = titleEl ? titleEl.textContent.replace(/\s+/g, ' ').trim() : '';
+    if (modalTitle) modalTitle.textContent = heading || modalTitle.textContent;
+
+    if (type === 'logo') {
+      modal.classList.add('ref-flow-modal--mode-logo');
+      modal.classList.remove('ref-flow-modal--mode-iframe');
+      frame.classList.add('ref-flow-modal__frame--logo');
+      iframe.removeAttribute('src');
+      imgOnly.removeAttribute('hidden');
+      imgOnly.src = src;
+      var thumbImg = thumb.querySelector('img');
+      imgOnly.alt = thumbImg ? (thumbImg.getAttribute('alt') || '') : '';
+    } else {
+      modal.classList.remove('ref-flow-modal--mode-logo');
+      modal.classList.add('ref-flow-modal--mode-iframe');
+      frame.classList.remove('ref-flow-modal__frame--logo');
+      imgOnly.setAttribute('hidden', '');
+      imgOnly.removeAttribute('src');
+      if (src) iframe.setAttribute('src', src);
+    }
+
+    prevFocus = document.activeElement;
+    modal.removeAttribute('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    var closeBtn = modal.querySelector('.ref-flow-modal__close');
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeModal(){
+    modal.setAttribute('hidden', '');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    modal.classList.remove('ref-flow-modal--mode-logo', 'ref-flow-modal--mode-iframe');
+    frame.classList.remove('ref-flow-modal__frame--logo');
+    imgOnly.setAttribute('hidden', '');
+    imgOnly.removeAttribute('src');
+    iframe.removeAttribute('src');
+    if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
+    prevFocus = null;
+  }
+
+  thumbs.forEach(function(thumb){
+    thumb.addEventListener('click', function(){ openModalFromThumb(thumb, null); });
+    thumb.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') openModalFromThumb(thumb, e);
+    });
+  });
+  dismissers.forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      closeModal();
+    });
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal();
+  });
 })();
 </script>
 </body>

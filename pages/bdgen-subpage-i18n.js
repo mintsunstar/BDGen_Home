@@ -116,8 +116,8 @@
         'sec-cert-desc': '축적한 기술의 혁신성과 사업 계획의 우수성, 경영 관리 능력을 인정받아 다양한 인증을 확보했습니다.',
         'cert-1-name': '기술혁신형 중소기업 확인서',
         'cert-1-issuer': '중소벤처기업부 · 2023.03.15',
-        'cert-2-name': '벤처기업 확인서',
-        'cert-2-issuer': '벤처기업확인기관 · 2023.04.05',
+        'cert-2-name': '벤처기업확인서',
+        'cert-2-issuer': '벤처기업확인기관 · 2026. 04. 08',
         'cert-3-name': '기업부설연구소 인정서',
         'cert-3-issuer': '한국산업기술진흥협회 · 2021.11.25',
         'cert-4-name': '직접생산확인 증명서',
@@ -150,7 +150,7 @@
         'cert-1-name': 'Inno-Biz Technology Innovation Certificate',
         'cert-1-issuer': 'Ministry of SMEs and Startups · 2023.03.15',
         'cert-2-name': 'Venture Company Certificate',
-        'cert-2-issuer': 'Venture Business Verification Agency · 2023.04.05',
+        'cert-2-issuer': 'Venture Business Verification Agency · Apr 8, 2026',
         'cert-3-name': 'Corporate R&D Center Accreditation',
         'cert-3-issuer': 'Korea Industrial Technology Association · 2021.11.25',
         'cert-4-name': 'Direct Production Confirmation Certificate',
@@ -382,14 +382,110 @@
         'hero-desc': '비디젠이 구축한 다양한 프로젝트와 고객 사례를 소개합니다.',
         'breadcrumb-current': '레퍼런스',
         'main-title': '레퍼런스',
-        'main-desc': '콘텐츠 준비 중입니다.'
+        'main-desc': '콘텐츠 준비 중입니다.',
+        'ref-page-display-title': 'Reference',
+        'ref-page-lead':
+          '비디젠은 고객의 요구를 반영하여 IT 환경에 최적화된 통합 시스템 서비스를 제공합니다.',
+        'ref-page-card-1-title':
+          'S통신 DID 서비스 및 PASS 모바일 지갑 서비스 운영/고도화',
+        'ref-page-card-1-period': '22. 01 ~ 현재진행',
+        'ref-page-card-1-tags':
+          '<span class="ref-page-tag">#모바일지갑</span><span class="ref-page-tag">#DID</span>',
+        'ref-page-card-2-title':
+          '디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정',
+        'ref-page-card-2-period': '24. 08 ~ 24. 12',
+        'ref-page-card-2-tags':
+          '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#취업지원</span>',
+        'ref-page-card-3-title':
+          '조각투자사업자를 위한 공익적 토큰증권 플랫폼(STO)구축 사업 참여기관 선정',
+        'ref-page-card-3-period': '24. 06 ~ 24. 12',
+        'ref-page-card-3-tags':
+          '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#토큰증권</span>',
+        'ref-page-card-4-title':
+          '서울시 블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축',
+        'ref-page-card-4-period': '22. 07 ~ 22. 12',
+        'ref-page-card-4-tags':
+          '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#전자근로계약</span>',
+        'ref-page-card-5-title':
+          '디지털배지 기반 통합 취업지원서비스 구축 — 블록체인 자격증명 시스템',
+        'ref-page-card-5-period': '2024. 06 ~ 2024. 12',
+        'ref-page-card-5-tags':
+          '<span class="ref-page-tag">#디지털배지</span><span class="ref-page-tag">#블록체인</span>',
+        'ref-page-card-6-title':
+          '블록체인 기반 마약류 의약품 관리 플랫폼 개발',
+        'ref-page-card-6-period': '2021. 05 ~ 2021. 12',
+        'ref-page-card-6-tags':
+          '<span class="ref-page-tag">#의료</span><span class="ref-page-tag">#블록체인</span>',
+        'ref-page-logo-alt-sk': 'SK텔레콤',
+        'ref-page-logo-alt-nipa': 'NIPA',
+        'ref-page-logo-text-keis': '한국고용정보원',
+        'ref-page-logo-text-nh': 'NH농협은행',
+        'ref-page-logo-text-seoul': '서울특별시',
+        'ref-page-logo-alt-smilegate': '스마일게이트',
+        'ref-page-logo-text-health': '보건의료기관',
+        'ref-page-flow-thumb-open-label': 'Service Flow 다이어그램 크게 보기',
+        'ref-page-flow-modal-dialog-aria': 'Service Flow 다이어그램 확대 보기',
+        'ref-page-flow-modal-dismiss-scrim': '닫기',
+        'ref-page-flow-modal-heading': 'Service Flow',
+        'ref-page-flow-modal-close': '닫기',
+        'ref-page-flow-modal-iframe-title': 'GenID Service Flow',
+        'ref-page-modal-thumb-open-logo': '로고·프로젝트 제목 크게 보기',
+        'ref-page-modal-thumb-open-digibadge': '디지털배지 다이어그램 크게 보기'
       },
       en: {
         'hero-title': 'Reference',
         'hero-desc': 'Introducing various projects and customer cases built by BDGen.',
         'breadcrumb-current': 'Reference',
         'main-title': 'Reference',
-        'main-desc': 'Content coming soon.'
+        'main-desc': 'Content coming soon.',
+        'ref-page-display-title': 'Reference',
+        'ref-page-lead':
+          'BDGen delivers integrated system services tailored to your needs and optimized for your IT environment.',
+        'ref-page-card-1-title':
+          'DID and PASS mobile wallet service operations and enhancement (major telco)',
+        'ref-page-card-1-period': 'Jan 2022 — ongoing',
+        'ref-page-card-1-tags':
+          '<span class="ref-page-tag">#MobileWallet</span><span class="ref-page-tag">#DID</span>',
+        'ref-page-card-2-title':
+          'Selected participant — integrated employment support service based on digital badges',
+        'ref-page-card-2-period': 'Aug 2024 — Dec 2024',
+        'ref-page-card-2-tags':
+          '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#Employment</span>',
+        'ref-page-card-3-title':
+          'Selected participant — public-interest tokenized security (STO) platform for fractional investment',
+        'ref-page-card-3-period': 'Jun 2024 — Dec 2024',
+        'ref-page-card-3-tags':
+          '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#STO</span>',
+        'ref-page-card-4-title':
+          'Seoul Metropolitan Government — blockchain-based e-labor contracts and career history platform',
+        'ref-page-card-4-period': 'Jul 2022 — Dec 2022',
+        'ref-page-card-4-tags':
+          '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#EContract</span>',
+        'ref-page-card-5-title':
+          'Digital badge-based employment support — blockchain credentialing system (NIPA)',
+        'ref-page-card-5-period': 'Jun 2024 — Dec 2024',
+        'ref-page-card-5-tags':
+          '<span class="ref-page-tag">#DigitalBadge</span><span class="ref-page-tag">#Blockchain</span>',
+        'ref-page-card-6-title':
+          'Blockchain-based controlled substance medicine management platform',
+        'ref-page-card-6-period': 'May 2021 — Dec 2021',
+        'ref-page-card-6-tags':
+          '<span class="ref-page-tag">#Healthcare</span><span class="ref-page-tag">#Blockchain</span>',
+        'ref-page-logo-alt-sk': 'SK Telecom',
+        'ref-page-logo-alt-nipa': 'NIPA',
+        'ref-page-logo-text-keis': 'KEIS',
+        'ref-page-logo-text-nh': 'NH Bank',
+        'ref-page-logo-text-seoul': 'Seoul',
+        'ref-page-logo-alt-smilegate': 'Smilegate',
+        'ref-page-logo-text-health': 'Healthcare',
+        'ref-page-flow-thumb-open-label': 'View Service Flow diagram larger',
+        'ref-page-flow-modal-dialog-aria': 'Enlarged Service Flow diagram',
+        'ref-page-flow-modal-dismiss-scrim': 'Close',
+        'ref-page-flow-modal-heading': 'Service Flow',
+        'ref-page-flow-modal-close': 'Close',
+        'ref-page-flow-modal-iframe-title': 'GenID Service Flow',
+        'ref-page-modal-thumb-open-logo': 'View logo and project title larger',
+        'ref-page-modal-thumb-open-digibadge': 'View digital badge diagram larger'
       }
     },
     'careers': {
@@ -472,7 +568,26 @@
         'careers-role-be': '백엔드 개발자',
         'careers-role-and': '안드로이드 개발자',
         'careers-role-ios': 'iOS 개발자',
-        'careers-cta-text': '지원서 작성하러 가기',
+        'careers-cta-text': '지원서 작성하기',
+        'careers-apply-title': '지원서 작성',
+        'careers-apply-name': '이름',
+        'careers-apply-name-ph': '성함을 입력해주세요.',
+        'careers-apply-email': 'E-mail',
+        'careers-apply-email-ph': '이메일을 입력해주세요.',
+        'careers-apply-phone': '연락처',
+        'careers-apply-phone-ph': '연락처를 입력해주세요.',
+        'careers-apply-position': '지원 포지션',
+        'careers-apply-resume': '이력서',
+        'careers-apply-portfolio': '포트폴리오',
+        'careers-apply-file-btn': '파일선택',
+        'careers-apply-file-hint1': '※ PDF 형식만 업로드 가능합니다.',
+        'careers-apply-file-hint2': '※ 파일 업로드 최대 용량 10mb',
+        'careers-apply-privacy': '개인정보 수집에 동의합니다.',
+        'careers-apply-submit': '지원서 접수하기',
+        'careers-apply-close': '닫기',
+        'careers-apply-submit-msg': '접수 시스템 연동 전입니다. 잠시 후 다시 이용해 주세요.',
+        'careers-apply-file-err-type': 'PDF 파일만 업로드할 수 있습니다.',
+        'careers-apply-file-err-size': '파일 크기는 10MB 이하여야 합니다.',
         'careers-link-saramin': '사람인 지원하기',
         'careers-link-jobkorea': '잡코리아 지원하기',
         'careers-link-saramin-title': '사람인 기업 채용 페이지 (URL 연결 예정)',
@@ -565,7 +680,26 @@
         'careers-role-be': 'Backend developer',
         'careers-role-and': 'Android developer',
         'careers-role-ios': 'iOS developer',
-        'careers-cta-text': 'Go to application form',
+        'careers-cta-text': 'Apply',
+        'careers-apply-title': 'Application form',
+        'careers-apply-name': 'Name',
+        'careers-apply-name-ph': 'Enter your name.',
+        'careers-apply-email': 'E-mail',
+        'careers-apply-email-ph': 'Enter your email.',
+        'careers-apply-phone': 'Phone',
+        'careers-apply-phone-ph': 'Enter your phone number.',
+        'careers-apply-position': 'Position',
+        'careers-apply-resume': 'Resume',
+        'careers-apply-portfolio': 'Portfolio',
+        'careers-apply-file-btn': 'Choose file',
+        'careers-apply-file-hint1': '※ PDF only.',
+        'careers-apply-file-hint2': '※ Max file size 10 MB.',
+        'careers-apply-privacy': 'I agree to the collection of personal information.',
+        'careers-apply-submit': 'Submit application',
+        'careers-apply-close': 'Close',
+        'careers-apply-submit-msg': 'Submission is not connected yet. Please try again later.',
+        'careers-apply-file-err-type': 'Only PDF files are allowed.',
+        'careers-apply-file-err-size': 'File size must be 10 MB or less.',
         'careers-link-saramin': 'Apply on Saramin',
         'careers-link-jobkorea': 'Apply on JobKorea',
         'careers-link-saramin-title': 'Saramin company jobs (URL to be connected)',
@@ -954,6 +1088,14 @@
       }
     });
 
+    main.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-alt');
+      if (T[key] !== undefined) {
+        var altText = String(T[key]).replace(/<[^>]+>/g, '').trim();
+        el.setAttribute('alt', altText);
+      }
+    });
+
     /* sub-nav links (page-specific) */
     var subNavLinks = main.querySelectorAll('.sub-nav-links a');
     if (subNavLinks.length && T['sub-nav-1']) {
@@ -995,6 +1137,12 @@
     if (intro2 && T['intro-typing-2']) {
       intro2.setAttribute('data-text', T['intro-typing-2']);
       intro2.textContent = T['intro-typing-2'];
+    }
+
+    var refTyping1 = document.getElementById('ref-page-typing-1');
+    if (refTyping1 && T['ref-page-display-title']) {
+      refTyping1.setAttribute('data-text', T['ref-page-display-title']);
+      refTyping1.textContent = T['ref-page-display-title'];
     }
 
     var hist1 = document.getElementById('history-typing-1');

@@ -642,7 +642,9 @@ footer {
   padding: 48px 0 32px;
 }
 .footer-inner {
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+  display: grid;
+  grid-template-columns: minmax(200px, 2fr) repeat(6, minmax(0, 1fr));
+  gap: clamp(24px, 2vw, 40px);
   margin-bottom: 40px;
 }
 .footer-brand { }
@@ -761,7 +763,8 @@ footer {
   .genid-usecases { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .ref-projects { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .news-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .footer-inner { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; }
   .about-orb { width: min(300px, 45vw); height: min(300px, 45vw); }
   .about-ring-1 { width: min(340px, 52vw); height: min(340px, 52vw); }
   .about-ring-2 { width: min(390px, 58vw); height: min(390px, 58vw); }

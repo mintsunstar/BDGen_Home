@@ -378,6 +378,7 @@
     },
     'reference': {
       ko: {
+        'sub-nav-1': '레퍼런스',
         'hero-title': '레퍼런스',
         'hero-desc': '비디젠이 구축한 다양한 프로젝트와 고객 사례를 소개합니다.',
         'breadcrumb-current': '레퍼런스',
@@ -433,6 +434,7 @@
         'ref-page-modal-thumb-open-digibadge': '디지털배지 다이어그램 크게 보기'
       },
       en: {
+        'sub-nav-1': 'Reference',
         'hero-title': 'Reference',
         'hero-desc': 'Introducing various projects and customer cases built by BDGen.',
         'breadcrumb-current': 'Reference',

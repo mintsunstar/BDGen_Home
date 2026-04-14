@@ -1698,7 +1698,9 @@ footer {
   padding: 48px 0 32px;
 }
 .footer-inner {
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+  display: grid;
+  grid-template-columns: minmax(200px, 2fr) repeat(6, minmax(0, 1fr));
+  gap: clamp(24px, 2vw, 40px);
   margin-bottom: 40px;
 }
 .footer-brand { }
@@ -2027,7 +2029,8 @@ footer {
   .genid-usecases { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .ref-projects { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .news-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .footer-inner { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; }
   .about-orb { width: min(300px, 45vw); height: min(300px, 45vw); }
   .about-ring-1 { width: min(340px, 52vw); height: min(340px, 52vw); }
   .about-ring-2 { width: min(390px, 58vw); height: min(390px, 58vw); }
@@ -2777,20 +2780,37 @@ footer {
         </div>
       </div>
       <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footerSvc">서비스</div>
+        <div class="footer-col-title" data-i18n="footerColAbout">회사소개</div>
         <ul>
-          <li><a href="#services" data-i18n="footerSvc1">블록체인 서비스 개발</a></li>
-          <li><a href="#services" data-i18n="footerSvc2">모바일 앱 개발</a></li>
-          <li><a href="#services" data-i18n="footerSvc3">플랫폼 운영 솔루션</a></li>
+          <li><a href="pages/about-intro.html" data-i18n="footerLinkIntro">회사소개</a></li>
+          <li><a href="pages/about-history.html" data-i18n="footerLinkHistory">연혁·인증</a></li>
+          <li><a href="pages/about-ci.html" data-i18n="footerLinkCi">CI소개</a></li>
+          <li><a href="pages/about-news.html" data-i18n="footerLinkNews">비디젠 뉴스</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <div class="footer-col-title" data-i18n="footerComp">회사</div>
+        <div class="footer-col-title" data-i18n="footerColBiz">사업영역</div>
         <ul>
-          <li><a href="#about-bdgen" data-i18n="footerAbout">회사소개</a></li>
-          <li><a href="#why" data-i18n="footerWhy">핵심역량</a></li>
-          <li><a href="#reference" data-i18n="footerRef">레퍼런스</a></li>
-          <li><a href="#news" data-i18n="footerNews">소식</a></li>
+          <li><a href="pages/business.html" data-i18n="footerLinkBiz">사업영역</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footerColSol">솔루션</div>
+        <ul>
+          <li><a href="pages/solution-genid.html" data-i18n="footerLinkGenid">GenID</a></li>
+          <li><a href="pages/solution-passkey.html" data-i18n="footerLinkPasskey">Passkey</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footerColRef">레퍼런스</div>
+        <ul>
+          <li><a href="pages/reference.html" data-i18n="footerLinkRef">레퍼런스</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footerColCareers">채용</div>
+        <ul>
+          <li><a href="pages/careers.html" data-i18n="footerLinkCareers">채용</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -3524,8 +3544,10 @@ var I18N = {
     ctaSending:'전송 중...', ctaSuccess:'문의가 접수되었습니다. 빠른 시일 내 답변드리겠습니다.', ctaFail:'전송에 실패했습니다. 다시 시도해 주세요.',
     ctaPlaceholder:'선택해 주세요', ctaMsgPlaceholder:'프로젝트 개요, 도입 목적, 일정 등 자유롭게 작성해 주세요.',
     footerDesc:'블록체인·DID 전문기업. 통신·금융·공공·의료 등 산업의 인증·증명 솔루션을 제공합니다.',
-    footerSvc:'서비스', footerComp:'회사', footerContact:'문의', footerSvc1:'블록체인 서비스 개발', footerSvc2:'모바일 앱 개발', footerSvc3:'플랫폼 운영 솔루션', footerSvc4:'GenID 솔루션',
-    footerAbout:'회사소개', footerWhy:'핵심역량', footerRef:'레퍼런스', footerNews:'소식', footerInquiry:'프로젝트 문의', footerIntro:'회사소개서', brochureDownload:'회사소개서 다운받기',
+    footerColAbout:'회사소개', footerColBiz:'사업영역', footerColSol:'솔루션', footerColRef:'레퍼런스', footerColCareers:'채용', footerContact:'문의',
+    footerLinkIntro:'회사소개', footerLinkHistory:'연혁·인증', footerLinkCi:'CI소개', footerLinkNews:'비디젠 뉴스', footerLinkBiz:'사업영역',
+    footerLinkGenid:'GenID', footerLinkPasskey:'Passkey', footerLinkRef:'레퍼런스', footerLinkCareers:'채용',
+    footerInquiry:'프로젝트 문의', footerIntro:'회사소개서', brochureDownload:'회사소개서 다운받기',
     footerPolicy:'개인정보처리방침', footerTerms:'이용약관',
     ref1Tag:'DID · 모바일지갑', ref1Proj:'PASS 모바일지갑 DID 서비스 운영·고도화. 수백만 사용자 규모의 국내 대표 모바일 신원인증 서비스 장기 운영.',
     ref2Tag:'블록체인 · 디지털배지', ref2Proj:'디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정. 블록체인 기반 디지털 자격증명 시스템 구현.',
@@ -3565,8 +3587,10 @@ var I18N = {
     ctaSending:'Sending...', ctaSuccess:'Your inquiry has been received. We will respond as soon as possible.', ctaFail:'Failed to send. Please try again.',
     ctaPlaceholder:'Please select', ctaMsgPlaceholder:'Project overview, goals, timeline—feel free to share.',
     footerDesc:'Blockchain·DID specialist. Authentication and verification solutions for telecom, finance, public, healthcare, and more.',
-    footerSvc:'Services', footerComp:'Company', footerContact:'Contact', footerSvc1:'Blockchain services', footerSvc2:'Mobile app development', footerSvc3:'Platform operations', footerSvc4:'GenID solution',
-    footerAbout:'About', footerWhy:'Capability', footerRef:'Reference', footerNews:'News', footerInquiry:'Project inquiry', footerIntro:'Company intro', brochureDownload:'Download company brochure',
+    footerColAbout:'Company', footerColBiz:'Business', footerColSol:'Solutions', footerColRef:'Reference', footerColCareers:'Careers', footerContact:'Contact',
+    footerLinkIntro:'Company', footerLinkHistory:'History & certifications', footerLinkCi:'CI', footerLinkNews:'BDGen News', footerLinkBiz:'Business',
+    footerLinkGenid:'GenID', footerLinkPasskey:'Passkey', footerLinkRef:'Reference', footerLinkCareers:'Careers',
+    footerInquiry:'Project inquiry', footerIntro:'Company intro', brochureDownload:'Download company brochure',
     footerPolicy:'Privacy policy', footerTerms:'Terms of use',
     ref1Tag:'DID · Mobile wallet', ref1Proj:'PASS mobile wallet DID service operations and enhancement. Long-term operation of a leading domestic mobile identity service serving millions.',
     ref2Tag:'Blockchain · Digital badge', ref2Proj:'Selected for digital badge-based integrated employment support project. Blockchain-based digital credential system implementation.',

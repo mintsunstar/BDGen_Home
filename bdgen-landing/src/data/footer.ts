@@ -11,29 +11,38 @@ export const company: CompanyInfo = {
 
 export const linkGroups: LinkGroup[] = [
   {
-    title: '서비스',
+    title: '회사소개',
     links: [
-      { label: '블록체인 서비스 개발', href: '#services' },
-      { label: '모바일 앱 개발', href: '#services' },
-      { label: '플랫폼 운영 솔루션', href: '#services' },
-      { label: 'GenID 솔루션', href: '#genid' },
+      { label: '회사소개', href: '/pages/about-intro.html' },
+      { label: '연혁·인증', href: '/pages/about-history.html' },
+      { label: 'CI소개', href: '/pages/about-ci.html' },
+      { label: '비디젠 뉴스', href: '/pages/about-news.html' },
     ],
   },
   {
-    title: '회사',
+    title: '사업영역',
+    links: [{ label: '사업영역', href: '/pages/business.html' }],
+  },
+  {
+    title: '솔루션',
     links: [
-      { label: '회사소개', href: '#about' },
-      { label: '핵심역량', href: '#why' },
-      { label: '레퍼런스', href: '#reference' },
-      { label: '소식', href: '#news' },
+      { label: 'GenID', href: '/pages/solution-genid.html' },
+      { label: 'Passkey', href: '/pages/solution-passkey.html' },
     ],
+  },
+  {
+    title: '레퍼런스',
+    links: [{ label: '레퍼런스', href: '/pages/reference.html' }],
+  },
+  {
+    title: '채용',
+    links: [{ label: '채용', href: '/pages/careers.html' }],
   },
   {
     title: '문의',
     links: [
       { label: '02-6091-1533', href: 'tel:02-6091-1533' },
-      { label: '[email protected]', href: 'mailto:[email protected]' },
-      { label: '프로젝트 문의', href: '#cta' },
+      { label: '프로젝트 문의', href: '/#cta' },
       { label: '회사소개서', href: 'https://bdgen.co.kr/asset/downloadfile/Intro_BDGen.pdf' },
     ],
   },

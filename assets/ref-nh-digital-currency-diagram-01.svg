@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 760">
+  <defs>
+    <linearGradient id="nhDcBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f0f7ff"/>
+      <stop offset="100%" stop-color="#e8f0fa"/>
+    </linearGradient>
+  </defs>
+  <rect width="1320" height="760" fill="url(#nhDcBg)"/>
+  <text x="660" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#0f172a">블록체인 기반 디지털통화관리 시스템</text>
+  <text x="660" y="108" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#64748b">발행 · 유통 · 정산 · 모니터링</text>
+  <rect x="100" y="200" width="320" height="380" rx="18" fill="#fff" stroke="#0065fa" stroke-width="2"/>
+  <text x="260" y="260" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#0065fa">노드·합의</text>
+  <text x="260" y="300" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#475569">분산 원장</text>
+  <rect x="500" y="200" width="320" height="380" rx="18" fill="#fff" stroke="#0065fa" stroke-width="2"/>
+  <text x="660" y="260" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#0065fa">통화관리</text>
+  <text x="660" y="300" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#475569">발행·회수·한도</text>
+  <rect x="900" y="200" width="320" height="380" rx="18" fill="#fff" stroke="#0065fa" stroke-width="2"/>
+  <text x="1060" y="260" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#0065fa">연동·감사</text>
+  <text x="1060" y="300" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#475569">API · 모니터링</text>
+  <line x1="420" y1="390" x2="490" y2="390" stroke="#94a3b8" stroke-width="3"/>
+  <line x1="820" y1="390" x2="890" y2="390" stroke="#94a3b8" stroke-width="3"/>
+  <polygon points="500,390 488,382 488,398" fill="#94a3b8"/>
+  <polygon points="900,390 888,382 888,398" fill="#94a3b8"/>
+</svg>

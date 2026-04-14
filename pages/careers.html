@@ -3118,15 +3118,6 @@
       if (submitting) return;
       var resumeFile = resumeInput.files[0];
       var portfolioFile = portfolioInput.files[0];
-      var payload = {
-        name: nameEl.value.trim(),
-        email: emailEl.value.trim(),
-        phone: phoneEl.value.trim(),
-        position: positionLabelText(),
-        privacy: true,
-        resume: '',
-        portfolio: ''
-      };
       submitting = true;
       submitBtn.disabled = true;
       submitBtn.classList.add('is-loading');
@@ -3134,13 +3125,19 @@
 
       Promise.all([toBase64(resumeFile), toBase64(portfolioFile)])
         .then(function(blobs){
-          payload.resume = blobs[0];
-          payload.portfolio = blobs[1];
+          var body = {
+            name: nameEl.value.trim(),
+            email: emailEl.value.trim(),
+            phone: phoneEl.value.trim(),
+            position: positionLabelText(),
+            resume: blobs[0],
+            portfolio: blobs[1]
+          };
           return fetch(SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(body)
           });
         })
         .then(function(){

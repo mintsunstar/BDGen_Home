@@ -1342,7 +1342,7 @@
       transition: none;
     }
   }
-  @media (max-width: 1023px){
+  @media (max-width: 1199px){
     .hero-inner{ padding: 48px 24px 50px; }
     .sub-nav{ overflow-x: auto; }
     .careers-welfare-grid{ grid-template-columns: repeat(2, 1fr); }
@@ -1735,13 +1735,58 @@
   .careers-apply-msg.careers-apply-msg--error{
     color: #c62828;
   }
-  @media (max-width: 560px){
+  @media (max-width: 767px){
+    .careers-apply-modal{
+      padding: 0;
+      align-items: stretch;
+      justify-content: stretch;
+    }
+    .careers-apply-modal__panel{
+      max-width: none;
+      width: 100%;
+      height: 100vh;
+      max-height: none;
+      min-height: 100vh;
+      border-radius: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .careers-apply-modal__close{
+      width: 48px;
+      height: 48px;
+      top: 8px;
+      right: 8px;
+    }
     .careers-apply-field{
       grid-template-columns: 1fr;
       gap: 8px;
     }
     .careers-apply-label{
       padding-top: 0;
+    }
+    .careers-apply-submit{
+      max-width: none;
+    }
+    .careers-apply-file-btn{
+      width: 100%;
+      min-height: 44px;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+    .careers-apply-radio{
+      min-height: 44px;
+      padding: 6px 0;
+    }
+    .careers-apply-privacy{
+      min-height: 44px;
+      padding: 8px 0;
+    }
+    .careers-apply-privacy input{
+      margin-top: 10px;
+      width: 22px;
+      height: 22px;
+    }
+    .careers-apply-input{
+      min-height: 48px;
     }
   }
 </style>
@@ -2260,10 +2305,6 @@
             <li role="none"><a href="https://www.beyondigital.co.kr/" role="menuitem" target="_blank" rel="noopener">BD</a></li>
             <li role="none"><a href="https://dtinc.co.kr/" role="menuitem" target="_blank" rel="noopener">DT</a></li>
           </ul>
-        </div>
-        <div class="footer-bottom-links">
-          <a href="#" title="개인정보처리방침 페이지 URL 확정 후 연결">개인정보처리방침</a>
-          <a href="#" title="이용약관 페이지 URL 확정 후 연결">이용약관</a>
         </div>
       </div>
     </div>

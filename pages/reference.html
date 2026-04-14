@@ -98,8 +98,9 @@
     padding: 28px 24px;
     box-sizing: border-box;
   }
-  /* 동일한 표시 영역(가로·세로 고정) 안에 맞춤 — 로고 비율·여백이 달라도 시각적 크기 통일 */
-  .ref-page-card-logo img{
+  /* 썸네일 기본 로고 크기 통일(호버 플로우 안 이미지·iframe에는 적용하지 않음) */
+  .ref-page-card-logo > img,
+  .ref-page-card-logo-default img{
     display: block;
     margin-inline: auto;
     box-sizing: border-box;
@@ -108,9 +109,10 @@
     object-fit: contain;
     object-position: center;
   }
-  /* 마약류 의약품 관리 플랫폼 카드 — logo_RC만 표시 영역 15% 확대 */
-  .ref-page-card-logo--logo-scale-115 img{
-    width: min(calc(240px * 1.15), 88%);
+  /* 부동산 감정평가 카드(logo_RC) 등 — 디폴트 로고 15% 확대(고정·% 쌍 모두 1.15배) */
+  .ref-page-card-logo--logo-scale-115 > img,
+  .ref-page-card-logo--logo-scale-115 .ref-page-card-logo-default img{
+    width: min(calc(240px * 1.15), calc(88% * 1.15));
     height: calc(88px * 1.15);
   }
   /* 호버 시 iframe 콘텐츠 — Service Flow(pk-flow) / 디지털배지 HTML 등 */
@@ -174,6 +176,24 @@
     border-radius: 12px;
     overflow: hidden;
     /* 클릭이 iframe 문서로 가면 부모로 전달되지 않음 → 모달 열림용 클릭은 영역에서 처리 */
+    pointer-events: none;
+  }
+  /* 호버 시 SVG 다이어그램 — 썸네일 전체에 맞게 확대(iframe과 동일하게 영역 채움) */
+  .ref-page-card-flow-embed--svg{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+  }
+  .ref-page-card-logo-flow .ref-page-card-flow-svg{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: contain;
+    object-position: center;
     pointer-events: none;
   }
   /* Service Flow 확대 모달 */
@@ -262,30 +282,24 @@
     border: 0;
     display: block;
   }
-  .ref-flow-modal__frame--logo{
-    aspect-ratio: auto;
-    min-height: 220px;
-    max-height: min(78vh, 720px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    box-sizing: border-box;
-  }
+  /* 다이어그램(SVG)도 iframe과 동일 프레임(SK·Service Flow 카드 기준 1239×899 비율) */
   .ref-modal__img-only{
     display: none;
-    max-width: 100%;
-    max-height: min(65vh, 560px);
-    width: auto;
-    height: auto;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
     object-fit: contain;
+    object-position: center;
+    box-sizing: border-box;
   }
   .ref-flow-modal--mode-logo .ref-flow-modal__frame iframe{
     display: none !important;
   }
   .ref-flow-modal--mode-logo .ref-modal__img-only{
     display: block;
-    position: relative;
   }
   .ref-page-card-logo--modal-thumb{
     cursor: pointer;
@@ -563,15 +577,22 @@
         </article>
         <article class="ref-page-card" role="listitem">
           <div
-            class="ref-page-card-logo ref-page-card-logo--modal-thumb"
+            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--modal-thumb"
             role="button"
             tabindex="0"
             data-ref-modal-type="logo"
-            data-ref-modal-src="../assets/LOGO_NH.png"
-            data-i18n-title="ref-page-modal-thumb-open-logo"
-            title="로고 크게 보기"
+            data-ref-modal-src="../assets/ref-sto-nh-diagram.svg"
+            data-i18n-title="ref-page-modal-thumb-open-sto"
+            title="STO 플랫폼 구축 다이어그램 크게 보기"
           >
-            <img src="../assets/LOGO_NH.png" alt="NH농협은행" data-i18n-alt="ref-page-logo-text-nh" loading="lazy" decoding="async"/>
+            <div class="ref-page-card-logo-default">
+              <img src="../assets/LOGO_NH.png" alt="NH농협은행" data-i18n-alt="ref-page-logo-text-nh" loading="lazy" decoding="async"/>
+            </div>
+            <div class="ref-page-card-logo-flow" aria-hidden="true">
+              <div class="ref-page-card-flow-embed ref-page-card-flow-embed--svg">
+                <img src="../assets/ref-sto-nh-diagram.svg" alt="" class="ref-page-card-flow-svg" width="1320" height="760" decoding="async" loading="eager"/>
+              </div>
+            </div>
           </div>
           <div class="ref-page-card-body">
             <h3 class="ref-page-card-title" data-i18n="ref-page-card-3-title">조각투자사업자를 위한 공익적 토큰증권 플랫폼(STO)구축 사업 참여기관 선정</h3>
@@ -583,15 +604,22 @@
         </article>
         <article class="ref-page-card" role="listitem">
           <div
-            class="ref-page-card-logo ref-page-card-logo--modal-thumb"
+            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--modal-thumb"
             role="button"
             tabindex="0"
             data-ref-modal-type="logo"
-            data-ref-modal-src="../assets/LOGO_SEOUL.png"
-            data-i18n-title="ref-page-modal-thumb-open-logo"
-            title="로고 크게 보기"
+            data-ref-modal-src="../assets/ref-seoul-labor-diagram-01.svg"
+            data-i18n-title="ref-page-modal-thumb-open-seoul"
+            title="공공일자리 플랫폼 다이어그램 크게 보기"
           >
-            <img src="../assets/LOGO_SEOUL.png" alt="서울특별시" data-i18n-alt="ref-page-logo-text-seoul" loading="lazy" decoding="async"/>
+            <div class="ref-page-card-logo-default">
+              <img src="../assets/LOGO_SEOUL.png" alt="서울특별시" data-i18n-alt="ref-page-logo-text-seoul" loading="lazy" decoding="async"/>
+            </div>
+            <div class="ref-page-card-logo-flow" aria-hidden="true">
+              <div class="ref-page-card-flow-embed ref-page-card-flow-embed--svg">
+                <img src="../assets/ref-seoul-labor-diagram-01.svg" alt="" class="ref-page-card-flow-svg" width="1320" height="760" decoding="async" loading="eager"/>
+              </div>
+            </div>
           </div>
           <div class="ref-page-card-body">
             <h3 class="ref-page-card-title" data-i18n="ref-page-card-4-title">서울시 블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축</h3>
@@ -603,41 +631,87 @@
         </article>
         <article class="ref-page-card" role="listitem">
           <div
-            class="ref-page-card-logo ref-page-card-logo--modal-thumb"
+            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--modal-thumb"
             role="button"
             tabindex="0"
-            data-ref-modal-type="logo"
-            data-ref-modal-src="../assets/rogo_nipa.png"
-            data-i18n-title="ref-page-modal-thumb-open-logo"
-            title="로고 크게 보기"
+            data-ref-modal-type="iframe"
+            data-ref-modal-src="../assets/ref-digibadge-employment-integrated-diagram.html"
+            data-i18n-title="ref-page-modal-thumb-open-digibadge"
+            title="디지털배지 다이어그램 크게 보기"
           >
-            <img src="../assets/rogo_nipa.png" alt="NIPA" data-i18n-alt="ref-page-logo-alt-nipa" loading="lazy" decoding="async"/>
+            <div class="ref-page-card-logo-default">
+              <img src="../assets/LOGO_KE.png" alt="한국고용정보원" data-i18n-alt="ref-page-logo-text-keis" loading="lazy" decoding="async"/>
+            </div>
+            <div class="ref-page-card-logo-flow" aria-hidden="true">
+              <div class="ref-page-card-flow-embed">
+                <iframe
+                  src="../assets/ref-digibadge-employment-integrated-thumb.html?v=1"
+                  title="디지털배지 통합 취업지원서비스 구축 다이어그램"
+                  loading="eager"
+                  scrolling="no"
+                ></iframe>
+              </div>
+            </div>
           </div>
           <div class="ref-page-card-body">
-            <h3 class="ref-page-card-title" data-i18n="ref-page-card-5-title">디지털배지 기반 통합 취업지원서비스 구축 — 블록체인 자격증명 시스템</h3>
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-5-title">디지털배지 기반 통합 취업지원서비스 구축</h3>
             <div class="ref-page-card-footer">
-              <span class="ref-page-card-period" data-i18n="ref-page-card-5-period">2024. 06 ~ 2024. 12</span>
+              <span class="ref-page-card-period" data-i18n="ref-page-card-5-period">24. 4 ~ 24. 12</span>
               <div class="ref-page-card-tags" data-i18n="ref-page-card-5-tags" data-i18n-html="true"></div>
             </div>
           </div>
         </article>
         <article class="ref-page-card" role="listitem">
           <div
-            class="ref-page-card-logo ref-page-card-logo--logo-scale-115 ref-page-card-logo--modal-thumb"
+            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--logo-scale-115 ref-page-card-logo--modal-thumb"
             role="button"
             tabindex="0"
             data-ref-modal-type="logo"
-            data-ref-modal-src="../assets/logo_RC.png"
-            data-i18n-title="ref-page-modal-thumb-open-logo"
-            title="로고 크게 보기"
+            data-ref-modal-src="../assets/ref-real-estate-appraisal-diagram-01.svg"
+            data-i18n-title="ref-page-modal-thumb-open-realestate"
+            title="부동산 감정평가 플랫폼 다이어그램 크게 보기"
           >
-            <img src="../assets/logo_RC.png" alt="보건의료기관" data-i18n-alt="ref-page-logo-text-health" loading="lazy" decoding="async"/>
+            <div class="ref-page-card-logo-default">
+              <img src="../assets/logo_RC.png" alt="보건의료기관" data-i18n-alt="ref-page-logo-text-health" loading="lazy" decoding="async"/>
+            </div>
+            <div class="ref-page-card-logo-flow" aria-hidden="true">
+              <div class="ref-page-card-flow-embed ref-page-card-flow-embed--svg">
+                <img src="../assets/ref-real-estate-appraisal-diagram-01.svg" alt="" class="ref-page-card-flow-svg" width="1320" height="760" decoding="async" loading="eager"/>
+              </div>
+            </div>
           </div>
           <div class="ref-page-card-body">
-            <h3 class="ref-page-card-title" data-i18n="ref-page-card-6-title">블록체인 기반 마약류 의약품 관리 플랫폼 개발</h3>
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-6-title">블록체인 기반 부동산 감정평가 이력관리 플랫폼 개발</h3>
             <div class="ref-page-card-footer">
-              <span class="ref-page-card-period" data-i18n="ref-page-card-6-period">2021. 05 ~ 2021. 12</span>
+              <span class="ref-page-card-period" data-i18n="ref-page-card-6-period">21. 05 ~ 21. 11</span>
               <div class="ref-page-card-tags" data-i18n="ref-page-card-6-tags" data-i18n-html="true"></div>
+            </div>
+          </div>
+        </article>
+        <article class="ref-page-card" role="listitem">
+          <div
+            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--modal-thumb"
+            role="button"
+            tabindex="0"
+            data-ref-modal-type="logo"
+            data-ref-modal-src="../assets/ref-medical-narcotics-diagram-01.svg?v=2"
+            data-i18n-title="ref-page-modal-thumb-open-narcotics"
+            title="마약류 의약품 관리 다이어그램 크게 보기"
+          >
+            <div class="ref-page-card-logo-default">
+              <img src="../assets/보라매병원_logo.svg" alt="보라매병원" data-i18n-alt="ref-page-logo-text-boramae" loading="lazy" decoding="async"/>
+            </div>
+            <div class="ref-page-card-logo-flow" aria-hidden="true">
+              <div class="ref-page-card-flow-embed ref-page-card-flow-embed--svg">
+                <img src="../assets/ref-medical-narcotics-diagram-01.svg?v=2" alt="" class="ref-page-card-flow-svg" width="1320" height="760" decoding="async" loading="eager"/>
+              </div>
+            </div>
+          </div>
+          <div class="ref-page-card-body">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-7-title">블록체인 기반 마약류 의약품 관리 플랫폼 개발</h3>
+            <div class="ref-page-card-footer">
+              <span class="ref-page-card-period" data-i18n="ref-page-card-7-period">21. 05 ~ 21. 12</span>
+              <div class="ref-page-card-tags" data-i18n="ref-page-card-7-tags" data-i18n-html="true"></div>
             </div>
           </div>
         </article>
@@ -746,10 +820,6 @@
             <li role="none"><a href="https://www.beyondigital.co.kr/" role="menuitem" target="_blank" rel="noopener">BD</a></li>
             <li role="none"><a href="https://dtinc.co.kr/" role="menuitem" target="_blank" rel="noopener">DT</a></li>
           </ul>
-        </div>
-        <div class="footer-bottom-links">
-          <a href="#" title="개인정보처리방침 페이지 URL 확정 후 연결">개인정보처리방침</a>
-          <a href="#" title="이용약관 페이지 URL 확정 후 연결">이용약관</a>
         </div>
       </div>
     </div>
@@ -862,16 +932,14 @@
     if (type === 'logo') {
       modal.classList.add('ref-flow-modal--mode-logo');
       modal.classList.remove('ref-flow-modal--mode-iframe');
-      frame.classList.add('ref-flow-modal__frame--logo');
       iframe.removeAttribute('src');
       imgOnly.removeAttribute('hidden');
       imgOnly.src = src;
-      var thumbImg = thumb.querySelector('img');
-      imgOnly.alt = thumbImg ? (thumbImg.getAttribute('alt') || '') : '';
+      var thumbImg = thumb.querySelector('.ref-page-card-logo-default img') || thumb.querySelector('img');
+      imgOnly.alt = heading || (thumbImg ? (thumbImg.getAttribute('alt') || '') : '');
     } else {
       modal.classList.remove('ref-flow-modal--mode-logo');
       modal.classList.add('ref-flow-modal--mode-iframe');
-      frame.classList.remove('ref-flow-modal__frame--logo');
       imgOnly.setAttribute('hidden', '');
       imgOnly.removeAttribute('src');
       if (src) iframe.setAttribute('src', src);
@@ -890,7 +958,6 @@
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     modal.classList.remove('ref-flow-modal--mode-logo', 'ref-flow-modal--mode-iframe');
-    frame.classList.remove('ref-flow-modal__frame--logo');
     imgOnly.setAttribute('hidden', '');
     imgOnly.removeAttribute('src');
     iframe.removeAttribute('src');

@@ -725,7 +725,7 @@ footer {
 ======================== */
 
 /* Tablet (1023px ?�하): ?�버�?메뉴 ?�환 */
-@media (max-width: 1023px) {
+@media (max-width: 1199px) {
   .gnb-nav { display: none; }
   .gnb-hamburger { display: flex; }
   .gnb-inner { padding: 0 var(--container-padding-x); }
@@ -763,17 +763,21 @@ footer {
   .genid-usecases { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .ref-projects { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .news-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .footer-inner { grid-template-columns: repeat(3, 1fr); gap: 32px; }
-  .footer-brand { grid-column: 1 / -1; }
   .about-orb { width: min(300px, 45vw); height: min(300px, 45vw); }
   .about-ring-1 { width: min(340px, 52vw); height: min(340px, 52vw); }
   .about-ring-2 { width: min(390px, 58vw); height: min(390px, 58vw); }
   .about-orb-inner { width: min(200px, 30vw); height: min(200px, 30vw); }
   .trust-item { min-width: 140px; padding: 16px 20px; }
 }
+@media (max-width: 1279px) and (min-width: 1200px) {
+  .footer-inner { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; }
+}
 
-/* Tablet (768~1023) */
-@media (max-width: 1023px) {
+/* 태블릿·소형 랩탑 (1200px 미만) */
+@media (max-width: 1199px) {
+  .footer-inner { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; }
   #hero {
     padding: clamp(100px, 20vh, 140px) 0 clamp(80px, 15vh, 120px);
     min-height: min(100vh, 700px);

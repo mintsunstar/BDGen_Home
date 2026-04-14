@@ -23,7 +23,7 @@ import { references } from '@/data/references';
 import { reasons } from '@/data/why';
 import { newsItems } from '@/data/news';
 import { contactConfig } from '@/data/contact';
-import { company, linkGroups, footerBottomLinks } from '@/data/footer';
+import { company, linkGroups } from '@/data/footer';
 
 export default function LandingPage() {
   useScrollReveal();
@@ -43,7 +43,7 @@ export default function LandingPage() {
         <NewsSection news={newsItems} />
         <CTASection contact={contactConfig} />
       </main>
-      <Footer company={company} linkGroups={linkGroups} bottomLinks={footerBottomLinks} />
+      <Footer company={company} linkGroups={linkGroups} />
       <FloatingBrochure />
       <BackToTop />
     </>

@@ -194,7 +194,13 @@
     border-radius: 18px;
     background: #fff;
     border: 1px solid #e8eaed;
-    transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.04);
+    transition:
+      opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.38s ease,
+      border-color 0.25s ease;
   }
   .bdgen-white-presentation .c-item:hover{
     transform: translateY(-2px);
@@ -215,6 +221,29 @@
     width: 120px;
     height: auto;
     display: block;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* 핵심 역량: 사업영역 SERVICES와 동일 스크롤 등장(AOS) */
+  html.js-intro-cap-aos .capability-section .capability-grid .c-item:not(.is-aos-visible){
+    opacity: 0;
+    filter: blur(8px);
+    pointer-events: none;
+  }
+  html.js-intro-cap-aos .capability-section .capability-grid .c-item:not(.is-aos-visible):nth-child(odd){
+    transform: translate3d(-120px, 0, 0);
+  }
+  html.js-intro-cap-aos .capability-section .capability-grid .c-item:not(.is-aos-visible):nth-child(even){
+    transform: translate3d(120px, 0, 0);
+  }
+  html.js-intro-cap-aos .capability-section .capability-grid .c-item.is-aos-visible{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+  /* 등장 후 호버는 기존 .c-item:hover 유지(리프트·글로우) + SERVICES와 동일 아이콘 확대 */
+  .bdgen-white-presentation .capability-section .capability-grid .c-item:hover .c-item-icon img{
+    transform: scale(1.06);
   }
   .bdgen-white-presentation .c-item-body{
     flex: 1;
@@ -253,6 +282,15 @@
       transform: none;
     }
     .page-hero-bg{ animation: none; }
+    html.js-intro-cap-aos .capability-section .capability-grid .c-item:not(.is-aos-visible){
+      opacity: 1;
+      filter: none;
+      transform: none;
+      pointer-events: auto;
+    }
+    .bdgen-white-presentation .capability-section .capability-grid .c-item:hover .c-item-icon img{
+      transform: none;
+    }
   }
   @media (max-width: 1023px){
     .hero-inner{ padding: 48px 24px 50px; }
@@ -585,10 +623,6 @@
             <li role="none"><a href="https://dtinc.co.kr/" role="menuitem" target="_blank" rel="noopener">DT</a></li>
           </ul>
         </div>
-        <div class="footer-bottom-links">
-          <a href="#" title="개인정보처리방침 페이지 URL 확정 후 연결">개인정보처리방침</a>
-          <a href="#" title="이용약관 페이지 URL 확정 후 연결">이용약관</a>
-        </div>
       </div>
     </div>
   </div>
@@ -736,6 +770,27 @@
     });
   },{threshold:0.28,rootMargin:'0px 0px -8% 0px'});
   obs.observe(section);
+})();
+/* 핵심 역량 카드: 사업영역 SERVICES와 동일 스크롤 등장(AOS) */
+(function(){
+  'use strict';
+  var items = document.querySelectorAll('.capability-section .capability-grid .c-item');
+  if (!items.length) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) return;
+  document.documentElement.classList.add('js-intro-cap-aos');
+  if (!window.IntersectionObserver) {
+    items.forEach(function(el){ el.classList.add('is-aos-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(ent){
+      if (!ent.isIntersecting) return;
+      ent.target.classList.add('is-aos-visible');
+      io.unobserve(ent.target);
+    });
+  }, { root: null, rootMargin: '0px 0px -18% 0px', threshold: 0.15 });
+  items.forEach(function(el){ io.observe(el); });
 })();
 (function(){
   var wrap=document.getElementById('footerFamilySite');

@@ -408,15 +408,19 @@
         'ref-page-card-4-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#전자근로계약</span>',
         'ref-page-card-5-title':
-          '디지털배지 기반 통합 취업지원서비스 구축 — 블록체인 자격증명 시스템',
-        'ref-page-card-5-period': '2024. 06 ~ 2024. 12',
+          '디지털배지 기반 통합 취업지원서비스 구축',
+        'ref-page-card-5-period': '24. 4 ~ 24. 12',
         'ref-page-card-5-tags':
           '<span class="ref-page-tag">#디지털배지</span><span class="ref-page-tag">#블록체인</span>',
         'ref-page-card-6-title':
-          '블록체인 기반 마약류 의약품 관리 플랫폼 개발',
-        'ref-page-card-6-period': '2021. 05 ~ 2021. 12',
+          '블록체인 기반 부동산 감정평가 이력관리 플랫폼 개발',
+        'ref-page-card-6-period': '21. 05 ~ 21. 11',
         'ref-page-card-6-tags':
-          '<span class="ref-page-tag">#의료</span><span class="ref-page-tag">#블록체인</span>',
+          '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#플랫폼개발</span>',
+        'ref-page-card-7-title': '블록체인 기반 마약류 의약품 관리 플랫폼 개발',
+        'ref-page-card-7-period': '21. 05 ~ 21. 12',
+        'ref-page-card-7-tags':
+          '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#플랫폼개발</span>',
         'ref-page-logo-alt-sk': 'SK텔레콤',
         'ref-page-logo-alt-nipa': 'NIPA',
         'ref-page-logo-text-keis': '한국고용정보원',
@@ -424,6 +428,7 @@
         'ref-page-logo-text-seoul': '서울특별시',
         'ref-page-logo-alt-smilegate': '스마일게이트',
         'ref-page-logo-text-health': '보건의료기관',
+        'ref-page-logo-text-boramae': '보라매병원',
         'ref-page-flow-thumb-open-label': 'Service Flow 다이어그램 크게 보기',
         'ref-page-flow-modal-dialog-aria': 'Service Flow 다이어그램 확대 보기',
         'ref-page-flow-modal-dismiss-scrim': '닫기',
@@ -431,7 +436,11 @@
         'ref-page-flow-modal-close': '닫기',
         'ref-page-flow-modal-iframe-title': 'GenID Service Flow',
         'ref-page-modal-thumb-open-logo': '로고·프로젝트 제목 크게 보기',
-        'ref-page-modal-thumb-open-digibadge': '디지털배지 다이어그램 크게 보기'
+        'ref-page-modal-thumb-open-digibadge': '디지털배지 다이어그램 크게 보기',
+        'ref-page-modal-thumb-open-sto': 'STO 플랫폼 구축 다이어그램 크게 보기',
+        'ref-page-modal-thumb-open-seoul': '공공일자리 플랫폼 다이어그램 크게 보기',
+        'ref-page-modal-thumb-open-realestate': '부동산 감정평가 플랫폼 다이어그램 크게 보기',
+        'ref-page-modal-thumb-open-narcotics': '마약류 의약품 관리 다이어그램 크게 보기'
       },
       en: {
         'sub-nav-1': 'Reference',
@@ -464,15 +473,20 @@
         'ref-page-card-4-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#EContract</span>',
         'ref-page-card-5-title':
-          'Digital badge-based employment support — blockchain credentialing system (NIPA)',
-        'ref-page-card-5-period': 'Jun 2024 — Dec 2024',
+          'Integrated employment support service based on digital badges',
+        'ref-page-card-5-period': 'Apr 2024 — Dec 2024',
         'ref-page-card-5-tags':
           '<span class="ref-page-tag">#DigitalBadge</span><span class="ref-page-tag">#Blockchain</span>',
         'ref-page-card-6-title':
-          'Blockchain-based controlled substance medicine management platform',
-        'ref-page-card-6-period': 'May 2021 — Dec 2021',
+          'Blockchain-based real estate appraisal history management platform development',
+        'ref-page-card-6-period': 'May 2021 — Nov 2021',
         'ref-page-card-6-tags':
-          '<span class="ref-page-tag">#Healthcare</span><span class="ref-page-tag">#Blockchain</span>',
+          '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#PlatformDevelopment</span>',
+        'ref-page-card-7-title':
+          'Blockchain-based controlled substance medicine management platform development',
+        'ref-page-card-7-period': 'May 2021 — Dec 2021',
+        'ref-page-card-7-tags':
+          '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#PlatformDevelopment</span>',
         'ref-page-logo-alt-sk': 'SK Telecom',
         'ref-page-logo-alt-nipa': 'NIPA',
         'ref-page-logo-text-keis': 'KEIS',
@@ -480,6 +494,7 @@
         'ref-page-logo-text-seoul': 'Seoul',
         'ref-page-logo-alt-smilegate': 'Smilegate',
         'ref-page-logo-text-health': 'Healthcare',
+        'ref-page-logo-text-boramae': 'Boramae Hospital',
         'ref-page-flow-thumb-open-label': 'View Service Flow diagram larger',
         'ref-page-flow-modal-dialog-aria': 'Enlarged Service Flow diagram',
         'ref-page-flow-modal-dismiss-scrim': 'Close',
@@ -487,7 +502,11 @@
         'ref-page-flow-modal-close': 'Close',
         'ref-page-flow-modal-iframe-title': 'GenID Service Flow',
         'ref-page-modal-thumb-open-logo': 'View logo and project title larger',
-        'ref-page-modal-thumb-open-digibadge': 'View digital badge diagram larger'
+        'ref-page-modal-thumb-open-digibadge': 'View digital badge diagram larger',
+        'ref-page-modal-thumb-open-sto': 'View STO platform diagram larger',
+        'ref-page-modal-thumb-open-seoul': 'View Seoul public jobs platform diagram larger',
+        'ref-page-modal-thumb-open-realestate': 'View real estate appraisal platform diagram larger',
+        'ref-page-modal-thumb-open-narcotics': 'View controlled substance medicine management diagram larger'
       }
     },
     'careers': {

@@ -345,7 +345,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .lang-switcher { position: relative; margin-left: 8px; }
 .lang-switcher-trigger {
   display: flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px; padding: 0;
+  min-width: 44px; min-height: 44px; width: 44px; height: 44px; padding: 0;
   background: none; border: none; cursor: pointer;
   color: inherit; border-radius: 8px;
   transition: color 0.3s, background 0.3s;
@@ -461,7 +461,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   border-bottom: 2px solid transparent;
 }
 .gnb-fullmenu-col a:hover { color: #0065FA; border-bottom-color: #0065FA; }
-@media (max-width: 1023px) {
+@media (max-width: 1199px) {
   .gnb-fullmenu-nav { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
 }
 @media (max-width: 600px) {
@@ -566,7 +566,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   margin-left: auto; margin-right: auto; width: fit-content; max-width: 100%;
 }
 .hero-line2 { white-space: nowrap; }
-@media (max-width: 1023px) { .hero-line2 { white-space: normal; } }
+@media (max-width: 1199px) { .hero-line2 { white-space: normal; } }
 .hero-title .gradient-text { color: #ffffff; -webkit-text-fill-color: #ffffff; }
 .hero-typing-cursor { border-right: 2px solid var(--primary); animation: blink 0.7s step-end infinite; padding-right: 2px; }
 .hero-sub {
@@ -1021,11 +1021,11 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   will-change: transform;
 }
 .about-bdgen-visual img {
-  width: 374px; height: 452px; object-fit: cover;
+  width: 100%; max-width: 374px; height: auto; aspect-ratio: 374 / 452; object-fit: cover;
   border-radius: var(--radius);
-  display: block; max-width: 100%;
+  display: block;
 }
-@media (max-width: 1023px) {
+@media (max-width: 767px) {
   .about-bdgen-grid { grid-template-columns: 1fr; gap: 48px; }
   .about-bdgen-visual { order: -1; }
 }
@@ -1222,7 +1222,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   flex: 1;
   margin: 0;
 }
-@media (max-width: 1023px) {
+@media (max-width: 767px) {
   .why-grid {
     grid-template-columns: 1fr;
   }
@@ -1440,7 +1440,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .news-grid .news-card .news-title { font-size: 0.9rem; margin-bottom: 0; line-height: 1.45; }
 .news-grid .news-card .news-excerpt { display: none; }
 .news-grid .news-card .news-meta { margin-bottom: 8px; }
-@media (max-width: 1023px) {
+@media (max-width: 767px) {
   .news-hero { flex-direction: column; gap: 40px; align-items: flex-start; }
   .news-hero-text { display: block; }
   .news-hero-title { font-size: clamp(1.75rem, 5vw, 2.5rem); }
@@ -1489,7 +1489,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   align-items: stretch;
   margin-bottom: 0;
 }
-@media (max-width: 900px) {
+@media (max-width: 767px) {
   .cta-split { grid-template-columns: 1fr; gap: 50px; }
 }
 .cta-form-wrap { display: flex; flex-direction: column; }
@@ -1535,7 +1535,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 /* 문의 폼 */
 .cta-form { display: flex; flex-direction: column; gap: 20px; }
 .cta-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media (max-width: 600px) { .cta-form-row { grid-template-columns: 1fr; } }
+@media (max-width: 767px) { .cta-form-row { grid-template-columns: 1fr; } }
 .cta-form-field { display: flex; flex-direction: column; gap: 8px; }
 .cta-form-field.full { grid-column: 1 / -1; }
 .cta-form-label {
@@ -1612,7 +1612,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   z-index: 0;
   overflow: hidden;
   margin-top: 8px;
-  width: 300px; height: 58px; min-height: 58px;
+  width: 100%; max-width: 300px; height: 58px; min-height: 58px;
   display: flex; align-items: center; justify-content: center;
   border: 1.5px solid #0065FA;
   color: #0065FA;
@@ -2011,8 +2011,8 @@ footer {
    RESPONSIVE - Desktop 1280+ | Laptop 1024~1279 | Tablet 768~1023 | Mobile ~767 | Small ~480
 ======================== */
 
-/* Tablet (1023px 이하): 중앙 네비 숨김, 우측 지구본+메뉴 아이콘 유지 */
-@media (max-width: 1023px) {
+/* 태블릿·모바일(1199px 이하): 중앙 네비 숨김, 우측 지구본+햄버거 유지 */
+@media (max-width: 1199px) {
   .gnb-nav { display: none; }
   .gnb-inner { padding: 0 var(--container-padding-x); }
   .gnb { padding: 12px 0; }
@@ -2025,21 +2025,25 @@ footer {
   .section-header { margin-bottom: clamp(2rem, 5vw, 3rem); }
   .about-grid { gap: 48px; }
   .services-grid { grid-template-columns: repeat(2, 1fr); gap: 70px; }
-  /* #why: 데스크톱 규칙 유지(1024px 이상). 1023px 이하는 공통 미디어쿼리에서 1열 */
+  /* #why: 데스크톱 규칙 유지(1200px 이상). 767px 이하에서 1열 */
   .genid-usecases { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .ref-projects { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .news-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .footer-inner { grid-template-columns: repeat(3, 1fr); gap: 32px; }
-  .footer-brand { grid-column: 1 / -1; }
   .about-orb { width: min(300px, 45vw); height: min(300px, 45vw); }
   .about-ring-1 { width: min(340px, 52vw); height: min(340px, 52vw); }
   .about-ring-2 { width: min(390px, 58vw); height: min(390px, 58vw); }
   .about-orb-inner { width: min(200px, 30vw); height: min(200px, 30vw); }
   .partner-metric { min-width: 140px; padding: 20px 24px; }
 }
+@media (max-width: 1279px) and (min-width: 1200px) {
+  .footer-inner { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; }
+}
 
-/* Tablet (768~1023) */
-@media (max-width: 1023px) {
+/* 태블릿·소형 랩탑 (1200px 미만) */
+@media (max-width: 1199px) {
+  .footer-inner { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; }
   #hero {
     padding: clamp(100px, 20vh, 140px) 0 clamp(80px, 15vh, 120px);
     min-height: min(100vh, 700px);
@@ -2063,6 +2067,13 @@ footer {
 
 /* Mobile (~767) */
 @media (max-width: 767px) {
+  :root { --container-padding-x: 16px; }
+  body { word-break: keep-all; overflow-wrap: anywhere; }
+  #about-bdgen img,
+  #services img,
+  #genid img,
+  #reference img,
+  #news img { max-width: 100%; height: auto; }
   .gnb { padding: 10px 0; }
   .gnb.scrolled { padding: 8px 0; }
   .gnb-logo-img { height: 28px; }
@@ -2079,7 +2090,7 @@ footer {
   .hero-scroll { bottom: 20px; font-size: 0.7rem; }
   .hero-scroll-mouse { width: 20px; height: 32px; }
   #partner { padding: calc(clamp(60px, 12vw, 100px) + 75px) 0; }
-  #partner .container { padding-left: clamp(24px, 5vw, 60px); padding-right: clamp(24px, 5vw, 60px); }
+  #partner .container { padding-left: 16px; padding-right: 16px; }
   .partner-title { white-space: normal; }
   .partner-title { font-size: clamp(2rem, 8vw, 74px); }
   .partner-metrics {
@@ -2156,12 +2167,20 @@ footer {
   .cta-buttons { flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 32px; }
   .cta-buttons .btn { width: 100%; justify-content: center; }
   .btn { width: 100%; min-width: 0; height: 58px; min-height: 58px; }
-  .cta-form-submit { width: 100%; min-width: 0; }
+  .cta-form-submit { width: 100%; max-width: none; min-width: 0; }
+  .cta-form-agree { min-height: 44px; align-items: flex-start; padding: 6px 0; }
+  .cta-form-agree input[type="checkbox"] { margin-top: 12px; flex-shrink: 0; }
+  .cta-form-select { min-height: 48px; }
   .cta-contact-row { flex-direction: column; gap: 16px; align-items: center; }
   .cta-contact-item { font-size: 0.85rem; }
   footer { padding: 36px 0 24px; }
   .footer-inner { grid-template-columns: 1fr; gap: 32px; margin-bottom: 32px; }
   .footer-desc { max-width: 100%; }
+  .footer-info { overflow: visible; word-break: keep-all; }
+  .footer-col a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 0; }
+  .footer-family-site-trigger { min-height: 44px; padding: 10px 12px; }
+  .gnb-fullmenu-inner { padding: 24px 16px 72px; }
+  .gnb-fullmenu-col a { display: flex; align-items: center; min-height: 44px; padding: 8px 0; }
   .footer-bottom { flex-direction: column; align-items: center; text-align: center; padding-top: 24px; gap: 12px; }
   .footer-bottom-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
   .back-top { bottom: 20px; right: 20px; width: 48px; height: 48px; }
@@ -2607,7 +2626,7 @@ footer {
       </div>
     </div>
     <div class="ref-more-wrap reveal">
-      <a href="#reference" class="btn btn-outline" data-i18n="refMore">전체 레퍼런스 보기</a>
+      <a href="pages/reference.html" class="btn btn-outline" data-i18n="refMore">전체 레퍼런스 보기</a>
     </div>
   </div>
 </section>
@@ -2837,10 +2856,6 @@ footer {
             <li role="none"><a href="https://dtinc.co.kr/" role="menuitem" target="_blank" rel="noopener">DT</a></li>
           </ul>
         </div>
-        <div class="footer-bottom-links">
-          <a href="#" data-placeholder="href" data-i18n="footerPolicy" title="TODO: 개인정보처리방침 페이지 URL 확정 후 연결">개인정보처리방침</a>
-          <a href="#" data-placeholder="href" data-i18n="footerTerms" title="TODO: 이용약관 페이지 URL 확정 후 연결">이용약관</a>
-        </div>
       </div>
     </div>
   </div>
@@ -2880,7 +2895,6 @@ footer {
   1. Hero 최종 카피 확정 (대표/기획 검토)
   2. Trust 숫자(30+, 6개, 5년+) — 실제 실적으로 교체
   3. 이노비즈·벤처기업 인증 — 인증서/근거자료 확보 후 노출
-  4. 개인정보처리방침·이용약관 URL 연결
   5. 고객사 로고 — 사용 승인 후 이미지 교체 (현재 텍스트)
   6. "S 통신사" — 고객사명 공개 여부 확정 후 수정
   7. "고객사명" placeholder — 실제 파트너명 또는 제거
@@ -3548,7 +3562,6 @@ var I18N = {
     footerLinkIntro:'회사소개', footerLinkHistory:'연혁·인증', footerLinkCi:'CI소개', footerLinkNews:'비디젠 뉴스', footerLinkBiz:'사업영역',
     footerLinkGenid:'GenID', footerLinkPasskey:'Passkey', footerLinkRef:'레퍼런스', footerLinkCareers:'채용',
     footerInquiry:'프로젝트 문의', footerIntro:'회사소개서', brochureDownload:'회사소개서 다운받기',
-    footerPolicy:'개인정보처리방침', footerTerms:'이용약관',
     ref1Tag:'DID · 모바일지갑', ref1Proj:'PASS 모바일지갑 DID 서비스 운영·고도화. 수백만 사용자 규모의 국내 대표 모바일 신원인증 서비스 장기 운영.',
     ref2Tag:'블록체인 · 디지털배지', ref2Proj:'디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정. 블록체인 기반 디지털 자격증명 시스템 구현.',
     ref3Tag:'블록체인 · 전자계약', ref3Proj:'블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축. 공공 행정 디지털 전환 선도.',
@@ -3591,7 +3604,6 @@ var I18N = {
     footerLinkIntro:'Company', footerLinkHistory:'History & certifications', footerLinkCi:'CI', footerLinkNews:'BDGen News', footerLinkBiz:'Business',
     footerLinkGenid:'GenID', footerLinkPasskey:'Passkey', footerLinkRef:'Reference', footerLinkCareers:'Careers',
     footerInquiry:'Project inquiry', footerIntro:'Company intro', brochureDownload:'Download company brochure',
-    footerPolicy:'Privacy policy', footerTerms:'Terms of use',
     ref1Tag:'DID · Mobile wallet', ref1Proj:'PASS mobile wallet DID service operations and enhancement. Long-term operation of a leading domestic mobile identity service serving millions.',
     ref2Tag:'Blockchain · Digital badge', ref2Proj:'Selected for digital badge-based integrated employment support project. Blockchain-based digital credential system implementation.',
     ref3Tag:'Blockchain · E-contract', ref3Proj:'Blockchain-based public job electronic labor contract and history platform. Leading public sector digital transformation.',

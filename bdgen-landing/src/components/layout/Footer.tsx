@@ -4,10 +4,9 @@ import type { CompanyInfo, LinkGroup } from '@/types/landing';
 interface FooterProps {
   company: CompanyInfo;
   linkGroups: LinkGroup[];
-  bottomLinks: { label: string; href: string }[];
 }
 
-export function Footer({ company, linkGroups, bottomLinks }: FooterProps) {
+export function Footer({ company, linkGroups }: FooterProps) {
   return (
     <footer role="contentinfo">
       <div className="container">
@@ -49,13 +48,6 @@ export function Footer({ company, linkGroups, bottomLinks }: FooterProps) {
         </div>
         <div className="footer-bottom">
           <span>© 2024 {company.name}. All rights reserved.</span>
-          <div className="footer-bottom-links">
-            {bottomLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

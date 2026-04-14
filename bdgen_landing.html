@@ -1589,6 +1589,23 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   color: var(--text-secondary);
 }
 .cta-form-agree a { color: var(--primary); text-decoration: underline; }
+.cta-form-error {
+  font-size: 0.8rem;
+  color: #ff7a8c;
+  line-height: 1.35;
+  min-height: 0;
+  margin: 0;
+}
+.cta-form-error:empty { display: none; }
+.cta-form-message {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  min-height: 0;
+}
+.cta-form-message:empty { display: none; }
+.cta-form-message.success { color: #5eead4; }
+.cta-form-message.error { color: #ff7a8c; }
 /* 문의 보내기: 기본 아웃라인(#0065FA), 양식 전부 작성 시 채워짐 */
 .cta-form-submit {
   position: relative;
@@ -1637,6 +1654,39 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .cta-form-submit.valid:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(0,101,250,0.5);
+}
+.cta-form-submit:disabled,
+.cta-form-submit:disabled:hover {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  color: #0065FA;
+  border-color: #0065FA;
+  background: transparent;
+}
+.cta-form-submit:disabled.valid,
+.cta-form-submit:disabled.valid:hover {
+  opacity: 0.45;
+  background: #0065FA;
+  color: #fff;
+  border-color: #0065FA;
+}
+.cta-form-submit:disabled::before,
+.cta-form-submit:disabled:hover::before {
+  transform: scaleY(0);
+}
+.cta-form-submit.is-loading:disabled,
+.cta-form-submit.is-loading:disabled:hover {
+  opacity: 1;
+  cursor: wait;
+  color: #fff;
+  border-color: #0065FA;
+  background: #0065FA;
+}
+.cta-form-submit.is-loading:disabled::before,
+.cta-form-submit.is-loading:disabled:hover::before {
+  transform: scaleY(1);
 }
 
 /* ========================
@@ -2643,11 +2693,12 @@ footer {
     <p class="cta-sub reveal reveal-delay-2" data-i18n="ctaSub">도입 검토부터 기술 상담까지, 비디젠 전문가가 함께합니다.</p>
     <div class="cta-split reveal reveal-delay-3">
       <div class="cta-form-wrap">
-        <form class="cta-form" action="#" method="post" aria-label="프로젝트 기술협업 문의 양식">
+        <form class="cta-form" action="#" method="post" aria-label="프로젝트 기술협업 문의 양식" novalidate>
       <div class="cta-form-row">
         <div class="cta-form-field">
           <label for="cta-name" class="cta-form-label" data-i18n="ctaName">성함</label>
-          <input type="text" id="cta-name" name="name" class="cta-form-input" placeholder="홍길동" required autocomplete="name">
+          <input type="text" id="cta-name" name="name" class="cta-form-input" placeholder="홍길동" autocomplete="name" aria-describedby="cta-name-error">
+          <p class="cta-form-error" id="cta-name-error" role="alert" aria-live="polite"></p>
         </div>
         <div class="cta-form-field">
           <label for="cta-company" class="cta-form-label" data-i18n="ctaCompany">회사명</label>
@@ -2657,7 +2708,8 @@ footer {
       <div class="cta-form-row">
         <div class="cta-form-field">
           <label for="cta-email" class="cta-form-label" data-i18n="ctaEmail">이메일</label>
-          <input type="email" id="cta-email" name="email" class="cta-form-input" placeholder="example@company.com" required autocomplete="email">
+          <input type="email" id="cta-email" name="email" class="cta-form-input" placeholder="example@company.com" autocomplete="email" aria-describedby="cta-email-error">
+          <p class="cta-form-error" id="cta-email-error" role="alert" aria-live="polite"></p>
         </div>
         <div class="cta-form-field">
           <label for="cta-phone" class="cta-form-label" data-i18n="ctaPhone">연락처</label>
@@ -2666,7 +2718,7 @@ footer {
       </div>
       <div class="cta-form-field">
         <label for="cta-type" class="cta-form-label" data-i18n="ctaType">문의 유형</label>
-        <select id="cta-type" name="inquiry_type" class="cta-form-select">
+        <select id="cta-type" name="type" class="cta-form-select">
           <option value="" data-i18n="ctaPlaceholder">선택해 주세요</option>
           <option value="consulting">도입 상담</option>
           <option value="poc">PoC(실증)</option>
@@ -2676,19 +2728,22 @@ footer {
       </div>
       <div class="cta-form-field">
         <label for="cta-message" class="cta-form-label" data-i18n="ctaMsg">문의 내용</label>
-        <textarea id="cta-message" name="message" class="cta-form-textarea" placeholder="프로젝트 개요, 도입 목적, 일정 등 자유롭게 작성해 주세요." required></textarea>
+        <textarea id="cta-message" name="message" class="cta-form-textarea" placeholder="프로젝트 개요, 도입 목적, 일정 등 자유롭게 작성해 주세요." aria-describedby="cta-message-error"></textarea>
+        <p class="cta-form-error" id="cta-message-error" role="alert" aria-live="polite"></p>
       </div>
       <div class="cta-form-agrees">
         <label class="cta-form-agree">
-          <input type="checkbox" id="cta-agree-privacy" name="agree_privacy" required aria-required="true">
+          <input type="checkbox" id="cta-privacy" name="privacy" value="1" aria-describedby="cta-privacy-error" aria-required="true">
           <span>개인정보 제공 및 활용동의 <em>(필수)</em></span>
         </label>
         <label class="cta-form-agree">
-          <input type="checkbox" id="cta-agree-marketing" name="agree_marketing" value="Y">
+          <input type="checkbox" id="cta-marketing" name="marketing" value="1">
           <span>마케팅 수신동의</span>
         </label>
       </div>
-      <button type="submit" class="cta-form-submit" data-i18n="ctaSubmit">문의 보내기</button>
+      <p class="cta-form-error" id="cta-privacy-error" role="alert" aria-live="polite"></p>
+      <button type="submit" class="cta-form-submit" data-i18n="ctaSubmit" disabled>문의 보내기</button>
+      <p id="cta-form-status" class="cta-form-message" role="status" aria-live="polite"></p>
         </form>
       </div>
       <div class="cta-map-wrap">
@@ -3174,30 +3229,162 @@ footer {
   });
 })();
 
-/* ---------- CTA 문의 폼: 양식 전부 작성 시 버튼 채워짐 ---------- */
+/* ---------- CTA 문의 폼: GAS 연동 · 유효성 · 전송 상태 ---------- */
 (function(){
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhxJYlzvWyIKNXNGoEyZIkXpslAejA-cxbGyJvO9_aLUZU8-RAW8CCfH_ztkKk7BEY/exec';
   var form = document.querySelector('#cta .cta-form');
   var submitBtn = form ? form.querySelector('.cta-form-submit') : null;
+  var statusEl = document.getElementById('cta-form-status');
   var nameEl = document.getElementById('cta-name');
   var emailEl = document.getElementById('cta-email');
   var messageEl = document.getElementById('cta-message');
   var typeEl = document.getElementById('cta-type');
-  var agreePrivacyEl = document.getElementById('cta-agree-privacy');
-  function checkValid(){
-    if(!submitBtn) return;
+  var companyEl = document.getElementById('cta-company');
+  var phoneEl = document.getElementById('cta-phone');
+  var privacyEl = document.getElementById('cta-privacy');
+  var marketingEl = document.getElementById('cta-marketing');
+  var errName = document.getElementById('cta-name-error');
+  var errEmail = document.getElementById('cta-email-error');
+  var errMessage = document.getElementById('cta-message-error');
+  var errPrivacy = document.getElementById('cta-privacy-error');
+  var formTouched = false;
+  var submitting = false;
+
+  function T(){
+    var lang = typeof LANG !== 'undefined' ? LANG : 'ko';
+    return (typeof I18N !== 'undefined' && I18N[lang]) ? I18N[lang] : {};
+  }
+
+  function isFormStructurallyValid(){
     var nameOk = nameEl && nameEl.value.trim() !== '';
     var emailOk = emailEl && emailEl.value.trim() !== '';
     var messageOk = messageEl && messageEl.value.trim() !== '';
-    var typeOk = typeEl && typeEl.value !== '';
-    var agreeOk = agreePrivacyEl && agreePrivacyEl.checked;
-    submitBtn.classList.toggle('valid', nameOk && emailOk && messageOk && typeOk && agreeOk);
+    var privacyOk = privacyEl && privacyEl.checked;
+    return !!(nameOk && emailOk && messageOk && privacyOk);
   }
-  if(form){
-    [nameEl, emailEl, messageEl, typeEl, agreePrivacyEl].forEach(function(el){
-      if(el){ el.addEventListener('input', checkValid); el.addEventListener('change', checkValid); }
+
+  function updateFieldErrors(){
+    var dict = T();
+    if(!formTouched){
+      if(errName) errName.textContent = '';
+      if(errEmail) errEmail.textContent = '';
+      if(errMessage) errMessage.textContent = '';
+      if(errPrivacy) errPrivacy.textContent = '';
+      return;
+    }
+    if(errName) errName.textContent = (nameEl && nameEl.value.trim() === '') ? (dict.ctaErrName || '성함을 입력해 주세요.') : '';
+    if(errEmail) errEmail.textContent = (emailEl && emailEl.value.trim() === '') ? (dict.ctaErrEmail || '이메일을 입력해 주세요.') : '';
+    if(errMessage) errMessage.textContent = (messageEl && messageEl.value.trim() === '') ? (dict.ctaErrMessage || '문의 내용을 입력해 주세요.') : '';
+    if(errPrivacy) errPrivacy.textContent = (privacyEl && !privacyEl.checked) ? (dict.ctaErrPrivacy || '개인정보 제공 및 활용동의가 필요합니다') : '';
+  }
+
+  function syncSubmitButton(){
+    if(!submitBtn || submitting) return;
+    var ok = isFormStructurallyValid();
+    submitBtn.classList.toggle('valid', ok);
+    submitBtn.disabled = !ok;
+  }
+
+  function setStatus(kind, text){
+    if(!statusEl) return;
+    statusEl.textContent = text || '';
+    statusEl.classList.remove('success', 'error');
+    if(kind === 'success') statusEl.classList.add('success');
+    if(kind === 'error') statusEl.classList.add('error');
+  }
+
+  function resetSubmitLabel(){
+    if(!submitBtn) return;
+    var dict = T();
+    var key = submitBtn.getAttribute('data-i18n');
+    var label = (key && dict[key]) ? dict[key] : '문의 보내기';
+    submitBtn.textContent = label;
+  }
+
+  function onFormChange(){
+    formTouched = true;
+    updateFieldErrors();
+    syncSubmitButton();
+  }
+
+  function submitForm(e){
+    e.preventDefault();
+    if(submitting) return;
+    formTouched = true;
+    updateFieldErrors();
+    if(!isFormStructurallyValid()){
+      syncSubmitButton();
+      return;
+    }
+    var dict = T();
+    var formData = {
+      name: nameEl ? nameEl.value.trim() : '',
+      company: companyEl ? companyEl.value.trim() : '',
+      email: emailEl ? emailEl.value.trim() : '',
+      phone: phoneEl ? phoneEl.value.trim() : '',
+      type: typeEl ? typeEl.value : '',
+      message: messageEl ? messageEl.value.trim() : '',
+      privacy: !!(privacyEl && privacyEl.checked),
+      marketing: !!(marketingEl && marketingEl.checked)
+    };
+    submitting = true;
+    if(submitBtn){
+      submitBtn.disabled = true;
+      submitBtn.classList.add('is-loading');
+      submitBtn.textContent = dict.ctaSending || '전송 중...';
+      submitBtn.classList.remove('valid');
+    }
+    setStatus('', '');
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    }).then(function(){
+      setStatus('success', dict.ctaSuccess || '문의가 접수되었습니다. 빠른 시일 내 답변드리겠습니다.');
+      form.reset();
+      formTouched = false;
+      updateFieldErrors();
+      resetSubmitLabel();
+    }).catch(function(){
+      setStatus('error', dict.ctaFail || '전송에 실패했습니다. 다시 시도해 주세요.');
+      resetSubmitLabel();
+    }).finally(function(){
+      submitting = false;
+      if(submitBtn) submitBtn.classList.remove('is-loading');
+      syncSubmitButton();
     });
-    checkValid();
   }
+
+  function initCtaForm(){
+    if(!form || !submitBtn) return;
+    [nameEl, emailEl, messageEl, typeEl, companyEl, phoneEl, privacyEl, marketingEl].forEach(function(el){
+      if(el){
+        el.addEventListener('input', onFormChange);
+        el.addEventListener('change', onFormChange);
+      }
+    });
+    form.addEventListener('submit', submitForm);
+    updateFieldErrors();
+    syncSubmitButton();
+  }
+
+  window.bdgenCtaRefreshI18n = function(){
+    if(submitting) return;
+    updateFieldErrors();
+    resetSubmitLabel();
+    syncSubmitButton();
+  };
+
+  function boot(){
+    if(typeof I18N === 'undefined'){
+      setTimeout(boot, 0);
+      return;
+    }
+    initCtaForm();
+  }
+  boot();
 })();
 
 /* ---------- GNB 스크롤 & Back to Top & FAB 배경 감지 ---------- */
@@ -3333,6 +3520,8 @@ var I18N = {
     newsMore:'모든 소식 보기', newsLink:'자세히 보기',
     ctaTitle:'프로젝트를 시작할 준비가 되셨나요?', ctaSub:'도입 검토부터 기술 상담까지, 비디젠 전문가가 함께합니다.',
     ctaName:'성함', ctaCompany:'회사명', ctaEmail:'이메일', ctaPhone:'연락처', ctaType:'문의 유형', ctaMsg:'문의 내용', ctaSubmit:'문의 보내기',
+    ctaErrName:'성함을 입력해 주세요.', ctaErrEmail:'이메일을 입력해 주세요.', ctaErrMessage:'문의 내용을 입력해 주세요.', ctaErrPrivacy:'개인정보 제공 및 활용동의가 필요합니다',
+    ctaSending:'전송 중...', ctaSuccess:'문의가 접수되었습니다. 빠른 시일 내 답변드리겠습니다.', ctaFail:'전송에 실패했습니다. 다시 시도해 주세요.',
     ctaPlaceholder:'선택해 주세요', ctaMsgPlaceholder:'프로젝트 개요, 도입 목적, 일정 등 자유롭게 작성해 주세요.',
     footerDesc:'블록체인·DID 전문기업. 통신·금융·공공·의료 등 산업의 인증·증명 솔루션을 제공합니다.',
     footerSvc:'서비스', footerComp:'회사', footerContact:'문의', footerSvc1:'블록체인 서비스 개발', footerSvc2:'모바일 앱 개발', footerSvc3:'플랫폼 운영 솔루션', footerSvc4:'GenID 솔루션',
@@ -3372,6 +3561,8 @@ var I18N = {
     newsMore:'View all news', newsLink:'Learn more',
     ctaTitle:'Ready to start your project?', ctaSub:'From evaluation to technical consultation, BDGen experts are with you.',
     ctaName:'Name', ctaCompany:'Company', ctaEmail:'Email', ctaPhone:'Phone', ctaType:'Inquiry type', ctaMsg:'Message', ctaSubmit:'Send inquiry',
+    ctaErrName:'Please enter your name.', ctaErrEmail:'Please enter your email.', ctaErrMessage:'Please enter your message.', ctaErrPrivacy:'Privacy consent is required.',
+    ctaSending:'Sending...', ctaSuccess:'Your inquiry has been received. We will respond as soon as possible.', ctaFail:'Failed to send. Please try again.',
     ctaPlaceholder:'Please select', ctaMsgPlaceholder:'Project overview, goals, timeline—feel free to share.',
     footerDesc:'Blockchain·DID specialist. Authentication and verification solutions for telecom, finance, public, healthcare, and more.',
     footerSvc:'Services', footerComp:'Company', footerContact:'Contact', footerSvc1:'Blockchain services', footerSvc2:'Mobile app development', footerSvc3:'Platform operations', footerSvc4:'GenID solution',
@@ -3423,7 +3614,7 @@ function applyLang(lang, skipHero){
     newsLine2.setAttribute('data-text', line2);
   }
   var suffixEl = document.querySelector('.partner-metric-value[data-suffix="개"]'); if(suffixEl) suffixEl.setAttribute('data-suffix', lang==='ko'?'개':'');
-  if(skipHero){ var ab=document.querySelector('#about-bdgen-title'); if(ab&&T.aboutLine1) ab.innerHTML='<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>'; var ph=document.getElementById('cta-message'); if(ph&&T.ctaMsgPlaceholder) ph.placeholder=T.ctaMsgPlaceholder; var sel=document.getElementById('cta-type'); if(sel&&sel.options[0]&&T.ctaPlaceholder) sel.options[0].textContent=T.ctaPlaceholder; var ctaT=document.getElementById('cta-typing'); if(ctaT&&T.ctaTitle) ctaT.setAttribute('data-text',T.ctaTitle); if(typeof window.wrapWhyTitleWave==='function') window.wrapWhyTitleWave(); return; }
+  if(skipHero){ var ab=document.querySelector('#about-bdgen-title'); if(ab&&T.aboutLine1) ab.innerHTML='<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>'; var ph=document.getElementById('cta-message'); if(ph&&T.ctaMsgPlaceholder) ph.placeholder=T.ctaMsgPlaceholder; var sel=document.getElementById('cta-type'); if(sel&&sel.options[0]&&T.ctaPlaceholder) sel.options[0].textContent=T.ctaPlaceholder; var ctaT=document.getElementById('cta-typing'); if(ctaT&&T.ctaTitle) ctaT.setAttribute('data-text',T.ctaTitle); if(typeof window.wrapWhyTitleWave==='function') window.wrapWhyTitleWave(); if(typeof window.bdgenCtaRefreshI18n==='function') window.bdgenCtaRefreshI18n(); return; }
   var heroSub = document.querySelector('.hero-sub'); if(heroSub) heroSub.innerHTML = T.heroSub;
   var el1=document.getElementById('hero-typing-1'),el2=document.getElementById('hero-typing-2'),el3=document.getElementById('hero-typing-3');
   if(el1&&el2&&el3){ el1.textContent=T.hero1; el2.textContent=T.hero2; el3.textContent=T.hero3; el3.classList.remove('hero-typing-cursor'); el3.style.borderRight='none'; }
@@ -3440,6 +3631,7 @@ function applyLang(lang, skipHero){
     ctaTypingEl.style.borderRight = 'none';
   }
   if(typeof window.wrapWhyTitleWave === 'function') window.wrapWhyTitleWave();
+  if(typeof window.bdgenCtaRefreshI18n === 'function') window.bdgenCtaRefreshI18n();
 }
 window.wrapWhyTitleWave = function(){
   var el = document.getElementById('why-title');

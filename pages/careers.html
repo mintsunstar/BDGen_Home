@@ -1548,6 +1548,39 @@
     border-color: var(--careers-blue);
     box-shadow: 0 0 0 3px rgba(0, 101, 250, 0.12);
   }
+  .careers-apply-stack{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+  }
+  .careers-apply-error{
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #c62828;
+    min-height: 0;
+  }
+  .careers-apply-error:empty{
+    display: none;
+  }
+  .careers-apply-privacy-block{
+    margin-bottom: 8px;
+  }
+  .careers-apply-feedback{
+    margin: 14px 0 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0d7a5c;
+    line-height: 1.55;
+    text-align: center;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .careers-apply-feedback[hidden]{
+    display: none !important;
+  }
   .careers-apply-radios{
     display: flex;
     flex-direction: column;
@@ -1675,11 +1708,30 @@
     border-color: #9aa5b1;
     background: #fafbfc;
   }
+  .careers-apply-submit:disabled,
+  .careers-apply-submit:disabled:hover{
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f4f6f9;
+    border-color: #d8dee6;
+    color: #6b7684;
+  }
+  .careers-apply-submit.is-loading:disabled,
+  .careers-apply-submit.is-loading:disabled:hover{
+    opacity: 1;
+    cursor: wait;
+    color: #fff;
+    background: var(--careers-blue);
+    border-color: var(--careers-blue);
+  }
   .careers-apply-msg{
     margin-top: 14px;
     font-size: 14px;
     color: var(--careers-blue);
     min-height: 1.2em;
+  }
+  .careers-apply-msg.careers-apply-msg--error{
+    color: #c62828;
   }
   @media (max-width: 560px){
     .careers-apply-field{
@@ -2011,6 +2063,7 @@
       <div class="careers-cta careers-scroll-sec">
         <div class="careers-scroll-stage careers-scroll-stage--title">
           <button type="button" class="btn btn-outline careers-cta-btn" id="careersApplyOpen" aria-haspopup="dialog" aria-controls="careersApplyModal" aria-expanded="false"><span data-i18n="careers-cta-text">지원서 작성하기</span><span class="careers-cta-arrow" aria-hidden="true">→</span></button>
+          <p class="careers-apply-feedback" id="careersApplyFeedback" role="status" aria-live="polite" hidden></p>
         </div>
         <div class="careers-scroll-stage careers-scroll-stage--lead">
           <div class="careers-cta-external">
@@ -2040,57 +2093,78 @@
     <form class="careers-apply-form" id="careersApplyForm" novalidate>
       <div class="careers-apply-field">
         <label class="careers-apply-label" for="careersApplyName"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-name">이름</span></label>
-        <input type="text" id="careersApplyName" name="name" class="careers-apply-input" autocomplete="name" required placeholder="성함을 입력해주세요." data-i18n-placeholder="careers-apply-name-ph"/>
+        <div class="careers-apply-stack">
+          <input type="text" id="careersApplyName" name="name" class="careers-apply-input" autocomplete="name" placeholder="성함을 입력해주세요." data-i18n-placeholder="careers-apply-name-ph" aria-describedby="careersApplyErrName"/>
+          <p class="careers-apply-error" id="careersApplyErrName" role="alert" aria-live="polite"></p>
+        </div>
       </div>
       <div class="careers-apply-field">
         <label class="careers-apply-label" for="careersApplyEmail"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-email">E-mail</span></label>
-        <input type="email" id="careersApplyEmail" name="email" class="careers-apply-input" autocomplete="email" required placeholder="이메일을 입력해주세요." data-i18n-placeholder="careers-apply-email-ph"/>
+        <div class="careers-apply-stack">
+          <input type="email" id="careersApplyEmail" name="email" class="careers-apply-input" autocomplete="email" placeholder="이메일을 입력해주세요." data-i18n-placeholder="careers-apply-email-ph" aria-describedby="careersApplyErrEmail"/>
+          <p class="careers-apply-error" id="careersApplyErrEmail" role="alert" aria-live="polite"></p>
+        </div>
       </div>
       <div class="careers-apply-field">
         <label class="careers-apply-label" for="careersApplyPhone"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-phone">연락처</span></label>
-        <input type="tel" id="careersApplyPhone" name="phone" class="careers-apply-input" autocomplete="tel" required placeholder="연락처를 입력해주세요." data-i18n-placeholder="careers-apply-phone-ph"/>
+        <div class="careers-apply-stack">
+          <input type="tel" id="careersApplyPhone" name="phone" class="careers-apply-input" autocomplete="tel" placeholder="연락처를 입력해주세요." data-i18n-placeholder="careers-apply-phone-ph" aria-describedby="careersApplyErrPhone"/>
+          <p class="careers-apply-error" id="careersApplyErrPhone" role="alert" aria-live="polite"></p>
+        </div>
       </div>
       <div class="careers-apply-field careers-apply-field--stack">
         <div class="careers-apply-label"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-position">지원 포지션</span></div>
-        <div class="careers-apply-radios" role="radiogroup" aria-labelledby="careersApplyPositionLegend">
-          <span id="careersApplyPositionLegend" class="careers-visually-hidden" data-i18n="careers-apply-position">지원 포지션</span>
-          <label class="careers-apply-radio"><input type="radio" name="position" value="fe" checked required/><span data-i18n="careers-role-fe">프론트엔드 개발자</span></label>
-          <label class="careers-apply-radio"><input type="radio" name="position" value="be"/><span data-i18n="careers-role-be">백엔드 개발자</span></label>
-          <label class="careers-apply-radio"><input type="radio" name="position" value="and"/><span data-i18n="careers-role-and">안드로이드 개발자</span></label>
-          <label class="careers-apply-radio"><input type="radio" name="position" value="ios"/><span data-i18n="careers-role-ios">iOS 개발자</span></label>
+        <div class="careers-apply-stack">
+          <div class="careers-apply-radios" role="radiogroup" aria-labelledby="careersApplyPositionLegend">
+            <span id="careersApplyPositionLegend" class="careers-visually-hidden" data-i18n="careers-apply-position">지원 포지션</span>
+            <label class="careers-apply-radio"><input type="radio" name="position" value="fe" checked/><span data-i18n="careers-role-fe">프론트엔드 개발자</span></label>
+            <label class="careers-apply-radio"><input type="radio" name="position" value="be"/><span data-i18n="careers-role-be">백엔드 개발자</span></label>
+            <label class="careers-apply-radio"><input type="radio" name="position" value="and"/><span data-i18n="careers-role-and">안드로이드 개발자</span></label>
+            <label class="careers-apply-radio"><input type="radio" name="position" value="ios"/><span data-i18n="careers-role-ios">iOS 개발자</span></label>
+          </div>
+          <p class="careers-apply-error" id="careersApplyErrPosition" role="alert" aria-live="polite"></p>
         </div>
       </div>
       <div class="careers-apply-field careers-apply-field--stack">
         <div class="careers-apply-label"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-resume">이력서</span></div>
-        <div class="careers-apply-file-row">
-          <input type="file" id="careersApplyResume" name="resume" class="careers-apply-file-input" accept=".pdf,application/pdf" required/>
-          <label for="careersApplyResume" class="careers-apply-file-btn"><span class="careers-apply-file-plus" aria-hidden="true">+</span><span data-i18n="careers-apply-file-btn">파일선택</span></label>
-          <span class="careers-apply-file-name" id="careersApplyResumeName" aria-live="polite"></span>
-          <ul class="careers-apply-file-hints">
-            <li data-i18n="careers-apply-file-hint1">※ PDF 형식만 업로드 가능합니다.</li>
-            <li data-i18n="careers-apply-file-hint2">※ 파일 업로드 최대 용량 10mb</li>
-          </ul>
+        <div class="careers-apply-stack">
+          <div class="careers-apply-file-row">
+            <input type="file" id="careersApplyResume" name="resume" class="careers-apply-file-input" accept=".pdf,application/pdf" aria-describedby="careersApplyErrResume"/>
+            <label for="careersApplyResume" class="careers-apply-file-btn"><span class="careers-apply-file-plus" aria-hidden="true">+</span><span data-i18n="careers-apply-file-btn">파일선택</span></label>
+            <span class="careers-apply-file-name" id="careersApplyResumeName" aria-live="polite"></span>
+            <ul class="careers-apply-file-hints">
+              <li data-i18n="careers-apply-file-hint1">※ PDF 형식만 업로드 가능합니다.</li>
+              <li data-i18n="careers-apply-file-hint2">※ 파일 업로드 최대 용량 10mb</li>
+            </ul>
+          </div>
+          <p class="careers-apply-error" id="careersApplyErrResume" role="alert" aria-live="polite"></p>
         </div>
       </div>
       <div class="careers-apply-field careers-apply-field--stack">
         <div class="careers-apply-label"><span class="careers-apply-req" aria-hidden="true">*</span><span data-i18n="careers-apply-portfolio">포트폴리오</span></div>
-        <div class="careers-apply-file-row">
-          <input type="file" id="careersApplyPortfolio" name="portfolio" class="careers-apply-file-input" accept=".pdf,application/pdf" required/>
-          <label for="careersApplyPortfolio" class="careers-apply-file-btn"><span class="careers-apply-file-plus" aria-hidden="true">+</span><span data-i18n="careers-apply-file-btn">파일선택</span></label>
-          <span class="careers-apply-file-name" id="careersApplyPortfolioName" aria-live="polite"></span>
-          <ul class="careers-apply-file-hints">
-            <li data-i18n="careers-apply-file-hint1">※ PDF 형식만 업로드 가능합니다.</li>
-            <li data-i18n="careers-apply-file-hint2">※ 파일 업로드 최대 용량 10mb</li>
-          </ul>
+        <div class="careers-apply-stack">
+          <div class="careers-apply-file-row">
+            <input type="file" id="careersApplyPortfolio" name="portfolio" class="careers-apply-file-input" accept=".pdf,application/pdf" aria-describedby="careersApplyErrPortfolio"/>
+            <label for="careersApplyPortfolio" class="careers-apply-file-btn"><span class="careers-apply-file-plus" aria-hidden="true">+</span><span data-i18n="careers-apply-file-btn">파일선택</span></label>
+            <span class="careers-apply-file-name" id="careersApplyPortfolioName" aria-live="polite"></span>
+            <ul class="careers-apply-file-hints">
+              <li data-i18n="careers-apply-file-hint1">※ PDF 형식만 업로드 가능합니다.</li>
+              <li data-i18n="careers-apply-file-hint2">※ 파일 업로드 최대 용량 10mb</li>
+            </ul>
+          </div>
+          <p class="careers-apply-error" id="careersApplyErrPortfolio" role="alert" aria-live="polite"></p>
         </div>
       </div>
       <hr class="careers-apply-divider"/>
-      <label class="careers-apply-privacy">
-        <input type="checkbox" id="careersApplyPrivacy" name="privacy" required/>
-        <span><span class="careers-apply-req">*</span> <span class="careers-apply-privacy-text" data-i18n="careers-apply-privacy">개인정보 수집에 동의합니다.</span></span>
-      </label>
+      <div class="careers-apply-privacy-block">
+        <label class="careers-apply-privacy">
+          <input type="checkbox" id="careersApplyPrivacy" name="privacy" value="1" aria-describedby="careersApplyErrPrivacy"/>
+          <span><span class="careers-apply-req">*</span> <span class="careers-apply-privacy-text" data-i18n="careers-apply-privacy">개인정보 수집에 동의합니다.</span></span>
+        </label>
+        <p class="careers-apply-error" id="careersApplyErrPrivacy" role="alert" aria-live="polite"></p>
+      </div>
       <div class="careers-apply-submit-wrap">
-        <button type="submit" class="careers-apply-submit" data-i18n="careers-apply-submit">지원서 접수하기</button>
+        <button type="submit" class="careers-apply-submit" id="careersApplySubmit" data-i18n="careers-apply-submit" disabled>지원서 접수하기</button>
         <p class="careers-apply-msg" id="careersApplyMsg" role="status" aria-live="polite"></p>
       </div>
     </form>
@@ -2099,7 +2173,16 @@
 <div class="careers-visually-hidden" aria-hidden="true">
   <span id="careersApplyErrTplType" data-i18n="careers-apply-file-err-type"></span>
   <span id="careersApplyErrTplSize" data-i18n="careers-apply-file-err-size"></span>
-  <span id="careersApplySubmitTpl" data-i18n="careers-apply-submit-msg"></span>
+  <span id="careersApplyTplErrName" data-i18n="careers-apply-err-name"></span>
+  <span id="careersApplyTplErrEmail" data-i18n="careers-apply-err-email"></span>
+  <span id="careersApplyTplErrPhone" data-i18n="careers-apply-err-phone"></span>
+  <span id="careersApplyTplErrPosition" data-i18n="careers-apply-err-position"></span>
+  <span id="careersApplyTplErrResume" data-i18n="careers-apply-err-resume"></span>
+  <span id="careersApplyTplErrPortfolio" data-i18n="careers-apply-err-portfolio"></span>
+  <span id="careersApplyTplErrPrivacy" data-i18n="careers-apply-err-privacy"></span>
+  <span id="careersApplyTplSuccess" data-i18n="careers-apply-success"></span>
+  <span id="careersApplyTplFail" data-i18n="careers-apply-fail"></span>
+  <span id="careersApplyTplSending" data-i18n="careers-apply-sending"></span>
 </div>
 </main>
 <footer role="contentinfo">
@@ -2755,126 +2838,360 @@
   });
 })();
 (function initCareersApplyModal(){
-  var modal = document.getElementById('careersApplyModal');
-  var openBtn = document.getElementById('careersApplyOpen');
-  var closeBtn = document.getElementById('careersApplyClose');
-  var backdrop = document.getElementById('careersApplyBackdrop');
-  var form = document.getElementById('careersApplyForm');
-  var msgEl = document.getElementById('careersApplyMsg');
-  if (!modal || !openBtn || !form) return;
-
-  var resumeInput = document.getElementById('careersApplyResume');
-  var portfolioInput = document.getElementById('careersApplyPortfolio');
-  var resumeNameEl = document.getElementById('careersApplyResumeName');
-  var portfolioNameEl = document.getElementById('careersApplyPortfolioName');
-  var lastFocus = null;
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzBh7Wvq8UY4rVS2spE8hWRmuAAY0x9BJYdGTcg125HmS1-gl58IrU70kPVrbZjNH29w/exec';
   var PDF_MAX = 10 * 1024 * 1024;
 
-  function errTypeText(){
-    var el = document.getElementById('careersApplyErrTplType');
-    return (el && el.textContent) ? el.textContent.trim() : 'PDF만 업로드할 수 있습니다.';
-  }
-  function errSizeText(){
-    var el = document.getElementById('careersApplyErrTplSize');
-    return (el && el.textContent) ? el.textContent.trim() : '10MB 이하여야 합니다.';
-  }
-  function submitMsgText(){
-    var el = document.getElementById('careersApplySubmitTpl');
-    return (el && el.textContent) ? el.textContent.trim() : '';
+  function tpl(id, fallback){
+    var el = document.getElementById(id);
+    var t = el && el.textContent ? el.textContent.trim() : '';
+    return t || fallback;
   }
 
-  function isPdfFile(file){
-    if (!file) return false;
-    var name = (file.name || '').toLowerCase();
-    return file.type === 'application/pdf' || name.endsWith('.pdf');
+  function toBase64(file){
+    return new Promise(function(resolve, reject){
+      var reader = new FileReader();
+      reader.onload = function(){
+        var r = reader.result;
+        if (typeof r !== 'string' || r.indexOf(',') < 0){
+          reject(new Error('read'));
+          return;
+        }
+        resolve(r.split(',')[1]);
+      };
+      reader.onerror = function(){ reject(reader.error || new Error('read')); };
+      reader.readAsDataURL(file);
+    });
   }
 
-  function validateFileInput(input, nameEl){
-    var f = input.files && input.files[0];
-    if (!f){
-      nameEl.textContent = '';
-      return true;
+  function boot(){
+    var modal = document.getElementById('careersApplyModal');
+    var openBtn = document.getElementById('careersApplyOpen');
+    var closeBtn = document.getElementById('careersApplyClose');
+    var backdrop = document.getElementById('careersApplyBackdrop');
+    var form = document.getElementById('careersApplyForm');
+    var msgEl = document.getElementById('careersApplyMsg');
+    var feedbackEl = document.getElementById('careersApplyFeedback');
+    var submitBtn = document.getElementById('careersApplySubmit');
+    if (!modal || !openBtn || !form || !submitBtn) return;
+
+    var nameEl = document.getElementById('careersApplyName');
+    var emailEl = document.getElementById('careersApplyEmail');
+    var phoneEl = document.getElementById('careersApplyPhone');
+    var privacyEl = document.getElementById('careersApplyPrivacy');
+    var resumeInput = document.getElementById('careersApplyResume');
+    var portfolioInput = document.getElementById('careersApplyPortfolio');
+    var resumeNameEl = document.getElementById('careersApplyResumeName');
+    var portfolioNameEl = document.getElementById('careersApplyPortfolioName');
+    var errName = document.getElementById('careersApplyErrName');
+    var errEmail = document.getElementById('careersApplyErrEmail');
+    var errPhone = document.getElementById('careersApplyErrPhone');
+    var errPosition = document.getElementById('careersApplyErrPosition');
+    var errResume = document.getElementById('careersApplyErrResume');
+    var errPortfolio = document.getElementById('careersApplyErrPortfolio');
+    var errPrivacy = document.getElementById('careersApplyErrPrivacy');
+
+    var lastFocus = null;
+    var formTouched = false;
+    var submitting = false;
+    var resumeFileOk = false;
+    var portfolioFileOk = false;
+    var submitLabelDefault = (submitBtn.textContent && submitBtn.textContent.trim()) || '지원서 접수하기';
+
+    function errTypeText(){
+      return tpl('careersApplyErrTplType', 'PDF 형식만 업로드 가능합니다');
     }
-    if (!isPdfFile(f)){
-      input.value = '';
-      nameEl.textContent = '';
-      window.alert(errTypeText());
-      return false;
+    function errSizeText(){
+      return tpl('careersApplyErrTplSize', '파일 크기는 10MB 이하만 가능합니다');
     }
-    if (f.size > PDF_MAX){
-      input.value = '';
-      nameEl.textContent = '';
-      window.alert(errSizeText());
-      return false;
+
+    function isPdfFile(file){
+      if (!file) return false;
+      var name = (file.name || '').toLowerCase();
+      return file.type === 'application/pdf' || name.endsWith('.pdf');
     }
-    nameEl.textContent = f.name;
-    return true;
-  }
 
-  if (resumeInput && resumeNameEl){
-    resumeInput.addEventListener('change', function(){ validateFileInput(resumeInput, resumeNameEl); });
-  }
-  if (portfolioInput && portfolioNameEl){
-    portfolioInput.addEventListener('change', function(){ validateFileInput(portfolioInput, portfolioNameEl); });
-  }
-
-  function syncPositionFromPage(){
-    var sel = document.querySelector('.careers-role.is-selected');
-    var val = sel ? sel.getAttribute('data-careers-role') : 'fe';
-    var allowed = { fe:1, be:1, and:1, ios:1 };
-    if (!allowed[val]) val = 'fe';
-    var radio = form.querySelector('input[name="position"][value="' + val + '"]');
-    if (radio){
-      radio.checked = true;
+    function setFileFieldOk(which, ok){
+      if (which === 'resume') resumeFileOk = ok;
+      else portfolioFileOk = ok;
     }
-  }
 
-  function openModal(){
-    lastFocus = document.activeElement;
+    function validateFileInput(input, nameEl, errEl, which){
+      var f = input.files && input.files[0];
+      if (!f){
+        nameEl.textContent = '';
+        if (errEl) errEl.textContent = '';
+        setFileFieldOk(which, false);
+        return;
+      }
+      if (!isPdfFile(f)){
+        input.value = '';
+        nameEl.textContent = '';
+        if (errEl) errEl.textContent = errTypeText();
+        setFileFieldOk(which, false);
+        formTouched = true;
+        syncUi();
+        return;
+      }
+      if (f.size > PDF_MAX){
+        input.value = '';
+        nameEl.textContent = '';
+        if (errEl) errEl.textContent = errSizeText();
+        setFileFieldOk(which, false);
+        formTouched = true;
+        syncUi();
+        return;
+      }
+      if (errEl) errEl.textContent = '';
+      nameEl.textContent = f.name;
+      setFileFieldOk(which, true);
+      formTouched = true;
+      syncUi();
+    }
+
+    function positionChecked(){
+      return !!form.querySelector('input[name="position"]:checked');
+    }
+
+    function positionLabelText(){
+      var checked = form.querySelector('input[name="position"]:checked');
+      if (!checked) return '';
+      var lab = checked.closest('label');
+      var span = lab ? lab.querySelector('span[data-i18n]') : null;
+      return span ? span.textContent.trim() : '';
+    }
+
+    function isFormStructurallyValid(){
+      var nameOk = nameEl && nameEl.value.trim() !== '';
+      var emailOk = emailEl && emailEl.value.trim() !== '';
+      var phoneOk = phoneEl && phoneEl.value.trim() !== '';
+      var posOk = positionChecked();
+      var resumeOk = resumeFileOk && resumeInput && resumeInput.files && resumeInput.files[0];
+      var portOk = portfolioFileOk && portfolioInput && portfolioInput.files && portfolioInput.files[0];
+      var privOk = privacyEl && privacyEl.checked;
+      return nameOk && emailOk && phoneOk && posOk && resumeOk && portOk && privOk;
+    }
+
+    function updateFieldErrors(){
+      if (!formTouched){
+        if (errName) errName.textContent = '';
+        if (errEmail) errEmail.textContent = '';
+        if (errPhone) errPhone.textContent = '';
+        if (errPosition) errPosition.textContent = '';
+        if (errResume) errResume.textContent = '';
+        if (errPortfolio) errPortfolio.textContent = '';
+        if (errPrivacy) errPrivacy.textContent = '';
+        return;
+      }
+      if (errName) errName.textContent = (nameEl && nameEl.value.trim() === '') ? tpl('careersApplyTplErrName', '이름을 입력해 주세요.') : '';
+      if (errEmail) errEmail.textContent = (emailEl && emailEl.value.trim() === '') ? tpl('careersApplyTplErrEmail', 'E-mail을 입력해 주세요.') : '';
+      if (errPhone) errPhone.textContent = (phoneEl && phoneEl.value.trim() === '') ? tpl('careersApplyTplErrPhone', '연락처를 입력해 주세요.') : '';
+      if (errPosition) errPosition.textContent = !positionChecked() ? tpl('careersApplyTplErrPosition', '지원 포지션을 선택해 주세요.') : '';
+      if (errResume){
+        if (!resumeInput || !resumeInput.files || !resumeInput.files[0]){
+          errResume.textContent = tpl('careersApplyTplErrResume', '이력서 PDF를 첨부해 주세요.');
+        } else if (!resumeFileOk){
+          /* 유지: PDF/용량 오류 문구는 validateFileInput에서 설정 */
+        } else {
+          errResume.textContent = '';
+        }
+      }
+      if (errPortfolio){
+        if (!portfolioInput || !portfolioInput.files || !portfolioInput.files[0]){
+          errPortfolio.textContent = tpl('careersApplyTplErrPortfolio', '포트폴리오 PDF를 첨부해 주세요.');
+        } else if (!portfolioFileOk){
+          /* 유지 */
+        } else {
+          errPortfolio.textContent = '';
+        }
+      }
+      if (errPrivacy) errPrivacy.textContent = (privacyEl && !privacyEl.checked) ? tpl('careersApplyTplErrPrivacy', '개인정보 수집 동의가 필요합니다') : '';
+    }
+
+    function syncUi(){
+      updateFieldErrors();
+      if (submitting) return;
+      var ok = isFormStructurallyValid();
+      submitBtn.disabled = !ok;
+    }
+
+    function onFormInput(){
+      formTouched = true;
+      syncUi();
+    }
+
+    function resetSubmitLabel(){
+      submitBtn.textContent = submitLabelDefault;
+    }
+
+    function syncPositionFromPage(){
+      var sel = document.querySelector('.careers-role.is-selected');
+      var val = sel ? sel.getAttribute('data-careers-role') : 'fe';
+      var allowed = { fe:1, be:1, and:1, ios:1 };
+      if (!allowed[val]) val = 'fe';
+      var radio = form.querySelector('input[name="position"][value="' + val + '"]');
+      if (radio) radio.checked = true;
+    }
+
+    function clearModalMessage(){
+      if (msgEl){
+        msgEl.textContent = '';
+        msgEl.classList.remove('careers-apply-msg--error');
+      }
+    }
+
+    function openModal(){
+      lastFocus = document.activeElement;
+      syncPositionFromPage();
+      formTouched = false;
+      var sb = document.querySelector('[data-i18n="careers-apply-submit"]');
+      if (sb && sb.textContent.trim()) submitLabelDefault = sb.textContent.trim();
+      else submitLabelDefault = submitBtn.textContent.trim() || submitLabelDefault;
+      updateFieldErrors();
+      clearModalMessage();
+      if (feedbackEl){
+        feedbackEl.textContent = '';
+        feedbackEl.setAttribute('hidden', '');
+      }
+      modal.removeAttribute('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+      openBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      syncUi();
+      window.setTimeout(function(){
+        if (nameEl) nameEl.focus();
+      }, 0);
+    }
+
+    function closeModal(){
+      modal.setAttribute('hidden', '');
+      modal.setAttribute('aria-hidden', 'true');
+      openBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+
+    openBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      openModal();
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function(e){
+      if (e.key !== 'Escape') return;
+      if (modal.hasAttribute('hidden')) return;
+      closeModal();
+    });
+
+    if (resumeInput && resumeNameEl){
+      resumeInput.addEventListener('change', function(){
+        validateFileInput(resumeInput, resumeNameEl, errResume, 'resume');
+      });
+    }
+    if (portfolioInput && portfolioNameEl){
+      portfolioInput.addEventListener('change', function(){
+        validateFileInput(portfolioInput, portfolioNameEl, errPortfolio, 'portfolio');
+      });
+    }
+
+    [nameEl, emailEl, phoneEl, privacyEl].forEach(function(el){
+      if (el){
+        el.addEventListener('input', onFormInput);
+        el.addEventListener('change', onFormInput);
+      }
+    });
+    form.querySelectorAll('input[name="position"]').forEach(function(r){
+      r.addEventListener('change', onFormInput);
+    });
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      formTouched = true;
+      if (resumeInput && resumeNameEl) validateFileInput(resumeInput, resumeNameEl, errResume, 'resume');
+      if (portfolioInput && portfolioNameEl) validateFileInput(portfolioInput, portfolioNameEl, errPortfolio, 'portfolio');
+      updateFieldErrors();
+      clearModalMessage();
+      if (!isFormStructurallyValid()){
+        syncUi();
+        return;
+      }
+      if (submitting) return;
+      var resumeFile = resumeInput.files[0];
+      var portfolioFile = portfolioInput.files[0];
+      var payload = {
+        name: nameEl.value.trim(),
+        email: emailEl.value.trim(),
+        phone: phoneEl.value.trim(),
+        position: positionLabelText(),
+        privacy: true,
+        resume: '',
+        portfolio: ''
+      };
+      submitting = true;
+      submitBtn.disabled = true;
+      submitBtn.classList.add('is-loading');
+      submitBtn.textContent = tpl('careersApplyTplSending', '접수 중...');
+
+      Promise.all([toBase64(resumeFile), toBase64(portfolioFile)])
+        .then(function(blobs){
+          payload.resume = blobs[0];
+          payload.portfolio = blobs[1];
+          return fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        })
+        .then(function(){
+          clearModalMessage();
+          closeModal();
+          form.reset();
+          formTouched = false;
+          resumeFileOk = false;
+          portfolioFileOk = false;
+          if (resumeNameEl) resumeNameEl.textContent = '';
+          if (portfolioNameEl) portfolioNameEl.textContent = '';
+          updateFieldErrors();
+          if (feedbackEl){
+            feedbackEl.textContent = tpl('careersApplyTplSuccess', '지원서가 접수되었습니다. 검토 후 연락드리겠습니다.');
+            feedbackEl.removeAttribute('hidden');
+          }
+        })
+        .catch(function(){
+          if (msgEl){
+            msgEl.textContent = tpl('careersApplyTplFail', '접수에 실패했습니다. 다시 시도해 주세요.');
+            msgEl.classList.add('careers-apply-msg--error');
+          }
+        })
+        .finally(function(){
+          submitting = false;
+          submitBtn.classList.remove('is-loading');
+          resetSubmitLabel();
+          syncPositionFromPage();
+          syncUi();
+        });
+    });
+
+    document.addEventListener('bdgen:subpage-language-applied', function(ev){
+      if (!ev.detail || ev.detail.pageKey !== 'careers') return;
+      var sb = document.querySelector('[data-i18n="careers-apply-submit"]');
+      if (sb && sb.textContent.trim()) submitLabelDefault = sb.textContent.trim();
+      if (!submitting) resetSubmitLabel();
+      updateFieldErrors();
+      syncUi();
+    });
+
     syncPositionFromPage();
-    if (msgEl) msgEl.textContent = '';
-    modal.removeAttribute('hidden');
-    modal.setAttribute('aria-hidden', 'false');
-    openBtn.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-    window.setTimeout(function(){
-      var name = document.getElementById('careersApplyName');
-      if (name) name.focus();
-    }, 0);
+    submitLabelDefault = submitBtn.textContent.trim() || submitLabelDefault;
+    syncUi();
   }
 
-  function closeModal(){
-    modal.setAttribute('hidden', '');
-    modal.setAttribute('aria-hidden', 'true');
-    openBtn.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
   }
-
-  openBtn.addEventListener('click', function(e){
-    e.preventDefault();
-    openModal();
-  });
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
-  if (backdrop) backdrop.addEventListener('click', closeModal);
-
-  document.addEventListener('keydown', function(e){
-    if (e.key !== 'Escape') return;
-    if (modal.hasAttribute('hidden')) return;
-    closeModal();
-  });
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    if (msgEl) msgEl.textContent = '';
-    if (resumeInput && resumeNameEl && !validateFileInput(resumeInput, resumeNameEl)) return;
-    if (portfolioInput && portfolioNameEl && !validateFileInput(portfolioInput, portfolioNameEl)) return;
-    if (!form.checkValidity()){
-      form.reportValidity();
-      return;
-    }
-    if (msgEl) msgEl.textContent = submitMsgText();
-  });
 })();
 </script>
 </body>

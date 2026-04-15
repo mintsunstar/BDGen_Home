@@ -110,6 +110,8 @@
         'era-2019-kw': '태동',
         'era-2019-txt': '변화의 씨앗을 심다',
         'outro-1': '비디젠의 기록은 내일도 계속됩니다.',
+        'outro-2-html':
+          '우리는 기술을 넘어 <span class="outro-hl" data-hl="1">사람과 사람</span>, <span class="outro-hl" data-hl="2">기업과 사회</span>를 잇는 가장 <span class="outro-hl" data-hl="3">안전한 다리</span>가 되겠습니다.',
         'outro-2': '우리는 기술을 넘어 사람과 사람,',
         'outro-3': '기업과 사회를 잇는 가장 안전한 다리가 되겠습니다.',
         'sec-cert-title': '인증 현황',
@@ -143,6 +145,8 @@
         'era-2019-kw': 'Launch',
         'era-2019-txt': 'Sowing seeds of change',
         'outro-1': 'BDGen\'s story continues tomorrow.',
+        'outro-2-html':
+          'Beyond technology, we connect <span class="outro-hl" data-hl="1">people to people</span>, <span class="outro-hl" data-hl="2">business and society</span> — the <span class="outro-hl" data-hl="3">safest bridge</span>.',
         'outro-2': 'Beyond technology, we connect people to people,',
         'outro-3': 'And become the safest bridge between business and society.',
         'sec-cert-title': 'Certifications',
@@ -1218,19 +1222,35 @@
       }
     }
 
-    /* History outro typing */
-    var outroLines = main.querySelectorAll('.outro-line[data-text]');
-    if (outroLines.length && T['outro-1']) {
-      var keys = ['outro-1', 'outro-2', 'outro-3'];
-      outroLines.forEach(function (line, i) {
-        var k = keys[i];
-        if (T[k]) {
-          line.setAttribute('data-text', T[k]);
-          var span = line.querySelector('.outro-text');
-          if (span) span.textContent = T[k];
+    var certTitle = document.getElementById('cert-typing-title');
+    var certDesc = document.getElementById('cert-typing-desc');
+    var hasCertTypingCursor = !!main.querySelector('.cert-typing-cursor');
+    if (certTitle && T['sec-cert-title']) {
+      certTitle.setAttribute('data-text', T['sec-cert-title']);
+      if (!certTitle.classList.contains('cert-typing-running')) {
+        if (
+          !hasCertTypingCursor ||
+          reducedMotion ||
+          certTitle.textContent.trim() !== ''
+        ) {
+          certTitle.textContent = T['sec-cert-title'];
         }
-      });
+      }
     }
+    if (certDesc && T['sec-cert-desc']) {
+      certDesc.setAttribute('data-text', T['sec-cert-desc']);
+      if (!certDesc.classList.contains('cert-typing-running')) {
+        if (
+          !hasCertTypingCursor ||
+          reducedMotion ||
+          certDesc.textContent.trim() !== ''
+        ) {
+          certDesc.textContent = T['sec-cert-desc'];
+        }
+      }
+    }
+
+    /* History outro: 첫 줄은 span[data-i18n], 둘째 줄은 data-i18n-html(outro-2-html) */
 
     /* CI CONCEPT title (data-text) */
     var ciTitle = document.getElementById('ciConceptTitle');

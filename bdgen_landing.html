@@ -328,8 +328,26 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   background: #fff; border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 .gnb-submenu-inner {
-  max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding-x);
-  display: flex; justify-content: center; align-items: center; gap: 0; flex-wrap: wrap;
+  max-width: var(--container-max); margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0;
+  box-sizing: border-box;
+}
+.gnb-submenu-inner::before {
+  content: ''; flex: 0 0 168px; width: 168px; max-width: min(168px, 42%); min-width: 0;
+  height: 0; overflow: hidden; pointer-events: none; visibility: hidden;
+}
+.gnb-submenu-inner::after {
+  content: ''; flex: 0 0 104px; width: 104px; max-width: min(104px, 30%); min-width: 0;
+  height: 0; overflow: hidden; pointer-events: none; visibility: hidden;
+}
+.gnb-submenu-links {
+  flex: 1 1 auto; min-width: 0; display: flex; justify-content: center; align-items: center;
+  flex-wrap: wrap; gap: 0;
+}
+@media (max-width: 1199px) {
+  .gnb-submenu-inner::before, .gnb-submenu-inner::after { display: none; }
+  .gnb-submenu-inner { justify-content: center; padding: 0 var(--container-padding-x); }
+  .gnb-submenu-links { width: 100%; justify-content: center; }
 }
 .gnb-submenu a {
   display: block; padding: 16px 28px; font-size: 1rem; font-weight: 500; white-space: nowrap;
@@ -2464,10 +2482,12 @@ footer {
         <a href="pages/about-intro.html" class="gnb-trigger" data-i18n="nav.about">회사소개</a>
         <div class="gnb-submenu">
           <div class="gnb-submenu-inner">
+            <div class="gnb-submenu-links">
             <a href="pages/about-intro.html" data-i18n="nav.about.intro">회사소개</a>
             <a href="pages/about-history.html" data-i18n="nav.about.history">연혁·인증</a>
             <a href="pages/about-ci.html" data-i18n="nav.about.ci">CI소개</a>
             <a href="pages/about-news.html" data-i18n="nav.about.news">비디젠 뉴스</a>
+            </div>
           </div>
         </div>
       </div>
@@ -2476,8 +2496,10 @@ footer {
         <a href="pages/solution-genid.html" class="gnb-trigger" data-i18n="nav.solution">솔루션</a>
         <div class="gnb-submenu">
           <div class="gnb-submenu-inner">
+            <div class="gnb-submenu-links">
             <a href="pages/solution-genid.html" data-i18n="nav.solution.genid">GenID</a>
             <a href="pages/solution-passkey.html" data-i18n="nav.solution.passkey">Passkey</a>
+            </div>
           </div>
         </div>
       </div>

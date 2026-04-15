@@ -11,9 +11,9 @@
   /* page-only: keep header/footer, make content white */
   body { background: #ffffff; color: #111; }
   .page-main { padding: 0; background: #ffffff; }
+  /* CI소개(about-ci)와 동일: 히어로 하단 별도 border 없음 → 서브내비·본문 사이 이중 띠 방지 */
   .page-hero {
     padding-top: 100px; /* fixed gnb height */
-    border-bottom: 1px solid rgba(0,0,0,0.08);
     position: relative;
     overflow: hidden;
     background: #1a1a1a url(../assets/hero-inner_01.jpg) no-repeat center top;
@@ -25,17 +25,18 @@
     background: rgba(0,0,0,0.2);
     pointer-events:none;
   }
-  /* about-intro와 동일: sub-nav 좌우 끝까지 풀폭 흰 배경, 틈 없이 붙이기 */
-  .page-hero .sub-nav.section-inner{
-    width: 100vw;
+  /* about-ci.html 과 동일: 서브내비만 .page-hero 직계 자식 (page-hero-substrip 래퍼 없음) */
+  .page-hero .sub-nav.section-inner {
+    width: 100%;
     max-width: none;
-    margin-left: 50%;
-    transform: translateX(-50%);
+    margin-left: 0;
+    transform: none;
     margin-top: 63px;
     margin-bottom: 0;
     background: #ffffff;
-    padding: 12px max(24px, calc(50vw - 600px)) 0;
+    padding: 12px max(24px, calc(50% - 600px + 24px)) 0;
     box-shadow: 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.06);
+    box-sizing: border-box;
   }
   /* Taller + vertically centered hero text block (same as about-intro) */
   .hero-inner {
@@ -202,43 +203,190 @@
     .history-era-text { flex: 1 1 auto; padding-top: 0; margin-left: 4px; }
   }
 
-  /* 연혁 클로징 */
+  /* 연혁 클로징 — 그라데이션 배경 + 패럴랙스 레이어 + 스크롤 리빌 */
   .history-story-outro {
+    position: relative;
     max-width: none;
     width: 100%;
     margin: 0 auto;
-    padding: 164px 24px;
+    padding: 164px 28px;
     text-align: center;
     border-radius: 0;
-    background: transparent;
+    overflow: hidden;
     border: none;
+    background: linear-gradient(180deg, #f8f9fa 0%, #f4f7fb 38%, #eef3fb 72%, #eaf1fa 100%);
+    isolation: isolate;
+  }
+  .history-story-outro .outro-parallax-layer {
+    position: absolute;
+    inset: -8%;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+  }
+  .history-story-outro .outro-parallax-layer--deep {
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(0, 101, 250, 0.1) 1px, transparent 1.5px);
+    background-size: 22px 22px;
+    opacity: 0.09;
+    z-index: 0;
+  }
+  .history-story-outro .outro-parallax-layer--flow {
+    z-index: 1;
+    opacity: 0.95;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .history-story-outro .outro-flow-svg {
+    width: 140%;
+    min-width: 900px;
+    height: auto;
+    max-height: 100%;
+    opacity: 0.55;
+  }
+  .history-story-outro .outro-flow-g {
+    fill: none;
+    stroke-linecap: round;
+  }
+  /* 곡선: 처음엔 숨김 → 뷰포트 진입 시 선이 그려짐 */
+  .history-story-outro .outro-flow-path {
+    stroke-dasharray: var(--outro-len, 2400);
+    stroke-dashoffset: var(--outro-len, 2400);
+    transition: stroke-dashoffset 2.35s cubic-bezier(0.33, 1, 0.68, 1),
+      filter 0.6s ease 0.15s;
+    filter: drop-shadow(0 0 0 rgba(0, 101, 250, 0));
+  }
+  .history-story-outro .outro-flow-path--a { transition-delay: 0s; }
+  .history-story-outro .outro-flow-path--b { transition-delay: 0.18s; }
+  .history-story-outro .outro-flow-path--c { transition-delay: 0.36s; }
+  .history-story-outro .outro-flow-svg.is-drawn .outro-flow-path {
+    stroke-dashoffset: 0;
+    filter: drop-shadow(0 0 12px rgba(0, 101, 250, 0.28));
+  }
+  /* 그려진 뒤: 밝은 세그먼트가 경로를 따라 흐름 */
+  .history-story-outro .outro-flow-shimmer {
+    pointer-events: none;
+    fill: none;
+    stroke-linecap: round;
+    opacity: 0;
+    stroke: rgba(210, 238, 255, 0.95);
+    stroke-dasharray: 72 calc(var(--outro-len, 2000) + 72);
+    stroke-dashoffset: 0;
+    mix-blend-mode: screen;
+  }
+  .history-story-outro .outro-flow-svg.is-shimmering .outro-flow-shimmer {
+    opacity: 0.72;
+    animation: outro-flow-shimmer-move 5.8s linear infinite;
+  }
+  .history-story-outro .outro-flow-shimmer--a { animation-delay: 0s; }
+  .history-story-outro .outro-flow-shimmer--b { animation-delay: 0.35s; }
+  .history-story-outro .outro-flow-shimmer--c { animation-delay: 0.7s; }
+  @keyframes outro-flow-shimmer-move {
+    to {
+      stroke-dashoffset: calc(-1 * (72px + var(--outro-len, 2000)));
+    }
   }
   .history-story-outro .outro-typing {
-    line-height: 70px;
-    font-size: 55px;
-    color: #1a1f27;
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* 한 문단(.outro-copy) 안에서만 줄바꿈 → 첫 문장·둘째 문장·자동 줄바꿈 모두 동일 행간 */
+  .history-story-outro .outro-copy {
+    margin: 0;
+    padding: 0;
+    --outro-lh: 1.55;
+    font-size: 62px;
+    line-height: var(--outro-lh);
     font-weight: 700;
-    letter-spacing: -0.01em;
+    color: #1a1f27;
+    letter-spacing: -0.02em;
+  }
+  /* br 없이 block으로 두 덩어리를 쌓으면 줄 상자 간격이 문단 내부 줄바꿈과 동일해짐 */
+  .history-story-outro .outro-line--1,
+  .history-story-outro .outro-line--2 {
+    display: block;
+    margin: 0;
+    padding: 0;
   }
   .history-story-outro .outro-line {
-    margin: 0;
-    min-height: 70px;
-    overflow: hidden;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
   }
-  .history-story-outro .outro-line .outro-text {
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 2px solid #1a1f27;
-    animation: blink 0.7s step-end infinite;
+  .history-story-outro .outro-line--1 .outro-text,
+  .history-story-outro .outro-line--2 {
+    display: block;
+    width: 100%;
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .history-story-outro .outro-line.done .outro-text {
-    border-right: none;
-    white-space: normal;
-    animation: none;
+  .history-story-outro .outro-line--1.is-revealed .outro-text,
+  .history-story-outro .outro-line--2.is-revealed {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
-  @keyframes blink {
-    50% { border-color: transparent; }
+  /* 핵심 구절 하이라이트: 얇은 블루 언더라인 + 선명도 */
+  .history-story-outro .outro-hl {
+    position: relative;
+    display: inline;
+    color: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    transition: color 0.35s ease, font-weight 0.35s ease;
+  }
+  .history-story-outro .outro-hl::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.05em;
+    height: 0.2em;
+    background: rgba(0, 101, 250, 0.36);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .history-story-outro .outro-hl.is-hl-done::after {
+    transform: scaleX(1);
+  }
+  .history-story-outro .outro-hl.is-hl-done {
+    color: #0a1220;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .history-story-outro .outro-line--1 .outro-text,
+    .history-story-outro .outro-line--2 {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .history-story-outro .outro-parallax-layer {
+      transform: none !important;
+    }
+    .history-story-outro .outro-hl::after {
+      transform: scaleX(1);
+      transition: none;
+    }
+    .history-story-outro .outro-flow-path {
+      stroke-dasharray: none !important;
+      stroke-dashoffset: 0 !important;
+      transition: none !important;
+      filter: none !important;
+    }
+    .history-story-outro .outro-flow-shimmer {
+      display: none !important;
+    }
   }
 
   /* 상단 타이틀 + 서브카피 */
@@ -322,6 +470,22 @@
   }
   @keyframes historyTypingBlink{
     50%{ border-right-color: transparent; }
+  }
+  /* 인증 현황 섹션 타이핑 */
+  #cert .cert-typing-heading {
+    min-height: 1.2em;
+  }
+  #cert .cert-typing-desc-wrap {
+    min-height: 4.2em;
+  }
+  #cert .cert-typing-cursor {
+    display: inline-block;
+    width: 0;
+    margin-left: 2px;
+    border-right: 2px solid #0064ff;
+    animation: historyTypingBlink 0.7s step-end infinite;
+    vertical-align: baseline;
+    opacity: 0;
   }
   .history-year-nav li { margin-bottom: 20px; }
   .history-year-link {
@@ -412,7 +576,8 @@
   }
 
   /* cert grid */
-  #cert.content-section { padding-bottom: 100px; }
+  /* 공통 .content-section 상단 72px 유지 + 추가 70px (순수 70px만 주면 72px를 덮어써서 오히려 줄어듦) */
+  #cert.content-section { padding-top: calc(72px + 70px); padding-bottom: 100px; }
   .cert-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .cert-card{
     padding: 22px 18px;
@@ -422,7 +587,89 @@
     transition: transform .2s;
   }
   .cert-card:hover{ transform: translateY(-2px); }
-  .cert-card .cert-img{ display: block; width: 180px !important; min-width: 180px; max-width: 180px; height: 180px !important; min-height: 180px; margin-bottom: 16px; object-fit: contain; background: #fff; }
+  .cert-card .cert-img{
+    display: block; width: 180px !important; min-width: 180px; max-width: 180px; height: 180px !important; min-height: 180px; margin-bottom: 16px; object-fit: contain; background: #fff;
+    cursor: pointer;
+    transition: box-shadow .2s;
+  }
+  @media (hover: hover) {
+    .cert-card .cert-img:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+  }
+
+  /* 인증서 이미지: 클릭 시 카드형 모달 · ESC·배경 클릭으로 닫기 */
+  .cert-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+    box-sizing: border-box;
+  }
+  .cert-lightbox[hidden] { display: none !important; }
+  .cert-lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    cursor: pointer;
+  }
+  .cert-lightbox-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(440px, calc(100vw - 48px));
+    max-width: 100%;
+    max-height: min(88vh, 720px);
+    margin: auto;
+    padding: 48px 22px 24px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+    background: #fff;
+    border-radius: 20px;
+    box-shadow:
+      0 24px 80px rgba(15, 23, 42, 0.16),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cert-lightbox-img {
+    display: block;
+    max-width: 100%;
+    max-height: min(58vh, 480px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #fafbfc;
+  }
+  .cert-lightbox-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(244, 246, 249, 0.98);
+    color: #1a1f27;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+    transition: background .2s, transform .2s;
+  }
+  .cert-lightbox-close:hover { background: #eef1f6; transform: scale(1.05); }
+  .cert-lightbox-close:focus-visible { outline: 2px solid #0064ff; outline-offset: 2px; }
   .cert-badge{
     display:inline-flex; align-items:center;
     font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
@@ -440,6 +687,11 @@
     #history.content-section { padding-bottom: 72px; }
     .history-story-intro { padding: 40px 24px 48px; margin-bottom: 48px; }
     .history-story-outro { margin-top: 0; padding: 132px 22px; }
+    .history-story-outro .outro-copy {
+      font-size: clamp(28px, 7vw, 44px);
+      --outro-lh: 1.55;
+      line-height: var(--outro-lh);
+    }
     .history-layout { flex-direction: column; margin-top: 48px; }
     .history-head-text{
       font-size: 38px;
@@ -489,10 +741,12 @@
         <a href="about-intro.html" class="gnb-trigger">회사소개</a>
         <div class="gnb-submenu">
           <div class="gnb-submenu-inner">
+            <div class="gnb-submenu-links">
             <a href="about-intro.html">회사소개</a>
             <a href="about-history.html">연혁·인증</a>
             <a href="about-ci.html">CI소개</a>
             <a href="about-news.html">비디젠 뉴스</a>
+            </div>
           </div>
         </div>
       </div>
@@ -501,8 +755,10 @@
         <a href="solution-genid.html" class="gnb-trigger">솔루션</a>
         <div class="gnb-submenu">
           <div class="gnb-submenu-inner">
+            <div class="gnb-submenu-links">
             <a href="solution-genid.html">GenID</a>
             <a href="solution-passkey.html">Passkey</a>
+            </div>
           </div>
         </div>
       </div>
@@ -709,10 +965,28 @@
   </section>
 
   <footer class="history-story-outro">
+    <div class="outro-parallax-layer outro-parallax-layer--deep" aria-hidden="true"></div>
+    <div class="outro-parallax-layer outro-parallax-layer--flow" aria-hidden="true">
+      <svg class="outro-flow-svg" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="outroFlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0065FA" stop-opacity="0"/>
+            <stop offset="45%" stop-color="#0065FA" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#0065FA" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <g class="outro-flow-g">
+          <path class="outro-flow-path outro-flow-path--a" stroke="url(#outroFlowGrad)" stroke-width="1.8" d="M-80,220 C140,60 360,380 520,210 S780,80 1080,240"/>
+          <path class="outro-flow-path outro-flow-path--b" stroke="rgba(0,101,250,0.22)" stroke-width="1.2" d="M-60,320 C200,160 420,400 640,260 S820,120 1080,340"/>
+          <path class="outro-flow-path outro-flow-path--c" stroke="rgba(0,101,250,0.14)" stroke-width="1" d="M-40,120 C300,280 500,40 720,200 S920,100 1100,180"/>
+        </g>
+      </svg>
+    </div>
     <div class="outro-typing">
-      <p class="outro-line" data-text="비디젠의 기록은 내일도 계속됩니다." data-i18n="outro-1"><span class="outro-text"></span></p>
-      <p class="outro-line" data-text="우리는 기술을 넘어 사람과 사람," data-i18n="outro-2"><span class="outro-text"></span></p>
-      <p class="outro-line" data-text="기업과 사회를 잇는 가장 안전한 다리가 되겠습니다." data-i18n="outro-3"><span class="outro-text"></span></p>
+      <p class="outro-copy">
+        <span class="outro-line outro-line--1"><span class="outro-text" data-i18n="outro-1">비디젠의 기록은 내일도 계속됩니다.</span></span>
+        <span class="outro-line outro-line--2" data-i18n="outro-2-html" data-i18n-html="true">우리는 기술을 넘어 <span class="outro-hl" data-hl="1">사람과 사람</span>, <span class="outro-hl" data-hl="2">기업과 사회</span>를 잇는 가장 <span class="outro-hl" data-hl="3">안전한 다리</span>가 되겠습니다.</span>
+      </p>
     </div>
   </footer>
 
@@ -722,8 +996,12 @@
   <section class="content-section" id="cert">
     <div class="section-inner">
       <div class="sec-label">Certification</div>
-      <h2 class="sec-title" data-i18n="sec-cert-title">인증 현황</h2>
-      <p class="sec-desc" data-i18n="sec-cert-desc">축적한 기술의 혁신성과 사업 계획의 우수성, 경영 관리 능력을 인정받아 다양한 인증을 확보했습니다.</p>
+      <h2 class="sec-title cert-typing-heading" id="cert-typing-head">
+        <span id="cert-typing-title" data-i18n="sec-cert-title" data-text="인증 현황"></span><span class="cert-typing-cursor" id="cert-typing-cursor" aria-hidden="true"></span>
+      </h2>
+      <p class="sec-desc cert-typing-desc-wrap" id="cert-typing-desc-wrap">
+        <span id="cert-typing-desc" data-i18n="sec-cert-desc" data-text="축적한 기술의 혁신성과 사업 계획의 우수성, 경영 관리 능력을 인정받아 다양한 인증을 확보했습니다."></span>
+      </p>
 
       <div class="cert-grid">
         <article class="cert-card">
@@ -836,6 +1114,13 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15l3 3 3-3"/></svg>
 </a>
 <button type="button" class="back-top" id="backTop" aria-label="맨 위로 이동">↑</button>
+<div id="certLightbox" class="cert-lightbox" role="dialog" aria-modal="true" aria-label="인증서 확대 보기" hidden>
+  <div class="cert-lightbox-backdrop" aria-hidden="true"></div>
+  <div class="cert-lightbox-dialog">
+    <button type="button" class="cert-lightbox-close" aria-label="닫기">&times;</button>
+    <img class="cert-lightbox-img" src="" alt="">
+  </div>
+</div>
 <script src="bdgen-subpage-i18n.js"></script>
 <script src="bdgen-hero-desc.js"></script>
 <script src="bdgen-interactions.js"></script>
@@ -887,11 +1172,19 @@
   if(!el1 || !el2 || !cursor) return;
 
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var text1 = (el1.getAttribute('data-text') || '기술로 빚은 신뢰,').trim();
-  var text2 = (el2.getAttribute('data-text') || '데이터로 증명한 혁신').trim();
-  var speed = reducedMotion ? 0 : 32;
+  var speed = reducedMotion ? 0 : 58;
+  var gapBetweenLines = 420;
+  var pauseBetweenCycles = 3600;
   var started = false;
   var typingToken = '';
+  var loopTimer = null;
+
+  function refreshTexts(){
+    return {
+      t1: (el1.getAttribute('data-text') || '기술로 빚은 신뢰,').trim(),
+      t2: (el2.getAttribute('data-text') || '데이터로 증명한 혁신').trim()
+    };
+  }
 
   function typeWriter(el, text, cb){
     var i = 0;
@@ -909,17 +1202,10 @@
     tick();
   }
 
-  function run(){
-    if(started) return;
-    started = true;
+  function runCycle(){
+    if(reducedMotion) return;
 
-    if(reducedMotion){
-      el1.textContent = text1;
-      el2.textContent = text2;
-      cursor.style.opacity = '0';
-      return;
-    }
-
+    var texts = refreshTexts();
     typingToken = String(Date.now() + Math.random());
     el1.setAttribute('data-typing-token', typingToken);
     el2.setAttribute('data-typing-token', typingToken);
@@ -929,15 +1215,32 @@
     el2.textContent = '';
     cursor.style.opacity = '1';
 
-    typeWriter(el1, text1, function(){
+    typeWriter(el1, texts.t1, function(){
       setTimeout(function(){
-        typeWriter(el2, text2, function(){
+        typeWriter(el2, texts.t2, function(){
           el1.classList.remove('history-typing-running');
           el2.classList.remove('history-typing-running');
           cursor.style.opacity = '0';
+          if (loopTimer) clearTimeout(loopTimer);
+          loopTimer = setTimeout(runCycle, pauseBetweenCycles);
         });
-      }, 70);
+      }, gapBetweenLines);
     });
+  }
+
+  function run(){
+    if(started) return;
+    started = true;
+
+    if(reducedMotion){
+      var t = refreshTexts();
+      el1.textContent = t.t1;
+      el2.textContent = t.t2;
+      cursor.style.opacity = '0';
+      return;
+    }
+
+    runCycle();
   }
 
   var anchor = document.querySelector('.history-story-top') || document.getElementById('history');
@@ -970,6 +1273,106 @@
   }
 })();
 (function(){
+  if (window.__bdgenCertTypingInitialized) return;
+  window.__bdgenCertTypingInitialized = true;
+
+  var certSec = document.getElementById('cert');
+  var titleEl = document.getElementById('cert-typing-title');
+  var descEl = document.getElementById('cert-typing-desc');
+  var cursor = document.getElementById('cert-typing-cursor');
+  var headEl = document.getElementById('cert-typing-head');
+  var descWrap = document.getElementById('cert-typing-desc-wrap');
+  if (!certSec || !titleEl || !descEl || !cursor || !headEl || !descWrap) return;
+
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var speed = reducedMotion ? 0 : 58;
+  var gapBetweenLines = 420;
+  var pauseBetweenCycles = 4200;
+  var typingToken = '';
+  var loopTimer = null;
+  var started = false;
+
+  function refreshTexts(){
+    return {
+      t1: (titleEl.getAttribute('data-text') || '인증 현황').trim(),
+      t2: (descEl.getAttribute('data-text') || '').trim()
+    };
+  }
+
+  function typeWriter(el, text, cb){
+    var i = 0;
+    var token = typingToken;
+    function tick(){
+      if (token !== typingToken) return;
+      if (i < text.length){
+        el.textContent = text.slice(0, i + 1);
+        i++;
+        setTimeout(tick, speed);
+      } else if (cb) cb();
+    }
+    tick();
+  }
+
+  function runCycle(){
+    if (reducedMotion) return;
+    var texts = refreshTexts();
+    if (!texts.t2) texts.t2 = (descEl.textContent || '').trim();
+
+    typingToken = String(Date.now() + Math.random());
+    titleEl.setAttribute('data-typing-token', typingToken);
+    descEl.setAttribute('data-typing-token', typingToken);
+    titleEl.classList.add('cert-typing-running');
+    descEl.classList.add('cert-typing-running');
+    titleEl.textContent = '';
+    descEl.textContent = '';
+    cursor.style.opacity = '1';
+    headEl.appendChild(cursor);
+
+    typeWriter(titleEl, texts.t1, function(){
+      setTimeout(function(){
+        descWrap.appendChild(cursor);
+        typeWriter(descEl, texts.t2, function(){
+          titleEl.classList.remove('cert-typing-running');
+          descEl.classList.remove('cert-typing-running');
+          cursor.style.opacity = '0';
+          if (loopTimer) clearTimeout(loopTimer);
+          loopTimer = setTimeout(runCycle, pauseBetweenCycles);
+        });
+      }, gapBetweenLines);
+    });
+  }
+
+  function run(){
+    if (started) return;
+    started = true;
+
+    if (reducedMotion){
+      var t = refreshTexts();
+      if (!t.t2) t.t2 = (descEl.textContent || '').trim();
+      titleEl.textContent = t.t1;
+      descEl.textContent = t.t2;
+      cursor.style.opacity = '0';
+      return;
+    }
+
+    runCycle();
+  }
+
+  if (reducedMotion){
+    run();
+    return;
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      io.disconnect();
+      run();
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+  io.observe(certSec);
+})();
+(function(){
   var navLinks=document.querySelectorAll('.history-year-link');
   var sections=document.querySelectorAll('.history-year-section');
   if(!navLinks.length||!sections.length)return;
@@ -998,52 +1401,159 @@
   setActive('sec2025');
 })();
 
-/* outro 타이핑 인터랙션 */
+/* outro: 스크롤 리빌 + 순차 하이라이트 + 패럴랙스 레이어 + 플로우 SVG 선 그리기·빛 흐름 */
 (function(){
-  var lines = document.querySelectorAll('.outro-line');
-  var charDelay = 80;
-  var lineDelay = 400;
+  var outro = document.querySelector('.history-story-outro');
+  if (!outro) return;
+  var l1 = outro.querySelector('.outro-line--1');
+  var l2 = outro.querySelector('.outro-line--2');
+  var deep = outro.querySelector('.outro-parallax-layer--deep');
+  var flow = outro.querySelector('.outro-parallax-layer--flow');
+  var flowSvg = outro.querySelector('.outro-flow-svg');
+  var flowPaths = flowSvg ? flowSvg.querySelectorAll('.outro-flow-path') : [];
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mx = 0, my = 0;
+  var shimmerTimer = null;
 
-  function typeLine(line, idx, cb) {
-    var span = line.querySelector('.outro-text');
-    var text = line.getAttribute('data-text') || '';
-    var i = 0;
-    span.textContent = '';
-    function tick() {
-      if ( i < text.length ) {
-        span.textContent += text.charAt(i);
-        i++;
-        setTimeout(tick, charDelay);
-      } else {
-        line.classList.add('done');
-        if (cb) cb();
-      }
-    }
-    tick();
+  var shimmerClass = ['outro-flow-shimmer--a', 'outro-flow-shimmer--b', 'outro-flow-shimmer--c'];
+  if (flowSvg && flowPaths.length) {
+    flowPaths.forEach(function(orig, i){
+      var len = orig.getTotalLength();
+      orig.style.setProperty('--outro-len', String(len));
+      if (reduced) return;
+      var sh = orig.cloneNode(true);
+      sh.classList.remove('outro-flow-path', 'outro-flow-path--a', 'outro-flow-path--b', 'outro-flow-path--c');
+      sh.classList.add('outro-flow-shimmer');
+      if (shimmerClass[i]) sh.classList.add(shimmerClass[i]);
+      sh.setAttribute('stroke', 'rgba(210, 238, 255, 0.95)');
+      var sw = parseFloat(orig.getAttribute('stroke-width') || '1');
+      sh.setAttribute('stroke-width', String(sw * 1.4));
+      orig.insertAdjacentElement('afterend', sh);
+    });
   }
 
-  function runSequence() {
-    var idx = 0;
-    function next() {
-      if ( idx < lines.length ) {
-        typeLine(lines[idx], idx, function(){
-          idx++;
-          setTimeout(next, lineDelay);
-        });
-      }
-    }
-    var observer = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if (entry.isIntersecting) {
-          observer.disconnect();
-          next();
-        }
+  function runHighlights() {
+    var order = ['1', '2', '3'];
+    if (reduced) {
+      order.forEach(function(id){
+        var el = outro.querySelector('.outro-hl[data-hl="' + id + '"]');
+        if (el) el.classList.add('is-hl-done');
       });
-    }, { threshold: 0.3 });
-    var outro = document.querySelector('.history-story-outro');
-    if (outro) observer.observe(outro);
+      return;
+    }
+    var delay = 0;
+    order.forEach(function(id){
+      setTimeout(function(){
+        var el = outro.querySelector('.outro-hl[data-hl="' + id + '"]');
+        if (el) el.classList.add('is-hl-done');
+      }, delay);
+      delay += 380;
+    });
   }
-  runSequence();
+
+  function updateParallax() {
+    if (reduced || !deep || !flow) return;
+    var rect = outro.getBoundingClientRect();
+    var vh = window.innerHeight || 1;
+    var prog = Math.max(0, Math.min(1, 1 - rect.top / (vh * 0.85)));
+    var scrollShift = (prog - 0.35) * 18;
+    deep.style.transform = 'translate3d(' + (mx * 10) + 'px,' + (my * 7 + scrollShift) + 'px,0)';
+    flow.style.transform = 'translate3d(' + (mx * 18) + 'px,' + (my * 12 - scrollShift * 0.4) + 'px,0)';
+  }
+
+  if (!reduced && deep && flow) {
+    outro.addEventListener('mousemove', function(e){
+      mx = (e.clientX / window.innerWidth - 0.5) * 2;
+      my = (e.clientY / window.innerHeight - 0.5) * 2;
+      updateParallax();
+    }, { passive: true });
+    window.addEventListener('scroll', updateParallax, { passive: true });
+    updateParallax();
+  }
+
+  function startReveal() {
+    if (flowSvg) flowSvg.classList.add('is-drawn');
+    if (!reduced && flowSvg) {
+      if (shimmerTimer) clearTimeout(shimmerTimer);
+      shimmerTimer = setTimeout(function(){
+        flowSvg.classList.add('is-shimmering');
+      }, 2800);
+    }
+    if (reduced) {
+      if (l1) l1.classList.add('is-revealed');
+      if (l2) l2.classList.add('is-revealed');
+      runHighlights();
+      return;
+    }
+    if (l1) l1.classList.add('is-revealed');
+    setTimeout(function(){
+      if (l2) l2.classList.add('is-revealed');
+      setTimeout(runHighlights, 650);
+    }, 1050);
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        io.disconnect();
+        startReveal();
+      }
+    });
+  }, { threshold: 0.22, rootMargin: '0px 0px -8% 0px' });
+  io.observe(outro);
+})();
+(function(){
+  var lb = document.getElementById('certLightbox');
+  if (!lb) return;
+  var lbImg = lb.querySelector('.cert-lightbox-img');
+  var closeBtn = lb.querySelector('.cert-lightbox-close');
+  var backdrop = lb.querySelector('.cert-lightbox-backdrop');
+  var imgs = document.querySelectorAll('#cert .cert-img');
+  if (!lbImg || imgs.length === 0) return;
+
+  var lastFocus = null;
+
+  function open(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lb.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    if (closeBtn) closeBtn.focus({ preventScroll: true });
+  }
+  function close() {
+    lb.setAttribute('hidden', '');
+    lbImg.removeAttribute('src');
+    lbImg.alt = '';
+    document.body.style.overflow = '';
+    if (lastFocus && typeof lastFocus.focus === 'function') {
+      try { lastFocus.focus({ preventScroll: true }); } catch (e) {}
+      lastFocus = null;
+    }
+  }
+
+  imgs.forEach(function(img){
+    img.setAttribute('tabindex', '0');
+    img.addEventListener('click', function(e){
+      e.preventDefault();
+      lastFocus = this;
+      open(this.currentSrc || this.src, this.alt);
+    });
+    img.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        lastFocus = this;
+        open(this.currentSrc || this.src, this.alt);
+      }
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  lb.addEventListener('click', function(e){
+    if (e.target === lb || e.target === backdrop) close();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !lb.hasAttribute('hidden')) close();
+  });
 })();
 </script>
 </body>

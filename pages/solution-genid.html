@@ -25,7 +25,7 @@
   .hero-inner{ max-width: 1200px; margin: 0 auto; padding: 64px 24px 50px; position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 360px; text-align: left; }
   .page-hero .hero-title{ font-size: 55px; line-height: 1.05; letter-spacing: -0.02em; margin-top: 0; color: #ffffff; }
   .page-hero .hero-desc{ margin-top: 14px; color: rgba(255,255,255,0.85); max-width: 760px; line-height: 1.85; }
-  .page-hero .sub-nav.section-inner{ width: 100vw; max-width: none; margin-left: 50%; transform: translateX(-50%); margin-top: 63px; margin-bottom: 0; background: #ffffff; padding: 12px max(24px, calc(50vw - 600px)) 0; box-shadow: 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.06); }
+  .page-hero .sub-nav.section-inner{ width: 100%; max-width: none; margin-left: 0; transform: none; margin-top: 63px; margin-bottom: 0; background: #ffffff; padding: 12px max(24px, calc(50% - 600px + 24px)) 0; box-shadow: 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.06); box-sizing: border-box; }
   .sub-nav{ display:flex; gap:0; border-top: none; position: relative; }
   .sub-nav a{ padding: 16px 22px; font-size: 18px; color: rgba(0,0,0,0.62); border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; white-space: nowrap; }
   .sub-nav a:hover{ color:#111; }
@@ -863,10 +863,12 @@
         <a href="about-intro.html" class="gnb-trigger">회사소개</a>
         <div class="gnb-submenu">
           <div class="gnb-submenu-inner">
+            <div class="gnb-submenu-links">
             <a href="about-intro.html">회사소개</a>
             <a href="about-history.html">연혁·인증</a>
             <a href="about-ci.html">CI소개</a>
             <a href="about-news.html">비디젠 뉴스</a>
+            </div>
           </div>
         </div>
       </div>
@@ -875,8 +877,10 @@
         <a href="solution-genid.html" class="gnb-trigger">솔루션</a>
         <div class="gnb-submenu">
           <div class="gnb-submenu-inner">
+            <div class="gnb-submenu-links">
             <a href="solution-genid.html">GenID</a>
             <a href="solution-passkey.html">Passkey</a>
+            </div>
           </div>
         </div>
       </div>

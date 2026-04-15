@@ -899,6 +899,10 @@ footer {
   .floating-brochure-fab { bottom: 84px; right: 20px; width: 52px; height: 52px; }
 }
 
+@media (max-width: 768px) {
+  footer .footer-inner > .footer-col { display: none !important; }
+}
+
 /* Small mobile (~480) */
 @media (max-width: 480px) {
   html { font-size: 14px; }

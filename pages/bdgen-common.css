@@ -201,7 +201,7 @@ footer{background:#030812;border-top:1px solid rgba(255,255,255,0.06);padding:48
 .back-top{position:fixed;bottom:32px;right:32px;z-index:var(--z-back-top);width:44px;height:44px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,200,255,0.4);opacity:0;pointer-events:none;transition:var(--transition);font-size:1.1rem;color:#fff;}
 .back-top.visible{opacity:1;pointer-events:all;}
 .back-top:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,200,255,0.5);}
-@media(max-width:767px){.back-top{bottom:20px;right:20px;width:48px;height:48px;}}
+@media(max-width:768px){.back-top{bottom:20px;right:16px;width:48px;height:48px;}}
 /* 서브페이지 공통: page-hero 있는 페이지(회사소개, 연혁 등) - GNB 흰색 기본, 호버 시 검정 */
 body.bdgen-subpage:has(.page-hero) .gnb-nav a{color:#fff!important;}
 body.bdgen-subpage:has(.page-hero) .gnb-logo-default{opacity:1!important;}
@@ -283,6 +283,9 @@ body.bdgen-subpage main .sub-nav.section-inner+.container{margin-top:150px!impor
   .page-title{font-size:clamp(1.65rem,6vw,2.5rem);}
   .page-sub{font-size:1rem;}
   .lang-option{min-height:44px;display:flex;align-items:center;}
+}
+@media(max-width:768px){
+  footer .footer-inner>.footer-col{display:none!important;}
 }
 /* hero-inner 서브텍스트 떨어지는 인터랙션 */
 .hero-inner .hero-title.hero-title-cascade{opacity:0;transform:translateY(18px);animation:hero-title-cascade 0.65s cubic-bezier(0.22,1,0.36,1) forwards;}

@@ -629,6 +629,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   padding-right: clamp(40px, 5vw, 80px);
   max-width: var(--container-max); margin: 0 auto;
   box-sizing: border-box;
+  text-align: center;
 }
 .partner-title {
   font-family: 'Pretendard', sans-serif;
@@ -637,15 +638,23 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   min-height: 1.2em; line-height: 1.35;
   white-space: nowrap;
 }
+.partner-title-line { display: inline; }
+.partner-title--single .partner-title-gap { display: none; }
+.partner-title--single .partner-mobile-br { display: none !important; }
+.partner-mobile-br {
+  display: none;
+}
 .partner-typing { border-right: 2px solid var(--primary); animation: blink 0.7s step-end infinite; }
 @keyframes blink { 50% { border-color: transparent; } }
 .partner-metrics {
   display: flex; align-items: center; justify-content: center;
   flex-wrap: wrap; gap: 0; list-style: none;
+  margin: 0 auto; padding: 0; width: 100%;
+  text-align: center;
 }
 .partner-metric {
-  flex: 1; min-width: 180px; max-width: 260px;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  flex: 1; min-width: 200px; max-width: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
   padding: 28px 32px; position: relative; text-align: center;
   opacity: 0; transform: translateY(24px);
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -658,11 +667,13 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   content: ''; position: absolute; left: 0; top: 15%; bottom: 15%;
   width: 1px; background: rgba(255,255,255,0.25);
 }
+/* 웹: 지표 숫자 56px · 하단 라벨 26px — 모바일은 @media (max-width: 767px)에서 재정의 */
 .partner-metric-value {
-  font-size: 60px; font-weight: 900;
+  font-size: 56px; font-weight: 900;
   color: #ffffff; line-height: 1;
   font-variant-numeric: tabular-nums; min-width: 4ch;
   white-space: nowrap;
+  text-align: center;
   transition: transform 0.3s ease;
 }
 .partner-metric:hover .partner-metric-value {
@@ -671,8 +682,9 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   transform: scale(1.05);
 }
 .partner-metric-label {
-  font-size: 0.9rem; color: #ffffff; font-weight: 500;
+  font-size: 26px; color: #ffffff; font-weight: 500;
   white-space: nowrap;
+  line-height: 1.35;
 }
 
 /* ========================
@@ -1003,6 +1015,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 }
 #about-bdgen .section-title .about-title-line span { color: #ffffff; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #ffffff; }
 #about-bdgen .section-sub { color: #8FA3C0; max-width: 100%; }
+#about-bdgen .section-sub br.about-sub-mbr { display: none; }
 .about-bdgen-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
 }
@@ -1441,15 +1454,14 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .news-grid .news-card .news-excerpt { display: none; }
 .news-grid .news-card .news-meta { margin-bottom: 8px; }
 @media (max-width: 767px) {
-  .news-hero { flex-direction: column; gap: 40px; align-items: flex-start; }
-  .news-hero-text { display: block; }
-  .news-hero-title { font-size: clamp(1.75rem, 5vw, 2.5rem); }
-  .news-grid { margin-top: 40px; align-content: start; grid-template-columns: 1fr; gap: 24px; }
-  .news-hero-image { width: 100%; min-width: 0; }
+  /* 모바일: 제목 → 대형 카드 → 나머지 그리드 (DOM은 이미지가 먼저라 display:contents로 순서 조정) */
+  .news-hero { flex-direction: column; gap: var(--section-head-to-body); align-items: stretch; }
+  .news-hero-text { display: contents; }
+  .news-hero-header { order: 1; width: 100%; margin-bottom: 0; }
+  .news-hero-image { order: 2; width: 100%; min-width: 0; }
+  .news-grid { order: 3; margin-top: 0; align-content: start; grid-template-columns: 1fr; gap: 24px; width: 100%; }
+  .news-hero-title { font-size: 32px; }
   .news-hero-image .news-thumb { min-height: 130px; aspect-ratio: 16/9; }
-}
-@media (max-width: 767px) {
-  .news-grid { grid-template-columns: 1fr; }
 }
 
 /* ========================
@@ -1478,6 +1490,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   text-align: center;
 }
 .cta-title { font-size: 74px; font-weight: 900; margin-bottom: 16px; line-height: 1.3; white-space: nowrap; }
+.cta-title-line { display: inline; }
+.cta-title--single .cta-title-gap { display: none; }
+.cta-title--single .cta-mobile-br { display: none !important; }
+.cta-mobile-br { display: none; }
 .cta-typing { border-right: 2px solid rgba(255,255,255,0.6); animation: blink 0.7s step-end infinite; }
 .cta-typing:empty { border-right-color: transparent; }
 .cta-sub { font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 150px; }
@@ -1835,10 +1851,11 @@ footer {
 .back-top:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,200,255,0.5); }
 
 /* Floating: 회사소개서 다운받기 — 하이엔드 FAB (Neon-Breathing + Glass + Aurora) */
+/* 회사소개서 FAB: 탑버튼과 동일 right, 세로는 탑버튼 위에 --fab-stack-gap 만큼 띄움 */
 .supreme-container {
   position: fixed;
-  bottom: 60px;
-  right: 60px;
+  bottom: calc(32px + 44px + 16px);
+  right: 32px;
   perspective: 1500px;
   z-index: var(--z-back-top);
 }
@@ -2023,6 +2040,8 @@ footer {
 @media (max-width: 1279px) {
   .section { padding: clamp(3.5rem, 8vw, 5rem) 0; }
   .section-header { margin-bottom: clamp(2rem, 5vw, 3rem); }
+  /* 데스크톱 전용 #services 114px보다 우선하지 않도록 태블릿·랩탑에서 동일 클램프 적용 */
+  #services .section-header { margin-bottom: clamp(2rem, 5vw, 3rem); }
   .about-grid { gap: 48px; }
   .services-grid { grid-template-columns: repeat(2, 1fr); gap: 70px; }
   /* #why: 데스크톱 규칙 유지(1200px 이상). 767px 이하에서 1열 */
@@ -2083,16 +2102,51 @@ footer {
   }
   .hero-content { max-width: 100%; }
   .hero-badge { font-size: 0.75rem; padding: 6px 14px; margin-bottom: 20px; }
-  .hero-title { font-size: clamp(1.5rem, 7vw, 2.2rem); line-height: 1.2; margin-bottom: 16px; }
-  .hero-sub { font-size: 0.95rem; margin-bottom: 28px; max-width: 100%; }
+  /* 히어로 메인 카피: 32px · 두 행 사이 10px */
+  .hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 32px;
+    line-height: 1.12;
+    margin-bottom: 0;
+  }
+  .hero-title br {
+    display: none;
+  }
+  .hero-line1,
+  .hero-line2 {
+    line-height: 1.12;
+  }
+  .hero-line2 {
+    margin-top: 0;
+    /* 두 번째 행(hero3)이 줄바꿈되지 않아 헤드타이틀 전체가 2줄로 유지됨 */
+    white-space: nowrap;
+  }
+  /* 서브: 14px · 타이틀과 간격 20px (기본 margin-top 60px 제거) */
+  .hero-sub {
+    font-size: 14px;
+    margin: 20px auto 28px;
+    max-width: 100%;
+    line-height: 1.95;
+  }
   .hero-cta { flex-direction: column; align-items: stretch; gap: 12px; }
   .hero-cta .btn { justify-content: center; width: 100%; }
   .hero-scroll { bottom: 20px; font-size: 0.7rem; }
   .hero-scroll-mouse { width: 20px; height: 32px; }
   #partner { padding: calc(clamp(60px, 12vw, 100px) + 75px) 0; }
   #partner .container { padding-left: 16px; padding-right: 16px; }
-  .partner-title { white-space: normal; }
-  .partner-title { font-size: clamp(2rem, 8vw, 74px); }
+  .partner-title { white-space: normal; font-size: 32px; margin-bottom: var(--section-head-to-body); }
+  .partner-title:not(.partner-title--single) .partner-title-gap { display: none; }
+  .partner-title:not(.partner-title--single) .partner-mobile-br { display: block; }
+  /* 섹션 메인 헤드타이틀 통일 32px */
+  #services .section-title,
+  #about-bdgen .section-title,
+  #why .section-title,
+  #reference .section-title {
+    font-size: 32px;
+  }
   .partner-metrics {
     display: grid; grid-template-columns: repeat(2, 1fr);
     gap: 0; row-gap: 20px;
@@ -2103,10 +2157,12 @@ footer {
   }
   .partner-metric:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.06); }
   .partner-metric + .partner-metric::before { display: none; }
-  .partner-metric-value { font-size: clamp(2rem, 6vw, 60px); }
-  .partner-metric-label { font-size: 0.8rem; }
+  /* 모바일: 지표 숫자 36px · 하단 라벨 16px */
+  .partner-metric-value { font-size: 36px; }
+  .partner-metric-label { font-size: 16px; }
   .section { padding: clamp(2.5rem, 6vw, 3.5rem) 0; }
-  .section-header { margin-bottom: 2rem; }
+  .section-header { margin-bottom: var(--section-head-to-body); }
+  #services .section-header { margin-bottom: var(--section-head-to-body) !important; }
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .about-visual { order: -1; }
   .about-features { margin-top: 24px; gap: 12px; }
@@ -2124,11 +2180,10 @@ footer {
   .service-card { height: 310px; }
   .service-card-body { padding: 24px 20px 28px; }
   .service-num { font-size: 3rem; margin-bottom: 16px; }
-  .service-title { font-size: 1.1rem; margin-bottom: 10px; }
   .service-desc { font-size: 0.85rem; margin-bottom: 20px; }
   .service-tags { gap: 6px; }
   .service-tag { font-size: 0.7rem; padding: 4px 10px; }
-  .genid-header { margin-bottom: 36px; }
+  .genid-header { margin-bottom: var(--section-head-to-body); }
   .genid-tabs { margin-bottom: 24px; flex-direction: column; }
   .genid-tab { width: 100%; justify-content: center; padding: 12px 20px; }
   .genid-features-grid { grid-template-columns: 1fr; gap: 14px; }
@@ -2162,14 +2217,34 @@ footer {
   .news-excerpt { font-size: 0.8rem; margin-bottom: 16px; }
   .ref-more-wrap { margin-top: 80px; }
   #cta { padding: 160px 0; }
-  .cta-title { font-size: clamp(1.75rem, 8vw, 74px); margin-bottom: 12px; white-space: normal; }
+  .cta-title { font-size: 32px; margin-bottom: 12px; white-space: normal; }
+  .cta-title:not(.cta-title--single) .cta-title-gap { display: none; }
+  .cta-title:not(.cta-title--single) .cta-mobile-br { display: block; }
   .cta-sub { font-size: 0.9rem; margin-bottom: 80px; }
   .cta-buttons { flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 32px; }
   .cta-buttons .btn { width: 100%; justify-content: center; }
   .btn { width: 100%; min-width: 0; height: 58px; min-height: 58px; }
   .cta-form-submit { width: 100%; max-width: none; min-width: 0; }
-  .cta-form-agree { min-height: 44px; align-items: flex-start; padding: 6px 0; }
-  .cta-form-agree input[type="checkbox"] { margin-top: 12px; flex-shrink: 0; }
+  .cta-form-agree {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 6px 0;
+    box-sizing: border-box;
+  }
+  .cta-form-agree input[type="checkbox"] {
+    margin: 0;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+  }
+  .cta-form-agree span {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.45;
+  }
   .cta-form-select { min-height: 48px; }
   .cta-contact-row { flex-direction: column; gap: 16px; align-items: center; }
   .cta-contact-item { font-size: 0.85rem; }
@@ -2183,10 +2258,157 @@ footer {
   .gnb-fullmenu-col a { display: flex; align-items: center; min-height: 44px; padding: 8px 0; }
   .footer-bottom { flex-direction: column; align-items: center; text-align: center; padding-top: 24px; gap: 12px; }
   .footer-bottom-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
-  .back-top { bottom: 20px; right: 20px; width: 48px; height: 48px; }
-  .supreme-container { bottom: 76px; right: 20px; }
+  /* 탑버튼·회사소개서: 오른쪽은 컨테이너 패딩(16px)과 맞춤, 세로 간격 16px */
+  .back-top {
+    bottom: 20px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+  .supreme-container {
+    bottom: calc(20px + 48px + 16px);
+    right: 16px;
+  }
   .supreme-btn { width: 56px; height: 56px; }
   .supreme-btn .icon-section svg { width: 22px; height: 22px; }
+}
+
+/* 모바일 푸터 숨김 · 레퍼런스↔뉴스 섹션 간격 70px (기존 #reference 하단 + #news 상단 패딩 합 과다) */
+@media (max-width: 768px) {
+  :root {
+    --section-head-to-body: 24px;
+  }
+  /* 767 미적용 폭(768px 등): 플로팅·탑버튼 오른쪽·세로 간격 동일 */
+  .back-top {
+    bottom: 20px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+  .supreme-container {
+    bottom: calc(20px + 48px + 16px);
+    right: 16px;
+  }
+  .supreme-btn {
+    width: 56px;
+    height: 56px;
+  }
+  .supreme-btn .icon-section svg {
+    width: 22px;
+    height: 22px;
+  }
+  /* 핵심 기술 및 제공 서비스 카드: 제목 26px · 문구 20px (원래 flex 배치: 텍스트 → 서브문구 → 아이콘은 타이틀 행 오른쪽) */
+  #services .service-title {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 26px;
+    line-height: 1.35;
+    font-weight: 800;
+    margin-bottom: 0;
+  }
+  #services .service-title-icon {
+    margin-left: auto;
+    margin-right: 20px;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+  #services .service-subtitle {
+    font-size: 20px;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+  #services .service-title-block [data-i18n="svc3Title"] {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.35;
+  }
+  #services .service-title-block [data-i18n="svc3Sub"] {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 20px;
+    line-height: 1.45;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+  }
+  /* 767 미디어가 적용되지 않는 정확히 768px 등: 히어로 두 번째 행 한 줄 유지 */
+  .hero-line2 {
+    white-space: nowrap;
+  }
+  /* CTA 체크박스·라벨 세로 정렬 (767과 동일) */
+  .cta-form-agree {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 6px 0;
+    box-sizing: border-box;
+  }
+  .cta-form-agree input[type="checkbox"] {
+    margin: 0;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+  }
+  .cta-form-agree span {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.45;
+  }
+  /* 767과 동일 뷰포트에서도 헤드↔본문 간격 토큰 확실히 적용 */
+  .section-header,
+  #services .section-header {
+    margin-bottom: var(--section-head-to-body) !important;
+  }
+  .partner-title { margin-bottom: var(--section-head-to-body); }
+  .genid-header { margin-bottom: var(--section-head-to-body); }
+  .news-hero { gap: var(--section-head-to-body); }
+  footer .footer-inner > .footer-col { display: none !important; }
+  #reference { padding-bottom: 35px; }
+  #news { padding-top: 35px; }
+  /* ABOUT BDGEN(Web3): min-height 950px·패딩 170px 제거, 타이틀 줄바꿈·본문·이미지 폭 */
+  #about-bdgen {
+    min-height: 0;
+    padding: clamp(48px, 10vw, 72px) 0;
+    align-items: flex-start;
+  }
+  #about-bdgen .section-title {
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+  #about-bdgen .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    margin-bottom: 10px;
+  }
+  #about-bdgen .section-title .about-title-line {
+    white-space: normal;
+    word-break: keep-all;
+  }
+  #about-bdgen .section-sub {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    margin-top: 16px;
+  }
+  #about-bdgen .section-sub br.about-sub-mbr { display: block; }
+  .about-bdgen-grid { gap: var(--section-head-to-body); }
+  .about-bdgen-text {
+    width: 100%;
+    min-width: 0;
+  }
+  .about-bdgen-visual {
+    width: 100%;
+    max-width: 100%;
+  }
+  .about-bdgen-tilt {
+    width: min(100%, 320px);
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* Small mobile (~480) */
@@ -2194,15 +2416,18 @@ footer {
   html { font-size: 14px; }
   .gnb-logo-img { height: 26px; }
   #hero { padding: 80px 0 60px; min-height: min(100vh, 550px); }
-  .hero-title { font-size: clamp(1.35rem, 8vw, 1.9rem); line-height: 1.2; }
+  .hero-title {
+    font-size: 32px;
+    line-height: 1.12;
+  }
   .hero-badge { font-size: 0.7rem; padding: 6px 12px; }
   .partner-metrics { grid-template-columns: 1fr; }
   .partner-metric:nth-child(odd) { border-right: none; }
   .partner-metric { border-bottom: 1px solid rgba(255,255,255,0.06); }
   .about-visual { display: none; }
   .about-orb, .about-ring-1, .about-ring-2 { display: none; }
-  .section-title { font-size: clamp(1.35rem, 6vw, 1.75rem); }
-  #services .section-title, #about-bdgen .section-title, #why .section-title, #reference .section-title, #cta .cta-title { font-size: clamp(1.75rem, 8vw, 74px); }
+  .section-title { font-size: 32px; }
+  #services .section-title, #about-bdgen .section-title, #why .section-title, #reference .section-title, #cta .cta-title { font-size: 32px; }
   .genid-product-badge { font-size: 0.72rem; padding: 6px 14px; }
   .service-card-body { padding: 20px 18px 24px; }
   .why-card { padding: 20px 18px; }
@@ -2367,7 +2592,9 @@ footer {
 <!-- ===== PARTNER (검증된 기술력 - 배경이미지 + 숫자지표 인터랙션) ===== -->
 <section id="partner" class="landing-partner" data-fab-theme="light" aria-label="검증된 기술력, 신뢰할 수 있는 파트너">
   <div class="container">
-    <h2 class="partner-title"><span id="partner-typing" class="partner-typing" data-text="검증된 기술력, 신뢰할 수 있는 파트너" aria-hidden="false"></span></h2>
+    <h2 class="partner-title" id="partnerTitleBlock">
+      <span id="partner-typing-1" class="partner-title-line partner-typing" data-text="검증된 기술력," aria-hidden="false"></span><span class="partner-title-gap"> </span><br class="partner-mobile-br" aria-hidden="true"><span id="partner-typing-2" class="partner-title-line" data-text="신뢰할 수 있는 파트너" aria-hidden="false"></span>
+    </h2>
     <ul class="partner-metrics" role="list">
       <li class="partner-metric">
         <span class="partner-metric-value" data-metric-type="number" data-count="30" data-suffix="+" data-duration="1600">0+</span>
@@ -2502,7 +2729,7 @@ footer {
           <span class="about-title-line"><span>산업의 신뢰 인프라</span>를</span>
           <span class="about-title-line">설계합니다</span>
         </h2>
-        <p class="section-sub reveal reveal-delay-2" data-i18n="aboutSub">(주)비디젠(BDGen)은 2019년 설립 이후 블록체인 응용 서비스 상용화에 집중해온<br> 전문 기업입니다. DID·NFT·Passkey 등 Web3 핵심 기술을 실제 산업에 구현하며<br> 신뢰할 수 있는 디지털 환경을 만들어 나가고 있습니다.</p>
+        <p class="section-sub reveal reveal-delay-2" data-i18n="aboutSub">(주)비디젠(BDGen)은 2019년 설립 이후<br class="about-sub-mbr"> 블록체인 응용 서비스 상용화에 집중해온<br class="about-sub-mbr"> 전문 기업입니다. DID·NFT·Passkey 등 Web3 핵심 기술을<br class="about-sub-mbr"> 실제 산업에 구현하며 신뢰할 수 있는<br class="about-sub-mbr"> 디지털 환경을 만들어 나가고 있습니다.</p>
       </div>
       <div class="about-bdgen-visual reveal-right">
         <div id="about-bdgen-tilt" class="about-bdgen-tilt">
@@ -2711,7 +2938,9 @@ footer {
   <div class="container">
   <div class="cta-content">
     <div class="section-label reveal" style="justify-content:center">CONTACT</div>
-    <h2 id="cta-title" class="cta-title reveal reveal-delay-1"><span id="cta-typing" class="cta-typing" data-text="프로젝트를 시작할 준비가 되셨나요?"></span></h2>
+    <h2 id="cta-title" class="cta-title reveal reveal-delay-1">
+      <span id="cta-typing-1" class="cta-title-line cta-typing" data-text="프로젝트를 시작할" aria-hidden="false"></span><span class="cta-title-gap"> </span><br class="cta-mobile-br" aria-hidden="true"><span id="cta-typing-2" class="cta-title-line" data-text="준비가 되셨나요?" aria-hidden="false"></span>
+    </h2>
     <p class="cta-sub reveal reveal-delay-2" data-i18n="ctaSub">도입 검토부터 기술 상담까지, 비디젠 전문가가 함께합니다.</p>
     <div class="cta-split reveal reveal-delay-3">
       <div class="cta-form-wrap">
@@ -3539,7 +3768,7 @@ var I18N = {
     svc2Title:'모바일·서비스 개발', svc2Sub:'UX 중심 플랫폼 구축', svc2Desc:'사용자 경험(UX)을 최우선으로 설계하는 Android·iOS Native App과 Web App을 개발합니다. DID 기반 인증 모듈을 포함한 보안 특화 모바일 서비스를 구현합니다.',
     svc3Title:'플랫폼 구축 및', svc3Sub:'운영 솔루션', svc3Desc:'서비스 기획 단계부터 런칭, 운영, 고도화까지 원스톱으로 지원합니다. 맞춤형 VNC 기반 솔루션 및 파트너 연계 통합까지 담당합니다.',
     aboutLine1:'Web3 기술로', aboutLine2:'<span>산업의 신뢰 인프라</span>를', aboutLine3:'설계합니다',
-    aboutSub:'(주)비디젠(BDGen)은 2019년 설립 이후 블록체인 응용 서비스 상용화에 집중해온 전문 기업입니다. DID·NFT·Passkey 등 Web3 핵심 기술을 실제 산업에 구현하며 신뢰할 수 있는 디지털 환경을 만들어 나가고 있습니다.',
+    aboutSub:'(주)비디젠(BDGen)은 2019년 설립 이후<br class="about-sub-mbr"> 블록체인 응용 서비스 상용화에 집중해온<br class="about-sub-mbr"> 전문 기업입니다. DID·NFT·Passkey 등 Web3 핵심 기술을<br class="about-sub-mbr"> 실제 산업에 구현하며 신뢰할 수 있는<br class="about-sub-mbr"> 디지털 환경을 만들어 나가고 있습니다.',
     whyTitle:'비디젠이 <span>강한 이유</span> 5가지', whySub:'수년간 축적된 기술 역량과 상용화 경험이 만드는 경쟁력',
     why1Title:'블록체인 응용 서비스 상용화 경험', why1Desc:'SKT PASS 모바일지갑, 디지털 혁신대학 출입 서비스 등 수백만 사용자 규모의 서비스를 실제로 상용화한 검증된 실전 경험을 보유합니다.',
     why2Title:'다층적 블록체인 기술 스택', why2Desc:'DID · NFT · 출입인증 등 응용 솔루션부터 Hyperledger Fabric · Ethereum 인프라까지, 전 계층을 자체 개발 · 운영하는 기술 보유 기업입니다.',
@@ -3581,7 +3810,7 @@ var I18N = {
     svc2Title:'Mobile & service development', svc2Sub:'UX-centric platform', svc2Desc:'We develop Android·iOS Native Apps and Web Apps with UX as top priority. We implement security-focused mobile services including DID-based authentication modules.',
     svc3Title:'Platform construction', svc3Sub:'& operations solution', svc3Desc:'We provide end-to-end support from service planning through launch, operations, and enhancement. Custom VNC-based solutions and partner integration.',
     aboutLine1:'Web3 technology', aboutLine2:'Trust infrastructure for industry', aboutLine3:'We design it.',
-    aboutSub:'BDGen, founded in 2019, is a specialized company focused on commercializing blockchain applications. We implement core Web3 technologies—DID, NFT, Passkey—into real-world industries to build trusted digital environments.',
+    aboutSub:'BDGen, founded in 2019, is a specialized company<br class="about-sub-mbr"> focused on commercializing blockchain applications.<br class="about-sub-mbr"> We implement core Web3 technologies—DID, NFT, Passkey—<br class="about-sub-mbr"> into real-world industries to build trusted digital environments.',
     whyTitle:'Why BDGen <span>stands out</span>', whySub:'Competitive edge from years of accumulated technical capability and commercialization experience',
     why1Title:'Commercialized blockchain application services', why1Desc:'We have verified real-world experience with services at scale—including SKT PASS mobile wallet and Digital Innovation University access services—serving millions of users.',
     why2Title:'Multi-layer blockchain technology stack', why2Desc:'From DID · NFT · access solutions to Hyperledger Fabric · Ethereum infrastructure, we develop and operate across the full stack.',
@@ -3613,6 +3842,21 @@ var I18N = {
     careersTitle:'Careers', careersSub:'Coming soon.'
   }
 };
+/** CTA 제목: 모바일에서 두 줄로 쪼개기 (한글·영문 분기) */
+function splitCtaTitleForLang(pt, lang) {
+  if (typeof pt !== 'string') return { line1: '', line2: '', single: true };
+  if (lang === 'ko') {
+    var prefixKo = '프로젝트를 시작할';
+    if (pt.indexOf(prefixKo) === 0 && pt.slice(prefixKo.length).trim().length > 0) {
+      return { line1: prefixKo, line2: pt.slice(prefixKo.length).trim(), single: false };
+    }
+  }
+  if (lang === 'en') {
+    var m = pt.match(/^(.+?)\s+(project\?)$/i);
+    if (m) return { line1: m[1].trim(), line2: m[2].trim(), single: false };
+  }
+  return { line1: pt, line2: '', single: true };
+}
 function applyLang(lang, skipHero){
   LANG = lang;
   localStorage.setItem('bdgen-lang', lang);
@@ -3631,7 +3875,55 @@ function applyLang(lang, skipHero){
   document.querySelectorAll('.lang-option').forEach(function(btn){
     btn.setAttribute('aria-selected', btn.getAttribute('data-lang') === lang);
   });
-  var pt = document.getElementById('partner-typing'); if(pt) { pt.setAttribute('data-text', T.partnerTitle); pt.textContent = T.partnerTitle; pt.classList.remove('partner-typing'); pt.style.borderRight = 'none'; }
+  (function(){
+    var p1 = document.getElementById('partner-typing-1');
+    var p2 = document.getElementById('partner-typing-2');
+    var ptBlock = document.getElementById('partnerTitleBlock');
+    if(!p1 || !p2) return;
+    var pt = T.partnerTitle;
+    var m = typeof pt === 'string' && pt.match(/^([^,]+),\s*(.+)$/);
+    p1.classList.remove('partner-typing');
+    p1.style.borderRight = 'none';
+    p2.classList.remove('partner-typing');
+    p2.style.borderRight = 'none';
+    if(m) {
+      p1.setAttribute('data-text', m[1].trim() + ',');
+      p2.setAttribute('data-text', m[2].trim());
+      p1.textContent = m[1].trim() + ',';
+      p2.textContent = m[2].trim();
+      if(ptBlock) ptBlock.classList.remove('partner-title--single');
+    } else {
+      p1.setAttribute('data-text', pt);
+      p2.setAttribute('data-text', '');
+      p1.textContent = pt;
+      p2.textContent = '';
+      if(ptBlock) ptBlock.classList.add('partner-title--single');
+    }
+  })();
+  (function(){
+    var cta1 = document.getElementById('cta-typing-1');
+    var cta2 = document.getElementById('cta-typing-2');
+    var ctaH = document.getElementById('cta-title');
+    if (!cta1 || !cta2 || T.ctaTitle == null) return;
+    var sp = splitCtaTitleForLang(T.ctaTitle, lang);
+    cta1.classList.remove('cta-typing');
+    cta1.style.borderRight = 'none';
+    cta2.classList.remove('cta-typing');
+    cta2.style.borderRight = 'none';
+    if (!sp.single) {
+      cta1.setAttribute('data-text', sp.line1);
+      cta2.setAttribute('data-text', sp.line2);
+      cta1.textContent = sp.line1;
+      cta2.textContent = sp.line2;
+      if (ctaH) ctaH.classList.remove('cta-title--single');
+    } else {
+      cta1.setAttribute('data-text', sp.line1);
+      cta2.setAttribute('data-text', '');
+      cta1.textContent = sp.line1;
+      cta2.textContent = '';
+      if (ctaH) ctaH.classList.add('cta-title--single');
+    }
+  })();
   /* 두 번째 섹션(PARTNER) 지표 라벨 영문/한글 확실히 반영 */
   document.querySelectorAll('#partner .partner-metric-label[data-i18n]').forEach(function(el){
     var key = el.getAttribute('data-i18n'); var val = T[key]; if(val) el.textContent = val;
@@ -3650,7 +3942,7 @@ function applyLang(lang, skipHero){
     newsLine2.setAttribute('data-text', line2);
   }
   var suffixEl = document.querySelector('.partner-metric-value[data-suffix="개"]'); if(suffixEl) suffixEl.setAttribute('data-suffix', lang==='ko'?'개':'');
-  if(skipHero){ var ab=document.querySelector('#about-bdgen-title'); if(ab&&T.aboutLine1) ab.innerHTML='<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>'; var ph=document.getElementById('cta-message'); if(ph&&T.ctaMsgPlaceholder) ph.placeholder=T.ctaMsgPlaceholder; var sel=document.getElementById('cta-type'); if(sel&&sel.options[0]&&T.ctaPlaceholder) sel.options[0].textContent=T.ctaPlaceholder; var ctaT=document.getElementById('cta-typing'); if(ctaT&&T.ctaTitle) ctaT.setAttribute('data-text',T.ctaTitle); if(typeof window.wrapWhyTitleWave==='function') window.wrapWhyTitleWave(); if(typeof window.bdgenCtaRefreshI18n==='function') window.bdgenCtaRefreshI18n(); return; }
+  if(skipHero){ var ab=document.querySelector('#about-bdgen-title'); if(ab&&T.aboutLine1) ab.innerHTML='<span class="about-title-line">'+T.aboutLine1+'</span><span class="about-title-line">'+T.aboutLine2+'</span><span class="about-title-line">'+T.aboutLine3+'</span>'; var ph=document.getElementById('cta-message'); if(ph&&T.ctaMsgPlaceholder) ph.placeholder=T.ctaMsgPlaceholder; var sel=document.getElementById('cta-type'); if(sel&&sel.options[0]&&T.ctaPlaceholder) sel.options[0].textContent=T.ctaPlaceholder; if(typeof window.wrapWhyTitleWave==='function') window.wrapWhyTitleWave(); if(typeof window.bdgenCtaRefreshI18n==='function') window.bdgenCtaRefreshI18n(); return; }
   var heroSub = document.querySelector('.hero-sub'); if(heroSub) heroSub.innerHTML = T.heroSub;
   var el1=document.getElementById('hero-typing-1'),el2=document.getElementById('hero-typing-2'),el3=document.getElementById('hero-typing-3');
   if(el1&&el2&&el3){ el1.textContent=T.hero1; el2.textContent=T.hero2; el3.textContent=T.hero3; el3.classList.remove('hero-typing-cursor'); el3.style.borderRight='none'; }
@@ -3659,13 +3951,6 @@ function applyLang(lang, skipHero){
   }
   var ph = document.getElementById('cta-message'); if(ph && T.ctaMsgPlaceholder) ph.placeholder = T.ctaMsgPlaceholder;
   var sel = document.getElementById('cta-type'); if(sel){ var opt0 = sel.options[0]; if(opt0 && T.ctaPlaceholder) opt0.textContent = T.ctaPlaceholder; }
-  var ctaTypingEl = document.getElementById('cta-typing');
-  if(ctaTypingEl && T.ctaTitle) {
-    ctaTypingEl.setAttribute('data-text', T.ctaTitle);
-    ctaTypingEl.textContent = T.ctaTitle;
-    ctaTypingEl.classList.remove('cta-typing');
-    ctaTypingEl.style.borderRight = 'none';
-  }
   if(typeof window.wrapWhyTitleWave === 'function') window.wrapWhyTitleWave();
   if(typeof window.bdgenCtaRefreshI18n === 'function') window.bdgenCtaRefreshI18n();
 }
@@ -3925,40 +4210,66 @@ else runWrapWhyTitleWave();
 
   observer.observe(partnerSection);
 
-  /* 파트너 타이틀 타이핑 (뷰포트 진입할 때마다 재생, data-text는 언어 전환 시 applyLang에서 갱신됨) */
-  var typingEl = document.getElementById('partner-typing');
-  if(typingEl){
-    var isTyping = false;
-    var typingObserver = new IntersectionObserver(function(entries){
+  /* 파트너 타이틀 타이핑 (1행·2행 순차, data-text는 applyLang에서 갱신) */
+  var typingEl1 = document.getElementById('partner-typing-1');
+  var typingEl2 = document.getElementById('partner-typing-2');
+  if(typingEl1 && typingEl2){
+    var isPartnerTyping = false;
+    var partnerTypingObserver = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(!entry.isIntersecting){
-          typingEl.textContent = '';
-          typingEl.classList.add('partner-typing');
-          typingEl.style.borderRight = '';
+          typingEl1.textContent = '';
+          typingEl2.textContent = '';
+          typingEl1.classList.add('partner-typing');
+          typingEl1.style.borderRight = '';
+          typingEl2.classList.remove('partner-typing');
+          typingEl2.style.borderRight = 'none';
           return;
         }
-        if(isTyping) return;
-        var fullText = typingEl.getAttribute('data-text') || '';
-        isTyping = true;
-        typingEl.textContent = '';
-        typingEl.classList.add('partner-typing');
-        typingEl.style.borderRight = '';
+        if(isPartnerTyping) return;
+        var text1 = typingEl1.getAttribute('data-text') || '';
+        var text2 = typingEl2.getAttribute('data-text') || '';
+        isPartnerTyping = true;
+        typingEl1.textContent = '';
+        typingEl2.textContent = '';
+        typingEl1.classList.add('partner-typing');
+        typingEl1.style.borderRight = '';
+        typingEl2.classList.remove('partner-typing');
+        typingEl2.style.borderRight = 'none';
         var i = 0;
-        function type(){
-          if(i < fullText.length){
-            typingEl.textContent += fullText.charAt(i);
+        function typeLine1(){
+          if(i < text1.length){
+            typingEl1.textContent += text1.charAt(i);
             i++;
-            setTimeout(type, 80);
+            setTimeout(typeLine1, 80);
           } else {
-            typingEl.classList.remove('partner-typing');
-            typingEl.style.borderRight = 'none';
-            isTyping = false;
+            typingEl1.classList.remove('partner-typing');
+            typingEl1.style.borderRight = 'none';
+            if(!text2.length){
+              isPartnerTyping = false;
+              return;
+            }
+            var j = 0;
+            typingEl2.classList.add('partner-typing');
+            typingEl2.style.borderRight = '';
+            function typeLine2(){
+              if(j < text2.length){
+                typingEl2.textContent += text2.charAt(j);
+                j++;
+                setTimeout(typeLine2, 80);
+              } else {
+                typingEl2.classList.remove('partner-typing');
+                typingEl2.style.borderRight = 'none';
+                isPartnerTyping = false;
+              }
+            }
+            typeLine2();
           }
         }
-        type();
+        typeLine1();
       });
     }, { threshold: 0.2 });
-    typingObserver.observe(partnerSection);
+    partnerTypingObserver.observe(partnerSection);
   }
 
   /* 핵심 기술 및 제공 서비스 타이핑 (뷰포트 진입 시) */
@@ -4084,39 +4395,62 @@ else runWrapWhyTitleWave();
     newsTypingObserver.observe(newsSection);
   }
 
-  /* CTA 타이틀 타이핑 (뷰포트 진입 시 1회 재생) */
+  /* CTA 타이틀 타이핑 (1행·2행 순차, 뷰포트 진입 시 1회 재생) */
   var ctaSection = document.getElementById('cta');
-  var ctaTypingEl = document.getElementById('cta-typing');
-  if(ctaSection && ctaTypingEl){
+  var ctaTyping1 = document.getElementById('cta-typing-1');
+  var ctaTyping2 = document.getElementById('cta-typing-2');
+  if(ctaSection && ctaTyping1 && ctaTyping2){
     var ctaTypingDone = false;
     var ctaTypingObserver = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(!entry.isIntersecting || ctaTypingDone) return;
         ctaTypingDone = true;
-        var fullText = (ctaTypingEl.getAttribute('data-text') || '').trim();
-        if(!fullText) return;
+        var text1 = (ctaTyping1.getAttribute('data-text') || '').trim();
+        var text2 = (ctaTyping2.getAttribute('data-text') || '').trim();
+        if(!text1 && !text2) return;
         if(reducedMotion){
-          ctaTypingEl.textContent = fullText;
-          ctaTypingEl.classList.remove('cta-typing');
-          ctaTypingEl.style.borderRight = 'none';
+          ctaTyping1.textContent = text1;
+          ctaTyping2.textContent = text2;
+          ctaTyping1.classList.remove('cta-typing');
+          ctaTyping1.style.borderRight = 'none';
+          ctaTyping2.classList.remove('cta-typing');
+          ctaTyping2.style.borderRight = 'none';
           return;
         }
-        ctaTypingEl.textContent = '';
-        ctaTypingEl.classList.add('cta-typing');
-        ctaTypingEl.style.borderRight = '';
-        var i = 0;
+        ctaTyping1.textContent = '';
+        ctaTyping2.textContent = '';
+        ctaTyping1.classList.add('cta-typing');
+        ctaTyping1.style.borderRight = '';
+        ctaTyping2.classList.remove('cta-typing');
+        ctaTyping2.style.borderRight = 'none';
         var speed = 70;
-        function type(){
-          if(i < fullText.length){
-            ctaTypingEl.textContent += fullText.charAt(i);
+        var i = 0;
+        function typeLine1(){
+          if(i < text1.length){
+            ctaTyping1.textContent += text1.charAt(i);
             i++;
-            setTimeout(type, speed);
+            setTimeout(typeLine1, speed);
           } else {
-            ctaTypingEl.classList.remove('cta-typing');
-            ctaTypingEl.style.borderRight = 'none';
+            ctaTyping1.classList.remove('cta-typing');
+            ctaTyping1.style.borderRight = 'none';
+            if(!text2.length) return;
+            var j = 0;
+            ctaTyping2.classList.add('cta-typing');
+            ctaTyping2.style.borderRight = '';
+            function typeLine2(){
+              if(j < text2.length){
+                ctaTyping2.textContent += text2.charAt(j);
+                j++;
+                setTimeout(typeLine2, speed);
+              } else {
+                ctaTyping2.classList.remove('cta-typing');
+                ctaTyping2.style.borderRight = 'none';
+              }
+            }
+            typeLine2();
           }
         }
-        type();
+        typeLine1();
       });
     }, { threshold: 0.2 });
     ctaTypingObserver.observe(ctaSection);

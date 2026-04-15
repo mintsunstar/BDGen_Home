@@ -388,7 +388,7 @@
         'ref-page-lead':
           '비디젠은 고객의 요구를 반영하여 IT 환경에 최적화된 통합 시스템 서비스를 제공합니다.',
         'ref-page-card-1-title': '블록체인 기반 디지털통화관리 시스템 구축',
-        'ref-page-card-1-period': '24. 01 ~ 현재진행',
+        'ref-page-card-1-period': '24. 11 ~ 25. 8',
         'ref-page-card-1-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#디지털통화</span><span class="ref-page-tag">#CBDC</span>',
         'ref-page-card-2-title':
@@ -402,7 +402,7 @@
         'ref-page-card-3-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#취업지원</span>',
         'ref-page-card-4-title':
-          '조각투자사업자를 위한 공익적 토큰증권 플랫폼(STO)구축 사업 참여기관 선정',
+          '조각 투자 사업자의 토큰증권(STO) 발행을 지원하는 공익적 토큰증권 플랫폼 구축',
         'ref-page-card-4-period': '24. 06 ~ 24. 12',
         'ref-page-card-4-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#토큰증권</span>',
@@ -411,11 +411,6 @@
         'ref-page-card-5-period': '22. 07 ~ 22. 12',
         'ref-page-card-5-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#전자근로계약</span>',
-        'ref-page-card-6-title':
-          '디지털배지 기반 통합 취업지원서비스 구축',
-        'ref-page-card-6-period': '24. 4 ~ 24. 12',
-        'ref-page-card-6-tags':
-          '<span class="ref-page-tag">#디지털배지</span><span class="ref-page-tag">#블록체인</span>',
         'ref-page-card-7-title':
           '블록체인 기반 부동산 감정평가 이력관리 플랫폼 개발',
         'ref-page-card-7-period': '21. 05 ~ 21. 11',
@@ -459,7 +454,7 @@
           'BDGen delivers integrated system services tailored to your needs and optimized for your IT environment.',
         'ref-page-card-1-title':
           'Blockchain-based digital currency management system implementation (NH)',
-        'ref-page-card-1-period': 'Jan 2024 — ongoing',
+        'ref-page-card-1-period': 'Nov 2024 — Aug 2025',
         'ref-page-card-1-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#DigitalCurrency</span><span class="ref-page-tag">#CBDC</span>',
         'ref-page-card-2-title':
@@ -473,7 +468,7 @@
         'ref-page-card-3-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#Employment</span>',
         'ref-page-card-4-title':
-          'Selected participant — public-interest tokenized security (STO) platform for fractional investment',
+          'Public-interest tokenized security (STO) platform supporting STO issuance by fractional investment issuers',
         'ref-page-card-4-period': 'Jun 2024 — Dec 2024',
         'ref-page-card-4-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#STO</span>',
@@ -482,11 +477,6 @@
         'ref-page-card-5-period': 'Jul 2022 — Dec 2022',
         'ref-page-card-5-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#EContract</span>',
-        'ref-page-card-6-title':
-          'Integrated employment support service based on digital badges',
-        'ref-page-card-6-period': 'Apr 2024 — Dec 2024',
-        'ref-page-card-6-tags':
-          '<span class="ref-page-tag">#DigitalBadge</span><span class="ref-page-tag">#Blockchain</span>',
         'ref-page-card-7-title':
           'Blockchain-based real estate appraisal history management platform development',
         'ref-page-card-7-period': 'May 2021 — Nov 2021',

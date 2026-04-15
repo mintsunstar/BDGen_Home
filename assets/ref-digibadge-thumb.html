@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <style>
   body {
     margin: 0;
@@ -243,14 +244,33 @@
 <script>
 (function () {
   var tries = 0;
+  var vpTries = 0;
   function fit() {
     var wrap = document.querySelector('.wrap');
     var box = document.querySelector('.ref-digibadge-scale-box');
     var flow = document.querySelector('.flow');
     if (!wrap || !box || !flow) return;
-    var vv = window.visualViewport;
-    var vw = (vv && vv.width) ? vv.width : (document.documentElement.clientWidth || window.innerWidth || 1);
-    var vh = (vv && vv.height) ? vv.height : (document.documentElement.clientHeight || window.innerHeight || 1);
+    var fe = window.frameElement;
+    var vw;
+    var vh;
+    if (fe && fe.clientWidth > 1 && fe.clientHeight > 1) {
+      vw = fe.clientWidth;
+      vh = fe.clientHeight;
+    } else {
+      var el = document.documentElement;
+      var bw = document.body ? document.body.clientWidth : 0;
+      var bh = document.body ? document.body.clientHeight : 0;
+      vw = Math.max(el.clientWidth, bw, 1);
+      vh = Math.max(el.clientHeight, bh, 1);
+    }
+    if (vw < 2 || vh < 2) {
+      if (vpTries < 120) {
+        vpTries++;
+        requestAnimationFrame(fit);
+      }
+      return;
+    }
+    vpTries = 0;
     var pad = 10;
     flow.style.transform = 'none';
     flow.style.transformOrigin = 'top left';
@@ -266,7 +286,7 @@
     }
     if (!w || !h) return;
     tries = 0;
-    var s = Math.min((vw - pad) / w, (vh - pad) / h, 1) * 0.98;
+    var s = Math.min((vw - pad) / w, (vh - pad) / h, 1) * 0.98 * 1.1;
     box.style.width = w * s + 'px';
     box.style.height = h * s + 'px';
     box.style.overflow = 'hidden';
@@ -291,8 +311,14 @@
   }
   window.addEventListener('resize', kick);
   window.addEventListener('load', kick);
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', kick);
+  window.addEventListener('pageshow', kick);
+  if (typeof IntersectionObserver !== 'undefined') {
+    try {
+      var io = new IntersectionObserver(function () {
+        kick();
+      }, { threshold: [0, 0.01, 1] });
+      io.observe(document.documentElement);
+    } catch (e) {}
   }
 })();
 </script>

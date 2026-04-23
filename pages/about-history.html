@@ -514,12 +514,21 @@
     background: #0064ff;
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.4s ease;
+    transition: transform 0.4s ease, background 0.25s ease;
   }
   .history-year-link:hover,
-  .history-year-link:focus-visible {
-    color: #0064ff;
+  .history-year-link:focus-visible,
+  .history-year-link.active:hover,
+  .history-year-link.active:focus-visible {
+    color: #24ACFF;
     outline: none;
+  }
+  .history-year-link:hover::after,
+  .history-year-link:focus-visible::after,
+  .history-year-link.active:hover::after,
+  .history-year-link.active:focus-visible::after {
+    background: #24ACFF;
+    transform: scaleX(1);
   }
   .history-year-link.active {
     color: #0064ff;

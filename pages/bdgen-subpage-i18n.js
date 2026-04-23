@@ -19,7 +19,7 @@
         'sub-nav-4': '비디젠 뉴스',
         'breadcrumb-current': '회사소개',
         'intro-typing-1': '고객의 가치를 창출하며 성장하는',
-        'intro-typing-2': 'SW 개발 전문 기업',
+        'intro-typing-2': '소프트웨어 개발 전문 기업',
         'mission-desc': 'Web3 기술 역량과 통신·금융·공공·IoT 분야의 서비스 플랫폼 구축 경험을 바탕으로,\n고객과 같은 목표로 최고의 가치를 전달합니다.',
         'statement': '비디젠은 블록체인 기반 디지털 신원(DID)과 Passkey 기술을 산업 현장에 적용하여,\n안전하고 편리한 인증·증명 경험을 설계합니다.',
         'core-val-1': 'Web3 & 블록체인 전문성',
@@ -58,7 +58,7 @@
         'sub-nav-4': 'News',
         'breadcrumb-current': 'Company',
         'intro-typing-1': 'Growing while creating value for customers,',
-        'intro-typing-2': 'A specialized SW development company',
+        'intro-typing-2': 'A specialized software development company',
         'mission-desc': 'Based on Web3 capabilities and platform-building experience across telecom, finance, public sector, and IoT,\nwe deliver the highest value aligned with our clients\' goals.',
         'statement': 'BDGen applies blockchain-based digital identity (DID) and Passkey technology to industrial settings,\ndesigning secure and convenient authentication and attestation experiences.',
         'core-val-1': 'Web3 & Blockchain Expertise',
@@ -478,7 +478,7 @@
         'ref-page-card-1-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#DigitalCurrency</span><span class="ref-page-tag">#CBDC</span>',
         'ref-page-card-2-title':
-          'SK Telecom DID and PASS mobile wallet<br> service operations and enhancement',
+          'SK텔레콤 DID and PASS mobile wallet<br> service operations and enhancement',
         'ref-page-card-2-desc':
           'We provide ongoing production operations for DID and mobile wallet services—<br>and continuous feature and reliability enhancements.',
         'ref-page-card-2-period': 'Jan 2022 — ongoing',
@@ -519,7 +519,7 @@
         'ref-page-card-8-period': 'May 2021 — Dec 2021',
         'ref-page-card-8-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#PlatformDevelopment</span>',
-        'ref-page-logo-alt-sk': 'SK Telecom',
+        'ref-page-logo-alt-sk': 'SK텔레콤',
         'ref-page-logo-alt-nipa': 'NIPA',
         'ref-page-logo-text-keis': 'KEIS',
         'ref-page-logo-text-nh': 'NH Bank',

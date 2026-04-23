@@ -1167,6 +1167,30 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 }
 #why .section-sub { color: #888; }
 #why .container { position: relative; z-index: 1; }
+/* WHY: 헤더 순차 등장(스크롤 시 #why에 .why-inview) */
+#why .section-header .section-label,
+#why .section-header .section-title,
+#why .section-header .section-sub {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+#why.why-inview .section-header .section-label {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.04s;
+}
+#why.why-inview .section-header .section-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.16s;
+}
+#why.why-inview .section-header .section-sub {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
 .why-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -1182,17 +1206,18 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .why-grid .why-card:nth-child(5) {
   grid-column: span 2;
 }
-/* Why 카드: 스크롤 시 아래→위 30px 순차 등장 (0.1s 스태거) */
+/* Why 카드: 헤더 애니 후 .why-cards-revealed로 아래→위 순차(스태거 강화) */
 #why .why-grid .why-card {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transform: translateY(32px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: opacity, transform;
 }
-#why .why-grid .why-card:nth-child(1) { transition-delay: 0s; }
-#why .why-grid .why-card:nth-child(2) { transition-delay: 0.1s; }
-#why .why-grid .why-card:nth-child(3) { transition-delay: 0.2s; }
-#why .why-grid .why-card:nth-child(4) { transition-delay: 0.3s; }
-#why .why-grid .why-card:nth-child(5) { transition-delay: 0.4s; }
+#why .why-grid .why-card:nth-child(1) { transition-delay: 0.06s; }
+#why .why-grid .why-card:nth-child(2) { transition-delay: 0.16s; }
+#why .why-grid .why-card:nth-child(3) { transition-delay: 0.28s; }
+#why .why-grid .why-card:nth-child(4) { transition-delay: 0.4s; }
+#why .why-grid .why-card:nth-child(5) { transition-delay: 0.52s; }
 #why .why-grid.why-cards-revealed .why-card {
   opacity: 1;
   transform: translateY(0);
@@ -1236,6 +1261,22 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 }
 .why-card:hover .why-icon-wrap {
   transform: scale(1.05);
+}
+@media (prefers-reduced-motion: reduce) {
+  #why .section-header .section-label,
+  #why .section-header .section-title,
+  #why .section-header .section-sub {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+  #why .why-grid .why-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
 }
 .why-title {
   font-size: clamp(1.05rem, 1.35vw, 1.5rem);
@@ -1298,14 +1339,23 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
   display: flex; align-items: center; justify-content: center;
   width: 100px; height: 60px; border-radius: 12px;
   background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-  padding: 0; overflow: hidden; transition: var(--transition); flex-shrink: 0;
+  /* cover → 가로·세로 비율 다른 로고(SK 등)가 잘림. 여백 + contain으로 전체 표시 */
+  padding: 6px 10px; overflow: hidden; transition: var(--transition); flex-shrink: 0;
+  box-sizing: border-box;
 }
 #reference .logo-item {
-  background: #f2f4f6; border: 1px solid #e5e7eb;
+  background: #fff;
+  border: 1px solid #e8eaef;
 }
-#reference .logo-item:hover { background: #e8f0fe; border-color: rgba(0,101,250,0.35); }
+#reference .logo-item:hover { background: #f8f9fb; border-color: #dde1e6; }
 .logo-item img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center;
+  display: block;
 }
 .logo-item:hover { background: rgba(0,200,255,0.06); border-color: rgba(0,200,255,0.2); }
 @keyframes logoScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
@@ -2223,7 +2273,7 @@ footer {
   .why-desc { font-size: 0.875rem; }
   .logo-track-wrap { margin-bottom: 40px; }
   .logo-track-wrap::before, .logo-track-wrap::after { width: 40px; }
-  .logo-item { width: 100px; height: 60px; padding: 0; }
+  .logo-item { width: 100px; height: 60px; padding: 6px 10px; box-sizing: border-box; }
   .ref-projects { grid-template-columns: 1fr; gap: 16px; }
   .ref-card { padding: 24px 20px; }
   .ref-card-tag { font-size: 0.7rem; margin-bottom: 12px; }
@@ -2766,40 +2816,40 @@ footer {
 <section id="why" class="section" aria-labelledby="why-title">
   <div class="container">
     <div class="section-header">
-      <div class="section-label reveal">WHY BDGEN</div>
-      <h2 id="why-title" class="section-title reveal reveal-delay-1" data-i18n="whyTitle">비디젠이 <span>강한 이유</span> 5가지</h2>
-      <p class="section-sub reveal reveal-delay-2" data-i18n="whySub">수년간 축적된 기술 역량과 상용화 경험이 만드는 경쟁력</p>
+      <div class="section-label">WHY BDGEN</div>
+      <h2 id="why-title" class="section-title" data-i18n="whyTitle">비디젠이 <span>강한 이유</span> 5가지</h2>
+      <p class="section-sub" data-i18n="whySub">수년간 축적된 기술 역량과 상용화 경험이 만드는 경쟁력</p>
     </div>
     <div class="why-grid">
-      <div class="why-card why-card--tint reveal" data-why-index="0">
+      <div class="why-card why-card--tint" data-why-index="0">
         <div class="why-icon-wrap" aria-hidden="true">
           <img src="assets/bd01_icon.png" alt="" width="72" height="72" loading="lazy" decoding="async">
         </div>
         <h3 class="why-title" data-i18n="why1Title">블록체인 응용 서비스 상용화 경험</h3>
         <p class="why-desc" data-i18n="why1Desc">SKT PASS 모바일지갑, 디지털 혁신대학 출입 서비스 등 수백만 사용자 규모의 서비스를 실제로 상용화한 검증된 실전 경험을 보유합니다.</p>
       </div>
-      <div class="why-card reveal reveal-delay-1" data-why-index="1">
+      <div class="why-card" data-why-index="1">
         <div class="why-icon-wrap" aria-hidden="true">
           <img src="assets/bd02_icon.png" alt="" width="72" height="72" loading="lazy" decoding="async">
         </div>
         <h3 class="why-title" data-i18n="why2Title">다양한 블록체인 기술 스택</h3>
         <p class="why-desc" data-i18n="why2Desc">DID · NFT · 출입인증 등 응용 솔루션부터 Hyperledger Fabric · Ethereum 인프라까지, 전 계층을 자체 개발 · 운영하는 기술 보유 기업입니다.</p>
       </div>
-      <div class="why-card reveal reveal-delay-2" data-why-index="2">
+      <div class="why-card" data-why-index="2">
         <div class="why-icon-wrap" aria-hidden="true">
           <img src="assets/bd03_icon.png" alt="" width="72" height="72" loading="lazy" decoding="async">
         </div>
         <h3 class="why-title" data-i18n="why3Title">상용 서비스 플랫폼 구축 경험</h3>
         <p class="why-desc" data-i18n="why3Desc">모바일 앱 · 웹 · IF 서버 · 백오피스를 포함한 풀스택 플랫폼을 처음부터 끝까지 직접 설계하고 납품합니다.</p>
       </div>
-      <div class="why-card why-card--tint reveal reveal-delay-3" data-why-index="3">
+      <div class="why-card why-card--tint" data-why-index="3">
         <div class="why-icon-wrap" aria-hidden="true">
           <img src="assets/bd04_icon.png" alt="" width="72" height="72" loading="lazy" decoding="async">
         </div>
         <h3 class="why-title" data-i18n="why4Title">기획부터 런칭까지 단일 팀 완결</h3>
         <p class="why-desc" data-i18n="why4Desc">서비스 기획 → UX 디자인 → 개발 → QA → 런칭의 전 과정을 하나의 팀에서 일관되게 처리하여 품질과 일정을 모두 보장합니다.</p>
       </div>
-      <div class="why-card reveal reveal-delay-4" data-why-index="4">
+      <div class="why-card" data-why-index="4">
         <div class="why-icon-wrap" aria-hidden="true">
           <img src="assets/bd05_icon.png" alt="" width="72" height="72" loading="lazy" decoding="async">
         </div>
@@ -2840,19 +2890,19 @@ footer {
       <div class="ref-card reveal">
         <div class="ref-card-tag" data-i18n="ref1Tag">📱 DID · 모바일지갑</div>
         <div class="ref-card-client">SK텔레콤</div>
-        <div class="ref-card-project" data-i18n="ref1Proj">PASS 모바일지갑 DID 서비스 운영·고도화. 수백만 사용자 규모의 국내 대표 모바일 신원인증 서비스 장기 운영.</div>
+        <div class="ref-card-project" data-i18n="ref1Proj">PASS 모바일지갑 DID 서비스 운영·고도화.<br>수백만 사용자 규모의 국내 대표 모바일 신원인증 서비스 장기 운영.</div>
         <div class="ref-card-period">2022.01 ~ 현재 진행 중</div>
       </div>
       <div class="ref-card reveal reveal-delay-1">
         <div class="ref-card-tag" data-i18n="ref2Tag">🎓 블록체인 · 디지털배지</div>
         <div class="ref-card-client">NIPA (정보통신산업진흥원)</div>
-        <div class="ref-card-project" data-i18n="ref2Proj">디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정. 블록체인 기반 디지털 자격증명 시스템 구현.</div>
+        <div class="ref-card-project" data-i18n="ref2Proj">디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정.<br>블록체인 기반 디지털 자격증명 시스템 구현.</div>
         <div class="ref-card-period">2024.06 ~ 2024.12</div>
       </div>
       <div class="ref-card reveal reveal-delay-2">
         <div class="ref-card-tag" data-i18n="ref3Tag">🏛️ 블록체인 · 전자계약</div>
         <div class="ref-card-client">서울특별시</div>
-        <div class="ref-card-project" data-i18n="ref3Proj">블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축. 공공 행정 디지털 전환 선도.</div>
+        <div class="ref-card-project" data-i18n="ref3Proj">블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축.<br>공공 행정 디지털 전환 선도.</div>
         <div class="ref-card-period">2022.07 ~ 2022.12</div>
       </div>
       <div class="ref-card reveal reveal-delay-3">
@@ -2864,12 +2914,12 @@ footer {
       <div class="ref-card reveal reveal-delay-4">
         <div class="ref-card-tag" data-i18n="ref5Tag">🏥 블록체인 · 의약품관리</div>
         <div class="ref-card-client">보건의료기관</div>
-        <div class="ref-card-project" data-i18n="ref5Proj">블록체인 기반 마약류 의약품 관리 플랫폼 개발. 유통 이력의 완전한 추적과 위변조 방지 실현.</div>
+        <div class="ref-card-project" data-i18n="ref5Proj">블록체인 기반 마약류 의약품 관리 플랫폼 개발.<br>유통 이력의 완전한 추적과 위변조 방지 실현.</div>
         <div class="ref-card-period">2021.05 ~ 2021.12</div>
       </div>
       <div class="ref-card reveal reveal-delay-5" data-placeholder="client-anonymized" title="TODO: 고객사명 공개 시 수정">
         <div class="ref-card-tag" data-i18n="ref6Tag">💉 DID · 의료인증</div>
-        <div class="ref-card-client">Sk telecom</div>
+        <div class="ref-card-client">SK텔레콤</div>
         <div class="ref-card-project" data-i18n="ref6Proj">DID 기반 백신접종증명 서비스 개발. 개인 의료 정보를 안전하게 보관하고 선택적으로 제출.</div>
         <div class="ref-card-period">2021.09 ~ 2021.11</div>
       </div>
@@ -3813,11 +3863,11 @@ var I18N = {
     footerLinkIntro:'회사소개', footerLinkHistory:'연혁·인증', footerLinkCi:'CI소개', footerLinkNews:'비디젠 뉴스', footerLinkBiz:'사업영역',
     footerLinkGenid:'GenID', footerLinkPasskey:'Passkey', footerLinkRef:'레퍼런스', footerLinkCareers:'채용',
     footerInquiry:'프로젝트 문의', footerIntro:'회사소개서', brochureDownload:'회사소개서 다운받기',
-    ref1Tag:'DID · 모바일지갑', ref1Proj:'PASS 모바일지갑 DID 서비스 운영·고도화. 수백만 사용자 규모의 국내 대표 모바일 신원인증 서비스 장기 운영.',
-    ref2Tag:'블록체인 · 디지털배지', ref2Proj:'디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정. 블록체인 기반 디지털 자격증명 시스템 구현.',
-    ref3Tag:'블록체인 · 전자계약', ref3Proj:'블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축. 공공 행정 디지털 전환 선도.',
+    ref1Tag:'DID · 모바일지갑', ref1Proj:'PASS 모바일지갑 DID 서비스 운영·고도화.<br>수백만 사용자 규모의 국내 대표 모바일 신원인증 서비스 장기 운영.',
+    ref2Tag:'블록체인 · 디지털배지', ref2Proj:'디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정.<br>블록체인 기반 디지털 자격증명 시스템 구현.',
+    ref3Tag:'블록체인 · 전자계약', ref3Proj:'블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축.<br>공공 행정 디지털 전환 선도.',
     ref4Tag:'블록체인 · STO', ref4Proj:'조각 투자 사업자의 토큰증권(STO) 발행을 지원하는 공익적 토큰증권 플랫폼 구축. 블록체인 기반 증권형 토큰 발행·거래 시스템.',
-    ref5Tag:'블록체인 · 의약품관리', ref5Proj:'블록체인 기반 마약류 의약품 관리 플랫폼 개발. 유통 이력의 완전한 추적과 위변조 방지 실현.',
+    ref5Tag:'블록체인 · 의약품관리', ref5Proj:'블록체인 기반 마약류 의약품 관리 플랫폼 개발.<br>유통 이력의 완전한 추적과 위변조 방지 실현.',
     ref6Tag:'DID · 의료인증', ref6Proj:'DID 기반 백신접종증명 서비스 개발. 개인 의료 정보를 안전하게 보관하고 선택적으로 제출.',
     careersTitle:'채용', careersSub:'준비 중입니다.'
   },
@@ -3855,11 +3905,11 @@ var I18N = {
     footerLinkIntro:'Company', footerLinkHistory:'History & certifications', footerLinkCi:'CI', footerLinkNews:'BDGen News', footerLinkBiz:'Business',
     footerLinkGenid:'GenID', footerLinkPasskey:'Passkey', footerLinkRef:'Reference', footerLinkCareers:'Careers',
     footerInquiry:'Project inquiry', footerIntro:'Company intro', brochureDownload:'Download company brochure',
-    ref1Tag:'DID · Mobile wallet', ref1Proj:'PASS mobile wallet DID service operations and enhancement. Long-term operation of a leading domestic mobile identity service serving millions.',
-    ref2Tag:'Blockchain · Digital badge', ref2Proj:'Selected for digital badge-based integrated employment support project. Blockchain-based digital credential system implementation.',
-    ref3Tag:'Blockchain · E-contract', ref3Proj:'Blockchain-based public job electronic labor contract and history platform. Leading public sector digital transformation.',
+    ref1Tag:'DID · Mobile wallet', ref1Proj:'PASS mobile wallet DID service operations and enhancement.<br>Long-term operation of a leading domestic mobile identity service serving millions.',
+    ref2Tag:'Blockchain · Digital badge', ref2Proj:'Selected for digital badge-based integrated employment support project.<br>Blockchain-based digital credential system implementation.',
+    ref3Tag:'Blockchain · E-contract', ref3Proj:'Blockchain-based public job electronic labor contract and history platform.<br>Leading public sector digital transformation.',
     ref4Tag:'Blockchain · STO', ref4Proj:'Public-interest tokenized security (STO) platform supporting STO issuance by fractional investment issuers. Blockchain-based security token issuance and trading system.',
-    ref5Tag:'Blockchain · Drug management', ref5Proj:'Blockchain-based controlled substance management platform. Complete traceability and counterfeit prevention.',
+    ref5Tag:'Blockchain · Drug management', ref5Proj:'Blockchain-based controlled substance management platform.<br>Complete traceability and counterfeit prevention.',
     ref6Tag:'DID · Medical verification', ref6Proj:'DID-based vaccination certificate service. Secure storage and selective disclosure of personal medical information.',
     careersTitle:'Careers', careersSub:'Coming soon.'
   }
@@ -4132,29 +4182,42 @@ else runWrapWhyTitleWave();
   window._revealObserver = observer; /* GenID 탭 전환 시 재사용 */
 })();
 
-/* ---------- Why BDGEN 카드 순차 등장 + 제목 물결 적용 ---------- */
+/* ---------- Why BDGEN: 헤더 순차 → 짧은 간격 → 카드 순차 + 제목 물결 ---------- */
 (function(){
   var whySection = document.getElementById('why');
   var whyGrid = whySection ? whySection.querySelector('.why-grid') : null;
   var whyTitle = document.getElementById('why-title');
-  if(!whyGrid) return;
-  function applyWaveIfNeeded(){
-    if(whyTitle && !whyTitle.querySelector('.why-wave-char') && typeof window.wrapWhyTitleWave === 'function')
+  if (!whyGrid || !whySection) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cardsDelayMs = 400;
+
+  function applyWaveIfNeeded() {
+    if (whyTitle && !whyTitle.querySelector('.why-wave-char') && typeof window.wrapWhyTitleWave === 'function')
       window.wrapWhyTitleWave();
   }
-  var observer = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
+  function revealWhySeq() {
+    whySection.classList.add('why-inview');
+    requestAnimationFrame(applyWaveIfNeeded);
+    if (reduced) {
+      whyGrid.classList.add('why-cards-revealed');
+    } else {
+      setTimeout(function () {
         whyGrid.classList.add('why-cards-revealed');
-        applyWaveIfNeeded();
+      }, cardsDelayMs);
+    }
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        revealWhySeq();
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   observer.observe(whySection);
-  if(whyTitle){
-    var mo = new MutationObserver(function(){
-      if(!whyTitle.querySelector('.why-wave-char')) setTimeout(applyWaveIfNeeded, 50);
+  if (whyTitle) {
+    var mo = new MutationObserver(function () {
+      if (!whyTitle.querySelector('.why-wave-char')) setTimeout(applyWaveIfNeeded, 50);
     });
     mo.observe(whyTitle, { childList: true, subtree: true });
   }

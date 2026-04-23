@@ -224,24 +224,43 @@
     display: block;
     transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  /* 핵심 역량: 사업영역 SERVICES와 동일 스크롤 등장(AOS) */
-  html.js-intro-cap-aos .capability-section .capability-grid .c-item:not(.is-aos-visible){
+  /* 핵심 역량: 뷰포트 진입 시 섹션 제목 → 카드 1~6 순차 등장 */
+  html.js-intro-cap-aos .capability-section > h2.section-title{
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html.js-intro-cap-aos .capability-section:not(.capability-inview) > h2.section-title{
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  html.js-intro-cap-aos .capability-section.capability-inview > h2.section-title{
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.04s;
+  }
+  html.js-intro-cap-aos .capability-section:not(.capability-inview) .capability-grid .c-item{
     opacity: 0;
     filter: blur(8px);
     pointer-events: none;
   }
-  html.js-intro-cap-aos .capability-section .capability-grid .c-item:not(.is-aos-visible):nth-child(odd){
+  html.js-intro-cap-aos .capability-section:not(.capability-inview) .capability-grid .c-item:nth-child(odd){
     transform: translate3d(-120px, 0, 0);
   }
-  html.js-intro-cap-aos .capability-section .capability-grid .c-item:not(.is-aos-visible):nth-child(even){
+  html.js-intro-cap-aos .capability-section:not(.capability-inview) .capability-grid .c-item:nth-child(even){
     transform: translate3d(120px, 0, 0);
   }
-  html.js-intro-cap-aos .capability-section .capability-grid .c-item.is-aos-visible{
+  html.js-intro-cap-aos .capability-section.capability-inview .capability-grid .c-item{
     opacity: 1;
     pointer-events: auto;
     transform: translate3d(0, 0, 0);
     filter: blur(0);
   }
+  html.js-intro-cap-aos .capability-section.capability-inview .capability-grid .c-item:nth-child(1){ transition-delay: 0.1s; }
+  html.js-intro-cap-aos .capability-section.capability-inview .capability-grid .c-item:nth-child(2){ transition-delay: 0.2s; }
+  html.js-intro-cap-aos .capability-section.capability-inview .capability-grid .c-item:nth-child(3){ transition-delay: 0.3s; }
+  html.js-intro-cap-aos .capability-section.capability-inview .capability-grid .c-item:nth-child(4){ transition-delay: 0.4s; }
+  html.js-intro-cap-aos .capability-section.capability-inview .capability-grid .c-item:nth-child(5){ transition-delay: 0.5s; }
+  html.js-intro-cap-aos .capability-section.capability-inview .capability-grid .c-item:nth-child(6){ transition-delay: 0.6s; }
+  html.js-intro-cap-aos .capability-section.capability-inview .capability-grid .c-item:hover{ transition-delay: 0s; }
   /* 등장 후 호버는 기존 .c-item:hover 유지(리프트·글로우) + SERVICES와 동일 아이콘 확대 */
   .bdgen-white-presentation .capability-section .capability-grid .c-item:hover .c-item-icon img{
     transform: scale(1.06);
@@ -283,7 +302,12 @@
       transform: none;
     }
     .page-hero-bg{ animation: none; }
-    html.js-intro-cap-aos .capability-section .capability-grid .c-item:not(.is-aos-visible){
+    html.js-intro-cap-aos .capability-section:not(.capability-inview) > h2.section-title,
+    html.js-intro-cap-aos .capability-section.capability-inview > h2.section-title{
+      opacity: 1;
+      transform: none;
+    }
+    html.js-intro-cap-aos .capability-section:not(.capability-inview) .capability-grid .c-item{
       opacity: 1;
       filter: none;
       transform: none;
@@ -303,7 +327,7 @@
     .bdgen-white-presentation .c-item{
       flex-direction: column;
       align-items: flex-start;
-      gap: 20px;
+      gap: 40px;
     }
     .bdgen-white-presentation .c-item-icon{
       width: 100%;
@@ -792,26 +816,26 @@
   },{threshold:0.28,rootMargin:'0px 0px -8% 0px'});
   obs.observe(section);
 })();
-/* 핵심 역량 카드: 사업영역 SERVICES와 동일 스크롤 등장(AOS) */
+/* 핵심 역량: 섹션이 뷰포트에 들어올 때 제목 → 카드 순차 등장 */
 (function(){
   'use strict';
-  var items = document.querySelectorAll('.capability-section .capability-grid .c-item');
-  if (!items.length) return;
+  var section = document.querySelector('.capability-section#strength') || document.querySelector('.bdgen-white-presentation .capability-section');
+  if (!section) return;
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) return;
   document.documentElement.classList.add('js-intro-cap-aos');
   if (!window.IntersectionObserver) {
-    items.forEach(function(el){ el.classList.add('is-aos-visible'); });
+    section.classList.add('capability-inview');
     return;
   }
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(ent){
       if (!ent.isIntersecting) return;
-      ent.target.classList.add('is-aos-visible');
+      section.classList.add('capability-inview');
       io.unobserve(ent.target);
     });
-  }, { root: null, rootMargin: '0px 0px -18% 0px', threshold: 0.15 });
-  items.forEach(function(el){ io.observe(el); });
+  }, { root: null, rootMargin: '0px 0px -8% 0px', threshold: 0.14 });
+  io.observe(section);
 })();
 (function(){
   var wrap=document.getElementById('footerFamilySite');

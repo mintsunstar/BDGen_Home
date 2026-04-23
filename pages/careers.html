@@ -925,11 +925,42 @@
   }
   .careers-req-block{ margin-bottom: 28px; }
   .careers-req-block:last-child{ margin-bottom: 0; }
-  .careers-req-block h4{
+  .careers-req-h{
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 16px;
     font-weight: 800;
     color: var(--careers-blue);
     margin: 0 0 10px;
+  }
+  .careers-req-h .careers-req-h-text{
+    min-width: 0;
+    flex: 1;
+  }
+  .careers-req-h-icon{
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 11px;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04), 0 3px 10px rgba(0, 101, 250, 0.1);
+  }
+  .careers-req-h-icon--must{
+    background: linear-gradient(145deg, #e8f4ff 0%, #d4e8ff 100%);
+  }
+  .careers-req-h-icon--pref{
+    background: linear-gradient(145deg, #fff6e0 0%, #ffecc8 100%);
+  }
+  .careers-req-h-icon--req{
+    background: linear-gradient(145deg, #e8fff4 0%, #c8f5e0 100%);
+  }
+  .careers-req-h-icon svg{
+    display: block;
+    width: 20px;
+    height: 20px;
   }
   .careers-req-block p, .careers-req-block ul{
     margin: 0;
@@ -2072,19 +2103,19 @@
         <div class="careers-roles-grid" role="group" aria-label="모집 분야 선택">
           <button type="button" class="careers-role" data-careers-role="fe" aria-pressed="false" id="careersRoleFe">
             <span class="careers-role-avatar" aria-hidden="true"><img src="../assets/front.png" alt="" width="120" height="120" loading="lazy" decoding="async"/></span>
-            <span class="careers-role-label" data-i18n="careers-role-fe">프론트엔드 개발자</span>
+            <span class="careers-role-label" data-i18n="careers-role-fe">Web-Front 개발자</span>
           </button>
           <button type="button" class="careers-role" data-careers-role="be" aria-pressed="false" id="careersRoleBe">
             <span class="careers-role-avatar" aria-hidden="true"><img src="../assets/back.png" alt="" width="120" height="120" loading="lazy" decoding="async"/></span>
-            <span class="careers-role-label" data-i18n="careers-role-be">백엔드 개발자</span>
+            <span class="careers-role-label" data-i18n="careers-role-be">Backend 개발자</span>
           </button>
           <button type="button" class="careers-role" data-careers-role="and" aria-pressed="false" id="careersRoleAnd">
-            <span class="careers-role-avatar" aria-hidden="true"><img src="../assets/andro.png" alt="" width="120" height="120" loading="lazy" decoding="async"/></span>
-            <span class="careers-role-label" data-i18n="careers-role-and">안드로이드 개발자</span>
+            <span class="careers-role-avatar" aria-hidden="true"><img src="../assets/Technology.png" alt="" width="120" height="120" loading="lazy" decoding="async"/></span>
+            <span class="careers-role-label" data-i18n="careers-role-and">Infra 운영 개발자</span>
           </button>
           <button type="button" class="careers-role" data-careers-role="ios" aria-pressed="false" id="careersRoleIos">
-            <span class="careers-role-avatar" aria-hidden="true"><img src="../assets/ios.png" alt="" width="120" height="120" loading="lazy" decoding="async"/></span>
-            <span class="careers-role-label" data-i18n="careers-role-ios">iOS 개발자</span>
+            <span class="careers-role-avatar" aria-hidden="true"><img src="../assets/andro.png" alt="" width="120" height="120" loading="lazy" decoding="async"/></span>
+            <span class="careers-role-label" data-i18n="careers-role-ios">모바일 앱 개발자</span>
           </button>
         </div>
         </div>
@@ -2092,19 +2123,47 @@
 
       <section class="careers-sec careers-scroll-sec" id="careers-requirements" aria-labelledby="careersReqSubtitle">
         <div class="careers-req careers-req--scroll">
-          <p id="careersReqSubtitle" class="careers-req-subtitle careers-scroll-stage careers-scroll-stage--title" data-i18n="careers-role-common">공통 분야</p>
+          <p id="careersReqSubtitle" class="careers-req-subtitle careers-scroll-stage careers-scroll-stage--title" data-i18n="careers-role-common">공통</p>
           <div class="careers-req-illus careers-scroll-stage careers-scroll-stage--lead">
             <img id="careersReqIllus" src="../assets/all_ai.png" alt="" width="400" height="320" loading="lazy" decoding="async"/>
           </div>
           <div class="careers-req-body careers-scroll-stage careers-scroll-stage--body">
             <div class="careers-req-panel" id="careersReqPanel">
               <div class="careers-req-block">
-                <h4 id="careersReqMustH" data-i18n="careers-req-common-must-h">1. 공통 자격요건</h4>
+                <h4 class="careers-req-h">
+                  <span class="careers-req-h-icon careers-req-h-icon--must" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <circle cx="12" cy="12" r="8.5" fill="#fff" stroke="var(--careers-blue)" stroke-width="1.6"/>
+                      <path d="M7.3 12.2l2.1 1.8 4-4.1" fill="none" stroke="var(--careers-blue)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span id="careersReqMustH" class="careers-req-h-text" data-i18n="careers-req-common-must-h">공통 자격 요건</span>
+                </h4>
                 <ul id="careersReqMustList" class="careers-req-list"></ul>
               </div>
-              <div class="careers-req-block">
-                <h4 id="careersReqPrefH" data-i18n="careers-req-common-pref-h">2. 우대 사항</h4>
+              <div class="careers-req-block" id="careersReqPrefBlock">
+                <h4 class="careers-req-h">
+                  <span class="careers-req-h-icon careers-req-h-icon--pref" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M12 4.2l1.3 2.4 2.6.3-1.9 1.9.45 2.6-2.45-1.3-2.45 1.3.45-2.6-1.9-1.9 2.6-.3L12 4.2z" fill="#FFB14A" stroke="#E89420" stroke-width="0.6" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span id="careersReqPrefH" class="careers-req-h-text" data-i18n="careers-req-common-pref-h">2. 우대 사항</span>
+                </h4>
                 <ul id="careersReqPrefList" class="careers-req-list"></ul>
+              </div>
+              <div class="careers-req-block" id="careersReqReqBlock">
+                <h4 class="careers-req-h">
+                  <span class="careers-req-h-icon careers-req-h-icon--req" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <rect x="5" y="4" width="12" height="16" rx="2.2" fill="#fff" stroke="#22C48A" stroke-width="1.4"/>
+                      <path d="M8 7.5h6.2M8 10.5h6.2M8 13.4h3.2" fill="none" stroke="#3DDC9B" stroke-width="1.2" stroke-linecap="round"/>
+                      <circle cx="15.2" cy="5.1" r="1.1" fill="#22C48A"/>
+                    </svg>
+                  </span>
+                  <span id="careersReqReqH" class="careers-req-h-text" data-i18n="careers-req-req-h">요건</span>
+                </h4>
+                <ul id="careersReqReqList" class="careers-req-list"></ul>
               </div>
             </div>
           </div>
@@ -2362,21 +2421,25 @@
 (function(){
   /* 모집요건 좌측 대형 일러스트만 illusLarge (all_ai, *_01). 모집분야 원형은 별도 파일 front/back/andro/ios.png */
   var ROLE_CFG={
-    common:{ illusLarge:'../assets/all_ai.png', titleKey:'careers-role-common', must:['careers-req-cm-m1','careers-req-cm-m2'], pref:['careers-req-cm-p1','careers-req-cm-p2'] },
-    fe:{ illusLarge:'../assets/front_01.png', titleKey:'careers-role-fe', must:['careers-req-fe-m1','careers-req-fe-m2','careers-req-fe-m3'], pref:['careers-req-fe-p1','careers-req-fe-p2'] },
-    be:{ illusLarge:'../assets/back_01.png', titleKey:'careers-role-be', must:['careers-req-be-m1','careers-req-be-m2','careers-req-be-m3','careers-req-be-m4','careers-req-be-m5','careers-req-be-m6'], pref:['careers-req-be-p1','careers-req-be-p2','careers-req-be-p3','careers-req-be-p4'] },
-    and:{ illusLarge:'../assets/andro_01.png', titleKey:'careers-role-and', must:['careers-req-and-m1','careers-req-and-m2','careers-req-and-m3','careers-req-and-m4'], pref:['careers-req-and-p1','careers-req-and-p2'] },
-    ios:{ illusLarge:'../assets/ios_01.png', titleKey:'careers-role-ios', must:['careers-req-ios-m1','careers-req-ios-m2','careers-req-ios-m3'], pref:['careers-req-ios-p1'] }
+    common:{ illusLarge:'../assets/all_ai.png', titleKey:'careers-role-common', must:['careers-req-cm-m1','careers-req-cm-m2','careers-req-cm-m3','careers-req-cm-m4'], pref:[], req:[] },
+    fe:{ illusLarge:'../assets/front_01.png', titleKey:'careers-role-fe', must:['careers-req-fe-m1'], pref:['careers-req-fe-p1'], req:['careers-req-fe-r1'] },
+    be:{ illusLarge:'../assets/back_01.png', titleKey:'careers-role-be', must:['careers-req-be-m1'], pref:['careers-req-be-p1'], req:['careers-req-be-r1'] },
+    and:{ illusLarge:'../assets/Technology.png', titleKey:'careers-role-and', must:['careers-req-and-m1'], pref:['careers-req-and-p1'], req:['careers-req-and-r1'] },
+    ios:{ illusLarge:'../assets/andro_01.png', titleKey:'careers-role-ios', must:['careers-req-ios-m1'], pref:['careers-req-ios-p1'], req:['careers-req-ios-r1'] }
   };
   var mustEl=document.getElementById('careersReqMustList');
   var prefEl=document.getElementById('careersReqPrefList');
+  var reqEl=document.getElementById('careersReqReqList');
   var illus=document.getElementById('careersReqIllus');
   var subtitle=document.getElementById('careersReqSubtitle');
   var mustH=document.getElementById('careersReqMustH');
   var prefH=document.getElementById('careersReqPrefH');
+  var reqH=document.getElementById('careersReqReqH');
+  var prefBlock=document.getElementById('careersReqPrefBlock');
+  var reqBlock=document.getElementById('careersReqReqBlock');
   var panel=document.getElementById('careersReqPanel');
   var buttons=document.querySelectorAll('[data-careers-role]');
-  if(!mustEl||!prefEl||!illus||!subtitle||!mustH||!prefH||!buttons.length)return;
+  if(!mustEl||!prefEl||!reqEl||!illus||!subtitle||!mustH||!prefH||!reqH||!buttons.length)return;
 
   var reducedMotion=typeof window.matchMedia==='function'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var switchToken=0;
@@ -2407,15 +2470,24 @@
     subtitle.setAttribute('data-i18n',cfg.titleKey);
     if(roleId==='common'){
       mustH.setAttribute('data-i18n','careers-req-common-must-h');
-      prefH.setAttribute('data-i18n','careers-req-common-pref-h');
+      prefH.removeAttribute('data-i18n');
+      reqH.removeAttribute('data-i18n');
     }else{
       mustH.setAttribute('data-i18n','careers-req-must-h');
       prefH.setAttribute('data-i18n','careers-req-pref-h');
+      reqH.setAttribute('data-i18n','careers-req-req-h');
     }
     fillList(mustEl,cfg.must);
-    fillList(prefEl,cfg.pref);
+    fillList(prefEl,cfg.pref||[]);
+    fillList(reqEl,cfg.req||[]);
+    if(prefBlock) prefBlock.style.display = (cfg.pref && cfg.pref.length) ? '' : 'none';
+    if(reqBlock) reqBlock.style.display = (cfg.req && cfg.req.length) ? '' : 'none';
     if(typeof window.applySubpageContent==='function'){
       window.applySubpageContent(localStorage.getItem('bdgen-lang')||'ko');
+    }
+    if(roleId==='common'){
+      prefH.textContent='';
+      reqH.textContent='';
     }
     var activeBtn=document.querySelector('[data-careers-role="'+roleId+'"] .careers-role-label');
     if(activeBtn&&activeBtn.textContent) illus.alt=activeBtn.textContent.trim();

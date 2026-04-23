@@ -308,9 +308,9 @@
         'svc5-t2': '#토큰',
         'svc5-t3': '#STO',
         'svc6-num': '06',
-        'svc6-title': '비대칭키 기반 Passkey 인증 기술',
+        'svc6-title': '비밀번호없는 패스키 인증 기술',
         'svc6-desc':
-          '전 세계 주요기업들이 강력한 보안과 편리한 Passkey\n사용자 편의성과 비대칭키 기반의 인증으로 보안성 강화를\n위한 필수 인증 기술',
+          '전 세계 주요기업들이 강력한 보안과 편리한 Passkey\n사용자의 편의성과 보완성을 동시에 강화를 위한 필수 인증 기술',
         'svc6-t1': '#SRE',
         'svc6-t2': '#관측성',
         'svc6-t3': '#이터레이션'
@@ -392,35 +392,49 @@
         'ref-page-lead':
           '비디젠은 고객의 요구를 반영하여 IT 환경에 최적화된 통합 시스템 서비스를 제공합니다.',
         'ref-page-card-1-title': '블록체인 기반 디지털통화관리 시스템 구축',
+        'ref-page-card-1-desc':
+          '블록체인을 활용한 디지털통화·전자지갑 연계를 위한<br>통화관리 시스템을 구축하고 운영 효율을 강화합니다.',
         'ref-page-card-1-period': '24. 11 ~ 25. 8',
         'ref-page-card-1-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#디지털통화</span><span class="ref-page-tag">#CBDC</span>',
         'ref-page-card-2-title':
-          'S통신 DID 서비스 및 PASS 모바일 지갑 서비스 운영/고도화',
+          'SK텔레콤 DID 서비스 및 PASS 모바일 지갑<br>서비스 운영/고도화',
+        'ref-page-card-2-desc':
+          'DID·모바일 지갑 기반 인증·지갑 서비스의 상용 운영과<br>기능·안정성 고도화를 지속 수행합니다.',
         'ref-page-card-2-period': '22. 01 ~ 현재진행',
         'ref-page-card-2-tags':
           '<span class="ref-page-tag">#모바일지갑</span><span class="ref-page-tag">#DID</span>',
         'ref-page-card-3-title':
-          '디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정',
+          '디지털배지 기반 통합 취업지원 서비스<br>구축 사업 참여기관 선정',
+        'ref-page-card-3-desc':
+          '디지털배지와 연계한 통합 취업지원 체계 구축에 참여기관으로 선정되어 핵심 시스템을 함께 구현합니다.',
         'ref-page-card-3-period': '24. 08 ~ 24. 12',
         'ref-page-card-3-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#취업지원</span>',
         'ref-page-card-4-title':
-          '조각 투자 사업자의 토큰증권(STO) 발행을 지원하는 공익적 토큰증권 플랫폼 구축',
+          '조각 투자 사업자의 토큰증권(STO) 발행을<br>지원하는 공익적 토큰증권 플랫폼 구축',
+        'ref-page-card-4-desc':
+          '소액투자자 보호와 발행·유통 투명성을 갖춘<br>공익적 토큰증권(STO) 플랫폼을 구축합니다.',
         'ref-page-card-4-period': '24. 06 ~ 24. 12',
         'ref-page-card-4-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#토큰증권</span>',
         'ref-page-card-5-title':
-          '서울시 블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축',
+          '서울시 블록체인 기반 공공일자리<br>전자근로계약 및 이력관리 플랫폼 구축',
+        'ref-page-card-5-desc':
+          '공공일자리 전자근로계약·근로 이력을 블록체인으로<br>기록·검증하는 공공 일자리 플랫폼을 구축합니다.',
         'ref-page-card-5-period': '22. 07 ~ 22. 12',
         'ref-page-card-5-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#전자근로계약</span>',
         'ref-page-card-7-title':
-          '블록체인 기반 부동산 감정평가 이력관리 플랫폼 개발',
+          '블록체인 기반 부동산 감정평가<br>이력관리 플랫폼 개발',
+        'ref-page-card-7-desc':
+          '감정평가 이력의 위·변조 방지와 감사 추적이 가능하도록<br>블록체인 기반 이력관리 플랫폼을 개발합니다.',
         'ref-page-card-7-period': '21. 05 ~ 21. 11',
         'ref-page-card-7-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#플랫폼개발</span>',
         'ref-page-card-8-title': '블록체인 기반 마약류 의약품 관리 플랫폼 개발',
+        'ref-page-card-8-desc':
+          '마약류 의약품의 처방·조제·이동 내역을 블록체인으로<br>기록·관리하는 보건 의료용 플랫폼을 개발합니다.',
         'ref-page-card-8-period': '21. 05 ~ 21. 12',
         'ref-page-card-8-tags':
           '<span class="ref-page-tag">#블록체인</span><span class="ref-page-tag">#플랫폼개발</span>',
@@ -458,36 +472,50 @@
           'BDGen delivers integrated system services tailored to your needs and optimized for your IT environment.',
         'ref-page-card-1-title':
           'Blockchain-based digital currency management system implementation (NH)',
+        'ref-page-card-1-desc':
+          'We build a digital currency management system for e-wallet integration<br>and strengthen operational efficiency using blockchain technology.',
         'ref-page-card-1-period': 'Nov 2024 — Aug 2025',
         'ref-page-card-1-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#DigitalCurrency</span><span class="ref-page-tag">#CBDC</span>',
         'ref-page-card-2-title':
-          'DID and PASS mobile wallet service operations and enhancement (major telco)',
+          'SK Telecom DID and PASS mobile wallet<br> service operations and enhancement',
+        'ref-page-card-2-desc':
+          'We provide ongoing production operations for DID and mobile wallet services—<br>and continuous feature and reliability enhancements.',
         'ref-page-card-2-period': 'Jan 2022 — ongoing',
         'ref-page-card-2-tags':
           '<span class="ref-page-tag">#MobileWallet</span><span class="ref-page-tag">#DID</span>',
         'ref-page-card-3-title':
-          'Selected participant — integrated employment support service based on digital badges',
+          'Selected participant: digital badge–based integrated<br> employment support service program',
+        'ref-page-card-3-desc':
+          'As a selected partner for the digital badge–based employment support program, we help implement the core system.',
         'ref-page-card-3-period': 'Aug 2024 — Dec 2024',
         'ref-page-card-3-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#Employment</span>',
         'ref-page-card-4-title':
-          'Public-interest tokenized security (STO) platform supporting STO issuance by fractional investment issuers',
+          'Tokenized security (STO) issuance for fractional issuers: <br> public-interest support platform',
+        'ref-page-card-4-desc':
+          'We build a public-interest STO platform with investor safeguards<br>and transparent issuance and distribution.',
         'ref-page-card-4-period': 'Jun 2024 — Dec 2024',
         'ref-page-card-4-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#STO</span>',
         'ref-page-card-5-title':
-          'Seoul Metropolitan Government — blockchain-based e-labor contracts and career history platform',
+          'Seoul: blockchain e-labor contracts and work history for public job programs <br> platform implementation',
+        'ref-page-card-5-desc':
+          'We build a public jobs platform that records and verifies<br>e-labor contracts and work history on blockchain.',
         'ref-page-card-5-period': 'Jul 2022 — Dec 2022',
         'ref-page-card-5-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#EContract</span>',
         'ref-page-card-7-title':
-          'Blockchain-based real estate appraisal history management platform development',
+          'Blockchain-based real estate appraisal <br> history management platform development',
+        'ref-page-card-7-desc':
+          'To prevent tampering and enable audit trails for appraisal records,<br>we develop a blockchain-based history management platform.',
         'ref-page-card-7-period': 'May 2021 — Nov 2021',
         'ref-page-card-7-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#PlatformDevelopment</span>',
         'ref-page-card-8-title':
           'Blockchain-based controlled substance medicine management platform development',
+        'ref-page-card-8-desc':
+          'We develop a healthcare platform that records and manages<br>prescription, dispensing, and movement of controlled substances on blockchain.',
         'ref-page-card-8-period': 'May 2021 — Dec 2021',
         'ref-page-card-8-tags':
           '<span class="ref-page-tag">#Blockchain</span><span class="ref-page-tag">#PlatformDevelopment</span>',
@@ -551,49 +579,35 @@
         'careers-step4': '처우협의 및 입사',
         'careers-process-note':
           '채용 절차 및 일정은 포지션에 따라 상이할 수 있으며, 인턴십 기간이 포함될 수 있습니다. 자세한 사항은 개별 안내를 참고해 주세요.',
-        'careers-role-common': '공통 분야',
-        'careers-req-common-must-h': '1. 공통 자격요건',
+        'careers-role-common': '공통',
+        'careers-req-common-must-h': '공통 자격 요건',
         'careers-req-common-pref-h': '2. 우대 사항',
-        'careers-req-cm-m1': '학력 : 초대졸 이상',
-        'careers-req-cm-m2': '경력 : 5년 이상',
-        'careers-req-cm-p1': '자격증 소지자 : 정보처리기사',
-        'careers-req-cm-p2':
-          '전공자 : 응용소프트웨어공학, 전산학, 컴퓨터공학, 정보통신공학',
-        'careers-req-must-h': '자격요건',
-        'careers-req-pref-h': '우대 사항',
-        'careers-req-fe-m1': 'JAVA & Spring 기반 웹 서비스 개발 경험',
-        'careers-req-fe-m2': 'jQuery, HTML5, JavaScript, Vue.js, React 중 1개 이상 개발 경험',
-        'careers-req-fe-m3': 'RESTful API에 대한 이해와 개발 경험',
-        'careers-req-fe-p1': '크로스 브라우징에 대한 지식과 경험',
-        'careers-req-fe-p2': '버전관리(Git or SVN) 사용',
-        'careers-req-be-m1': 'Spring framework(Spring Boot)를 활용한 개발 경험',
-        'careers-req-be-m2': 'Spring Security 사용 경험',
-        'careers-req-be-m3': 'Oracle, MySQL, Maria DB 등 RDBMS 사용 경험',
-        'careers-req-be-m4': '버전관리(Git or SVN) 사용 경험',
-        'careers-req-be-m5': '빌드 / 테스트 / 배포 자동화에 대한 이해와 경험',
-        'careers-req-be-m6': 'AWS 등 인프라에 대한 이해 및 사용 경험',
-        'careers-req-be-p1': '오픈소스 사용 / 커스터마이징 경험',
-        'careers-req-be-p2': 'Linux / Unix 기본 명령어 사용 능력',
-        'careers-req-be-p3': '클라이언트 / 서버에 대한 이해',
-        'careers-req-be-p4': 'API 개발 및 운영',
-        'careers-req-and-m1':
-          'JAVA, Kotlin 언어를 활용한 개발 경험 (Android 가이드라인을 준수한 개발 및 플랫폼 사용 경험)',
-        'careers-req-and-m2': '협업 및 협업 툴 (Git, Zeplin, Trello, Jira 등) 사용 경험',
-        'careers-req-and-m3': 'RESTful API에 대한 이해와 개발 경험',
-        'careers-req-and-m4': 'RESTful API 기반 앱 개발 경험',
-        'careers-req-and-p1': '애자일 기반의 프로젝트 진행 경험',
-        'careers-req-and-p2': 'Native App 과 Web 통신에 대한 이해',
-        'careers-req-ios-m1':
-          'Swift, Objective-C 언어를 활용한 개발 경험 (iOS 가이드 라인을 준수한 개발 및 플랫폼 사용 경험)',
-        'careers-req-ios-m2': '협업 및 협업 툴 (Git, Zeplin, Trello, Jira 등) 사용 경험',
-        'careers-req-ios-m3': 'RESTful API 기반 앱 개발 경험',
-        'careers-req-ios-p1': '애자일 기반의 프로젝트 진행 경험',
+        'careers-req-cm-m1': '형상관리: Git Flow, GitHub/GitLab Actions 필수',
+        'careers-req-cm-m2': 'AI 활용: Copilot 등 AI 도구로 생산성 향상 우대',
+        'careers-req-cm-m3': 'REST API, 로그/지표 기반 장애 대응, 빠른 도메인 학습',
+        'careers-req-cm-m4': '각 분야에 다양한 오픈소스 활용능력 및 경험자 우대',
+        'careers-req-must-h': '필수',
+        'careers-req-pref-h': '우대',
+        'careers-req-req-h': '요건',
+        'careers-req-fe-m1': 'TypeScript, React/Vue.js(Composition API), Next.js/Nuxt.js, Git Flow',
+        'careers-req-fe-p1': '디자인 시스템, 접근성(WCAG), Lighthouse 95+, E2E 테스트(Cypress)',
+        'careers-req-fe-r1': 'SPA/SSR 경험 2년+, PR 리뷰 경험',
+        'careers-req-be-m1': 'Java/Kotlin, Spring Boot, PostgreSQL, Git Flow',
+        'careers-req-be-p1':
+          'Microservices, Kafka, AWS/EKS, AI 코드 리팩토링, Prometheus, Grafana, Datadog과 같은 오픈소스 활용능력',
+        'careers-req-be-r1': '분산 시스템 3년+, CI/CD 경험',
+        'careers-req-and-m1': 'Kubernetes, Docker, Terraform, GitOps',
+        'careers-req-and-p1': 'Helm, Observability(ELK), AI 모니터링, SRE 경험',
+        'careers-req-and-r1': 'IaC 운영 2년+, MTTR 단축 사례',
+        'careers-req-ios-m1': 'Flutter/Swift/Kotlin, MVVM, Git Flow',
+        'careers-req-ios-p1': 'React Native, Fastlane, Firebase, AI 테스트',
+        'careers-req-ios-r1': '앱 출시 2회+, 릴리즈 운영 경험',
         'careers-roles-title': 'Open Positions',
         'careers-roles-lead': '아래 분야에 지원하실 수 있습니다',
-        'careers-role-fe': '프론트엔드 개발자',
-        'careers-role-be': '백엔드 개발자',
-        'careers-role-and': '안드로이드 개발자',
-        'careers-role-ios': 'iOS 개발자',
+        'careers-role-fe': 'Web-Front 개발자',
+        'careers-role-be': 'Backend 개발자',
+        'careers-role-and': 'Infra 운영 개발자',
+        'careers-role-ios': '모바일 앱 개발자',
         'careers-cta-text': '지원서 작성하기',
         'careers-apply-title': '지원서 작성',
         'careers-apply-name': '이름',
@@ -670,52 +684,35 @@
         'careers-step4': 'Terms & onboarding',
         'careers-process-note':
           'Steps and schedules may vary by role and may include an internship. Details will be shared individually.',
-        'careers-role-common': 'Common requirements',
-        'careers-req-common-must-h': '1. Common qualifications',
+        'careers-role-common': 'Common',
+        'careers-req-common-must-h': 'Common requirements',
         'careers-req-common-pref-h': '2. Preferred qualifications',
-        'careers-req-cm-m1': 'Education: Associate degree (junior college) or higher',
-        'careers-req-cm-m2': 'Experience: 5 years or more',
-        'careers-req-cm-p1': 'Certifications: Engineer Information Processing',
-        'careers-req-cm-p2':
-          'Preferred majors: Applied Software Engineering, Computer Science, Computer Engineering, Information & Communications Engineering',
-        'careers-req-must-h': 'Requirements',
-        'careers-req-pref-h': 'Preferred qualifications',
-        'careers-req-fe-m1': 'Experience building web services with Java & Spring',
-        'careers-req-fe-m2':
-          'Hands-on development with at least one of jQuery, HTML5, JavaScript, Vue.js, or React',
-        'careers-req-fe-m3': 'Understanding and development experience with RESTful APIs',
-        'careers-req-fe-p1': 'Knowledge and experience with cross-browser compatibility',
-        'careers-req-fe-p2': 'Version control (Git or SVN)',
-        'careers-req-be-m1': 'Development experience with Spring Framework (Spring Boot)',
-        'careers-req-be-m2': 'Experience using Spring Security',
-        'careers-req-be-m3': 'Experience with RDBMS such as Oracle, MySQL, or MariaDB',
-        'careers-req-be-m4': 'Version control (Git or SVN)',
-        'careers-req-be-m5': 'Understanding and experience with build, test, and deployment automation',
-        'careers-req-be-m6': 'Understanding and hands-on experience with infrastructure such as AWS',
-        'careers-req-be-p1': 'Experience using and customizing open source software',
-        'careers-req-be-p2': 'Basic Linux / Unix command-line skills',
-        'careers-req-be-p3': 'Understanding of client and server architecture',
-        'careers-req-be-p4': 'API development and operations',
-        'careers-req-and-m1':
-          'Development experience with Java and Kotlin (development following Android guidelines and platform practices)',
-        'careers-req-and-m2':
-          'Experience with collaboration tools (Git, Zeplin, Trello, Jira, etc.)',
-        'careers-req-and-m3': 'Understanding and development experience with RESTful APIs',
-        'careers-req-and-m4': 'App development experience based on RESTful APIs',
-        'careers-req-and-p1': 'Project experience following Agile practices',
-        'careers-req-and-p2': 'Understanding of communication between native apps and web',
-        'careers-req-ios-m1':
-          'Development experience with Swift and Objective-C (development following iOS guidelines and platform practices)',
-        'careers-req-ios-m2':
-          'Experience with collaboration tools (Git, Zeplin, Trello, Jira, etc.)',
-        'careers-req-ios-m3': 'App development experience based on RESTful APIs',
-        'careers-req-ios-p1': 'Project experience following Agile practices',
+        'careers-req-cm-m1': 'VCS: Git Flow; GitHub / GitLab Actions required',
+        'careers-req-cm-m2': 'AI tools: higher productivity with Copilot and similar (preferred)',
+        'careers-req-cm-m3': 'REST API, log/metric-based incident response, quick domain learning',
+        'careers-req-cm-m4': 'Open source experience across domains (preferred)',
+        'careers-req-must-h': 'Required',
+        'careers-req-pref-h': 'Preferred',
+        'careers-req-req-h': 'Expectations',
+        'careers-req-fe-m1': 'TypeScript, React or Vue (Composition API), Next.js or Nuxt.js, Git Flow',
+        'careers-req-fe-p1': 'Design systems, accessibility (WCAG), Lighthouse 95+, E2E (Cypress)',
+        'careers-req-fe-r1': '2+ years SPA/SSR experience, PR review experience',
+        'careers-req-be-m1': 'Java or Kotlin, Spring Boot, PostgreSQL, Git Flow',
+        'careers-req-be-p1':
+          'Microservices, Kafka, AWS/EKS, AI-assisted refactoring, Prometheus, Grafana, Datadog, and similar open source',
+        'careers-req-be-r1': '3+ years distributed systems, CI/CD experience',
+        'careers-req-and-m1': 'Kubernetes, Docker, Terraform, GitOps',
+        'careers-req-and-p1': 'Helm, observability (ELK), AI monitoring, SRE experience',
+        'careers-req-and-r1': '2+ years IaC operations, examples of lower MTTR',
+        'careers-req-ios-m1': 'Flutter, Swift, or Kotlin, MVVM, Git Flow',
+        'careers-req-ios-p1': 'React Native, Fastlane, Firebase, AI testing',
+        'careers-req-ios-r1': '2+ app store releases, release operations experience',
         'careers-roles-title': 'Open Positions',
         'careers-roles-lead': 'You can apply for the positions below.',
-        'careers-role-fe': 'Frontend developer',
+        'careers-role-fe': 'Web front-end developer',
         'careers-role-be': 'Backend developer',
-        'careers-role-and': 'Android developer',
-        'careers-role-ios': 'iOS developer',
+        'careers-role-and': 'Infra / platform engineer',
+        'careers-role-ios': 'Mobile app developer',
         'careers-cta-text': 'Apply',
         'careers-apply-title': 'Application form',
         'careers-apply-name': 'Name',

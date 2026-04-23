@@ -36,7 +36,15 @@
   .bdgen-white-presentation .inner-container{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
   .bdgen-white-presentation .main-title{ font-size: 77px; font-weight: 800; line-height: 100px; margin-top: 0; margin-bottom: 0; letter-spacing: -1.5px; }
   .bdgen-white-presentation .hero-desc{ font-size: 20px; color: #4e5968; margin-top: 30px; font-weight: 400; }
-  /* 레퍼런스 본문 — 카드 그리드(첨부 시안) */
+  /* 레퍼런스 본문 — 3열 텍스트 카드(로고 하단 오른쪽) */
+  .ref-page-section.bdgen-white-presentation{
+    background: #ffffff;
+    color: #1a1f27;
+  }
+  /* 3×420 + gap 2×40 + 좌우 패딩 */
+  .ref-page-section .inner-container{
+    max-width: 1400px;
+  }
   .ref-page-main-title{
     font-size: 77px;
     font-weight: 800;
@@ -59,341 +67,205 @@
   .ref-page-lead{
     text-align: center;
     max-width: 920px;
-    margin: 0 auto 56px;
+    margin: 0 auto 48px;
     font-size: 16px;
     line-height: 1.8;
-    color: #666666;
+    color: #5c6370;
     font-weight: 400;
     letter-spacing: -0.02em;
   }
   .ref-page-grid{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: 80px;
-    column-gap: 32px;
+    grid-template-columns: minmax(0, 420px);
+    gap: 60px;
     align-items: stretch;
+    justify-content: center;
+  }
+  @media (min-width: 900px){
+    .ref-page-grid{ grid-template-columns: repeat(2, 420px); }
+  }
+  @media (min-width: 1400px){
+    .ref-page-grid{ grid-template-columns: repeat(3, 420px); }
   }
   .ref-page-card{
+    --ref-card-navy-1: #0f2a45;
+    --ref-card-navy-2: #153a5c;
+    --ref-card-navy-3: #0b1f32;
+    position: relative;
     display: flex;
     flex-direction: column;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 2px;
-    overflow: hidden;
-    transition: box-shadow 0.28s ease, border-color 0.28s ease;
-  }
-  .ref-page-card:hover{
-    border-color: rgba(0, 101, 250, 0.38);
-    box-shadow: 0 14px 44px rgba(15, 40, 90, 0.09);
-  }
-  .ref-page-card-logo{
-    flex-shrink: 0;
+    box-sizing: border-box;
     height: 300px;
     min-height: 300px;
-    background: #fafafa;
-    border-bottom: 1px solid #ebebeb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 28px 24px;
-    box-sizing: border-box;
-  }
-  /* 썸네일 기본 로고 크기 통일(호버 플로우 안 이미지·iframe에는 적용하지 않음) */
-  .ref-page-card-logo > img,
-  .ref-page-card-logo-default img{
-    display: block;
-    margin-inline: auto;
-    box-sizing: border-box;
-    width: min(240px, 88%);
-    height: 88px;
-    object-fit: contain;
-    object-position: center;
-  }
-  /* 부동산 감정평가 카드(logo_RC) 등 — 디폴트 로고 15% 확대(고정·% 쌍 모두 1.15배) */
-  .ref-page-card-logo--logo-scale-115 > img,
-  .ref-page-card-logo--logo-scale-115 .ref-page-card-logo-default img{
-    width: min(calc(240px * 1.15), calc(88% * 1.15));
-    height: calc(88px * 1.15);
-  }
-  /* 호버 시 iframe 콘텐츠 — Service Flow(pk-flow) / 디지털배지 HTML 등 */
-  .ref-page-card-logo--flow-hover,
-  .ref-page-card-logo--embed-hover{
-    position: relative;
-    /* block + 자식 height:100% 는 퍼센트 높이 미해결 시 영역이 0이 될 수 있음 → flex로 로고만 중앙 정렬 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .ref-page-card-logo--flow-hover{
-    cursor: pointer;
-  }
-  .ref-page-card-logo--embed-hover{
-    cursor: default;
-  }
-  .ref-page-card-logo-default{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-    transition: opacity 0.28s ease;
-  }
-  .ref-page-card-logo-flow{
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    display: grid;
-    grid-template: 1fr / 1fr;
-    /* place-items:center 는 자식을 내용 크기로 줄임. iframe은 absolute라 부모 높이에 안 잡혀 0×0 → 다이어그램 안 보임 */
-    place-items: stretch;
-    padding: 8px 10px;
-    box-sizing: border-box;
-    background: #f8fafc;
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.28s ease, visibility 0s linear 0.28s;
-    min-height: 0;
-  }
-  .ref-page-card-flow-embed{
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-    min-width: 0;
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-  }
-  .ref-page-card-flow-embed iframe{
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-    border-radius: 12px;
-    overflow: hidden;
-    /* 클릭이 iframe 문서로 가면 부모로 전달되지 않음 → 모달 열림용 클릭은 영역에서 처리 */
-    pointer-events: none;
-  }
-  /* 호버 시 SVG 다이어그램 — 썸네일 전체에 맞게 확대(iframe과 동일하게 영역 채움) */
-  .ref-page-card-flow-embed--svg{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-    min-width: 0;
-  }
-  .ref-page-card-logo-flow .ref-page-card-flow-svg{
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    object-fit: contain;
-    object-position: center;
-    pointer-events: none;
-  }
-  /* Service Flow 확대 모달 */
-  .ref-flow-modal{
-    position: fixed;
-    inset: 0;
-    z-index: 10050;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
-    box-sizing: border-box;
-  }
-  .ref-flow-modal[hidden]{
-    display: none !important;
-  }
-  .ref-flow-modal__backdrop{
-    position: absolute;
-    inset: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: rgba(15, 23, 42, 0.72);
-    cursor: pointer;
-  }
-  .ref-flow-modal__panel{
-    position: relative;
-    z-index: 1;
-    width: min(1120px, 96vw);
-    max-height: min(92vh, 920px);
-    display: flex;
-    flex-direction: column;
     background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    border: 1px solid #e2e5ea;
+    border-radius: 20px;
+    padding: 26px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     overflow: hidden;
+    isolation: isolate;
+    z-index: 0;
+    transition:
+      background 0.4s ease,
+      border-color 0.4s ease,
+      box-shadow 0.4s ease,
+      border-radius 0.4s ease;
   }
-  .ref-flow-modal__toolbar{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 12px 14px;
-    border-bottom: 1px solid #e8ecf1;
-    flex-shrink: 0;
-  }
-  .ref-flow-modal__heading{
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #111;
-    letter-spacing: -0.02em;
-  }
-  .ref-flow-modal__close{
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 8px;
-    background: #f1f5f9;
-    color: #334155;
-    font-size: 1.35rem;
-    line-height: 1;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .ref-flow-modal__close:hover{
-    background: #e2e8f0;
-  }
-  .ref-flow-modal__frame{
-    position: relative;
-    width: 100%;
-    flex: 1 1 auto;
-    min-height: min(360px, 50vh);
-    aspect-ratio: 1239 / 899;
-    max-height: min(calc(92vh - 64px), calc(96vw * 899 / 1239));
-    background: #f8fafc;
-  }
-  .ref-flow-modal__frame iframe{
+  .ref-page-card::before{
+    content: "";
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-  }
-  /* 다이어그램(SVG)도 iframe과 동일 프레임(SK·Service Flow 카드 기준 1239×899 비율) */
-  .ref-modal__img-only{
-    display: none;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
-    object-fit: contain;
-    object-position: center;
-    box-sizing: border-box;
-  }
-  .ref-flow-modal--mode-logo .ref-flow-modal__frame iframe{
-    display: none !important;
-  }
-  .ref-flow-modal--mode-logo .ref-modal__img-only{
-    display: block;
-  }
-  .ref-page-card-logo--modal-thumb{
-    cursor: pointer;
-  }
-  .ref-page-card:hover .ref-page-card-logo-flow{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: opacity 0.28s ease, visibility 0s;
-  }
-  .ref-page-card:hover .ref-page-card-logo-default{
+    right: -18%;
+    bottom: -30%;
+    width: 75%;
+    height: 80%;
+    background:
+      radial-gradient(ellipse 55% 50% at 60% 45%,
+        rgba(0, 230, 255, 0.5) 0%,
+        rgba(140, 80, 255, 0.4) 32%,
+        rgba(255, 60, 180, 0.22) 55%,
+        transparent 68%);
     opacity: 0;
+    transform: scale(0.88);
+    transition: opacity 0.45s ease, transform 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
   }
-  @media (prefers-reduced-motion: reduce){
-    .ref-page-card-logo-default,
-    .ref-page-card-logo-flow{
-      transition-duration: 0.01ms;
-    }
-    .ref-page-card-logo-flow{
-      transition-delay: 0s;
-    }
+  .ref-page-card::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(165deg, rgba(12, 32, 58, 0) 0%, rgba(5, 18, 36, 0.35) 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.4s ease;
   }
-  .ref-page-card-logo--text span{
-    display: block;
-    font-size: clamp(0.95rem, 2vw, 1.1rem);
-    font-weight: 800;
-    color: #111;
-    text-align: center;
-    line-height: 1.4;
-    letter-spacing: -0.02em;
+  .ref-page-card:hover{
+    background: linear-gradient(165deg, var(--ref-card-navy-1) 0%, var(--ref-card-navy-2) 48%, var(--ref-card-navy-3) 100%);
+    border-color: rgba(0, 200, 255, 0.22);
+    box-shadow:
+      0 14px 44px rgba(0, 25, 55, 0.4),
+      0 0 0 1px rgba(0, 210, 255, 0.12),
+      0 0 48px rgba(80, 160, 255, 0.12);
   }
-  .ref-page-card-body{
-    padding: 22px 22px 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+  .ref-page-card:hover::before{
+    opacity: 1;
+    transform: scale(1);
+  }
+  .ref-page-card:hover::after{
+    opacity: 1;
+  }
+  .ref-page-card > *{
+    position: relative;
+    z-index: 1;
+  }
+  .ref-page-card-content{
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .ref-page-card-title{
-    font-size: 0.9375rem;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     color: #111;
-    line-height: 1.6;
-    margin: 0 0 20px;
+    line-height: 1.5;
+    /* 한 줄·두 줄이든 본문 시작 위치를 2줄 기준으로 통일 */
+    min-height: calc(1.5em * 2);
+    margin: 0 0 12px;
     letter-spacing: -0.02em;
+    transition: color 0.35s ease;
   }
-  .ref-page-card-footer{
+  .ref-page-card:hover .ref-page-card-title{
+    color: #fff;
+  }
+  .ref-page-card-desc{
+    margin: 0 0 20px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #4b5563;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    transition: color 0.35s ease;
+  }
+  .ref-page-card:hover .ref-page-card-desc{
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .ref-page-card-foot{
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 12px 16px;
+    gap: 16px 20px;
     margin-top: auto;
+    padding-top: 4px;
   }
   .ref-page-card-period{
-    font-size: 0.8125rem;
-    color: #888;
+    font-size: 0.75rem;
+    color: #9ca3af;
     font-weight: 500;
     line-height: 1.4;
-  }
-  .ref-page-card-tags{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: flex-end;
-    flex: 1;
+    flex: 0 1 auto;
     min-width: 0;
+    transition: color 0.35s ease;
   }
-  .ref-page-card-tags .ref-page-tag{
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    background: #8eb8f5;
-    color: #fff;
-    border: none;
-    line-height: 1.2;
+  .ref-page-card:hover .ref-page-card-period{
+    color: rgba(255, 255, 255, 0.55);
+  }
+  .ref-page-card-logo{
+    flex: 0 0 auto;
+    margin-left: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 4px 6px;
+    border-radius: 8px;
+    transition: background 0.35s ease, box-shadow 0.35s ease;
+  }
+  .ref-page-card:hover .ref-page-card-logo{
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+  .ref-page-card-logo img{
+    display: block;
+    max-width: 148px;
+    max-height: 52px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: right bottom;
+    transition: filter 0.35s ease, opacity 0.35s ease;
+  }
+  .ref-page-card:hover .ref-page-card-logo img{
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+  }
+  .ref-page-card-logo--scale-115 img{
+    max-width: 170px;
+    max-height: 60px;
   }
   @media (max-width: 1023px){
     .hero-inner{ padding: 48px 24px 50px; }
     .sub-nav{ overflow-x: auto; }
     .bdgen-white-presentation .main-title{ font-size: 40px; }
     .ref-page-main-title{ font-size: 40px; letter-spacing: -0.02em; }
-    .ref-page-grid{ row-gap: 80px; column-gap: 22px; }
   }
   @media (max-width: 768px){
     .bdgen-white-presentation .main-title{ font-size: 34px; }
     .ref-page-main-title{ font-size: 34px; }
-    .ref-page-grid{ grid-template-columns: 1fr; }
-    .ref-page-lead{ margin-bottom: 40px; }
+    .ref-page-lead{ margin-bottom: 36px; }
   }
   @media (prefers-reduced-motion: reduce){
+    .ref-page-card,
+    .ref-page-card::before,
+    .ref-page-card::after,
+    .ref-page-card-title,
+    .ref-page-card-desc,
+    .ref-page-card-period,
+    .ref-page-card-logo,
+    .ref-page-card-logo img{
+      transition-duration: 0.01ms;
+    }
+    .ref-page-card::before{ transform: none; }
     .ref-page-main-title .ref-page-typing-cursor{ animation: none; border-right-color: transparent; }
   }
 </style>
@@ -509,7 +381,7 @@
       </nav>
     </div>
   </div>
-  <section class="bdgen-white-presentation" aria-labelledby="ref-page-heading">
+  <section class="bdgen-white-presentation ref-page-section" aria-labelledby="ref-page-heading">
     <div class="inner-container">
       <h2 id="ref-page-heading" class="ref-page-main-title">
         <span id="ref-page-typing-1" class="ref-page-typing-line ref-page-typing-cursor" data-i18n="ref-page-display-title" data-text="Reference">Reference</span>
@@ -517,238 +389,92 @@
       <p class="ref-page-lead" data-i18n="ref-page-lead">비디젠은 고객의 요구를 반영하여 IT 환경에 최적화된 통합 시스템 서비스를 제공합니다.</p>
       <div class="ref-page-grid" role="list">
         <article class="ref-page-card" role="listitem">
-          <div
-            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--modal-thumb"
-            role="button"
-            tabindex="0"
-            data-ref-modal-type="iframe"
-            data-ref-modal-src="../assets/ref-cbdc-architecture-v2.html?v=1"
-            data-i18n-title="ref-page-modal-thumb-open-digital-currency"
-            title="디지털통화관리 시스템 다이어그램 크게 보기"
-          >
-            <div class="ref-page-card-logo-default">
+          <div class="ref-page-card-content">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-1-title">블록체인 기반 디지털통화관리 시스템 구축</h3>
+            <p class="ref-page-card-desc" data-i18n="ref-page-card-1-desc" data-i18n-html="true">블록체인을 활용한 디지털통화·전자지갑 연계를 위한<br>통화관리 시스템을 구축하고 운영 효율을 강화합니다.</p>
+          </div>
+          <div class="ref-page-card-foot">
+            <span class="ref-page-card-period" data-i18n="ref-page-card-1-period">24. 11 ~ 25. 8</span>
+            <div class="ref-page-card-logo">
               <img src="../assets/LOGO_NH.png" alt="NH농협은행" data-i18n-alt="ref-page-logo-text-nh" loading="lazy" decoding="async"/>
             </div>
-            <div class="ref-page-card-logo-flow" aria-hidden="true">
-              <div class="ref-page-card-flow-embed">
-                <iframe
-                  src="../assets/ref-cbdc-architecture-thumb.html?v=5"
-                  title="CBDC · Digital Wallet Service Architecture"
-                  loading="eager"
-                ></iframe>
-              </div>
-            </div>
           </div>
-          <div class="ref-page-card-body">
-            <h3 class="ref-page-card-title" data-i18n="ref-page-card-1-title">블록체인 기반 디지털통화관리 시스템 구축</h3>
-            <div class="ref-page-card-footer">
-              <span class="ref-page-card-period" data-i18n="ref-page-card-1-period">24. 11 ~ 25. 8</span>
-              <div class="ref-page-card-tags" data-i18n="ref-page-card-1-tags" data-i18n-html="true"></div>
+        </article>
+        <article class="ref-page-card" role="listitem">
+          <div class="ref-page-card-content">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-2-title" data-i18n-html="true">SK텔레콤 DID 서비스 및 PASS 모바일 지갑<br>서비스 운영/고도화</h3>
+            <p class="ref-page-card-desc" data-i18n="ref-page-card-2-desc" data-i18n-html="true">DID·모바일 지갑 기반 인증·지갑 서비스의 상용 운영과<br>기능·안정성 고도화를 지속 수행합니다.</p>
+          </div>
+          <div class="ref-page-card-foot">
+            <span class="ref-page-card-period" data-i18n="ref-page-card-2-period">22. 01 ~ 현재진행</span>
+            <div class="ref-page-card-logo">
+              <img src="../assets/rogo_sk.png" alt="SK텔레콤" data-i18n-alt="ref-page-logo-alt-sk" loading="lazy" decoding="async"/>
             </div>
           </div>
         </article>
         <article class="ref-page-card" role="listitem">
-          <div
-            class="ref-page-card-logo ref-page-card-logo--flow-hover ref-page-card-logo--modal-thumb"
-            role="button"
-            tabindex="0"
-            data-ref-modal-type="iframe"
-            data-ref-modal-src="pk-flow-embed.html?svg=../assets/BLOCKCHAIN_flow.svg&amp;v=14"
-            data-i18n-title="ref-page-flow-thumb-open-label"
-            title="Service Flow 다이어그램을 크게 봅니다"
-          >
-            <div class="ref-page-card-logo-default">
-              <img src="../assets/rogo_sk.png" alt="SK텔레콤" loading="lazy" decoding="async"/>
-            </div>
-            <div class="ref-page-card-logo-flow" aria-hidden="true">
-              <div class="ref-page-card-flow-embed">
-                <iframe
-                  src="pk-flow-embed.html?svg=../assets/BLOCKCHAIN_flow.svg&amp;v=13"
-                  title="GenID Service Flow"
-                  loading="lazy"
-                ></iframe>
-              </div>
-            </div>
+          <div class="ref-page-card-content">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-3-title" data-i18n-html="true">디지털배지 기반 통합 취업지원 서비스<br>구축 사업 참여기관 선정</h3>
+            <p class="ref-page-card-desc" data-i18n="ref-page-card-3-desc">디지털배지와 연계한 통합 취업지원 체계 구축에 참여기관으로 선정되어 핵심 시스템을 함께 구현합니다.</p>
           </div>
-          <div class="ref-page-card-body">
-            <h3 class="ref-page-card-title" data-i18n="ref-page-card-2-title">SK telecom DID 서비스 및 PASS 모바일 지갑 서비스 운영/고도화</h3>
-            <div class="ref-page-card-footer">
-              <span class="ref-page-card-period" data-i18n="ref-page-card-2-period">22. 01 ~ 현재진행</span>
-              <div class="ref-page-card-tags" data-i18n="ref-page-card-2-tags" data-i18n-html="true"></div>
-            </div>
-          </div>
-        </article>
-        <article class="ref-page-card" role="listitem">
-          <div
-            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--modal-thumb"
-            role="button"
-            tabindex="0"
-            data-ref-modal-type="iframe"
-            data-ref-modal-src="../assets/디지털배지.html"
-            data-i18n-title="ref-page-modal-thumb-open-digibadge"
-            title="디지털배지 다이어그램 크게 보기"
-          >
-            <div class="ref-page-card-logo-default">
+          <div class="ref-page-card-foot">
+            <span class="ref-page-card-period" data-i18n="ref-page-card-3-period">24. 08 ~ 24. 12</span>
+            <div class="ref-page-card-logo">
               <img src="../assets/LOGO_KE.png" alt="한국고용정보원" data-i18n-alt="ref-page-logo-text-keis" loading="lazy" decoding="async"/>
             </div>
-            <div class="ref-page-card-logo-flow" aria-hidden="true">
-              <div class="ref-page-card-flow-embed">
-                <iframe
-                  src="../assets/ref-digibadge-thumb.html?v=5"
-                  title="디지털배지 취업지원 서비스"
-                  loading="eager"
-                  scrolling="no"
-                ></iframe>
-              </div>
-            </div>
-          </div>
-          <div class="ref-page-card-body">
-            <h3 class="ref-page-card-title" data-i18n="ref-page-card-3-title">디지털배지 기반 통합 취업지원서비스 구축 사업 참여기관 선정</h3>
-            <div class="ref-page-card-footer">
-              <span class="ref-page-card-period" data-i18n="ref-page-card-3-period">24. 08 ~ 24. 12</span>
-              <div class="ref-page-card-tags" data-i18n="ref-page-card-3-tags" data-i18n-html="true"></div>
-            </div>
           </div>
         </article>
         <article class="ref-page-card" role="listitem">
-          <div
-            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--modal-thumb"
-            role="button"
-            tabindex="0"
-            data-ref-modal-type="logo"
-            data-ref-modal-src="../assets/ref-sto-nh-diagram.svg"
-            data-i18n-title="ref-page-modal-thumb-open-sto"
-            title="STO 플랫폼 구축 다이어그램 크게 보기"
-          >
-            <div class="ref-page-card-logo-default">
+          <div class="ref-page-card-content">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-4-title" data-i18n-html="true">조각 투자 사업자의 토큰증권(STO) 발행을<br>지원하는 공익적 토큰증권 플랫폼 구축</h3>
+            <p class="ref-page-card-desc" data-i18n="ref-page-card-4-desc" data-i18n-html="true">소액투자자 보호와 발행·유통 투명성을 갖춘<br>공익적 토큰증권(STO) 플랫폼을 구축합니다.</p>
+          </div>
+          <div class="ref-page-card-foot">
+            <span class="ref-page-card-period" data-i18n="ref-page-card-4-period">24. 06 ~ 24. 12</span>
+            <div class="ref-page-card-logo">
               <img src="../assets/LOGO_NH.png" alt="NH농협은행" data-i18n-alt="ref-page-logo-text-nh" loading="lazy" decoding="async"/>
             </div>
-            <div class="ref-page-card-logo-flow" aria-hidden="true">
-              <div class="ref-page-card-flow-embed ref-page-card-flow-embed--svg">
-                <img src="../assets/ref-sto-nh-diagram.svg" alt="" class="ref-page-card-flow-svg" width="1320" height="760" decoding="async" loading="eager"/>
-              </div>
-            </div>
-          </div>
-          <div class="ref-page-card-body">
-            <h3 class="ref-page-card-title" data-i18n="ref-page-card-4-title">조각 투자 사업자의 토큰증권(STO) 발행을 지원하는 공익적 토큰증권 플랫폼 구축</h3>
-            <div class="ref-page-card-footer">
-              <span class="ref-page-card-period" data-i18n="ref-page-card-4-period">24. 06 ~ 24. 12</span>
-              <div class="ref-page-card-tags" data-i18n="ref-page-card-4-tags" data-i18n-html="true"></div>
-            </div>
           </div>
         </article>
         <article class="ref-page-card" role="listitem">
-          <div
-            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--modal-thumb"
-            role="button"
-            tabindex="0"
-            data-ref-modal-type="logo"
-            data-ref-modal-src="../assets/ref-seoul-labor-diagram-01.svg"
-            data-i18n-title="ref-page-modal-thumb-open-seoul"
-            title="공공일자리 플랫폼 다이어그램 크게 보기"
-          >
-            <div class="ref-page-card-logo-default">
+          <div class="ref-page-card-content">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-5-title" data-i18n-html="true">서울시 블록체인 기반 공공일자리<br>전자근로계약 및 이력관리 플랫폼 구축</h3>
+            <p class="ref-page-card-desc" data-i18n="ref-page-card-5-desc" data-i18n-html="true">공공일자리 전자근로계약·근로 이력을 블록체인으로<br>기록·검증하는 공공 일자리 플랫폼을 구축합니다.</p>
+          </div>
+          <div class="ref-page-card-foot">
+            <span class="ref-page-card-period" data-i18n="ref-page-card-5-period">22. 07 ~ 22. 12</span>
+            <div class="ref-page-card-logo">
               <img src="../assets/LOGO_SEOUL.png" alt="서울특별시" data-i18n-alt="ref-page-logo-text-seoul" loading="lazy" decoding="async"/>
             </div>
-            <div class="ref-page-card-logo-flow" aria-hidden="true">
-              <div class="ref-page-card-flow-embed ref-page-card-flow-embed--svg">
-                <img src="../assets/ref-seoul-labor-diagram-01.svg" alt="" class="ref-page-card-flow-svg" width="1320" height="760" decoding="async" loading="eager"/>
-              </div>
-            </div>
-          </div>
-          <div class="ref-page-card-body">
-            <h3 class="ref-page-card-title" data-i18n="ref-page-card-5-title">서울시 블록체인 기반 공공일자리 전자근로계약 및 이력관리 플랫폼 구축</h3>
-            <div class="ref-page-card-footer">
-              <span class="ref-page-card-period" data-i18n="ref-page-card-5-period">22. 07 ~ 22. 12</span>
-              <div class="ref-page-card-tags" data-i18n="ref-page-card-5-tags" data-i18n-html="true"></div>
-            </div>
           </div>
         </article>
         <article class="ref-page-card" role="listitem">
-          <div
-            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--logo-scale-115 ref-page-card-logo--modal-thumb"
-            role="button"
-            tabindex="0"
-            data-ref-modal-type="logo"
-            data-ref-modal-src="../assets/ref-real-estate-appraisal-diagram-01.svg"
-            data-i18n-title="ref-page-modal-thumb-open-realestate"
-            title="부동산 감정평가 플랫폼 다이어그램 크게 보기"
-          >
-            <div class="ref-page-card-logo-default">
+          <div class="ref-page-card-content">
+            <h3 class="ref-page-card-title" data-i18n="ref-page-card-7-title" data-i18n-html="true">블록체인 기반 부동산 감정평가<br>이력관리 플랫폼 개발</h3>
+            <p class="ref-page-card-desc" data-i18n="ref-page-card-7-desc" data-i18n-html="true">감정평가 이력의 위·변조 방지와 감사 추적이 가능하도록<br>블록체인 기반 이력관리 플랫폼을 개발합니다.</p>
+          </div>
+          <div class="ref-page-card-foot">
+            <span class="ref-page-card-period" data-i18n="ref-page-card-7-period">21. 05 ~ 21. 11</span>
+            <div class="ref-page-card-logo ref-page-card-logo--scale-115">
               <img src="../assets/logo_RC.png" alt="보건의료기관" data-i18n-alt="ref-page-logo-text-health" loading="lazy" decoding="async"/>
             </div>
-            <div class="ref-page-card-logo-flow" aria-hidden="true">
-              <div class="ref-page-card-flow-embed ref-page-card-flow-embed--svg">
-                <img src="../assets/ref-real-estate-appraisal-diagram-01.svg" alt="" class="ref-page-card-flow-svg" width="1320" height="760" decoding="async" loading="eager"/>
-              </div>
-            </div>
-          </div>
-          <div class="ref-page-card-body">
-            <h3 class="ref-page-card-title" data-i18n="ref-page-card-7-title">블록체인 기반 부동산 감정평가 이력관리 플랫폼 개발</h3>
-            <div class="ref-page-card-footer">
-              <span class="ref-page-card-period" data-i18n="ref-page-card-7-period">21. 05 ~ 21. 11</span>
-              <div class="ref-page-card-tags" data-i18n="ref-page-card-7-tags" data-i18n-html="true"></div>
-            </div>
           </div>
         </article>
         <article class="ref-page-card" role="listitem">
-          <div
-            class="ref-page-card-logo ref-page-card-logo--embed-hover ref-page-card-logo--modal-thumb"
-            role="button"
-            tabindex="0"
-            data-ref-modal-type="logo"
-            data-ref-modal-src="../assets/ref-medical-narcotics-diagram-01.svg?v=2"
-            data-i18n-title="ref-page-modal-thumb-open-narcotics"
-            title="마약류 의약품 관리 다이어그램 크게 보기"
-          >
-            <div class="ref-page-card-logo-default">
-              <img src="../assets/보라매병원_logo.svg" alt="보라매병원" data-i18n-alt="ref-page-logo-text-boramae" loading="lazy" decoding="async"/>
-            </div>
-            <div class="ref-page-card-logo-flow" aria-hidden="true">
-              <div class="ref-page-card-flow-embed ref-page-card-flow-embed--svg">
-                <img src="../assets/ref-medical-narcotics-diagram-01.svg?v=2" alt="" class="ref-page-card-flow-svg" width="1320" height="760" decoding="async" loading="eager"/>
-              </div>
-            </div>
-          </div>
-          <div class="ref-page-card-body">
+          <div class="ref-page-card-content">
             <h3 class="ref-page-card-title" data-i18n="ref-page-card-8-title">블록체인 기반 마약류 의약품 관리 플랫폼 개발</h3>
-            <div class="ref-page-card-footer">
-              <span class="ref-page-card-period" data-i18n="ref-page-card-8-period">21. 05 ~ 21. 12</span>
-              <div class="ref-page-card-tags" data-i18n="ref-page-card-8-tags" data-i18n-html="true"></div>
+            <p class="ref-page-card-desc" data-i18n="ref-page-card-8-desc" data-i18n-html="true">마약류 의약품의 처방·조제·이동 내역을 블록체인으로<br>기록·관리하는 보건 의료용 플랫폼을 개발합니다.</p>
+          </div>
+          <div class="ref-page-card-foot">
+            <span class="ref-page-card-period" data-i18n="ref-page-card-8-period">21. 05 ~ 21. 12</span>
+            <div class="ref-page-card-logo">
+              <img src="../assets/보라매병원_logo.svg" alt="보라매병원" data-i18n-alt="ref-page-logo-text-boramae" loading="lazy" decoding="async"/>
             </div>
           </div>
         </article>
       </div>
     </div>
   </section>
-  <div
-    id="refFlowModal"
-    class="ref-flow-modal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="refFlowModalTitle"
-    aria-hidden="true"
-    hidden
-    data-i18n-title="ref-page-flow-modal-dialog-aria"
-    title="Service Flow 다이어그램 확대 보기"
-  >
-    <button type="button" class="ref-flow-modal__backdrop" data-ref-flow-modal-dismiss data-i18n-title="ref-page-flow-modal-dismiss-scrim" title="닫기" aria-label="닫기"></button>
-    <div class="ref-flow-modal__panel">
-      <div class="ref-flow-modal__toolbar">
-        <h2 id="refFlowModalTitle" class="ref-flow-modal__heading" data-i18n="ref-page-flow-modal-heading">Service Flow</h2>
-        <button type="button" class="ref-flow-modal__close" data-ref-flow-modal-dismiss data-i18n-title="ref-page-flow-modal-close" title="닫기" aria-label="닫기">&times;</button>
-      </div>
-      <div class="ref-flow-modal__frame" id="refModalFrame">
-        <iframe
-          id="refFlowModalIframe"
-          data-i18n-title="ref-page-flow-modal-iframe-title"
-          title=""
-          loading="lazy"
-        ></iframe>
-        <img id="refModalImgOnly" class="ref-modal__img-only" alt="" hidden decoding="async"/>
-      </div>
-    </div>
-  </div>
 </main>
 <footer role="contentinfo">
   <div class="container">
@@ -911,78 +637,6 @@
     document.addEventListener('DOMContentLoaded',scheduleRun);
   }else scheduleRun();
   window.addEventListener('bdgen:subpage-language-applied',function(){ scheduleRun(); });
-})();
-(function(){
-  var modal = document.getElementById('refFlowModal');
-  var iframe = document.getElementById('refFlowModalIframe');
-  var imgOnly = document.getElementById('refModalImgOnly');
-  var modalTitle = document.getElementById('refFlowModalTitle');
-  var frame = document.getElementById('refModalFrame');
-  var thumbs = document.querySelectorAll('.ref-page-card-logo--modal-thumb');
-  if (!modal || !iframe || !imgOnly || !frame || !thumbs.length) return;
-  var dismissers = modal.querySelectorAll('[data-ref-flow-modal-dismiss]');
-  var prevFocus = null;
-
-  function openModalFromThumb(thumb, e){
-    if (e && e.type === 'keydown') e.preventDefault();
-    var type = (thumb.getAttribute('data-ref-modal-type') || 'iframe').trim();
-    var src = (thumb.getAttribute('data-ref-modal-src') || '').trim();
-    var article = thumb.closest('.ref-page-card');
-    var titleEl = article && article.querySelector('.ref-page-card-title');
-    var heading = titleEl ? titleEl.textContent.replace(/\s+/g, ' ').trim() : '';
-    if (modalTitle) modalTitle.textContent = heading || modalTitle.textContent;
-
-    if (type === 'logo') {
-      modal.classList.add('ref-flow-modal--mode-logo');
-      modal.classList.remove('ref-flow-modal--mode-iframe');
-      iframe.removeAttribute('src');
-      imgOnly.removeAttribute('hidden');
-      imgOnly.src = src;
-      var thumbImg = thumb.querySelector('.ref-page-card-logo-default img') || thumb.querySelector('img');
-      imgOnly.alt = heading || (thumbImg ? (thumbImg.getAttribute('alt') || '') : '');
-    } else {
-      modal.classList.remove('ref-flow-modal--mode-logo');
-      modal.classList.add('ref-flow-modal--mode-iframe');
-      imgOnly.setAttribute('hidden', '');
-      imgOnly.removeAttribute('src');
-      if (src) iframe.setAttribute('src', src);
-    }
-
-    prevFocus = document.activeElement;
-    modal.removeAttribute('hidden');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    var closeBtn = modal.querySelector('.ref-flow-modal__close');
-    if (closeBtn) closeBtn.focus();
-  }
-
-  function closeModal(){
-    modal.setAttribute('hidden', '');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    modal.classList.remove('ref-flow-modal--mode-logo', 'ref-flow-modal--mode-iframe');
-    imgOnly.setAttribute('hidden', '');
-    imgOnly.removeAttribute('src');
-    iframe.removeAttribute('src');
-    if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
-    prevFocus = null;
-  }
-
-  thumbs.forEach(function(thumb){
-    thumb.addEventListener('click', function(){ openModalFromThumb(thumb, null); });
-    thumb.addEventListener('keydown', function(e){
-      if (e.key === 'Enter' || e.key === ' ') openModalFromThumb(thumb, e);
-    });
-  });
-  dismissers.forEach(function(el){
-    el.addEventListener('click', function(e){
-      e.preventDefault();
-      closeModal();
-    });
-  });
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal();
-  });
 })();
 </script>
 </body>

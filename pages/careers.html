@@ -2974,7 +2974,7 @@
   });
 })();
 (function initCareersApplyModal(){
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwA-mLcc3_djoi42Q8KNrV4qiTPo78_IG2CRNbAjEVRn5XLsvGIA3_kDucWd7IG03RJ/exec";
+  const RECRUIT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxlHyH2NbHBPUYnH33X5iOj28js-Y2aAYjRY4jx-cCdMXMRKz_0qgvcPkc2-yDDYBqDAQ/exec";
   var PDF_MAX = 10 * 1024 * 1024;
 
   function tpl(id, fallback){
@@ -3286,7 +3286,7 @@
             portfolio: portfolio
           };
           console.log("payload 크기(bytes):", JSON.stringify(submitData).length);
-          return fetch(SCRIPT_URL, {
+          return fetch(RECRUIT_SCRIPT_URL, {
             method: "POST",
             mode: "no-cors",
             headers: { "Content-Type": "text/plain" },

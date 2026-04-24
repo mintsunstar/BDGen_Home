@@ -2974,7 +2974,7 @@
   });
 })();
 (function initCareersApplyModal(){
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZVRzBLTsXxPh9D0ovIMr3yar5eD0SrZW8GU9SR6knWXHmCgud62PIyk-a2BWrTKN_/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxMxoNQyMsOWsyv2d2gtUdDuz8egrPKgGgoJ8OF_qOArNYt6ltHZDJh2FNyogl2GkEi/exec';
   var PDF_MAX = 10 * 1024 * 1024;
 
   function tpl(id, fallback){
@@ -3286,7 +3286,8 @@
             portfolio: portfolio
           };
           console.log("payload 크기(bytes):", JSON.stringify(submitData).length);
-          /* CORS: no-cors 는 응답이 opaque 이라 HTTP 성공/실패를 알 수 없고 항상 이어진 것처럼 보임 → 실제 GAS/메일 실패해도 "접수됨"이 뜰 수 있음 */
+          /* CORS: no-cors 는 응답이 opaque·status 0 으로만 보이며 HTTP 성공 여부를 알 수 없음 */
+          console.log("[careers] fetch: mode=cors (콘솔이 opaque/0이면 캐시·구버전 HTML 가능 → Ctrl+Shift+R)");
           return fetch(SCRIPT_URL, {
             method: 'POST',
             mode: 'cors',
@@ -3295,6 +3296,9 @@
           })
             .then(function(res) {
               console.log("fetch 상태:", res.status, res.type);
+              if (res.type === "opaque" && res.status === 0) {
+                console.warn("[careers] opaque+0 은 no-cors 응답과 같은 패턴입니다. 최신 careers.html( mode:cors )가 로드됐는지 Network 탭 'Disable cache' 후 강력 새로고침하세요.");
+              }
               return res.text().then(function(text) {
                 console.log("fetch 응답:", text);
                 if (!res.ok) {

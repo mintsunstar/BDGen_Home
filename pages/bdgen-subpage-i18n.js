@@ -962,7 +962,7 @@
         'pk-contact-title':
           '<span class="pk-contact-passkey">Passkey</span>에 대해 궁금하신 점이 있으실까요?',
         'pk-contact-phone': '대표문의 02-6091-1533',
-        'pk-contact-email': '이메일문의 passkey@bdgen.co.kr',
+        'pk-contact-email': '이메일문의 sales@bdgen.co.kr',
         'pk-ph-visual': '일러스트 영역',
         'pk-ph-cert': '인증서·규격 이미지',
         'pk-ph-arch': '보안·칩 도식',
@@ -1067,7 +1067,7 @@
           '<ul class="pk-ben-bullet-list"><li class="pk-ben-stat-line"><span class="pk-count-up" data-count="1">0</span> registration for seamless login across devices</li><li>No need to type or remember passwords one by one</li><li>Register once on a phone, PC, or tablet—use seamlessly across devices</li></ul>',
         'pk-contact-title': 'Have questions about <span class="pk-contact-passkey">Passkey</span>?',
         'pk-contact-phone': 'Main line 02-6091-1533',
-        'pk-contact-email': 'Email passkey@bdgen.co.kr',
+        'pk-contact-email': 'Email sales@bdgen.co.kr',
         'pk-ph-visual': 'Illustration area',
         'pk-ph-cert': 'Certificate / standards visual',
         'pk-ph-arch': 'Security / hardware diagram',

@@ -2994,7 +2994,12 @@
         }
         resolve(r.split(',')[1]);
       };
-      reader.onerror = function(){ reject(reader.error || new Error('read')); };
+      reader.onerror = function(){
+        reject(reader.error || new Error('read'));
+      };
+      reader.onabort = function(){
+        reject(new Error('aborted'));
+      };
       reader.readAsDataURL(file);
     });
   }
@@ -3259,16 +3264,26 @@
       submitBtn.classList.add('is-loading');
       submitBtn.textContent = tpl('careersApplyTplSending', '접수 중...');
 
+      var didConvert = false;
       Promise.all([toBase64(resumeFile), toBase64(portfolioFile)])
         .then(function(blobs){
+          didConvert = true;
+          var formType = "recruit";
+          var name = nameEl.value.trim();
+          var email = emailEl.value.trim();
+          var phone = phoneEl.value.trim();
+          var position = positionLabelText();
+          var resume = blobs[0];
+          var portfolio = blobs[1];
+          console.log("전송 데이터:", JSON.stringify({formType, name, email, phone, position, resume: resume ? "base64 있음" : "없음", portfolio: portfolio ? "base64 있음" : "없음"}));
           var body = {
-            formType: 'recruit',
-            name: nameEl.value.trim(),
-            email: emailEl.value.trim(),
-            phone: phoneEl.value.trim(),
-            position: positionLabelText(),
-            resume: blobs[0],
-            portfolio: blobs[1]
+            formType: "recruit",
+            name: name,
+            email: email,
+            phone: phone,
+            position: position,
+            resume: resume,
+            portfolio: portfolio
           };
           return fetch(SCRIPT_URL, {
             method: 'POST',
@@ -3294,7 +3309,11 @@
         })
         .catch(function(){
           if (msgEl){
-            msgEl.textContent = tpl('careersApplyTplFail', '접수에 실패했습니다. 다시 시도해 주세요.');
+            if (!didConvert) {
+              msgEl.textContent = '파일 변환에 실패했습니다. 다시 시도해 주세요.';
+            } else {
+              msgEl.textContent = tpl('careersApplyTplFail', '접수에 실패했습니다. 다시 시도해 주세요.');
+            }
             msgEl.classList.add('careers-apply-msg--error');
           }
         })

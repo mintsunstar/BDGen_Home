@@ -3566,7 +3566,7 @@ footer {
 
 /* ---------- CTA 문의 폼: GAS 연동 · 유효성 · 전송 상태 ---------- */
 (function(){
-  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyeabrr8UcO5kAroGmtb0hPTkd_AEluF7o65FnAJQwZXOtnbL_t8xFRUDZ1wlkH2SOI/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOduwb85GbSDh3PSCYyHsaA5zw2-q44fUdL1wxk2Wdx3YZULjcJD8JJdfcvrSmowUE/exec';
   var form = document.querySelector('#cta .cta-form');
   var submitBtn = form ? form.querySelector('.cta-form-submit') : null;
   var statusEl = document.getElementById('cta-form-status');
@@ -3653,6 +3653,7 @@ footer {
     }
     var dict = T();
     var formData = {
+      formType: 'contact',
       name: nameEl ? nameEl.value.trim() : '',
       company: companyEl ? companyEl.value.trim() : '',
       email: emailEl ? emailEl.value.trim() : '',

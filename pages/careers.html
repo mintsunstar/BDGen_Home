@@ -2974,7 +2974,7 @@
   });
 })();
 (function initCareersApplyModal(){
-  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx1C3_EfI-Ectjj7VtIj0m2ulgHQ2gckFQDtJuziUX0zLZnNJSr0x3oLvlXtLMsMBilNw/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOduwb85GbSDh3PSCYyHsaA5zw2-q44fUdL1wxk2Wdx3YZULjcJD8JJdfcvrSmowUE/exec';
   var PDF_MAX = 10 * 1024 * 1024;
 
   function tpl(id, fallback){
@@ -3262,6 +3262,7 @@
       Promise.all([toBase64(resumeFile), toBase64(portfolioFile)])
         .then(function(blobs){
           var body = {
+            formType: 'recruit',
             name: nameEl.value.trim(),
             email: emailEl.value.trim(),
             phone: phoneEl.value.trim(),

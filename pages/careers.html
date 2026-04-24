@@ -3276,7 +3276,7 @@
           var resume = blobs[0];
           var portfolio = blobs[1];
           console.log("전송 데이터:", JSON.stringify({formType, name, email, phone, position, resume: resume ? "base64 있음" : "없음", portfolio: portfolio ? "base64 있음" : "없음"}));
-          var body = {
+          var submitData = {
             formType: "recruit",
             name: name,
             email: email,
@@ -3285,12 +3285,20 @@
             resume: resume,
             portfolio: portfolio
           };
+          console.log("payload 크기(bytes):", JSON.stringify(submitData).length);
           return fetch(SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
             headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(body)
-          });
+            body: JSON.stringify(submitData)
+          })
+            .then(function(res) {
+              console.log("fetch 상태:", res.status, res.type);
+            })
+            .catch(function(err) {
+              console.log("fetch 에러:", err);
+              return Promise.reject(err);
+            });
         })
         .then(function(){
           clearModalMessage();

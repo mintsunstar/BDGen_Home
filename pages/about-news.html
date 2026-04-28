@@ -293,13 +293,19 @@
     animation-delay: var(--news-stagger, 0s);
   }
 
+  /* 페이지네이션: 활성 탭 — 금색 상단선 + 좌우 연한 구분선 + 청록 숫자·짧은 밑줄 */
   .news-pagination{
+    --pag-teal: #0d9488;
+    --pag-gold: #c9a352;
+    --pag-border: #e4e4e7;
+    --pag-muted: #6b7280;
+    --pag-nav: #a1a1aa;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    gap: 6px 4px;
-    padding-top: 8px;
+    gap: 0;
+    padding-top: 20px;
   }
   .news-pagination a,
   .news-pagination span{
@@ -307,32 +313,96 @@
     align-items: center;
     justify-content: center;
     min-width: 40px;
-    height: 40px;
-    padding: 0 8px;
+    min-height: 44px;
+    padding: 0 10px;
     font-size: 16px;
     font-weight: 500;
-    color: #1a1f27;
     text-decoration: none;
-    border-bottom: 2px solid transparent;
     box-sizing: border-box;
-  }
-  .news-pagination a:hover{
-    color: #24ACFF;
-  }
-  .news-pagination .is-current{
-    color: #24ACFF;
-    border-bottom-color: #24ACFF;
-    font-weight: 600;
   }
   .news-pagination button.news-page-btn{
     font: inherit;
-    background: none;
+    font-family: inherit;
+    margin: 0;
+    vertical-align: bottom;
+    box-sizing: border-box;
+  }
+  button.news-page-btn.news-page-num{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    padding: 10px 12px 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--pag-muted);
+    background: transparent;
+    border: none;
+    border-bottom: none;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  button.news-page-btn.news-page-num:not(.is-current):hover{
+    color: #4b5563;
+  }
+  button.news-page-btn.news-page-num.is-current{
+    color: var(--pag-teal);
+    font-weight: 700;
+    border-top: 2px solid var(--pag-gold);
+    border-left: 1px solid var(--pag-border);
+    border-right: 1px solid var(--pag-border);
+    cursor: default;
+    pointer-events: none;
+    padding-bottom: 10px;
+  }
+  button.news-page-btn.news-page-num.is-current::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    width: 0.95em;
+    height: 2px;
+    background: var(--pag-teal);
+    border-radius: 1px;
+  }
+  button.news-page-btn.news-page-nav{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px 10px;
+    margin-top: auto;
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 400;
+    color: var(--pag-nav);
+    background: transparent;
     border: none;
     cursor: pointer;
-    font-family: inherit;
+    transition: color 0.2s ease;
   }
-  .news-pagination button.news-page-btn.is-current{
+  button.news-page-btn.news-page-next{
+    margin-left: 14px;
+  }
+  button.news-page-btn.news-page-nav:hover{
+    color: #71717a;
+  }
+  button.news-page-btn.news-page-nav:disabled,
+  button.news-page-btn.news-page-nav[aria-disabled="true"]{
+    opacity: 0.35;
+    cursor: default;
     pointer-events: none;
+  }
+  button.news-page-btn.news-page-nav:focus-visible{
+    outline: 2px solid var(--pag-teal);
+    outline-offset: 2px;
+  }
+  button.news-page-btn.news-page-num:focus-visible:not(.is-current){
+    outline: 2px solid var(--pag-teal);
+    outline-offset: 2px;
   }
   .news-card.is-hidden{ display: none !important; }
   .news-pagination .news-page-ellipsis{
@@ -683,10 +753,10 @@
       </div>
 
       <nav class="news-pagination" id="newsPagination" aria-label="페이지 이동">
-        <button type="button" class="news-page-btn is-current" data-news-page-btn="1" aria-current="page">1</button>
-        <button type="button" class="news-page-btn" data-news-page-btn="2">2</button>
-        <button type="button" class="news-page-btn" id="newsPageNext" data-i18n-title="news-page-next" title="다음 페이지" aria-label="다음 페이지">&gt;</button>
-        <button type="button" class="news-page-btn" id="newsPageLast" data-i18n-title="news-page-last" title="마지막 페이지" aria-label="마지막 페이지">&gt;&gt;</button>
+        <button type="button" class="news-page-btn news-page-num is-current" data-news-page-btn="1" aria-current="page">1</button>
+        <button type="button" class="news-page-btn news-page-num" data-news-page-btn="2">2</button>
+        <button type="button" class="news-page-btn news-page-nav news-page-next" id="newsPageNext" data-i18n-title="news-page-next" title="다음 페이지" aria-label="다음 페이지">&gt;</button>
+        <button type="button" class="news-page-btn news-page-nav news-page-last" id="newsPageLast" data-i18n-title="news-page-last" title="마지막 페이지" aria-label="마지막 페이지">&raquo;</button>
       </nav>
     </div>
   </section>
@@ -907,6 +977,16 @@
       b.classList.toggle('is-current', on);
       b.setAttribute('aria-current', on ? 'page' : 'false');
     });
+    if (nextBtn) {
+      var atEnd = p >= totalPages;
+      nextBtn.disabled = atEnd;
+      nextBtn.setAttribute('aria-disabled', atEnd ? 'true' : 'false');
+    }
+    if (lastBtn) {
+      var atEnd2 = p >= totalPages;
+      lastBtn.disabled = atEnd2;
+      lastBtn.setAttribute('aria-disabled', atEnd2 ? 'true' : 'false');
+    }
     setupNewsReveal();
   }
   btns.forEach(function(b){

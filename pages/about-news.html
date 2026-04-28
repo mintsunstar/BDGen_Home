@@ -178,6 +178,10 @@
     border-color: #24ACFF;
     color: #24ACFF;
   }
+  /* 검색 중에는 페이지네이션 숨김(검색 결과는 한 목록으로 표시) */
+  .news-pagination.news-pagination--searching{
+    display: none;
+  }
 
   .news-grid{
     display: grid;
@@ -929,12 +933,20 @@
 (function(){
   var grid = document.getElementById('newsGrid');
   var pag = document.getElementById('newsPagination');
+  var searchField = document.getElementById('newsSearchField');
+  var searchType = document.getElementById('newsSearchType');
+  var searchForm = document.querySelector('.news-search');
+  var newsTotalEl = document.querySelector('.news-total');
+
   if(!grid || !pag) return;
+
   var cards = grid.querySelectorAll('.news-card');
   var btns = pag.querySelectorAll('[data-news-page-btn]');
   var nextBtn = document.getElementById('newsPageNext');
   var lastBtn = document.getElementById('newsPageLast');
   var totalPages = 2;
+  var totalListed = cards.length;
+  var currentPageNum = 1;
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var newsRevealIo = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
@@ -945,6 +957,31 @@
       el.classList.add('news-reveal-run');
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+
+  function normalize(s){ return String(s||'').trim().toLowerCase(); }
+  function cardTitleNorm(card){
+    var t = card.querySelector('.news-card-title');
+    return normalize(t ? t.textContent : '');
+  }
+
+  /**
+   * 제목 검색: 제목(text)만 검사.
+   * 내용 검색: 카드에는 본문이 없어 제목 + 날짜(표시 문자열) 문자열까지 매칭.
+   */
+  function cardMatchesQuery(card, q, typeSel){
+    if(!q) return true;
+    var title = cardTitleNorm(card);
+    var tm = card.querySelector('.news-card-date time');
+    var dateHay = normalize(tm ? (tm.dateTime || tm.textContent || '') : '');
+    if(typeSel === 'title') return title.indexOf(q) !== -1;
+    return title.indexOf(q) !== -1 || dateHay.indexOf(q) !== -1;
+  }
+
+  function syncTotalLine(displayCount){
+    var strong = newsTotalEl ? newsTotalEl.querySelector('strong') : null;
+    if(!strong) return;
+    strong.textContent = String(displayCount);
+  }
 
   function setupNewsReveal(){
     cards.forEach(function(c){
@@ -966,38 +1003,79 @@
     });
   }
 
-  function showPage(n){
-    var p = Math.max(1, Math.min(totalPages, n));
+  function refreshGridVisibility(){
+    var q = normalize(searchField && searchField.value);
+    var typeSel = (searchType && searchType.value) || 'title';
+    var filtering = q.length > 0;
+
+    if(pag) pag.classList.toggle('news-pagination--searching', filtering);
+
+    var shown = 0;
     cards.forEach(function(c){
-      var cp = c.getAttribute('data-news-page');
-      c.classList.toggle('is-hidden', cp !== String(p));
+      var match = cardMatchesQuery(c, q, typeSel);
+      var wrongPage = !filtering && (c.getAttribute('data-news-page') !== String(currentPageNum));
+      var hide = !match || wrongPage;
+      c.classList.toggle('is-hidden', hide);
+      if(!hide) shown++;
     });
+
+    syncTotalLine(filtering ? shown : totalListed);
+
     btns.forEach(function(b){
-      var on = b.getAttribute('data-news-page-btn') === String(p);
+      var pn = parseInt(b.getAttribute('data-news-page-btn'), 10);
+      var on = !filtering && (pn === currentPageNum);
       b.classList.toggle('is-current', on);
       b.setAttribute('aria-current', on ? 'page' : 'false');
     });
-    if (nextBtn) {
-      var atEnd = p >= totalPages;
+    if (nextBtn && !filtering) {
+      var atEnd = currentPageNum >= totalPages;
       nextBtn.disabled = atEnd;
       nextBtn.setAttribute('aria-disabled', atEnd ? 'true' : 'false');
+    } else if (nextBtn && filtering) {
+      nextBtn.disabled = true;
+      nextBtn.setAttribute('aria-disabled', 'true');
     }
-    if (lastBtn) {
-      var atEnd2 = p >= totalPages;
+    if (lastBtn && !filtering) {
+      var atEnd2 = currentPageNum >= totalPages;
       lastBtn.disabled = atEnd2;
       lastBtn.setAttribute('aria-disabled', atEnd2 ? 'true' : 'false');
+    } else if (lastBtn && filtering) {
+      lastBtn.disabled = true;
+      lastBtn.setAttribute('aria-disabled', 'true');
     }
+
     setupNewsReveal();
   }
+
+  function showPage(n){
+    currentPageNum = Math.max(1, Math.min(totalPages, parseInt(n,10)||1));
+    refreshGridVisibility();
+  }
+
   btns.forEach(function(b){
-    b.addEventListener('click', function(){ showPage(parseInt(b.getAttribute('data-news-page-btn'), 10)); });
+    b.addEventListener('click', function(){
+      showPage(parseInt(b.getAttribute('data-news-page-btn'), 10));
+    });
   });
   if(nextBtn) nextBtn.addEventListener('click', function(){
+    if(normalize(searchField&&searchField.value)) return;
     var cur = grid.querySelector('.news-card:not(.is-hidden)');
     var pg = cur ? parseInt(cur.getAttribute('data-news-page'), 10) || 1 : 1;
     showPage(pg + 1);
   });
-  if(lastBtn) lastBtn.addEventListener('click', function(){ showPage(totalPages); });
+  if(lastBtn) lastBtn.addEventListener('click', function(){
+    if(normalize(searchField&&searchField.value)) return;
+    showPage(totalPages);
+  });
+
+  function onSearchInput(){
+    currentPageNum = 1;
+    refreshGridVisibility();
+  }
+  if(searchForm) searchForm.addEventListener('submit', function(e){ e.preventDefault(); onSearchInput(); });
+  if(searchField) searchField.addEventListener('input', onSearchInput);
+  if(searchType) searchType.addEventListener('change', onSearchInput);
+
   showPage(1);
 })();
 </script>

@@ -48,6 +48,15 @@ export function Footer({ company, linkGroups }: FooterProps) {
         </div>
         <div className="footer-bottom">
           <span>© 2024 {company.name}. All rights reserved.</span>
+          <div className="footer-bottom-links">
+            <a
+              href="https://www.bdgen.co.kr/hrm/sign-in"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              비디젠 직원 전용 HRM
+            </a>
+          </div>
         </div>
       </div>
     </footer>
